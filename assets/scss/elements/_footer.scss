@@ -1,0 +1,95 @@
+footer {
+  // position: absolute;
+  // bottom: 0;
+  padding-top: 4.125rem !important;
+  width: 100%;
+  section {
+    &:first-child {
+      background-color: rgba(146, 39, 143, 0.85);
+      text-align: center;
+      padding: 2rem 0;
+      @include breakpoint-up(xxlarge) {
+        padding: 2.5rem 0;
+      }
+      h4 {
+        color: $white;
+        margin: 0;
+      }
+    }
+    &:nth-child(2) {
+      background-color: rgba(230, 212, 229, 0.5);
+      padding-top: 2rem;
+      padding-bottom: 2.5rem;
+      .image-container {
+        @include breakpoint-up(large) {
+          width: 25%;
+        }
+        @include breakpoint-up(xxlarge) {
+          width: 30%;
+        }
+      }
+      .link-container {
+        @include breakpoint-up(large) {
+          width: 33%;
+        }
+        @include breakpoint-up(xxlarge) {
+          width: 30%;
+        }
+      }
+      .download-container {
+        @include breakpoint-up(large) {
+          width: 20%;
+        }
+      }
+      .social-links {
+        display: flex;
+        div {
+          margin-right: 5px;
+        }
+      }
+      .p-t2 {
+        padding-top: 2rem;
+      }
+      .logo {
+        height: 4rem;
+      }
+      a {
+        display: block;
+        // font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 0.8rem;
+        @include breakpoint-up(large) {
+          font-size: 18px;
+        }
+        @include breakpoint-up(xxlarge) {
+          font-size: 22px;
+        }
+      }
+      p {
+        font-size: 16px;
+      }
+      h6 {
+        color: $purple;
+        text-decoration: underline;
+        margin-top: 0.5rem;
+      }
+    }
+    &:last-child {
+      background-color: $medium-purple;
+      padding: 1rem;
+      text-align: center;
+      color: $white;
+      font-weight: bold;
+      @include breakpoint-down(medium) {
+        font-size: 0.875rem;
+      }
+    }
+  }
+  small {
+    font-size: 12px;
+    line-height: 1;
+    @include breakpoint-up(xxlarge) {
+      font-size: 14px;
+    }
+  }
+}

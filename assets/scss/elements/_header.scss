@@ -1,0 +1,204 @@
+.header {
+  // position: fixed;
+  // top: 0;
+  width: 100vw;
+  // background-color: $background;
+  z-index: 5;
+  &__links {
+    p,
+    span {
+      color: $black;
+      font-family: $square721;
+      font-weight: bold;
+      font-size: 18px;
+      // font-weight: bold;
+      @include breakpoint-up(xxlarge) {
+        font-size: 24px;
+      }
+    }
+    @include breakpoint-down(medium) {
+      &-anchor-container {
+        border-bottom: 1px solid $purple;
+        padding: 0.6rem;
+        p {
+          margin: 0;
+        }
+        .child__link {
+          margin-top: 0.5rem;
+          a {
+            display: block;
+            margin-bottom: 0.2rem;
+            padding: 0.5rem 1rem;
+            background-color: $light-purple;
+          }
+        }
+      }
+    }
+    // a {
+    //   &:not(:last-child) {
+    //     margin-right: 2.5rem;
+    //   }
+    // }
+  }
+  &__toggle {
+    > span {
+      display: block;
+      background-color: $purple;
+      width: 26px;
+      height: 2px;
+      transition: all 300ms ease-in-out;
+      transform-origin: 3px 1px;
+      &:not(:last-child) {
+        margin-bottom: 5px;
+      }
+    }
+  }
+  &.open {
+    .header__toggle {
+      > span:first-child {
+        transform: rotate(45deg);
+      }
+      > span:nth-child(2) {
+        opacity: 0;
+      }
+      > span:last-child {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  .overlay {
+    position: fixed;
+    // top: 6.875rem;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 100vh;
+    background: $white;
+    z-index: 2;
+  }
+
+  nav {
+    position: relative;
+    // background-color: $background;
+    z-index: 4;
+    @include breakpoint-down(medium) {
+      padding: 2rem 1rem;
+    }
+    @include breakpoint-up(large) {
+      padding: 1.5rem 6.4375rem;
+    }
+  }
+  &__logo {
+    img {
+      // width: 5.5rem;
+      height: 3rem;
+      @include breakpoint-up(xxlarge) {
+        height: 4rem;
+      }
+    }
+  }
+  &__menu {
+    // background: $dark-grey;
+    padding: 0 1.625rem;
+    border-radius: 3px;
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    z-index: 3;
+    @include breakpoint-down(medium) {
+      width: calc(100% - 2.5rem);
+    }
+    @include breakpoint-up(large) {
+      width: calc(100% - 15rem);
+    }
+
+    > div {
+      display: block;
+      text-align: center;
+      padding: 0 0.625rem;
+    }
+  }
+
+  &__button {
+    border-radius: 0.5rem;
+    &:hover {
+      background-color: $medium-purple;
+    }
+  }
+  .flex {
+    display: flex;
+
+    &-jc-sb {
+      justify-content: space-between;
+    }
+    &-js-c {
+      justify-content: center;
+    }
+
+    &-ai-c {
+      align-items: center;
+    }
+    &-50 {
+      flex: 1;
+    }
+  }
+  .display {
+    &__block {
+      display: block;
+    }
+
+    &__none {
+      display: none;
+    }
+  }
+  .select_container {
+    position: relative;
+    .arrow-down {
+      width: 12px;
+      margin-left: 0.5rem;
+      margin-top: 0;
+      @include breakpoint-up(xxlarge) {
+        width: 14px;
+        margin-left: 0.8rem;
+        margin-top: -1px;
+      }
+      img {
+        width: 100%;
+      }
+    }
+    .dropdown {
+      box-sizing: content-box;
+      position: absolute;
+      margin-top: -8px;
+      @include breakpoint-up(xxlarge) {
+        margin-top: -10px;
+      }
+      // width: inherit;
+      a {
+        background-color: $light-purple;
+        display: block;
+        margin-bottom: 0.2rem;
+        padding: 0.5rem 1rem;
+        min-width: 9.375rem;
+        @include breakpoint-up(xxlarge) {
+          min-width: 11.875rem;
+        }
+      }
+      &__block {
+        display: block;
+      }
+      &__none {
+        display: none;
+      }
+    }
+  }
+  .m-lr {
+    margin: 0 0.8rem;
+    @include breakpoint-up(xxlarge) {
+      margin: 0 2rem;
+    }
+  }
+}

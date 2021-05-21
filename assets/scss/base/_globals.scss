@@ -1,0 +1,259 @@
+@font-face {
+  font-family: Square721;
+  src: url('@/assets/fonts/square-721-bt.ttf') format('truetype');
+}
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  font-family: $source-sans;
+  font-size: 17px;
+  color: $medium-grey;
+  overflow-x: hidden;
+  @include breakpoint-up(large) {
+    font-size: 19px;
+    line-height: 1.6;
+  }
+  @include breakpoint-up(xxlarge) {
+    font-size: 24px;
+    line-height: 1.8;
+  }
+  // width: 100%;
+  //   background: $background;
+  &.noscroll {
+    overflow: hidden;
+  }
+}
+a,
+a:visited,
+a:hover {
+  text-decoration: none;
+  color: $medium-grey;
+}
+.flex {
+  @include breakpoint-up(large) {
+    display: flex;
+
+    &-jc-sb {
+      justify-content: space-between;
+    }
+    &-jc-sa {
+      justify-content: space-around;
+    }
+    &-jc-c {
+      justify-content: center;
+    }
+
+    &-ai-c {
+      align-items: center;
+    }
+    &-50 {
+      flex: 1;
+    }
+    &-wrap {
+      flex-wrap: wrap;
+    }
+  }
+}
+.hide-for-mobile {
+  @include breakpoint-down(medium) {
+    display: none !important;
+  }
+}
+
+.hide-for-desktop {
+  @include breakpoint-up(large) {
+    display: none !important;
+  }
+}
+
+.container {
+  @include breakpoint-down(medium) {
+    padding: $padding-mobile;
+  }
+  @include breakpoint-up(large) {
+    padding: $padding-web;
+  }
+}
+.column-3 {
+  width: 100%;
+  @include breakpoint-up(large) {
+    width: 33%;
+  }
+}
+.column-4 {
+  width: 100%;
+  @include breakpoint-up(large) {
+    width: 25%;
+  }
+}
+.column-6 {
+  width: 100%;
+  @include breakpoint-up(large) {
+    width: 50%;
+  }
+}
+.button {
+  display: inline-block;
+  border-radius: 5px;
+  background-color: $purple;
+  color: $white !important;
+  padding: 0.5rem 1.5rem;
+  border: 0 transparent;
+  outline: none;
+  font-size: $font-medium;
+  font-family: $square721;
+  cursor: pointer;
+  @include breakpoint-up(large) {
+    font-size: 18px;
+    padding: 0.75rem 1.5rem;
+  }
+  @include breakpoint-up(xxlarge) {
+    font-size: 22px;
+  }
+  &:focus {
+    border: 0 transparent;
+    outline: none;
+  }
+  @include breakpoint-up(xxlarge) {
+    font-size: 1.3rem;
+  }
+}
+.t-c {
+  text-align: center;
+}
+p,
+span {
+  @include breakpoint-up(xxlarge) {
+    // font-size: 1.3rem;
+  }
+}
+h1 {
+  // font-family: $nunito;
+  color: $purple;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 2.5rem;
+  text-shadow: 0px 16px 21px #00000029;
+  text-transform: capitalize;
+  font-family: $square721;
+  @include breakpoint-up(large) {
+    font-size: 2.8rem;
+    line-height: 3.5rem;
+  }
+  @include breakpoint-up(xxlarge) {
+    font-size: 3rem;
+    line-height: 4.35rem;
+  }
+}
+h2 {
+  // font-family: $nunito;
+  color: $purple;
+  line-height: 2rem;
+  font-size: 1.75rem;
+  text-shadow: 0px 16px 21px #00000029;
+  font-family: $square721;
+  @include breakpoint-up(large) {
+    font-size: 2.5rem;
+    line-height: 2.8125rem;
+  }
+}
+h3 {
+  // font-family: $nunito;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 2.2rem;
+  text-shadow: 0px 16px 21px #00000029;
+  font-family: $square721;
+  @include breakpoint-up(large) {
+    font-size: 2.25rem;
+  }
+}
+h4 {
+  // font-family: $nunito;
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: $square721;
+  @include breakpoint-up(large) {
+    font-size: 1.8rem;
+  }
+  @include breakpoint-up(xxlarge) {
+    font-size: 2rem;
+  }
+}
+h5 {
+  // font-family: $nunito;
+  // font-weight: 700;
+  font-size: 1.5rem;
+  margin: 1.2rem 0;
+  font-family: $square721;
+  @include breakpoint-up(large) {
+    font-size: 1.5rem;
+  }
+  @include breakpoint-up(xxlarge) {
+    font-size: 1.8rem;
+  }
+}
+h6 {
+  // font-family: $nunito;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 1.2rem;
+  @include breakpoint-up(large) {
+    font-size: 1.2rem;
+  }
+  @include breakpoint-up(xxlarge) {
+    font-size: 1.5rem;
+  }
+}
+.bg-white {
+  background-color: $white;
+}
+.tx {
+  &-c {
+    text-align: center;
+  }
+  &-l {
+    text-align: center;
+  }
+}
+.intro__carousel {
+  .VueCarousel-pagination {
+    @include breakpoint-up(large) {
+      margin-top: 2rem;
+    }
+
+    .VueCarousel-dot-container {
+      .VueCarousel-dot {
+        height: 4px !important;
+        width: 2rem !important;
+        border-radius: 0;
+        background-color: rgba(146, 39, 143, 0.5) !important;
+      }
+      .VueCarousel-dot--active {
+        background-color: rgba(146, 39, 143, 1) !important;
+      }
+    }
+  }
+}
+.service__carousel {
+  .VueCarousel-navigation--disabled {
+    opacity: 0 !important;
+  }
+}

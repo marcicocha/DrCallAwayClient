@@ -2,6 +2,7 @@
   <carousel
     :pagination-enabled="false"
     :per-page-custom="[
+      [320, 1],
       [640, 2],
       [1024, 3],
     ]"
@@ -47,6 +48,10 @@ export default {
           description: 'Special Ailments',
           imgSrc: 'img3.png',
         },
+        {
+          description: 'Special Ailments',
+          imgSrc: 'img3.png',
+        },
       ],
     }
   },
@@ -63,9 +68,11 @@ h1 {
   text-shadow: 0px 16px 21px #00000029;
 }
 .slide {
-  padding-right: 0.8rem;
   border-radius: 10px;
   flex-shrink: 0;
+  @include breakpoint-up(large) {
+    padding-right: 0.8rem;
+  }
   &__container {
     position: relative;
     width: 100%;

@@ -16,7 +16,7 @@
         class="container flex bg-white flex-ai-c flex-jc-sb service__heading"
       >
         <div class="column-3">
-          <h2>Our Services</h2>
+          <h5>Our Services</h5>
           <p>
             Our Integration of modern technology with primary healthcare gives
             all categories of people, however remote, round- the-clock access to
@@ -26,7 +26,7 @@
         <div class="service__carousel-container"><AppServiceCarousel /></div>
       </div>
       <div class="service__container container">
-        <h3>Get 24/7 Online Services for you and your family</h3>
+        <h3>Get 24/7 Online Services For You And Your Family</h3>
         <p>Sign up and connect with a doctor at your convenience</p>
         <br />
         <br />
@@ -35,7 +35,7 @@
     </section>
     <section class="container flex flex-jc-sa howitworks">
       <div class="column-3 howitworks__text">
-        <h2>How it Works</h2>
+        <h5>How It Works</h5>
         <ul>
           <li>
             Download the DrCallAwayTM App from the Google Play Store or iOS App
@@ -62,12 +62,12 @@
     </section>
     <section class="container ailment">
       <div>
-        <h2 class="tx-c">Common Ailments Treated</h2>
+        <h5 class="tx-c">Common Ailments Treated</h5>
         <p class="tx-c">
           Sign up and connect with a doctor at your convenience
         </p>
         <br />
-        <div class="ailment__list flex">
+        <div class="ailment__list flex flex-jc-c">
           <ul class="column-3">
             <li>Allergic Rhinitis</li>
             <li>Arthritis</li>
@@ -100,7 +100,7 @@
         <img src="@/assets/images/homepage/boy-patient.png" alt="boy-patient" />
       </div>
       <div class="column-6 text-container">
-        <h4>Designed to be rewarding for patients</h4>
+        <h5>Designed To Be Rewarding For Patients</h5>
         <ul>
           <li>Get Medical Care for Non Emergency Conditions</li>
           <li>24/7 Access to Licensed doctors</li>
@@ -179,6 +179,9 @@ export default {
     @include breakpoint-up(large) {
       padding-bottom: 5rem;
     }
+    h5 {
+      color: $purple;
+    }
   }
   &__carousel-container {
     width: 100%;
@@ -232,7 +235,7 @@ export default {
     background-repeat: no-repeat;
     z-index: -2;
   }
-  h2 {
+  h5 {
     color: $white;
     margin: 0;
   }
@@ -270,6 +273,9 @@ export default {
     }
   }
   &__text {
+    h5 {
+      color: $purple;
+    }
     ul {
       list-style-type: none;
       @include breakpoint-up(large) {
@@ -296,6 +302,17 @@ export default {
             padding: 0.1rem 0.9rem;
           }
         }
+        // &:not(:last-child) {
+        //   &::after {
+        //     content: '';
+        //     position: absolute;
+        //     top: 24px;
+        //     left: -45px;
+        //     width: 1px;
+        //     height: 6rem;
+        //     background: $purple;
+        //   }
+        // }
         &:first-child {
           &::before {
             content: '1';
@@ -358,7 +375,7 @@ export default {
     @include breakpoint-up(large) {
       padding-left: 3rem;
     }
-    h4 {
+    h5 {
       margin-top: 0;
       color: $medium-purple;
     }
@@ -370,14 +387,15 @@ export default {
         margin-bottom: 0.8rem;
         color: $medium-purple;
         font-weight: bold;
+        font-size: 14px;
         &::before {
           content: '';
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
           left: -40px;
-          width: 0.875rem;
-          height: 0.875rem;
+          width: 0.75rem;
+          height: 0.75rem;
           background: $medium-purple;
           border-radius: 100%;
         }

@@ -4,7 +4,7 @@
 // }
 @font-face {
   font-family: Square721;
-  src: url('@/assets/fonts/TT0246M_.TTF') format('truetype');
+  src: url('@/assets/fonts/Square-721-BT_42058.TTF') format('truetype');
 }
 @font-face {
   font-family: Square721-Bold;
@@ -35,7 +35,6 @@ body {
   color: $medium-grey;
   overflow-x: hidden;
   @include breakpoint-up(large) {
-    font-size: 18px;
     line-height: 1.6;
   }
   @include breakpoint-up(xxlarge) {
@@ -127,20 +126,21 @@ a:hover {
   outline: none;
   font-size: $font-medium;
   font-family: $square721;
+  font-weight: bold;
   cursor: pointer;
   @include breakpoint-up(large) {
-    font-size: 18px;
-    padding: 0.75rem 1.5rem;
+    padding: 0.6rem 1.8rem;
   }
   @include breakpoint-up(xxlarge) {
-    font-size: 22px;
+    font-size: 18px;
+    padding: 0.75rem 1.8rem;
   }
   &:focus {
     border: 0 transparent;
     outline: none;
   }
-  @include breakpoint-up(xxlarge) {
-    font-size: 1.3rem;
+  &:hover {
+    background-color: $medium-purple;
   }
 }
 .t-c {
@@ -162,12 +162,12 @@ h1 {
   text-transform: capitalize;
   // font-family: $square721;
   @include breakpoint-up(large) {
-    font-size: 2.5rem;
-    line-height: 3.5rem;
+    font-size: 2.25rem;
+    line-height: 3rem;
   }
   @include breakpoint-up(xxlarge) {
-    font-size: 3rem;
-    line-height: 4.35rem;
+    font-size: 2.5rem;
+    line-height: 4rem;
   }
 }
 h2 {
@@ -191,7 +191,7 @@ h3 {
   line-height: 2.2rem;
   text-shadow: 0px 16px 21px #00000029;
   @include breakpoint-up(large) {
-    font-size: 2.25rem;
+    font-size: 2rem;
   }
 }
 h4 {
@@ -220,11 +220,8 @@ h5 {
 h6 {
   // font-family: $nunito;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.125rem;
   margin-bottom: 1.2rem;
-  @include breakpoint-up(large) {
-    font-size: 1.2rem;
-  }
   @include breakpoint-up(xxlarge) {
     font-size: 1.5rem;
   }

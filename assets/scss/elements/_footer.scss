@@ -20,7 +20,7 @@ footer {
           @include breakpoint-up(large) {
             width: 45%;
           }
-          h4 {
+          h5 {
             color: $white;
             margin: 0;
           }
@@ -49,6 +49,11 @@ footer {
             background-color: $white;
             color: $purple !important;
             font-weight: bold;
+            @include breakpoint-down(medium) {
+              padding: 2px;
+              font-size: 14px;
+              margin: 0.1rem;
+            }
           }
           @include breakpoint-up(large) {
             width: 45%;
@@ -98,11 +103,10 @@ footer {
         // font-weight: bold;
         font-size: 16px;
         margin-bottom: 0.8rem;
-        @include breakpoint-up(large) {
-          font-size: 18px;
-        }
+        text-shadow: 0px 16px 21px #00000029;
+        font-weight: bold;
         @include breakpoint-up(xxlarge) {
-          font-size: 22px;
+          font-size: 18px;
         }
       }
       p {
@@ -126,8 +130,10 @@ footer {
     }
   }
   small {
+    display: block;
     font-size: 12px;
-    line-height: 1;
+    line-height: 2;
+    text-align: center;
     @include breakpoint-up(xxlarge) {
       font-size: 14px;
     }

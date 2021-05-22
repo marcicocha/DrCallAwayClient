@@ -45,4 +45,7 @@ h1 {
   font-family: $Square721-Bold;
   text-shadow: 0px 16px 21px #00000029;
 }
+button {
+  font-weight: bold;
+}
 </style>

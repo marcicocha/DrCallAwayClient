@@ -13,7 +13,7 @@
       font-size: 16px;
       // font-weight: bold;
       @include breakpoint-up(xxlarge) {
-        font-size: 24px;
+        font-size: 18px;
       }
     }
     @include breakpoint-down(medium) {
@@ -93,9 +93,9 @@
   &__logo {
     img {
       // width: 5.5rem;
-      height: 3rem;
+      height: 2.8125rem;
       @include breakpoint-up(xxlarge) {
-        height: 4rem;
+        height: 3rem;
       }
     }
   }
@@ -124,8 +124,10 @@
 
   &__button {
     border-radius: 0.5rem;
-    &:hover {
-      background-color: $medium-purple;
+    margin-left: 1.8rem;
+    font-weight: bold;
+    @include breakpoint-up(xxlarge) {
+      margin-left: 2rem;
     }
   }
   .flex {

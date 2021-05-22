@@ -90,14 +90,13 @@
               >Subscription</span
             ></nuxt-link
           >
+          <nuxt-link to="contact" class="button header__button"
+            >Talk To A Medical Practitioner</nuxt-link
+          >
         </div>
-        <div class="hide-for-mobile">
-          <div class="flex flex-jc-sb flex-ai-c">
-            <nuxt-link to="contact" class="button header__button"
-              >Talk To A Medical Practitioner</nuxt-link
-            >
-          </div>
-        </div>
+        <!-- <div class="hide-for-mobile">
+          <div class="flex flex-jc-sb flex-ai-c"></div>
+        </div> -->
       </nav>
       <div
         :class="{
@@ -169,11 +168,11 @@
       <section class="container">
         <div class="flex flex-ai-c flex-jc-sa subscribe">
           <div class="subscribe__text">
-            <h4>Get Healthy Tips, Subscribe now</h4>
+            <h5>Get Healthy Tips, Subscribe Now</h5>
           </div>
           <div class="subscribe__form">
             <input type="text" />
-            <button class="button">Suscribe</button>
+            <button class="button">Subscribe</button>
           </div>
         </div>
       </section>
@@ -209,7 +208,7 @@
               </div>
             </div>
             <div class="download-container">
-              <h6>Download our free app</h6>
+              <h6>Download Our Free App</h6>
               <div class="social-links">
                 <div>
                   <img src="@/assets/images/app-store.png" alt="app-store" />
@@ -243,9 +242,9 @@
           <div class="p-t2">
             <hr />
             <small
-              >“DrCallAway TM is not a Pharmacy. We do not carry nor ship
-              medicines. Online prescriptions made by our doctors are sent to
-              the subscriber or our partner pharmacy according to the
+              >“DrCallAway <sup>TM</sup> is not a Pharmacy. We do not carry nor
+              ship medicines. Online prescriptions made by our doctors are sent
+              to the subscriber or our partner pharmacy according to the
               subscriber”s choice, after an online medical consultation. Similar
               to a physical consultation with a doctor, subscription fee does
               not include payment for medications prescribed. A subscriber is
@@ -255,7 +254,7 @@
         </div>
       </section>
       <section>
-        {{ `Copyright © ${year} DrCallAwayTM All Rights Reserved` }}
+        Copyright © {{ year }} DrCallAway <sup>TM</sup> All Rights Reserved
       </section>
     </footer>
   </div>

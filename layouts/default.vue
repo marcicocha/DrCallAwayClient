@@ -15,7 +15,7 @@
         }"
       ></div>
       <nav class="flex flex-jc-sb flex-ai-c">
-        <nuxt-link to="/" class="header__logo"
+        <nuxt-link to="/" class="header__logo" @click="showOverlay"
           ><img src="@/assets/images/logo.png" alt="logo"
         /></nuxt-link>
 
@@ -170,7 +170,10 @@
         <div>
           <h4>Get Healthy Tips, Subscribe now</h4>
         </div>
-        <div></div>
+        <div>
+          <input type="text" />
+          <button class="button">Suscribe</button>
+        </div>
       </section>
       <section class="container">
         <div>

@@ -31,15 +31,15 @@ body {
   padding: 0;
   line-height: 1.5;
   font-family: $source-sans;
-  font-size: 17px;
+  font-size: 16px;
   color: $medium-grey;
   overflow-x: hidden;
   @include breakpoint-up(large) {
-    font-size: 19px;
+    font-size: 18px;
     line-height: 1.6;
   }
   @include breakpoint-up(xxlarge) {
-    font-size: 24px;
+    font-size: 22px;
     line-height: 1.8;
   }
   // width: 100%;

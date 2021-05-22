@@ -9,7 +9,7 @@
     :navigation-enabled="true"
     :navigation-next-label="nextLabel"
     :navigation-prev-label="prevLabel"
-    :scrollPerPage="true"
+    :scroll-per-page="true"
   >
     <slide v-for="(item, i) in serviceList" :key="i" class="slide">
       <div class="slide__container">
@@ -32,8 +32,8 @@ export default {
   },
   data() {
     return {
-      nextLabel: "<i class='fas fa-arrow-right'></i>",
-      prevLabel: "<i class='fas fa-arrow-left'></i>",
+      nextLabel: "<i class='fa fa-arrow-right'></i>",
+      prevLabel: "<i class='fa fa-arrow-left'></i>",
       serviceList: [
         {
           description: 'Consultations',

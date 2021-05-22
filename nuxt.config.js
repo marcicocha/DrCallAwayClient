@@ -24,9 +24,10 @@ export default {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap',
       },
+    ],
+    script: [
       {
-        rel: 'stylesheet',
-        href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+        src: 'https://use.fontawesome.com/100875b2bb.js',
       },
     ],
   },

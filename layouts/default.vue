@@ -1,6 +1,7 @@
 <template>
   <div>
     <header
+      ref="scroll"
       :class="{
         header: true,
         open: overlayIsVisible,
@@ -263,6 +264,15 @@ export default {
       visible2: false,
       year: new Date().getFullYear(),
     }
+  },
+  watch: {
+    $route: {
+      handler(to, from) {
+        document.body.scrollTop = 0
+        document.documentElement.scrollTop = 0
+        this.$refs.scroll.scrollTop = 0 // Because my scroll layer is not a body, set the scrollTop of the scroll layer to 0
+      },
+    },
   },
   methods: {
     showOverlay() {

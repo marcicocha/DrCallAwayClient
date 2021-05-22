@@ -150,28 +150,29 @@ export default {
 .service {
   position: relative;
   padding-bottom: 5rem;
-  background-image: url('@/assets/images/homepage/services-bg.svg');
-  background-repeat: no-repeat;
-  background-position: -27rem -4.25rem;
-  // &::before {
-  //   content: '';
-  //   position: absolute;
-  //   bottom: -6px;
-  //   width: 100%;
-  //   height: 100%;
-  //   z-index: -2;
-  //   background-image: url('@/assets/images/homepage/services-bg.svg');
-  //   background-repeat: no-repeat;
-  //   // background-position: inherit;
-  // }
+  // background-image: url('@/assets/images/homepage/services-bg.svg');
+  // background-repeat: no-repeat;
+  // background-position: -27rem -4.25rem;
+  &::before {
+    // content: '';
+    position: absolute;
+    bottom: -6px;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background-image: url('@/assets/images/homepage/services-bg.svg');
+    background-repeat: no-repeat;
+    @include breakpoint-up(large) {
+      bottom: -1.5rem;
+      left: -18rem;
+    }
+    @include breakpoint-up(xxlarge) {
+      bottom: -1.5rem;
+      left: -18rem;
+      padding-bottom: 7rem;
+    }
+  }
 
-  @include breakpoint-up(large) {
-    background-position: -20rem -3rem;
-  }
-  @include breakpoint-up(xxlarge) {
-    padding-bottom: 7rem;
-    background-position: -19rem 2rem;
-  }
   &__heading {
     padding-bottom: 3rem;
     margin-top: 4px;
@@ -220,26 +221,16 @@ export default {
   background: $dark-purple;
   color: $white;
   &::before {
-    content: '';
+    // content: '';
     position: absolute;
     top: -31rem;
     left: 0;
-    transform: rotate(64deg);
+    // transform: rotate(64deg);
     width: 100%;
     height: 100%;
     background-image: url('@/assets/images/homepage/services-bg.svg');
     background-repeat: no-repeat;
     z-index: -2;
-    @include breakpoint-up(large) {
-      top: -16rem;
-      left: 47rem;
-      transform: rotate(-18deg);
-    }
-    @include breakpoint-up(xxlarge) {
-      top: -19rem;
-      left: 81rem;
-      transform: rotate(-10deg);
-    }
   }
   h2 {
     color: $white;
@@ -289,6 +280,7 @@ export default {
         margin-bottom: 2rem;
         position: relative;
         &::before {
+          content: '';
           position: absolute;
           left: -45px;
           border-radius: 100%;
@@ -334,9 +326,24 @@ export default {
   }
 }
 .last-section {
-  margin-top: 3rem;
+  padding-top: 3rem;
+  position: relative;
+  &::before {
+    @include breakpoint-up(large) {
+      content: '';
+      position: absolute;
+      top: -28%;
+      left: -22%;
+      opacity: 0.5;
+      width: 100%;
+      min-height: 150%;
+      background-image: url('@/assets/images/homepage/services-bg.svg');
+      background-repeat: no-repeat;
+      z-index: -2;
+    }
+  }
   @include breakpoint-up(large) {
-    margin-top: 6rem;
+    padding-top: 6rem;
   }
   .img-container {
     margin-bottom: 3rem;

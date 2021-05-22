@@ -1,0 +1,64 @@
+.vsa-item {
+  &__content {
+    margin-left: 0;
+    padding: 0 1.5rem;
+    border: 0.5px solid rgba(184, 113, 179, 1);
+    p {
+      margin: 1rem 0;
+    }
+  }
+  &__trigger {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #eedded;
+    color: $medium-grey;
+    padding: 1.25rem;
+    border: 0;
+    &__content {
+      text-align: left;
+    }
+    &__icon {
+      .open {
+        display: block;
+      }
+
+      .close {
+        display: none;
+      }
+    }
+  }
+  &__heading {
+    position: relative;
+    border: 0.5px solid rgba(184, 113, 179, 1);
+  }
+  &--is-active {
+    .vsa-item__header:focus {
+      outline: none;
+      border: 0;
+    }
+    .vsa-item__trigger {
+      //   background-color: $gold;
+      border: 0;
+      &:focus {
+        outline: none;
+        border: 0;
+      }
+    }
+    .vsa-item__trigger__icon {
+      .open {
+        display: none;
+      }
+
+      .close {
+        display: block;
+      }
+    }
+  }
+}
+.accordion_heading {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: $square721;
+}

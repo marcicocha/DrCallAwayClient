@@ -42,7 +42,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 h1 {
-  font-family: $square721;
+  font-family: $Square721-Bold;
   text-shadow: 0px 16px 21px #00000029;
 }
 </style>

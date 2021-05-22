@@ -7,13 +7,53 @@ footer {
     &:first-child {
       background-color: rgba(146, 39, 143, 0.85);
       text-align: center;
-      padding: 2rem 0;
+      padding-top: 2rem;
+      padding-bottom: 2rem;
       @include breakpoint-up(xxlarge) {
         padding: 2.5rem 0;
       }
-      h4 {
-        color: $white;
-        margin: 0;
+      .subscribe {
+        &__text {
+          @include breakpoint-down(medium) {
+            margin-bottom: 1rem;
+          }
+          @include breakpoint-up(large) {
+            width: 45%;
+          }
+          h4 {
+            color: $white;
+            margin: 0;
+          }
+        }
+        &__form {
+          border: 1px solid $white;
+          border-radius: 10px;
+          display: flex;
+          @include breakpoint-up(large) {
+            margin-right: 1rem;
+          }
+          input {
+            outline: none;
+            border: none;
+            width: 65%;
+            background-color: transparent;
+            color: $white;
+            padding: 0.5rem;
+            font-size: 16px;
+            font-family: $source-sans;
+          }
+          button {
+            // float: right;
+            width: 35%;
+            margin: 0.3rem;
+            background-color: $white;
+            color: $purple !important;
+            font-weight: bold;
+          }
+          @include breakpoint-up(large) {
+            width: 45%;
+          }
+        }
       }
     }
     &:nth-child(2) {

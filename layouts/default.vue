@@ -166,13 +166,15 @@
       <Nuxt />
     </div>
     <footer>
-      <section>
-        <div>
-          <h4>Get Healthy Tips, Subscribe now</h4>
-        </div>
-        <div>
-          <input type="text" />
-          <button class="button">Suscribe</button>
+      <section class="container">
+        <div class="flex flex-ai-c flex-jc-sa subscribe">
+          <div class="subscribe__text">
+            <h4>Get Healthy Tips, Subscribe now</h4>
+          </div>
+          <div class="subscribe__form">
+            <input type="text" />
+            <button class="button">Suscribe</button>
+          </div>
         </div>
       </section>
       <section class="container">

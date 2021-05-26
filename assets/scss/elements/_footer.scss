@@ -13,12 +13,19 @@ footer {
         padding: 2.5rem 0;
       }
       .subscribe {
+        @include breakpoint-down(medium) {
+          padding: $padding-mobile;
+        }
+        @include breakpoint-up(large) {
+          width: 60%;
+          margin: 0 auto;
+        }
         &__text {
           @include breakpoint-down(medium) {
             margin-bottom: 1rem;
           }
           @include breakpoint-up(large) {
-            width: 45%;
+            width: 50%;
           }
           h5 {
             color: $white;

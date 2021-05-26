@@ -165,8 +165,8 @@
       <Nuxt />
     </div>
     <footer>
-      <section class="container">
-        <div class="flex flex-ai-c flex-jc-sa subscribe">
+      <section>
+        <div class="flex flex-ai-c flex-jc-sb subscribe">
           <div class="subscribe__text">
             <h5>Get Healthy Tips, Subscribe Now</h5>
           </div>

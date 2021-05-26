@@ -244,6 +244,9 @@ h6 {
     }
 
     .VueCarousel-dot-container {
+      @include breakpoint-down(medium) {
+        margin-top: 0 !important;
+      }
       .VueCarousel-dot {
         height: 4px !important;
         width: 2rem !important;

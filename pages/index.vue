@@ -33,30 +33,47 @@
         <button class="button">Get Started</button>
       </div>
     </section>
-    <section class="container flex flex-jc-sa howitworks">
-      <div class="column-3 howitworks__text">
+    <section class="flex flex-jc-sb flex-ai-c howitworks">
+      <div class="howitworks__text">
         <h5>How It Works</h5>
         <ul>
           <li>
-            Download the DrCallAwayTM App from the Google Play Store or iOS App
-            Store and install on your mobile device.
+            <span>1</span>
+            <span>
+              Download the DrCallAwayTM App from the Google Play Store or iOS
+              App Store and install on your mobile device.
+            </span>
           </li>
           <li>
-            Register by stating your Full name, Age, Gender, Address, Medical
-            Record (any underlying conditions), then select a plan.
-          </li>
-          <li>Pay for your chosen plan through online payment platforms.</li>
-          <li>
-            Call or Chat with the doctor. Medication will be prescribed as
-            needed after your consultation.
+            <span>2</span>
+            <span>
+              Register by stating your Full name, Age, Gender, Address, Medical
+              Record (any underlying conditions), then select a plan.
+            </span>
           </li>
           <li>
-            Pick up your prescription as well as run your diagnostic tests from
-            our partners nearest to you.
+            <span>3</span>
+            <span
+              >Pay for your chosen plan through online payment platforms.</span
+            >
+          </li>
+          <li>
+            <span>4</span>
+            <span
+              >Call or Chat with the doctor. Medication will be prescribed as
+              needed after your consultation.</span
+            >
+          </li>
+          <li>
+            <span>5</span>
+            <span
+              >Pick up your prescription as well as run your diagnostic tests
+              from our partners nearest to you.</span
+            >
           </li>
         </ul>
       </div>
-      <div class="column-3 howitworks__image">
+      <div class="howitworks__image">
         <img src="@/assets/images/homepage/phone.png" alt="phone" />
       </div>
     </section>
@@ -263,8 +280,18 @@ export default {
 }
 .howitworks {
   padding-bottom: 3rem;
+  @include breakpoint-down(medium) {
+    padding: $padding-mobile;
+  }
+  @include breakpoint-up(large) {
+    width: 50%;
+    margin: 0 auto;
+  }
   &__image {
-    padding: 0 3rem;
+    padding: 0 2rem;
+    @include breakpoint-up(large) {
+      width: 50%;
+    }
     @include breakpoint-up(xxlarge) {
       padding: 0 5rem;
     }
@@ -273,69 +300,57 @@ export default {
     }
   }
   &__text {
+    @include breakpoint-up(large) {
+      width: 45%;
+    }
     h5 {
       color: $purple;
     }
     ul {
       list-style-type: none;
+      padding-left: 0;
       @include breakpoint-up(large) {
-        padding-left: 4rem;
+        // padding-left: 4rem;
       }
 
       li {
-        margin-bottom: 2rem;
+        margin-bottom: 1.3rem;
         position: relative;
-        &::before {
-          content: '';
-          position: absolute;
-          left: -45px;
-          border-radius: 100%;
-          background-color: $purple;
-          color: $white;
-          padding: 0.1rem 0.6rem;
-          font-weight: bold;
-          @include breakpoint-up(large) {
-            padding: 0.1rem 0.75rem;
-            left: -4rem;
+        display: flex;
+        span {
+          &:first-child {
+            background-color: $purple;
+            color: $white;
+            padding: 0.1rem 0.6rem;
+            font-weight: bold;
+            border-radius: 100%;
+            height: 1.8rem;
+            position: relative;
+            @include breakpoint-up(large) {
+              padding: 0 0.6rem;
+            }
+            &::after {
+              content: '';
+              position: absolute;
+              top: 24px;
+              left: 50%;
+              width: 1px;
+              height: 6rem;
+              background: $purple;
+            }
           }
-          @include breakpoint-up(xxlarge) {
-            padding: 0.1rem 0.9rem;
-          }
-        }
-        // &:not(:last-child) {
-        //   &::after {
-        //     content: '';
-        //     position: absolute;
-        //     top: 24px;
-        //     left: -45px;
-        //     width: 1px;
-        //     height: 6rem;
-        //     background: $purple;
-        //   }
-        // }
-        &:first-child {
-          &::before {
-            content: '1';
-          }
-        }
-        &:nth-child(2) {
-          &::before {
-            content: '2';
-          }
-        }
-        &:nth-child(3) {
-          &::before {
-            content: '3';
-          }
-        }
-        &:nth-child(4) {
-          &::before {
-            content: '4';
+          &:last-child {
+            margin-left: 1.5rem;
           }
         }
         &:last-child {
-          &::before {
-            content: '5';
+          span {
+            &:first-child {
+              &::after {
+                height: 0;
+                width: 0;
+              }
+            }
           }
         }
       }

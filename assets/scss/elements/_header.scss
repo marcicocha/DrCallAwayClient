@@ -93,9 +93,9 @@
   &__logo {
     img {
       // width: 5.5rem;
-      height: 2.8125rem;
+      width:  10rem;
       @include breakpoint-up(xxlarge) {
-        height: 3rem;
+        width:  10rem;
       }
     }
   }

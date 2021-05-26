@@ -7,8 +7,42 @@
     :per-page="1"
     class="intro__carousel"
   >
-    <slide v-for="(title, i) in introList" :key="i">
-      <h1>{{ title }}</h1>
+    <slide>
+      <h1>
+        AFFORDABLE <br />
+        PROFESSIONAL <br />
+        ONLINE HEALTHCARE
+      </h1>
+      <p>
+        Let's put a short but engaging sentence here to wet the appetite of the
+        site visitors. Let's put a short but very engaging sentence here to wet
+        the appetite of the site visitors. Let's put a short but very engaging
+        sentence here to wet the appetite of the site visitors.
+      </p>
+      <br />
+      <button class="button">Start Consultation</button>
+    </slide>
+    <slide>
+      <h1>
+        ALWAYS A HUMAN <br />
+        CONNECTION: WEB, <br />
+        PHONE AND VIDEO
+      </h1>
+      <p>
+        Let's put a short but engaging sentence here to wet the appetite of the
+        site visitors. Let's put a short but very engaging sentence here to wet
+        the appetite of the site visitors. Let's put a short but very engaging
+        sentence here to wet the appetite of the site visitors.
+      </p>
+      <br />
+      <button class="button">Start Consultation</button>
+    </slide>
+    <slide>
+      <h1>
+        ONLINE DOCTOR <br />
+        VISIT ANYTIME, <br />
+        ANYWHERE!
+      </h1>
       <p>
         Let's put a short but engaging sentence here to wet the appetite of the
         site visitors. Let's put a short but very engaging sentence here to wet
@@ -28,15 +62,6 @@ export default {
   components: {
     Carousel,
     Slide,
-  },
-  data() {
-    return {
-      introList: [
-        'AFFORDABLE PROFESSIONAL ONLINE HEALTHCARE',
-        'ALWAYS A HUMAN CONNECTION: WEB, PHONE AND VIDEO',
-        'ONLINE DOCTOR VISIT ANYTIME, ANYWHERE!',
-      ],
-    }
   },
 }
 </script>

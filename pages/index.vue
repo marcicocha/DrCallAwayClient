@@ -223,6 +223,9 @@ export default {
       background-color: $white;
       color: $purple !important;
       font-weight: bold;
+      &:hover {
+        background-color: $light-purple;
+      }
     }
     h3 {
       color: $white;

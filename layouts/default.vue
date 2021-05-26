@@ -201,7 +201,7 @@
                   <nuxt-link to="privacy-policy"
                     ><span>Privacy Policy</span></nuxt-link
                   >
-                  <nuxt-link to="our-team"
+                  <nuxt-link to="terms-conditions"
                     ><span>Terms and Conditions</span></nuxt-link
                   >
                 </div>

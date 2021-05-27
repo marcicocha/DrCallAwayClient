@@ -2,44 +2,249 @@
   <div class="list flex">
     <div class="list__key hide-for-mobile">
       <ul>
-        <li>Introduction</li>
-        <li>Your Status</li>
-        <li>Effect</li>
-        <li>Use of Our Website</li>
-        <li>Online Registration</li>
-        <li>The Services</li>
-        <li>Purchase of Services</li>
-        <li>Purchase Price and Payment Terms</li>
-        <li>Fraud</li>
-        <li>Security</li>
-        <li>Privacy and Personal Information</li>
-        <li>Indemnity and Limitation of Liability</li>
-        <li>Governing Law and Jurisdiction</li>
-        <li>Disputes</li>
-        <li>Notices</li>
-        <li>Advertising</li>
-        <li>Guarantee and Complaints Mgt</li>
-        <li>Intellectual Property And Use Of Our...</li>
-        <li>Terms and Discontinuation</li>
-        <li>Links</li>
-        <li>General</li>
-        <li>Disclaimer</li>
-        <li>Savon Nettoyage Corporate Info.</li>
+        <li :class="{ active: key === 'introduction' }">
+          <a @click="changePageHandler('introduction')">Introduction</a>
+        </li>
+        <li :class="{ active: key === 'status' }">
+          <a @click="changePageHandler('status')">Your Status</a>
+        </li>
+        <li :class="{ active: key === 'effect' }">
+          <a @click="changePageHandler('effect')">Effect</a>
+        </li>
+        <li :class="{ active: key === 'ourWebsite' }">
+          <a @click="changePageHandler('ourWebsite')">Use of Our Website</a>
+        </li>
+        <li :class="{ active: key === 'registration' }">
+          <a @click="changePageHandler('registration')">Online Registration</a>
+        </li>
+        <li :class="{ active: key === 'service' }">
+          <a @click="changePageHandler('service')">The Services</a>
+        </li>
+        <li :class="{ active: key === 'purchaseService' }">
+          <a @click="changePageHandler('purchaseService')"
+            >Purchase of Services</a
+          >
+        </li>
+        <li :class="{ active: key === 'priceTerms' }">
+          <a @click="changePageHandler('priceTerms')"
+            >Purchase Price and Payment Terms</a
+          >
+        </li>
+        <li :class="{ active: key === 'fraud' }">
+          <a @click="changePageHandler('fraud')">Fraud</a>
+        </li>
+        <li :class="{ active: key === 'security' }">
+          <a @click="changePageHandler('security')">Security</a>
+        </li>
+        <li :class="{ active: key === 'privacyPersonalInformation' }">
+          <a @click="changePageHandler('privacyPersonalInformation')"
+            >Privacy and Personal Information</a
+          >
+        </li>
+        <li :class="{ active: key === 'indemnityLimitation' }">
+          <a @click="changePageHandler('indemnityLimitation')"
+            >Indemnity and Limitation of Liability</a
+          >
+        </li>
+        <li :class="{ active: key === 'governingLaw' }">
+          <a @click="changePageHandler('governingLaw')"
+            >Governing Law and Jurisdiction</a
+          >
+        </li>
+        <li :class="{ active: key === 'disputes' }">
+          <a @click="changePageHandler('disputes')">Disputes</a>
+        </li>
+        <li :class="{ active: key === 'notices' }">
+          <a @click="changePageHandler('notices')">Notices</a>
+        </li>
+        <li :class="{ active: key === 'advertising' }">
+          <a @click="changePageHandler('advertising')">Advertising</a>
+        </li>
+        <li :class="{ active: key === 'guarantee' }">
+          <a @click="changePageHandler('guarantee')"
+            >Guarantee and Complaints Mgt</a
+          >
+        </li>
+        <li :class="{ active: key === 'intellectualProperty' }">
+          <a @click="changePageHandler('intellectualProperty')"
+            >Intellectual Property And Use Of Our...</a
+          >
+        </li>
+        <li :class="{ active: key === 'termsDiscontinuation' }">
+          <a @click="changePageHandler('termsDiscontinuation')"
+            >Terms and Discontinuation</a
+          >
+        </li>
+        <li :class="{ active: key === 'link' }">
+          <a @click="changePageHandler('link')">Links</a>
+        </li>
+        <li :class="{ active: key === 'general' }">
+          <a @click="changePageHandler('general')">General</a>
+        </li>
+        <li :class="{ active: key === 'disclaimer' }">
+          <a @click="changePageHandler('disclaimer')">Disclaimer</a>
+        </li>
+        <li :class="{ active: key === 'corporateInfo' }">
+          <a @click="changePageHandler('corporateInfo')"
+            >Savon Nettoyage Corporate Info.</a
+          >
+        </li>
       </ul>
     </div>
-    <div class="list__details">
+    <div ref="top" class="list__details">
       <h2>Terms and Conditions</h2>
       <p>Effective Date: Monday, May 17, 2021</p>
-      <br />
+      <component
+        :is="computedComponent"
+        @changePageHandler="changePageHandler"
+      ></component>
     </div>
   </div>
 </template>
 <script>
-export default {}
+import AppIntroduction from '@/components/term-condition/AppIntroduction'
+import AppStatus from '@/components/term-condition/AppStatus'
+import AppEffect from '@/components/term-condition/AppEffect'
+import AppUseOfOurWebsite from '@/components/term-condition/AppUseOfOurWebsite'
+import AppOnlineRegistration from '@/components/term-condition/AppOnlineRegistration'
+import AppServices from '@/components/term-condition/AppServices'
+import AppPurchaseService from '@/components/term-condition/AppPurchaseService'
+import AppPurchasePricePaymentTerms from '@/components/term-condition/AppPurchasePricePaymentTerms'
+import AppFraud from '@/components/term-condition/AppFraud'
+import AppSecurity from '@/components/term-condition/AppSecurity'
+import AppPrivacyPersonalInformation from '@/components/term-condition/AppPrivacyPersonalInformation'
+import AppIndemnityLimitationLiability from '@/components/term-condition/AppIndemnityLimitationLiability'
+import AppGoverningLaw from '@/components/term-condition/AppGoverningLaw'
+import AppDisputes from '@/components/term-condition/AppDisputes'
+import AppNotices from '@/components/term-condition/AppNotices'
+import AppAdvertising from '@/components/term-condition/AppAdvertising'
+import AppGuaranteeComplaints from '@/components/term-condition/AppGuaranteeComplaints'
+import AppIntellectualProperty from '@/components/term-condition/AppIntellectualProperty'
+import AppTermsDiscontinuation from '@/components/term-condition/AppTermsDiscontinuation'
+import AppLink from '@/components/term-condition/AppLink'
+import AppGeneral from '@/components/term-condition/AppGeneral'
+import AppDisclaimer from '@/components/term-condition/AppDisclaimer'
+import AppCorporateInfo from '@/components/term-condition/AppCorporateInfo'
+
+export default {
+  components: {
+    /* eslint-disable vue/no-unused-components */
+    AppIntroduction,
+    AppStatus,
+    AppEffect,
+    AppUseOfOurWebsite,
+    AppOnlineRegistration,
+    AppServices,
+    AppPurchaseService,
+    AppPurchasePricePaymentTerms,
+    AppFraud,
+    AppSecurity,
+    AppPrivacyPersonalInformation,
+    AppIndemnityLimitationLiability,
+    AppGoverningLaw,
+    AppDisputes,
+    AppNotices,
+    AppAdvertising,
+    AppGuaranteeComplaints,
+    AppIntellectualProperty,
+    AppTermsDiscontinuation,
+    AppLink,
+    AppGeneral,
+    AppDisclaimer,
+    AppCorporateInfo,
+  },
+  data() {
+    return {
+      key: 'introduction',
+    }
+  },
+  computed: {
+    computedComponent() {
+      if (this.key === 'status') {
+        return 'AppStatus'
+      }
+      if (this.key === 'effect') {
+        return 'AppEffect'
+      }
+      if (this.key === 'ourWebsite') {
+        return 'AppUseOfOurWebsite'
+      }
+      if (this.key === 'registration') {
+        return 'AppOnlineRegistration'
+      }
+      if (this.key === 'service') {
+        return 'AppServices'
+      }
+      if (this.key === 'purchaseService') {
+        return 'AppPurchaseService'
+      }
+      if (this.key === 'priceTerms') {
+        return 'AppPurchasePricePaymentTerms'
+      }
+      if (this.key === 'fraud') {
+        return 'AppFraud'
+      }
+      if (this.key === 'security') {
+        return 'AppSecurity'
+      }
+      if (this.key === 'privacyPersonalInformation') {
+        return 'AppPrivacyPersonalInformation'
+      }
+      if (this.key === 'indemnityLimitation') {
+        return 'AppIndemnityLimitationLiability'
+      }
+      if (this.key === 'governingLaw') {
+        return 'AppGoverningLaw'
+      }
+      if (this.key === 'disputes') {
+        return 'AppDisputes'
+      }
+      if (this.key === 'notices') {
+        return 'AppNotices'
+      }
+      if (this.key === 'advertising') {
+        return 'AppAdvertising'
+      }
+      if (this.key === 'guarantee') {
+        return 'AppGuaranteeComplaints'
+      }
+      if (this.key === 'intellectualProperty') {
+        return 'AppIntellectualProperty'
+      }
+      if (this.key === 'termsDiscontinuation') {
+        return 'AppTermsDiscontinuation'
+      }
+      if (this.key === 'link') {
+        return 'AppLink'
+      }
+      if (this.key === 'general') {
+        return 'AppGeneral'
+      }
+      if (this.key === 'disclaimer') {
+        return 'AppDisclaimer'
+      }
+      if (this.key === 'corporateInfo') {
+        return 'AppCorporateInfo'
+      }
+      return 'AppIntroduction'
+    },
+  },
+  methods: {
+    changePageHandler(key) {
+      this.key = key
+      document.body.scrollTop = 0
+      document.documentElement.scrollTop = 0
+      this.$refs.top.scrollTop = 0
+    },
+  },
+}
 </script>
 <style lang="scss" scoped>
 .list {
   border-top: 1px solid $purple;
+  .active {
+    opacity: 1;
+  }
   &__key {
     background: rgba(146, 39, 143, 0.05);
     color: rgba(146, 39, 143, 1);
@@ -48,7 +253,11 @@ export default {}
     //   padding-left: 1.5rem;
     // }
     @include breakpoint-up(large) {
+      padding-left: 5rem;
+    }
+    @include breakpoint-up(xxlarge) {
       padding-left: 7rem;
+      width: 30%;
     }
     ul {
       margin: 3rem 0;
@@ -57,7 +266,12 @@ export default {}
         position: relative;
         text-shadow: 0px 16px 21px rgba(0, 0, 0, 0.16);
         font-weight: bold;
+        font-family: $square721;
         margin-bottom: 2rem;
+        opacity: 0.4;
+        a {
+          color: $purple;
+        }
         &::before {
           content: '';
           position: absolute;
@@ -194,13 +408,18 @@ export default {}
     }
   }
   &__details {
+    margin-bottom: 4.125rem !important;
     @include breakpoint-down(medium) {
       padding-right: 1.5rem;
       padding-left: 1.5rem;
     }
     @include breakpoint-up(large) {
+      width: 70%;
       padding-right: 7rem;
       padding-left: 4rem;
+    }
+    @include breakpoint-up(xxlarge) {
+      width: 70%;
     }
   }
 }

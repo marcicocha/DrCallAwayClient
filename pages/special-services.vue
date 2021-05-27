@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container special">
     <h2>Our Special Services</h2>
     <br />
     <AppCard
@@ -54,6 +54,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.special {
+  margin-bottom: 4.125rem !important;
+}
 h2 {
   text-align: center;
   position: relative;

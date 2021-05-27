@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="corporate-container">
     <div class="title">
       <h1>Corporate Information</h1>
     </div>
@@ -87,6 +87,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.corporate-container {
+  margin-bottom: 4.125rem !important;
+}
 .title {
   padding: 6rem 0;
   text-align: center;

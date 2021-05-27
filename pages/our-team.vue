@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container team">
     <h2>Meet The Team</h2>
     <p class="team__description">Our Board Of Directors</p>
     <br />
@@ -101,6 +101,7 @@ h4 {
   }
 }
 .team {
+  margin-bottom: 4.125rem !important;
   &__description {
     text-align: center;
   }

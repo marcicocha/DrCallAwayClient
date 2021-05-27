@@ -1,0 +1,51 @@
+<template>
+  <div>
+    <h6>DISCLAIMER</h6>
+    <p>
+      <b
+        >THE SITE ITSELF IS SUPPLIED ON AN “AS IS” BASIS AND HAS NOT BEEN
+        COMPILED OR SUPPLIED TO MEET YOUR INDIVIDUAL REQUIREMENTS. IT IS YOUR
+        SOLE RESPONSIBILITY TO SATISFY YOURSELF PRIOR TO ACCEPTING THESE TERMS
+        AND CONDITIONS THAT THE SERVICE AVAILABLE FROM AND THROUGH THIS SITE
+        WILL MEET YOUR INDIVIDUAL REQUIREMENTS AND BE COMPATIBLE WITH YOUR
+        HARDWARE AND/OR SOFTWARE.
+      </b>
+    </p>
+    <p>
+      <b
+        >SAVON NETTOYAGE AND/OR THE ADMINISTRATORS OF THE SITE DO NOT GUARANTEE
+        THAT THE CONVERSATION WITH THE DOCTOR VIA THE TELEPHONE AND/OR SERVICE
+        PROVIDED IS THE APPROPRIATE CAUSE OF ACTION FOR YOUR PARTICULAR
+        HEALTHCARE PROBLEM/QUESTION.</b
+      >
+    </p>
+    <p>
+      <b>
+        THE SERVICES OFFERED DO NOT AND ARE NOT INTENDED NOR SUITED TO REPLACE
+        OR SUBSTITUTE FOR PROFESSIONAL MEDICAL ADVICE, ANY REAL OR PERCEIVED OR
+        IMPENDING MEDICAL EMERGENCY, CONSULTATION, EXAMINATION, DIAGNOSIS OR
+        TREATMENT , AND DO NOT CONSTITUTE MEDICAL EXAMINATION, THERAPY AND NOR
+        DO THEY REPLACE IN-PERSON CONSULTATION WITH MEDICAL PRACTITIONERS.
+      </b>
+    </p>
+    <br />
+    <div class="flex flex-jc-sb navigation">
+      <a @click="$emit('changePageHandler', 'general')"
+        ><h6>&#60;&#60;&#60; General</h6></a
+      >
+      <a @click="$emit('changePageHandler', 'corporateInfo')"
+        ><h6>Savon Nettoyage Corporate Info &#62;&#62;&#62;</h6></a
+      >
+    </div>
+  </div>
+</template>
+<style lang="scss" scoped>
+h6 {
+  color: $purple;
+}
+a {
+  h6 {
+    text-shadow: 0px 16px 21px #00000029;
+  }
+}
+</style>

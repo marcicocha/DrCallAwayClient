@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="work_container">
     <div class="title">
       <h1>How It Works</h1>
     </div>
@@ -61,6 +61,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.work_container {
+  margin-bottom: 4.125rem !important;
+}
 .title {
   padding: 6rem 0;
   text-align: center;

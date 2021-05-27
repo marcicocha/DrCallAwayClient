@@ -44,7 +44,20 @@
       your use of Savon Nettoyage’s site or DrCallAway managed by Savon
       Nettoyage.
     </p>
-    <br />
-    <h6>Next: Personal Information >>></h6>
+    <a
+      style="text-align: right"
+      @click="$emit('changePageHandler', 'personalInformation')"
+      ><h6>Personal Information >>></h6></a
+    >
   </div>
 </template>
+<style lang="scss" scoped>
+h6 {
+  color: $purple;
+}
+a {
+  h6 {
+    text-shadow: 0px 16px 21px #00000029;
+  }
+}
+</style>

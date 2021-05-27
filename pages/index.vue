@@ -362,6 +362,7 @@ export default {
 }
 .last-section {
   padding-top: 3rem;
+  padding-bottom: 4.125rem !important;
   position: relative;
   &::before {
     @include breakpoint-up(large) {

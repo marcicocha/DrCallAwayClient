@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="subscription">
     <div class="title">
       <h1>Subscriptions</h1>
     </div>
@@ -73,6 +73,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.subscription {
+  margin-bottom: 4.125rem !important;
+}
 .title {
   padding: 6rem 0;
   text-align: center;

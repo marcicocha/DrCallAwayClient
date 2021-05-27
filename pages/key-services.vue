@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container key">
     <h2>Our Key Services</h2>
     <br />
     <AppCard
@@ -80,6 +80,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.key {
+  margin-bottom: 4.125rem !important;
+}
 h2 {
   text-align: center;
   position: relative;

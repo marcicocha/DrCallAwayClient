@@ -118,6 +118,7 @@
       </div>
       <div class="column-6 text-container">
         <h5>Designed To Be Rewarding For Patients</h5>
+        <br />
         <ul>
           <li>Get Medical Care for Non Emergency Conditions</li>
           <li>24/7 Access to Licensed doctors</li>
@@ -125,7 +126,9 @@
           <li>Online Real-time Video Chat</li>
         </ul>
         <br />
-        <button class="button">Start Your Virtual Visit</button>
+        <div class="t-c">
+          <button class="button">Start Your Virtual Visit</button>
+        </div>
       </div>
     </section>
   </div>

@@ -535,6 +535,7 @@ export default {
     },
     userHandler() {
       console.log('user is signed in')
+      this.$router.replace('/admin/patient')
     },
     showOverlay() {
       this.overlayIsVisible = !this.overlayIsVisible

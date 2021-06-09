@@ -84,8 +84,8 @@
           Sign up and connect with a doctor at your convenience
         </p>
         <br />
-        <div class="ailment__list flex flex-jc-c">
-          <ul class="column-3">
+        <div class="ailment__list flex flex-jc-se">
+          <ul class="column-4">
             <li>Allergic Rhinitis</li>
             <li>Arthritis</li>
             <li>Asthma</li>
@@ -93,7 +93,7 @@
             <li>Urinary tract infections</li>
             <li>ENT infections</li>
           </ul>
-          <ul class="column-3">
+          <ul class="column-4">
             <li>Hypertension</li>
             <li>Malaria</li>
             <li>Common Cold And Flu</li>
@@ -101,7 +101,7 @@
             <li>Eye Irritations And Infections</li>
             <li>Diabetes</li>
           </ul>
-          <ul class="column-3">
+          <ul class="column-4">
             <li>Anxiety &amp; Depression</li>
             <li>Headache</li>
             <li>GIT Related diseases</li>
@@ -263,6 +263,9 @@ export default {
     ul {
       list-style-type: none;
       margin: 0;
+      @include breakpoint-up(large) {
+        margin-left: 6rem;
+      }
       li {
         position: relative;
         margin-bottom: 0.8rem;

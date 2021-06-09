@@ -9,8 +9,9 @@
         <AppCard v-for="(step, i) in stepList" :key="i" class="card">
           <div class="card__title">
             <img :src="getImgHandler(step.imgSrc)" alt="icons" />
-            <h5>{{ `Step ${i}` }}</h5>
+            <h5>Step {{ i + 1 }}</h5>
           </div>
+          <br />
           <p>{{ step.description }}</p>
         </AppCard>
       </div>

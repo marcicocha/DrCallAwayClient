@@ -5,6 +5,7 @@
     :autoplay-timeout="5000"
     :pagination-enabled="true"
     :per-page="1"
+    :loop="true"
     class="intro__carousel"
   >
     <slide>

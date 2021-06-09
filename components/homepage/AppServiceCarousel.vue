@@ -90,11 +90,11 @@ h1 {
         font-family: $square721;
         font-weight: bold;
         color: $white;
+        width: 100%;
         position: absolute;
         top: 50%;
-        left: 50%;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
       }
     }
     img {

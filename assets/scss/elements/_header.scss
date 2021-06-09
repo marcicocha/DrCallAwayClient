@@ -11,6 +11,7 @@
       font-family: $square721;
       font-weight: bold;
       font-size: 16px;
+      margin-bottom: 0;
       // font-weight: bold;
       @include breakpoint-up(xxlarge) {
         font-size: 18px;
@@ -93,9 +94,9 @@
   &__logo {
     img {
       // width: 5.5rem;
-      width:  10rem;
+      width: 10rem;
       @include breakpoint-up(xxlarge) {
-        width:  10rem;
+        width: 10rem;
       }
     }
   }
@@ -174,7 +175,8 @@
     .dropdown {
       box-sizing: content-box;
       position: absolute;
-      margin-top: -8px;
+      // margin-top: -8px;
+      margin-top: 0;
       @include breakpoint-up(xxlarge) {
         margin-top: -10px;
       }
@@ -184,7 +186,10 @@
         display: block;
         margin-bottom: 0.2rem;
         padding: 0.5rem 1rem;
-        min-width: 9.375rem;
+        min-width: 10rem;
+        span {
+          font-size: 14px;
+        }
         @include breakpoint-up(xxlarge) {
           min-width: 11.875rem;
         }

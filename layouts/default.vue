@@ -90,9 +90,13 @@
               >Subscription</span
             ></nuxt-link
           >
-          <nuxt-link to="contact" class="button header__button"
-            >Talk To A Medical Practitioner</nuxt-link
+          <button
+            to="contact"
+            class="button header__button"
+            @click="showSignInModal"
           >
+            Talk To A Medical Practitioner
+          </button>
         </div>
         <!-- <div class="hide-for-mobile">
           <div class="flex flex-jc-sb flex-ai-c"></div>
@@ -197,7 +201,9 @@
                   <nuxt-link to="our-team"><span>Our Team</span></nuxt-link>
                 </div>
                 <div>
-                  <a href=""><span>Practitioner Registration</span></a>
+                  <a @click="showSignUpModal('practitioner')"
+                    ><span>Practitioner Registration</span></a
+                  >
                   <nuxt-link to="privacy-policy"
                     ><span>Privacy Policy</span></nuxt-link
                   >
@@ -257,16 +263,239 @@
         Copyright © {{ year }} DrCallAway <sup>TM</sup> All Rights Reserved
       </section>
     </footer>
+    <a-modal
+      :visible="modalIsVisible"
+      width="480px"
+      :confirm-loading="confirmLoading"
+      :footer="null"
+      :destroy-on-close="true"
+      :mask-style="{ background: 'rgba(61, 12, 60, 0.9)' }"
+      centered
+      @cancel="closeModal"
+    >
+      <br />
+      <div class="signIn">
+        <div v-if="signInIsVisible">
+          <div class="t-c">
+            <h1>Login</h1>
+            <p>Sign in to your DrCallAwayTM account below</p>
+          </div>
+          <br />
+          <div>
+            <ValidationObserver ref="observer" tag="div">
+              <AppInput
+                v-model="userObject.email"
+                placeholder="Email"
+                required
+              />
+              <AppInput
+                v-model="userObject.password"
+                placeholder="Password"
+                type="password"
+                required
+              />
+              <a-row type="flex" :gutter="16" align="middle"
+                ><a-col :span="12"><AppCheckbox label="Remember me" /></a-col
+                ><a-col :span="12"
+                  ><p class="t-r">
+                    <a @click="forgotPasswordIsVisibleHandler"
+                      >Forgot Password</a
+                    >
+                  </p></a-col
+                ></a-row
+              >
+            </ValidationObserver>
+            <a-row type="flex" :gutter="16"
+              ><a-col :span="12"
+                ><AppButton
+                  type="primary"
+                  :loading="isLoading"
+                  @click="userHandler"
+                  >Sign In</AppButton
+                ></a-col
+              >
+              <a-col :span="12">
+                <AppButton
+                  type="default"
+                  :loading="isLoading"
+                  @click="showSignUpModal('patient')"
+                  >Create an Account</AppButton
+                >
+              </a-col></a-row
+            >
+            <br />
+            <p class="t-c">
+              By clicking “Sign In” you are agreeing to DrCallAwayTM <br />
+              <nuxt-link to="terms-conditions">Terms and Conditions</nuxt-link>
+            </p>
+          </div>
+        </div>
+        <div v-if="signUpIsVisible">
+          <div class="t-c">
+            <h1>Create An Account</h1>
+            <p>
+              Please complete to create your account. All fields are compulsory
+            </p>
+          </div>
+          <br />
+          <div>
+            <AppSelect
+              v-if="mode === 'practitioner'"
+              v-model="userObject.gender"
+              placeholder="Practitioner"
+              rules="required"
+              required
+              :remote="false"
+              :data="[
+                'DOCTOR',
+                'NURSE',
+                'AMBULANCE',
+                'DIAGNOTIC CENTER',
+                'PHARMACY',
+                'NUTRITIONIST',
+              ]"
+            />
+            <a-row type="flex" :gutter="16"
+              ><a-col :span="12"
+                ><AppInput
+                  v-model="signUpObject.firstName"
+                  placeholder="First Name"
+                  required
+                  rules="required"
+                />
+              </a-col>
+              <a-col :span="12"
+                ><AppInput
+                  v-model="signUpObject.lastName"
+                  placeholder="Last Name"
+                  required
+                  rules="required"
+                />
+              </a-col>
+            </a-row>
+            <AppSelect
+              v-if="mode === 'patient'"
+              v-model="userObject.gender"
+              placeholder="Gender"
+              rules="required"
+              required
+              :remote="false"
+              :data="['MALE', 'FEMALE']"
+            />
+            <AppInput
+              v-model="userObject.phoneNumber"
+              placeholder="Phone Number"
+              required
+              rules="required"
+            />
+            <AppInput
+              v-model="userObject.email"
+              placeholder="Email"
+              type="email"
+              required
+              rules="required"
+            />
+            <AppInput
+              v-model="userObject.password"
+              placeholder="Password"
+              type="password"
+              required
+            />
+            <AppInput
+              v-model="userObject.confirmPassword"
+              placeholder="Confirm Password"
+              type="password"
+              required
+            />
+            <AppCheckbox label="I agree with terms and conditions" />
+            <div class="t-c">
+              <AppButton
+                type="primary"
+                :loading="isLoading"
+                :block="false"
+                @click="userHandler"
+                >Register</AppButton
+              >
+              <br />
+              <p>
+                Already have an account?
+                <a @click="showSignInModal">Sign In.</a>
+              </p>
+              <p v-if="mode !== 'patient'">
+                Provider?
+                <a @click="showSignUpModal('practitioner')">Sign Up Here</a>
+              </p>
+              <p v-else>
+                Patient?
+                <a @click="showSignUpModal('patient')">Sign Up Here</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div v-if="forgotPasswordIsVisible">
+          <div class="t-c">
+            <h1>Forgot Your Password?</h1>
+            <p>Enter your email and we'll send you a password reset link.</p>
+          </div>
+          <br />
+          <AppInput
+            v-model="passwordObject.email"
+            placeholder="Email"
+            type="email"
+            required
+            rules="required"
+          />
+          <br />
+          <div class="t-c">
+            <AppButton
+              type="primary"
+              :loading="isLoading"
+              :block="false"
+              @click="userHandler"
+              >Send Request</AppButton
+            >
+            <br />
+            <p>
+              Back to
+              <a @click="showSignInModal">Sign In.</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </a-modal>
   </div>
 </template>
 <script>
+import AppInput from '@/components/AppInput'
+import AppCheckbox from '@/components/AppCheckbox'
+import AppSelect from '@/components/AppSelect'
+import AppButton from '@/components/AppButton'
+import { ValidationObserver } from 'vee-validate'
+
 export default {
+  components: {
+    AppInput,
+    AppCheckbox,
+    AppButton,
+    AppSelect,
+    ValidationObserver,
+  },
   data() {
     return {
       overlayIsVisible: false,
       visible1: false,
       visible2: false,
       year: new Date().getFullYear(),
+      modalIsVisible: false,
+      signUpIsVisible: false,
+      signInIsVisible: false,
+      confirmLoading: false,
+      userObject: {},
+      isLoading: false,
+      mode: 'patient',
+      signUpObject: '',
+      forgotPasswordIsVisible: false,
+      passwordObject: {},
     }
   },
   watch: {
@@ -279,6 +508,34 @@ export default {
     },
   },
   methods: {
+    closeModal() {
+      this.modalIsVisible = false
+      this.signUpIsVisible = false
+      this.signInIsVisible = false
+      if (this.forgotPasswordIsVisible) {
+        this.forgotPasswordIsVisible = false
+        this.signInIsVisible = true
+      }
+    },
+    showSignInModal() {
+      this.modalIsVisible = true
+      this.signInIsVisible = true
+      this.signUpIsVisible = false
+      this.forgotPasswordIsVisible = false
+    },
+    showSignUpModal(mode) {
+      this.modalIsVisible = true
+      this.signUpIsVisible = true
+      this.signInIsVisible = false
+      this.mode = mode
+    },
+    forgotPasswordIsVisibleHandler() {
+      this.forgotPasswordIsVisible = true
+      this.signInIsVisible = false
+    },
+    userHandler() {
+      console.log('user is signed in')
+    },
     showOverlay() {
       this.overlayIsVisible = !this.overlayIsVisible
       this.visible2 = false
@@ -302,3 +559,18 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.signIn {
+  padding: 1.2rem;
+  h1 {
+    @include breakpoint-up(large) {
+      font-size: 2rem;
+      line-height: 3rem;
+    }
+    @include breakpoint-up(xxlarge) {
+      font-size: 2.25rem;
+      line-height: 4rem;
+    }
+  }
+}
+</style>

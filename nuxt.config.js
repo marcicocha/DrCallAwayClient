@@ -1,7 +1,9 @@
+require('dotenv').config()
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   target: 'static',
   ssr: false,
+  // mode: 'universal',
   head: {
     title: 'Dr Call Away',
     htmlAttrs: {
@@ -33,10 +35,13 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['~/assets/scss/main.scss'],
+  css: [
+    { src: 'ant-design-vue/dist/antd.less', lang: 'less' },
+    '~/assets/scss/main.scss',
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['@/plugins/antd-ui', '@/plugins/veevalidate'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -54,6 +59,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -68,6 +74,15 @@ export default {
         },
       },
     },
+    loaders: {
+      less: {
+        javascriptEnabled: true,
+        modifyVars: {
+          'primary-color': '#92278f',
+        },
+      },
+    },
+    transpile: ['vee-validate/dist/rules'],
   },
   styleResources: {
     scss: [

@@ -163,7 +163,7 @@
       box-sizing: content-box;
       position: absolute;
       // margin-top: -8px;
-      margin-top: 0;
+      margin-top: 8px;
       @include breakpoint-up(xxlarge) {
         margin-top: -10px;
       }

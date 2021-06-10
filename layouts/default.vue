@@ -265,7 +265,7 @@
     </footer>
     <a-modal
       :visible="modalIsVisible"
-      width="480px"
+      width="420px"
       :confirm-loading="confirmLoading"
       :footer="null"
       :destroy-on-close="true"

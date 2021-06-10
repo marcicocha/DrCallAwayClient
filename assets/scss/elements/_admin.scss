@@ -1,0 +1,29 @@
+.filter {
+  .ant-select-selection,
+  .ant-input {
+    border-radius: 0;
+  }
+}
+.admin-wrapper {
+  background-color: $white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+}
+.ant-tabs-nav {
+  font-size: 18px;
+  font-weight: bold;
+  color: rgba(187, 197, 213, 1);
+}
+.ant-tabs-nav .ant-tabs-tab-active {
+  color: $dark-purple;
+  font-weight: bold;
+}
+.ant-tabs-ink-bar {
+  height: 3px;
+  background: $dark-purple;
+  border-radius: 10px;
+}
+.ant-form-item {
+  margin-bottom: 0;
+}

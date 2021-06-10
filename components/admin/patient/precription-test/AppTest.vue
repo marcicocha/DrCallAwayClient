@@ -1,18 +1,13 @@
 <template>
   <div>
+    <h6>TESTS</h6>
     <AppTabs v-model="activeKey">
       <template slot="default">
-        <a-tab-pane key="1" tab="Pending Cases" force-render>
-          <AppCaseFileDataTable :status="pending" :data-source="dataSource1" />
+        <a-tab-pane key="1" tab="Pending Tests" force-render>
+          <AppTestDataTable :status="pending" :data-source="dataSource1" />
         </a-tab-pane>
-        <a-tab-pane key="2" tab="Active Cases" force-render>
-          <AppCaseFileDataTable :status="active" :data-source="dataSource2" />
-        </a-tab-pane>
-        <a-tab-pane key="3" tab="Completed Cases" force-render>
-          <AppCaseFileDataTable
-            :status="completed"
-            :data-source="dataSource3"
-          />
+        <a-tab-pane key="3" tab="Completed Test" force-render>
+          <AppTestDataTable :status="completed" :data-source="dataSource2" />
         </a-tab-pane>
       </template>
       <template slot="rightInfo">
@@ -43,44 +38,34 @@
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
-import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable.vue'
+import AppTestDataTable from '@/components/admin/patient/precription-test/AppTestDataTable'
+
 export default {
+  name: 'AppTest',
   components: {
     AppTabs,
     AppInput,
     AppSelect,
-    AppCaseFileDataTable,
+    AppTestDataTable,
   },
-  layout: 'dashboard',
   data() {
     return {
       activeKey: '1',
       filterObj: {},
       dataSource1: [
         {
-          caseId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          complaint: 'Malaria and Typhoid',
-          dateAdded: '23rd March, 2021',
+          testId: '#000001',
+          caseAssociated: 'Dr. Michael Sanwo-Olu',
+          prescribedBy: 'Malaria and Typhoid',
           status: 'Pending',
         },
       ],
       dataSource2: [
         {
-          caseId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          complaint: 'Malaria and Typhoid',
-          dateAdded: '23rd March, 2021',
+          testId: '#000001',
+          caseAssociated: 'Dr. Michael Sanwo-Olu',
+          prescribedBy: 'Malaria and Typhoid',
           status: 'Active',
-        },
-      ],
-      dataSource3: [
-        {
-          caseId: '#000002',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          complaint: 'Malaria and Typhoid',
-          dateAdded: '23rd March, 2021',
-          status: 'Completed',
         },
       ],
     }

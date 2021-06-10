@@ -1,22 +1,24 @@
 <template>
   <div>
+    <h6>PRECRIPTIONS</h6>
     <AppTabs v-model="activeKey">
       <template slot="default">
-        <a-tab-pane key="1" tab="Pending Appointment" force-render>
-          <AppAppointmentDataTable
+        <a-tab-pane key="1" tab="Pending Prescription" force-render>
+          <AppPrescriptionDataTable
             :status="pending"
             :data-source="dataSource1"
           />
         </a-tab-pane>
-        <a-tab-pane key="2" tab="Booked Appointment" force-render>
-          <AppAppointmentDataTable
-            :status="booked"
+
+        <a-tab-pane key="2" tab="Completed Prescription">
+          <AppPrescriptionDataTable
+            :status="completed"
             :data-source="dataSource2"
           />
         </a-tab-pane>
-        <a-tab-pane key="3" tab="Completed Appointment" force-render>
-          <AppAppointmentDataTable
-            :status="completed"
+        <a-tab-pane key="3" tab="Declined Prescription">
+          <AppPrescriptionDataTable
+            :status="booked"
             :data-source="dataSource3"
           />
         </a-tab-pane>
@@ -49,47 +51,45 @@
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
-import AppAppointmentDataTable from '@/components/admin/patient/appointment/AppAppointmentDataTable.vue'
+import AppPrescriptionDataTable from '@/components/admin/patient/precription-test/AppPrescriptionDataTable'
+
 export default {
+  name: 'AppPrescription',
   components: {
     AppTabs,
     AppInput,
     AppSelect,
-    AppAppointmentDataTable,
+    AppPrescriptionDataTable,
   },
-  layout: 'dashboard',
   data() {
     return {
       activeKey: '1',
       filterObj: {},
       dataSource1: [
         {
-          appointmentId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          description: 'Malaria and Typhoid',
-          dateOfVisit: '23rd March, 2021',
-          timeOfVisit: '8:00am',
+          presecriptionId: '#000001',
+          presecriptionTitle: 'Prescription for Strong Headache',
+          prescribedBy: 'Dr Yomi',
+          prescriptionDate: '30th March, 2021',
           status: 'Pending',
         },
       ],
       dataSource2: [
         {
-          appointmentId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          description: 'Malaria and Typhoid',
-          dateOfVisit: '23rd March, 2021',
-          timeOfVisit: '8:00am',
+          presecriptionId: '#000001',
+          presecriptionTitle: 'Prescription for Strong Headache',
+          prescribedBy: 'Dr Yomi',
+          prescriptionDate: '30th March, 2021',
           status: 'Active',
         },
       ],
       dataSource3: [
         {
-          appointmentId: '#000002',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          description: 'Malaria and Typhoid',
-          dateOfVisit: '23rd March, 2021',
-          timeOfVisit: '8:00am',
-          status: 'Completed',
+          presecriptionId: '#000001',
+          caseAssociated: 'Prescription for Strong Headache',
+          prescribedBy: 'Dr Yomi',
+          prescriptionDate: '30th March, 2021',
+          status: 'Active',
         },
       ],
     }

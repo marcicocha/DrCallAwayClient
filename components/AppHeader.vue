@@ -10,7 +10,11 @@
     </div>
     <div class="header-body">
       <div class="header-menu">
-        <AppButton type="primary" :block="false" @click="subscribeHandler"
+        <AppButton
+          type="primary"
+          :block="false"
+          class="admin-button"
+          @click="subscribeHandler"
           >Subscribe</AppButton
         >
         <img
@@ -56,6 +60,9 @@ export default {
   .header-menu {
     display: flex;
     align-items: center;
+    .admin-button {
+      font-size: 14px;
+    }
     .notification {
       width: 44px;
       height: 44px;

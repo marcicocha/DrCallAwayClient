@@ -1,13 +1,12 @@
 <template>
+  <!-- <ValidationProvider :vid="$attrs.name" :name="name" :rules="rules" tag="div"> -->
   <a-form-item
     :label="label"
     :label-col="labelCol"
     :wrapper-col="wrapperCol"
     :required="required"
   >
-    <!--
-  slot-scope="{ errors, flags }"
-    :validate-status="resolveState({ errors, flags })"
+    <!-- slot-scope="{ errors, flags }" :validate-status="resolveState({ errors, flags })"
     :help="showErrors ? errors[0] : ''" -->
     <a-input
       v-model="innerValue"
@@ -21,6 +20,7 @@
       @blur="blurHandler"
     />
   </a-form-item>
+  <!-- </ValidationProvider> -->
 </template>
 
 <script>

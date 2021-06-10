@@ -35,12 +35,14 @@
             </a-col>
           </a-row>
           <br />
+          <br />
           <div class="t-c">
             <AppButton
               type="default"
               :block="false"
               :loading="isLoading"
               class="admin-button"
+              style="margin-right: 1rem"
               @click="submitHandler"
               >RENEW PLAN</AppButton
             >

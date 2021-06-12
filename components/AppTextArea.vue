@@ -12,7 +12,6 @@
         :placeholder="placeholder"
         :size="size"
         :rows="rows"
-        cols="50"
         :disabled="disabled"
         @blur="blurHandler"
       />
@@ -101,37 +100,3 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
-textarea {
-  outline: none;
-  border: none;
-  display: block;
-  font-family: 'GothamLight', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 150%;
-  color: #2e434e;
-  width: 100%;
-}
-@media only screen and (max-width: 991px) {
-  textarea {
-    font-size: 13px !important;
-    line-height: 195%;
-  }
-}
-@media only screen and (min-width: 1536px) {
-  @media only screen and (min-height: 730px) {
-    textarea {
-      font-size: 12px !important;
-      line-height: 195%;
-    }
-  }
-  @media only screen and (min-height: 900px) {
-    textarea {
-      font-size: 14px !important;
-      line-height: 195%;
-    }
-  }
-}
-</style>

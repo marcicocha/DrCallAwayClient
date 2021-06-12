@@ -65,12 +65,12 @@ import AppInput from '@/components/AppInput'
 // import AppSelect from '@/components/AppSelect'
 import AppTitleDivider from '@/components/AppTitleDivider'
 export default {
-  layout: 'dashboard',
   components: {
     AppInput,
     // AppSelect,
     AppTitleDivider,
   },
+  layout: 'dashboard',
   data() {
     return {
       suscriptionObj: {},

@@ -1,6 +1,11 @@
 <template>
   <div>
-    <a-table :columns="columns" :data-source="dataSource" :pagination="false">
+    <a-table
+      :columns="columns"
+      :data-source="dataSource"
+      :pagination="false"
+      :custom-row="customRow"
+    >
       <template slot="status" slot-scope="text, record">
         <div
           :class="{
@@ -63,6 +68,17 @@ export default {
         // },
       ]
       return columns
+    },
+  },
+  methods: {
+    customRow(record) {
+      return {
+        on: {
+          click: (event) => {
+            this.$emit('showPrescriptionModal', record)
+          },
+        },
+      }
     },
   },
 }

@@ -6,18 +6,21 @@
           <AppAppointmentDataTable
             :status="pending"
             :data-source="dataSource1"
+            @showAppointmentModal="showAppointmentModal"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Booked Appointment" force-render>
           <AppAppointmentDataTable
             :status="booked"
             :data-source="dataSource2"
+            @showAppointmentModal="showAppointmentModal"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Appointment" force-render>
           <AppAppointmentDataTable
             :status="completed"
             :data-source="dataSource3"
+            @showAppointmentModal="showAppointmentModal"
           />
         </a-tab-pane>
       </template>
@@ -43,6 +46,22 @@
         </a-row>
       </template>
     </AppTabs>
+    <a-modal
+      :visible="modalIsVisible"
+      width="420px"
+      :confirm-loading="confirmLoading"
+      :footer="null"
+      :destroy-on-close="true"
+      :mask-style="{ background: 'rgba(61, 12, 60, 0.9)' }"
+      centered
+      @cancel="closeModal"
+    >
+      <div>
+        <h6 class="t-c">Medical Checkup</h6>
+        <a-divider />
+        <AppAppointmentCreationForm :current-appointment="currentAppointment" />
+      </div>
+    </a-modal>
   </div>
 </template>
 <script>
@@ -50,18 +69,23 @@ import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppAppointmentDataTable from '@/components/admin/patient/appointment/AppAppointmentDataTable.vue'
+import AppAppointmentCreationForm from '@/components/admin/patient/appointment/AppAppointmentCreationForm'
+
 export default {
   components: {
     AppTabs,
     AppInput,
     AppSelect,
     AppAppointmentDataTable,
+    AppAppointmentCreationForm,
   },
   layout: 'dashboard',
   data() {
     return {
       activeKey: '1',
       filterObj: {},
+      modalIsVisible: false,
+      currentAppointment: {},
       dataSource1: [
         {
           appointmentId: '#000001',
@@ -79,7 +103,7 @@ export default {
           description: 'Malaria and Typhoid',
           dateOfVisit: '23rd March, 2021',
           timeOfVisit: '8:00am',
-          status: 'Active',
+          status: 'Booked',
         },
       ],
       dataSource3: [
@@ -94,6 +118,15 @@ export default {
       ],
     }
   },
+  methods: {
+    showAppointmentModal(record) {
+      this.currentAppointment = record
+      this.modalIsVisible = true
+    },
+    closeModal() {
+      this.modalIsVisible = false
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -102,5 +135,8 @@ export default {
   right: 0;
   top: 0;
   width: 35%;
+}
+h6 {
+  color: $dark-purple;
 }
 </style>

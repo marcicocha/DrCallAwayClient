@@ -92,7 +92,6 @@ import AppSelect from '@/components/AppSelect'
 import AppAmbulanceDataTable from '@/components/admin/patient/ambulance/AppAmbulanceDataTable'
 import AppTitleDivider from '@/components/AppTitleDivider'
 export default {
-  layout: 'dashboard',
   components: {
     AppTabs,
     AppInput,
@@ -100,6 +99,7 @@ export default {
     AppAmbulanceDataTable,
     AppTitleDivider,
   },
+  layout: 'dashboard',
   data() {
     return {
       activeKey: '1',

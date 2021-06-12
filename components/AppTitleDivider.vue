@@ -1,7 +1,8 @@
 <template>
   <div>
     <p>
-      <span>{{ title }}</span>
+      <span class="title">{{ title }}</span>
+      <slot></slot>
     </p>
   </div>
 </template>
@@ -19,7 +20,8 @@ p {
   padding-bottom: 0.875rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
-  span {
+  position: relative;
+  .title {
     padding-bottom: 1.15rem;
     position: relative;
     &::after {
@@ -32,6 +34,13 @@ p {
       background: $dark-purple;
       border-radius: 10px;
     }
+  }
+  .right-details {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
   }
 }
 </style>

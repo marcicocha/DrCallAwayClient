@@ -109,7 +109,7 @@
                 :disabled="healthDetails.recurring !== 'Others'"
               />
             </a-col>
-            <a-col :span="8">
+            <a-col :span="24">
               <AppTextArea
                 v-model="healthDetails.additionalInformation"
                 label="Additional Information"

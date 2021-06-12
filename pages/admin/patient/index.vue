@@ -18,7 +18,11 @@
     <br />
 
     <div>
-      <AppTitleDivider title="Case File" />
+      <AppTitleDivider title="Case File"
+        ><span class="right-details"
+          ><NuxtLink to="/admin/patient/case-file">View All ></NuxtLink></span
+        ></AppTitleDivider
+      >
       <a-table :columns="columns" :data-source="dataSource" :pagination="false">
         <template slot="status" slot-scope="text, record">
           <div
@@ -34,7 +38,11 @@
     </div>
     <br />
     <div>
-      <AppTitleDivider title="Appointments" />
+      <AppTitleDivider title="Appointments">
+        <span class="right-details"
+          ><NuxtLink to="/admin/patient/appointment">View All ></NuxtLink></span
+        >
+      </AppTitleDivider>
       <a-table
         :columns="columns"
         :data-source="dataSource1"
@@ -53,6 +61,7 @@
 import { Carousel, Slide } from 'vue-carousel'
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppTitleDivider from '@/components/AppTitleDivider'
+
 export default {
   components: {
     Carousel,

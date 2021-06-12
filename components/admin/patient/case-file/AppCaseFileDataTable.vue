@@ -1,6 +1,12 @@
 <template>
   <div>
-    <a-table :columns="columns" :data-source="dataSource" :pagination="false">
+    <a-table
+      :columns="columns"
+      :data-source="dataSource"
+      :pagination="false"
+      :row-key="(record) => record.caseId"
+      :custom-row="customRow"
+    >
       <template slot="status" slot-scope="text, record">
         <div
           :class="{
@@ -65,16 +71,16 @@ export default {
       return columns
     },
   },
+  methods: {
+    customRow(record) {
+      return {
+        on: {
+          click: (event) => {
+            this.$emit('showCaseFile', record)
+          },
+        },
+      }
+    },
+  },
 }
 </script>
-<style lang="scss" scoped>
-.blue {
-  color: #0031a5;
-}
-.green {
-  color: #2ec114;
-}
-.red {
-  color: #e74353;
-}
-</style>

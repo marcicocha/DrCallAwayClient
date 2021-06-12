@@ -7,6 +7,7 @@
           <AppPrescriptionDataTable
             :status="pending"
             :data-source="dataSource1"
+            @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>
 
@@ -14,12 +15,14 @@
           <AppPrescriptionDataTable
             :status="completed"
             :data-source="dataSource2"
+            @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Declined Prescription">
           <AppPrescriptionDataTable
             :status="booked"
             :data-source="dataSource3"
+            @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>
       </template>
@@ -65,6 +68,7 @@ export default {
     return {
       activeKey: '1',
       filterObj: {},
+      prescriptionModalIsVisible: false,
       dataSource1: [
         {
           presecriptionId: '#000001',
@@ -93,6 +97,11 @@ export default {
         },
       ],
     }
+  },
+  methods: {
+    showPrescriptionModal() {
+      this.prescriptionModalIsVisible = false
+    },
   },
 }
 </script>

@@ -352,3 +352,18 @@ h6 {
   > td {
   background: $light-grey;
 }
+.blue {
+  color: #0031a5;
+}
+.green {
+  color: #2ec114;
+}
+.red {
+  color: #e74353;
+}
+.ant-checkbox-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.7rem;
+}

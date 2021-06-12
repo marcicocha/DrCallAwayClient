@@ -70,7 +70,7 @@ export default {
       return {
         on: {
           click: (event) => {
-            this.$emit('showCaseFile', record)
+            this.$emit('showTestModal', record)
           },
         },
       }

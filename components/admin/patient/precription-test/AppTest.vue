@@ -4,10 +4,18 @@
     <AppTabs v-model="activeKey">
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Tests" force-render>
-          <AppTestDataTable :status="pending" :data-source="dataSource1" />
+          <AppTestDataTable
+            :status="pending"
+            :data-source="dataSource1"
+            @showTestModal="showTestModal"
+          />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Test" force-render>
-          <AppTestDataTable :status="completed" :data-source="dataSource2" />
+          <AppTestDataTable
+            :status="completed"
+            :data-source="dataSource2"
+            @showTestModal="showTestModal"
+          />
         </a-tab-pane>
       </template>
       <template slot="rightInfo">
@@ -52,6 +60,7 @@ export default {
     return {
       activeKey: '1',
       filterObj: {},
+      testModalIsVisible: false,
       dataSource1: [
         {
           testId: '#000001',
@@ -69,6 +78,11 @@ export default {
         },
       ],
     }
+  },
+  methods: {
+    showTestModal() {
+      this.testModalIsVisible = false
+    },
   },
 }
 </script>

@@ -48,6 +48,22 @@
         </a-row>
       </template>
     </AppTabs>
+    <a-modal
+      :visible="prescriptionModalIsVisible"
+      width="500px"
+      :confirm-loading="confirmLoading"
+      :footer="null"
+      :destroy-on-close="true"
+      :mask-style="{ background: 'rgba(61, 12, 60, 0.9)' }"
+      centered
+      @cancel="closeModal"
+    >
+      <div>
+        <h6 class="t-c">Prescription for Strong Headache</h6>
+        <a-divider />
+        <AppPrescriptionForm :currentPrescriptionObj="currentPrescriptionObj" />
+      </div>
+    </a-modal>
   </div>
 </template>
 <script>
@@ -55,6 +71,7 @@ import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppPrescriptionDataTable from '@/components/admin/patient/precription-test/AppPrescriptionDataTable'
+import AppPrescriptionForm from '@/components/admin/patient/precription-test/AppPrescriptionForm'
 
 export default {
   name: 'AppPrescription',
@@ -63,12 +80,15 @@ export default {
     AppInput,
     AppSelect,
     AppPrescriptionDataTable,
+    AppPrescriptionForm,
   },
   data() {
     return {
       activeKey: '1',
       filterObj: {},
       prescriptionModalIsVisible: false,
+      confirmLoading: false,
+      currentPrescriptionObj: {},
       dataSource1: [
         {
           presecriptionId: '#000001',
@@ -99,7 +119,11 @@ export default {
     }
   },
   methods: {
-    showPrescriptionModal() {
+    showPrescriptionModal(record) {
+      this.prescriptionModalIsVisible = true
+      this.currentPrescriptionObj = record
+    },
+    closeModal() {
       this.prescriptionModalIsVisible = false
     },
   },

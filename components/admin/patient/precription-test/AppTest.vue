@@ -40,6 +40,22 @@
         </a-row>
       </template>
     </AppTabs>
+    <a-modal
+      :visible="testModalIsVisible"
+      width="500px"
+      :confirm-loading="confirmLoading"
+      :footer="null"
+      :destroy-on-close="true"
+      :mask-style="{ background: 'rgba(61, 12, 60, 0.9)' }"
+      centered
+      @cancel="closeModal"
+    >
+      <div>
+        <h6 class="t-c">Prescription for Strong Headache</h6>
+        <a-divider />
+        <AppTestForm :currentTestObj="currentTestObj" />
+      </div>
+    </a-modal>
   </div>
 </template>
 <script>
@@ -47,6 +63,7 @@ import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppTestDataTable from '@/components/admin/patient/precription-test/AppTestDataTable'
+import AppTestForm from '@/components/admin/patient/precription-test/AppTestForm'
 
 export default {
   name: 'AppTest',
@@ -55,12 +72,15 @@ export default {
     AppInput,
     AppSelect,
     AppTestDataTable,
+    AppTestForm,
   },
   data() {
     return {
       activeKey: '1',
       filterObj: {},
       testModalIsVisible: false,
+      confirmLoading: false,
+      currentTestObj: {},
       dataSource1: [
         {
           testId: '#000001',
@@ -80,7 +100,11 @@ export default {
     }
   },
   methods: {
-    showTestModal() {
+    showTestModal(record) {
+      this.testModalIsVisible = true
+      this.currentTestObj = record
+    },
+    closeModal() {
       this.testModalIsVisible = false
     },
   },

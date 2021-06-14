@@ -23,7 +23,27 @@
     <br />
     <ul v-if="!minified" class="menu-list">
       <li v-for="(menu, index) in clientMenu" :key="index">
-        <NuxtLink :to="menu.path">{{ menu.name }}</NuxtLink>
+        <p class="menu_p-container">
+          <a class="menu_anchor" @click="goToPage(menu.path, menu.children)">{{
+            menu.name
+          }}</a>
+        </p>
+        <ul
+          v-if="
+            menu.children.length !== 0 &&
+            childMenuIsVisible &&
+            parentPath === menu.path
+          "
+          class="menu-children"
+        >
+          <li v-for="(child, i) in menu.children" :key="i">
+            <p>
+              <a @click="goToPage(child.path, child.children)">{{
+                child.name
+              }}</a>
+            </p>
+          </li>
+        </ul>
       </li>
     </ul>
   </aside>
@@ -40,6 +60,8 @@ export default {
   },
   data() {
     return {
+      childMenuIsVisible: false,
+      parentPath: '',
       clientMenu: [
         {
           key: 'dashboard',
@@ -115,10 +137,49 @@ export default {
           children: [
             {
               key: 'subscribe',
-              name: 'susbcribe',
-              path: '/admin/patient/self-service/susbcribe',
+              name: 'Susbcribe',
+              path: '/admin/patient/self-service/subscribe',
               children: [],
             },
+            {
+              key: 'helpdesk',
+              name: 'Helpdesk',
+              path: '/admin/patient/self-service/helpdesk',
+              children: [],
+            },
+          ],
+        },
+      ],
+      doctorMenu: [
+        {
+          key: 'dashboard',
+          name: 'Dashboard',
+          path: '/admin/doctor',
+          children: [],
+        },
+        {
+          key: 'waiting-room',
+          name: 'Waiting Room',
+          path: '/admin/doctor/waiting-room',
+          children: [],
+        },
+        {
+          key: 'case-management',
+          name: 'Case Management',
+          path: '/admin/doctor/case-management',
+          children: [],
+        },
+        {
+          key: 'appointment',
+          name: 'Appointments',
+          path: '/admin/doctor/appointment',
+          children: [],
+        },
+        {
+          key: 'self_service',
+          name: 'Self Service',
+          path: '/admin/patient/self-service',
+          children: [
             {
               key: 'helpdesk',
               name: 'Helpdesk',
@@ -171,6 +232,15 @@ export default {
         this.$router.push('/')
       }
     },
+    goToPage(path, children) {
+      if (children.length === 0) {
+        this.$router.replace(path)
+        this.childMenuIsVisible = false
+      } else {
+        this.childMenuIsVisible = true
+        this.parentPath = path
+      }
+    },
   },
 }
 </script>
@@ -202,17 +272,44 @@ export default {
     padding-left: 0;
     li {
       margin-bottom: 0.3rem;
-      border-radius: 10px;
-      padding: 8px;
+      .menu_p-container {
+        padding: 8px;
+        border-radius: 10px;
+      }
       a {
         color: $purple;
       }
-      &:hover {
-        background: $medium-purple;
-        opacity: 0.7;
+    }
+  }
+  .menu-children {
+    list-style-type: none;
+    padding-left: 0;
+    li {
+      margin-bottom: 0.2rem;
+      p {
+        padding: 8px;
+        border-radius: 10px;
         a {
-          color: #fff;
+          color: $purple;
         }
+      }
+    }
+  }
+  .menu-list li:hover {
+    .menu_p-container {
+      background: $medium-purple;
+      opacity: 1;
+    }
+    .menu_anchor {
+      color: #fff;
+    }
+  }
+  .menu-children li:hover {
+    p {
+      background: $medium-purple;
+      opacity: 0.7;
+      a {
+        color: #fff;
       }
     }
   }

@@ -5,14 +5,14 @@
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Tests" force-render>
           <AppTestDataTable
-            :status="pending"
+            status="pending"
             :data-source="dataSource1"
             @showTestModal="showTestModal"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Test" force-render>
           <AppTestDataTable
-            :status="completed"
+            status="completed"
             :data-source="dataSource2"
             @showTestModal="showTestModal"
           />
@@ -53,7 +53,7 @@
       <div>
         <h6 class="t-c">Prescription for Strong Headache</h6>
         <a-divider />
-        <AppTestForm :currentTestObj="currentTestObj" />
+        <AppTestForm :current-test-obj="currentTestObj" />
       </div>
     </a-modal>
   </div>
@@ -62,8 +62,8 @@
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
-import AppTestDataTable from '@/components/admin/patient/precription-test/AppTestDataTable'
-import AppTestForm from '@/components/admin/patient/precription-test/AppTestForm'
+import AppTestDataTable from '@/components/admin/patient/precription-test/test/AppTestDataTable'
+import AppTestForm from '@/components/admin/patient/precription-test/test/AppTestForm'
 
 export default {
   name: 'AppTest',
@@ -116,5 +116,8 @@ export default {
   right: 0;
   top: 0;
   width: 35%;
+}
+h6 {
+  color: $dark-purple;
 }
 </style>

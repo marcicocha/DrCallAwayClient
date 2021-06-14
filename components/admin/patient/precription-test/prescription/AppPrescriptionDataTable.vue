@@ -37,9 +37,9 @@ export default {
     columns() {
       const columns = [
         {
-          title: 'Presecription ID',
-          dataIndex: 'presecriptionId',
-          scopedSlots: { customRender: 'presecriptionId' },
+          title: 'Prescription ID',
+          dataIndex: 'prescriptionId',
+          scopedSlots: { customRender: 'prescriptionId' },
         },
         {
           title: 'Prescription Title',
@@ -48,8 +48,8 @@ export default {
         },
         {
           title: 'Presecription By',
-          dataIndex: 'presecriptionBy',
-          scopedSlots: { customRender: 'presecriptionBy' },
+          dataIndex: 'prescriptionBy',
+          scopedSlots: { customRender: 'prescriptionBy' },
         },
         {
           title: 'Prescription Date',

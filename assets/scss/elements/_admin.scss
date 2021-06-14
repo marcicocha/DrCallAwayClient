@@ -8,7 +8,7 @@
   background-color: $white;
   border-radius: 10px;
   padding: 1.5rem;
-  border: 1px solid #BBC5D5;
+  border: 1px solid #bbc5d5;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
 }
 .ant-tabs-nav {
@@ -31,4 +31,34 @@
     color: $dark-purple;
     font-weight: bold;
   }
+}
+.colored-table {
+  .ant-table {
+    padding: 0;
+  }
+  .ant-table-thead {
+    background: $medium-purple;
+  }
+  .ant-table-thead > tr > th {
+    background: $medium-purple;
+    color: $white;
+    font-weight: 400;
+  }
+  .ant-table-tbody {
+    background: #eedded;
+
+    .ant-table-row {
+      background: #eedded;
+    }
+  }
+  .ant-table-tbody > tr > td {
+    border-bottom: 2px solid white;
+  }
+}
+.ant-btn-primary {
+  background-color: $dark-purple !important;
+}
+.ant-btn-default {
+  color: $dark-purple;
+  border-color: $dark-purple;
 }

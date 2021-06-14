@@ -49,16 +49,13 @@
     <AppTabs v-model="activeKey">
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Requests" force-render>
-          <AppAmbulanceDataTable :status="pending" :data-source="dataSource" />
+          <AppAmbulanceDataTable status="pending" :data-source="dataSource" />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Active Requests">
-          <AppAmbulanceDataTable :status="active" :data-source="dataSource" />
+          <AppAmbulanceDataTable status="active" :data-source="dataSource" />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Requests">
-          <AppAmbulanceDataTable
-            :status="completed"
-            :data-source="dataSource"
-          />
+          <AppAmbulanceDataTable status="completed" :data-source="dataSource" />
         </a-tab-pane>
       </template>
       <template slot="rightInfo">

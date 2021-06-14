@@ -6,8 +6,8 @@
   </div>
 </template>
 <script>
-import AppTest from '@/components/admin/patient/precription-test/AppTest'
-import AppPrescription from '@/components/admin/patient/precription-test/AppPrescription'
+import AppTest from '@/components/admin/patient/precription-test/test/AppTest'
+import AppPrescription from '@/components/admin/patient/precription-test/prescription/AppPrescription'
 
 export default {
   components: {

@@ -5,7 +5,7 @@
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Prescription" force-render>
           <AppPrescriptionDataTable
-            :status="pending"
+            status="pending"
             :data-source="dataSource1"
             @showPrescriptionModal="showPrescriptionModal"
           />
@@ -13,14 +13,14 @@
 
         <a-tab-pane key="2" tab="Completed Prescription">
           <AppPrescriptionDataTable
-            :status="completed"
+            status="completed"
             :data-source="dataSource2"
             @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Declined Prescription">
           <AppPrescriptionDataTable
-            :status="booked"
+            status="booked"
             :data-source="dataSource3"
             @showPrescriptionModal="showPrescriptionModal"
           />
@@ -61,7 +61,9 @@
       <div>
         <h6 class="t-c">Prescription for Strong Headache</h6>
         <a-divider />
-        <AppPrescriptionForm :currentPrescriptionObj="currentPrescriptionObj" />
+        <AppPrescriptionForm
+          :current-prescription-obj="currentPrescriptionObj"
+        />
       </div>
     </a-modal>
   </div>
@@ -70,8 +72,8 @@
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
-import AppPrescriptionDataTable from '@/components/admin/patient/precription-test/AppPrescriptionDataTable'
-import AppPrescriptionForm from '@/components/admin/patient/precription-test/AppPrescriptionForm'
+import AppPrescriptionDataTable from '@/components/admin/patient/precription-test/prescription/AppPrescriptionDataTable'
+import AppPrescriptionForm from '@/components/admin/patient/precription-test/prescription/AppPrescriptionForm'
 
 export default {
   name: 'AppPrescription',
@@ -91,8 +93,8 @@ export default {
       currentPrescriptionObj: {},
       dataSource1: [
         {
-          presecriptionId: '#000001',
-          presecriptionTitle: 'Prescription for Strong Headache',
+          prescriptionId: '#000001',
+          prescriptionTitle: 'Prescription for Strong Headache',
           prescribedBy: 'Dr Yomi',
           prescriptionDate: '30th March, 2021',
           status: 'Pending',
@@ -100,8 +102,8 @@ export default {
       ],
       dataSource2: [
         {
-          presecriptionId: '#000001',
-          presecriptionTitle: 'Prescription for Strong Headache',
+          prescriptionId: '#000001',
+          prescriptionTitle: 'Prescription for Strong Headache',
           prescribedBy: 'Dr Yomi',
           prescriptionDate: '30th March, 2021',
           status: 'Active',
@@ -109,8 +111,8 @@ export default {
       ],
       dataSource3: [
         {
-          presecriptionId: '#000001',
-          caseAssociated: 'Prescription for Strong Headache',
+          prescriptionId: '#000001',
+          prescriptionTitle: 'Prescription for Strong Headache',
           prescribedBy: 'Dr Yomi',
           prescriptionDate: '30th March, 2021',
           status: 'Active',
@@ -135,5 +137,8 @@ export default {
   right: 0;
   top: 0;
   width: 35%;
+}
+h6 {
+  color: $dark-purple;
 }
 </style>

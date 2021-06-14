@@ -15,6 +15,6 @@ export default {
   components: {
     AppTitleDivider,
   },
-  layout: 'HelpDesk',
+  layout: 'dashboard',
 }
 </script>

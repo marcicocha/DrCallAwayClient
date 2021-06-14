@@ -152,10 +152,10 @@ a:hover {
 }
 .admin-button {
   padding: 0 2rem;
-
-  @include breakpoint-up(large) {
-    padding: 0 3rem;
-  }
+  
+  // @include breakpoint-up(large) {
+  //   padding: 0 2rem;
+  // }
 }
 .t-c {
   text-align: center;

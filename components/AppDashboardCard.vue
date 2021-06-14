@@ -2,6 +2,7 @@
   <div
     class="flex flex-jc-sb flex-ai-c dashboard-card"
     :style="{ background: color }"
+    @click="$emit('click')"
   >
     <div class="img-container">
       <img :src="getImgHandler(cardObj.imgSrc)" alt="icon" />

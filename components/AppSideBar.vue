@@ -5,6 +5,7 @@
       'menu__full-width': !minified,
       'menu__minimized-width': minified,
     }"
+    style="overflow-y: scroll"
   >
     <div class="logo">
       <img
@@ -23,6 +24,33 @@
     <br />
     <ul v-if="!minified" class="menu-list">
       <li v-for="(menu, index) in clientMenu" :key="index">
+        <p class="menu_p-container">
+          <a class="menu_anchor" @click="goToPage(menu.path, menu.children)">{{
+            menu.name
+          }}</a>
+        </p>
+        <ul
+          v-if="
+            menu.children.length !== 0 &&
+            childMenuIsVisible &&
+            parentPath === menu.path
+          "
+          class="menu-children"
+        >
+          <li v-for="(child, i) in menu.children" :key="i">
+            <p>
+              <a @click="goToPage(child.path, child.children)">{{
+                child.name
+              }}</a>
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <br />
+    <p>DOCTOR</p>
+    <ul v-if="!minified" class="menu-list">
+      <li v-for="(menu, index) in doctorMenu" :key="index">
         <p class="menu_p-container">
           <a class="menu_anchor" @click="goToPage(menu.path, menu.children)">{{
             menu.name
@@ -257,9 +285,15 @@ export default {
   z-index: 10;
   &__full-width {
     width: 230px;
+    @include breakpoint-up(xxlarge) {
+      width: 300px;
+    }
   }
   &__minimized-width {
     width: 80px;
+    @include breakpoint-up(xxlarge) {
+      width: 120px;
+    }
   }
   .logo {
     text-align: center;

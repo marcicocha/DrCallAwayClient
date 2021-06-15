@@ -93,19 +93,19 @@ export default {
         {
           firstText: 'Talk to a',
           secondText: 'DOCTOR',
-          imgSrc: 'admin/1.png',
+          imgSrc: 'admin/patient/1.png',
           color: '#641C62',
         },
         {
           firstText: 'Request a',
           secondText: 'Service',
-          imgSrc: 'admin/2.png',
+          imgSrc: 'admin/patient/2.png',
           color: '#BB58B6',
         },
         {
           firstText: 'Case',
           secondText: 'File',
-          imgSrc: 'admin/3.png',
+          imgSrc: 'admin/patient/3.png',
           color: '#3D0C3C',
         },
       ],

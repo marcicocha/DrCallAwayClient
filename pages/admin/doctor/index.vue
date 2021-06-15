@@ -20,7 +20,7 @@
     <div>
       <AppTitleDivider title="Case File"
         ><span class="right-details"
-          ><NuxtLink to="/admin/patient/case-file">View All ></NuxtLink></span
+          ><NuxtLink to="/admin/doctor/case-file">View All ></NuxtLink></span
         ></AppTitleDivider
       >
       <a-table :columns="columns" :data-source="dataSource" :pagination="false">
@@ -40,11 +40,11 @@
     <div>
       <AppTitleDivider title="Appointments">
         <span class="right-details"
-          ><NuxtLink to="/admin/patient/appointment">View All ></NuxtLink></span
+          ><NuxtLink to="/admin/doctor/appointment">View All ></NuxtLink></span
         >
       </AppTitleDivider>
       <a-table
-        :columns="columns"
+        :columns="appointedColumns"
         :data-source="dataSource1"
         :pagination="false"
       >
@@ -75,14 +75,14 @@ export default {
       dataSource: [
         {
           caseId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
+          patientName: 'Dr. Michael Sanwo-Olu',
           complaint: 'Malaria and Typhoid',
           dateAdded: '23rd March, 2021',
           status: 'Active',
         },
         {
           caseId: '#000002',
-          consultantName: 'Dr. Michael Sanwo-Olu',
+          patientName: 'Dr. Michael Sanwo-Olu',
           complaint: 'Malaria and Typhoid',
           dateAdded: '23rd March, 2021',
           status: 'Completed',
@@ -91,21 +91,21 @@ export default {
       dataSource1: [],
       dashboardList: [
         {
-          firstText: 'Talk to a',
-          secondText: 'DOCTOR',
-          imgSrc: 'admin/1.png',
+          firstText: 'Waiting',
+          secondText: 'ROOM',
+          imgSrc: 'admin/doctor/1.png',
           color: '#641C62',
         },
         {
-          firstText: 'Request a',
-          secondText: 'Service',
-          imgSrc: 'admin/2.png',
+          firstText: 'View',
+          secondText: 'APPOINTMENTS',
+          imgSrc: 'admin/patient/2.png',
           color: '#BB58B6',
         },
         {
           firstText: 'Case',
-          secondText: 'File',
-          imgSrc: 'admin/3.png',
+          secondText: 'MANAGEMENT',
+          imgSrc: 'admin/patient/3.png',
           color: '#3D0C3C',
         },
       ],
@@ -120,9 +120,9 @@ export default {
           scopedSlots: { customRender: 'caseId' },
         },
         {
-          title: 'Consultant Name',
-          dataIndex: 'consultantName',
-          scopedSlots: { customRender: 'consultantName' },
+          title: 'Patient Name',
+          dataIndex: 'patientName',
+          scopedSlots: { customRender: 'patientName' },
         },
         {
           title: 'Complaint',
@@ -133,6 +133,46 @@ export default {
           title: 'Date Added',
           dataIndex: 'dateAdded',
           scopedSlots: { customRender: 'dateAdded' },
+        },
+        {
+          title: 'Status',
+          dataIndex: 'status',
+          scopedSlots: { customRender: 'status' },
+        },
+        // {
+        //  title: '',
+        //  dataIndex: 'operation1',
+        //  scopedSlots: { customRender: 'operation' },
+        // },
+      ]
+      return columns
+    },
+    appointedColumns() {
+      const columns = [
+        {
+          title: 'Appointment ID',
+          dataIndex: 'appointmentId',
+          scopedSlots: { customRender: 'appointmentId' },
+        },
+        {
+          title: 'Patient Name',
+          dataIndex: 'patientName',
+          scopedSlots: { customRender: 'patientName' },
+        },
+        {
+          title: 'Description',
+          dataIndex: 'description',
+          scopedSlots: { customRender: 'description' },
+        },
+        {
+          title: 'Date of Visit',
+          dataIndex: 'dateOfVisit',
+          scopedSlots: { customRender: 'dateOfVisit' },
+        },
+        {
+          title: 'Time of Visit',
+          dataIndex: 'timeOfVisit',
+          scopedSlots: { customRender: 'timeOfVisit' },
         },
         {
           title: 'Status',

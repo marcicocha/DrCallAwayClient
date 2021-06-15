@@ -59,7 +59,10 @@
       <div>
         <h6 class="t-c">Medical Checkup</h6>
         <a-divider />
-        <AppAppointmentCreationForm :current-appointment="currentAppointment" />
+        <AppAppointmentCreationForm
+          :current-appointment="currentAppointment"
+          status="patient"
+        />
       </div>
     </a-modal>
   </div>
@@ -130,12 +133,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.right-info {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 35%;
-}
 h6 {
   color: $dark-purple;
 }

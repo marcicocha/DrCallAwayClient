@@ -54,6 +54,12 @@
   .ant-table-tbody > tr > td {
     border-bottom: 2px solid white;
   }
+  .ant-table-placeholder {
+    background: #eedded;
+  }
+  .ant-empty-description {
+    color: $medium-purple;
+  }
 }
 .ant-btn-primary {
   background-color: $dark-purple !important;
@@ -61,4 +67,10 @@
 .ant-btn-default {
   color: $dark-purple;
   border-color: $dark-purple;
+}
+.right-info {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 35%;
 }

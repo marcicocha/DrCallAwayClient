@@ -1,51 +1,49 @@
 <template>
-  <div class="full-input">
-    <a-form-item
-      :label="label"
-      :required="required"
-      :label-col="labelCol"
-      :wrapper-col="wrapperCol"
+  <a-form-item
+    :label="label"
+    :required="required"
+    :label-col="labelCol"
+    :wrapper-col="wrapperCol"
+  >
+    <!-- <label for="name">{{ label }}</label> -->
+    <a-select
+      v-model="innerValue"
+      mode="default"
+      show-search
+      style="width: 100%"
+      :loading="fetching"
+      :disabled="disabled"
+      :placeholder="placeholder"
+      :allow-clear="allowClear"
+      :default-value="defaultValue"
+      @blur="blurHandler"
+      @change="changeHandler"
+      @focus="searchHandler"
+      @select="selectHandler"
     >
-      <!-- <label for="name">{{ label }}</label> -->
-      <a-select
-        v-model="innerValue"
-        mode="default"
-        show-search
-        style="width: 100%"
-        :loading="fetching"
-        :disabled="disabled"
-        :placeholder="placeholder"
-        :allow-clear="allowClear"
-        :default-value="defaultValue"
-        @blur="blurHandler"
-        @change="changeHandler"
-        @focus="searchHandler"
-        @select="selectHandler"
-      >
-        <template v-if="remote && dataRemote">
+      <template v-if="remote && dataRemote">
+        <a-select-option
+          v-for="d in dataRemote"
+          :key="d.value"
+          :title="d.text"
+          :value="d.text"
+        >
+          {{ d.text }}
+        </a-select-option>
+      </template>
+      <template v-else>
+        <template v-if="data && data.length !== ''">
           <a-select-option
-            v-for="d in dataRemote"
-            :key="d.value"
-            :title="d.text"
-            :value="d.text"
+            v-for="(i, index) in data"
+            :key="i + '-' + index"
+            :value="i"
           >
-            {{ d.text }}
+            {{ i }}
           </a-select-option>
         </template>
-        <template v-else>
-          <template v-if="data && data.length !== ''">
-            <a-select-option
-              v-for="(i, index) in data"
-              :key="i + '-' + index"
-              :value="i"
-            >
-              {{ i }}
-            </a-select-option>
-          </template>
-        </template>
-      </a-select>
-    </a-form-item>
-  </div>
+      </template>
+    </a-select>
+  </a-form-item>
 </template>
 <script>
 export default {

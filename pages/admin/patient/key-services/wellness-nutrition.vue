@@ -1,15 +1,119 @@
 <template>
   <div>
-    <a-row type="flex" :gutter="24">
+    <a-row v-if="!screenIsVisible" type="flex" :gutter="24">
       <a-col v-for="(card, j) in wellnessList" :key="j" :span="12">
         <AppDashboardCard
           :card-obj="card"
           :color="card.color"
-          @click="showModalhandler(card.key)"
           style="margin-bottom: 2rem"
+          @click="showModalhandler(card.key)"
         />
       </a-col>
     </a-row>
+    <div v-else>
+      <div>
+        <a @click="closeViewHandler"
+          ><img src="@/assets/images/long-arrow-left.svg"
+        /></a>
+      </div>
+      <br />
+      <div>
+        <AppTabs v-model="activeKey">
+          <template slot="default">
+            <a-tab-pane key="1" tab="Tests" force-render>
+              <div class="colored-table">
+                <AppScreeningDataTable
+                  status="tests"
+                  :data-source="dataSource"
+                />
+              </div>
+            </a-tab-pane>
+            <a-tab-pane key="2" tab="Endocrinology: Special Test">
+              <div class="colored-table">
+                <AppScreeningDataTable
+                  status="special-test"
+                  :data-source="dataSource"
+                />
+              </div>
+            </a-tab-pane>
+            <a-tab-pane key="3" tab="Examinations" force-render>
+              <div class="colored-table">
+                <AppScreeningDataTable
+                  status="examination"
+                  :data-source="dataSource"
+                />
+              </div>
+            </a-tab-pane>
+            <a-tab-pane key="4" tab="Ultrasound Scan" force-render>
+              <div class="colored-table">
+                <AppScreeningDataTable
+                  status="ultrasound"
+                  :data-source="dataSource"
+                />
+              </div>
+            </a-tab-pane>
+          </template>
+          <template slot="rightInfo">
+            <a-row type="flex" :gutter="16" class="right-info">
+              <a-col :span="12">
+                <AppSelect
+                  v-model="filterObj.filterKey"
+                  placeholder="Select filter option"
+                  :data="['YES']"
+                  class="filter"
+                  :remote="true"
+                />
+              </a-col>
+              <a-col :span="12">
+                <AppInput
+                  v-model="filterObj.filterValue"
+                  placeholder="Search"
+                  class="filter"
+                  name="value"
+                />
+              </a-col>
+            </a-row>
+          </template>
+        </AppTabs>
+
+        <br />
+        <div>
+          <h6>Book an Appointment</h6>
+          <div class="admin-wrapper">
+            <a-form>
+              <a-row type="flex" align="bottom" :gutter="16">
+                <a-col :span="8">
+                  <AppInput
+                    v-model="bookAppointmentObj.date"
+                    label="Date of Visit"
+                    placeholder="Select Date"
+                    name="date of visit"
+                  />
+                </a-col>
+                <a-col :span="8">
+                  <AppInput
+                    v-model="bookAppointmentObj.time"
+                    label="Time of Visit"
+                    placeholder="Select Time"
+                    name="time of visit"
+                  />
+                </a-col>
+                <a-col :span="8">
+                  <AppButton
+                    type="primary"
+                    :block="false"
+                    :loading="isLoading"
+                    class="admin-button"
+                    @click="submitHandler"
+                    >BOOK</AppButton
+                  >
+                </a-col>
+              </a-row>
+            </a-form>
+          </div>
+        </div>
+      </div>
+    </div>
     <a-modal
       :visible="modalIsVisible"
       width="420px"
@@ -23,17 +127,28 @@
       <div>
         <h6 class="t-c">{{ modalTitle }}</h6>
         <a-divider />
-        <div></div>
+        <div>
+          <AppNutritionForm v-if="wellnessKey === 'nutritionist'" />
+          <AppDentistForm v-if="wellnessKey === 'dentist'" />
+          <AppOpticalForm v-if="wellnessKey === 'optical'" />
+        </div>
       </div>
     </a-modal>
   </div>
 </template>
 <script>
 import AppDashboardCard from '@/components/AppDashboardCard'
-
+import AppNutritionForm from '@/components/admin/patient/key-service/wellness-nutrition/AppNutritionForm'
+import AppDentistForm from '@/components/admin/patient/key-service/wellness-nutrition/AppDentistForm'
+import AppOpticalForm from '@/components/admin/patient/key-service/wellness-nutrition/AppOpticalForm'
+import AppScreeningDataTable from '@/components/admin/patient/key-service/wellness-nutrition/AppScreeningDataTable'
 export default {
   components: {
     AppDashboardCard,
+    AppNutritionForm,
+    AppDentistForm,
+    AppOpticalForm,
+    AppScreeningDataTable,
   },
   layout: 'dashboard',
   data() {
@@ -42,33 +157,38 @@ export default {
       screenIsVisible: false,
       confirmLoading: false,
       wellnessKey: false,
+      dataSource: [],
+      activeKey: '1',
+      filterObj: {},
+      isLoading: false,
+      bookAppointmentObj: {},
       wellnessList: [
         {
           key: 'screening',
           firstText: 'Request annual',
           secondText: 'MEDICAL SCREENING',
-          imgSrc: 'admin/2.png',
+          imgSrc: 'admin/patient/2.png',
           color: '#641C62',
         },
         {
           key: 'nutritionist',
           firstText: 'Talk to a',
           secondText: 'NUTRITIONIST',
-          imgSrc: 'admin/2.png',
+          imgSrc: 'admin/patient/2.png',
           color: '#BB58B6',
         },
         {
           key: 'dentist',
           firstText: 'Request a',
           secondText: 'DENTIST',
-          imgSrc: 'admin/2.png',
+          imgSrc: 'admin/patient/2.png',
           color: '#BB58B6',
         },
         {
           key: 'optical',
           firstText: 'Request an',
           secondText: 'OPTICAL SERVICE',
-          imgSrc: 'admin/2.png',
+          imgSrc: 'admin/patient/2.png',
           color: '#641C62',
         },
       ],
@@ -97,6 +217,17 @@ export default {
     closeModal() {
       this.modalIsVisible = false
     },
+    closeViewHandler() {
+      this.screenIsVisible = false
+    },
+    submitHandler() {
+      console.log('CLICKED')
+    },
   },
 }
 </script>
+<style lang="scss" scoped>
+h6 {
+  color: $dark-purple;
+}
+</style>

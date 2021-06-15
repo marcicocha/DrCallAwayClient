@@ -61,9 +61,15 @@ export default {
       padding-right: 30px;
       &__full-width {
         padding-left: 260px;
+        @include breakpoint-up(xxlarge) {
+          padding-left: 330px;
+        }
       }
       &__minimized-width {
         padding-left: 110px;
+        @include breakpoint-up(xxlarge) {
+          padding-left: 150px;
+        }
       }
     }
   }

@@ -1,22 +1,20 @@
 <template>
-  <div class="full-input">
-    <a-form-item
-      :label="label"
-      :required="required"
-      :label-col="labelCol"
-      :wrapper-col="wrapperCol"
-    >
-      <a-textarea
-        v-model="innerValue"
-        type="text"
-        :placeholder="placeholder"
-        :size="size"
-        :rows="rows"
-        :disabled="disabled"
-        @blur="blurHandler"
-      />
-    </a-form-item>
-  </div>
+  <a-form-item
+    :label="label"
+    :required="required"
+    :label-col="labelCol"
+    :wrapper-col="wrapperCol"
+  >
+    <a-textarea
+      v-model="innerValue"
+      type="text"
+      :placeholder="placeholder"
+      :size="size"
+      :rows="rows"
+      :disabled="disabled"
+      @blur="blurHandler"
+    />
+  </a-form-item>
 </template>
 
 <script>

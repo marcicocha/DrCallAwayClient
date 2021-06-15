@@ -59,7 +59,10 @@
       <div>
         <h6 class="t-c">Medical Checkup</h6>
         <a-divider />
-        <AppAppointmentCreationForm :current-appointment="currentAppointment" />
+        <AppAppointmentCreationForm
+          :current-appointment="currentAppointment"
+          status="doctor"
+        />
       </div>
     </a-modal>
   </div>
@@ -68,7 +71,7 @@
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
-import AppAppointmentDataTable from '@/components/admin/patient/appointment/AppAppointmentDataTable.vue'
+import AppAppointmentDataTable from '@/components/admin/doctor/appointment/AppAppointmentDataTable'
 import AppAppointmentCreationForm from '@/components/admin/patient/appointment/AppAppointmentCreationForm'
 
 export default {
@@ -89,7 +92,7 @@ export default {
       dataSource1: [
         {
           appointmentId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
+          patientName: 'Dr. Michael Sanwo-Olu',
           description: 'Malaria and Typhoid',
           dateOfVisit: '23rd March, 2021',
           timeOfVisit: '8:00am',
@@ -99,7 +102,7 @@ export default {
       dataSource2: [
         {
           appointmentId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
+          patientName: 'Dr. Michael Sanwo-Olu',
           description: 'Malaria and Typhoid',
           dateOfVisit: '23rd March, 2021',
           timeOfVisit: '8:00am',
@@ -109,7 +112,7 @@ export default {
       dataSource3: [
         {
           appointmentId: '#000002',
-          consultantName: 'Dr. Michael Sanwo-Olu',
+          patientName: 'Dr. Michael Sanwo-Olu',
           description: 'Malaria and Typhoid',
           dateOfVisit: '23rd March, 2021',
           timeOfVisit: '8:00am',
@@ -130,12 +133,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.right-info {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 35%;
-}
 h6 {
   color: $dark-purple;
 }

@@ -9,9 +9,17 @@
           :disabled="isReadOnly"
         />
         <AppInput
+          v-if="status === 'patient'"
           v-model="appointmentObj.consultantName"
           label="Consultant Name"
           name="consultant name"
+          :disabled="isReadOnly"
+        />
+        <AppInput
+          v-if="status === 'doctor'"
+          v-model="appointmentObj.patientName"
+          label="Patient Name"
+          name="Patient name"
           :disabled="isReadOnly"
         />
         <AppInput
@@ -70,6 +78,10 @@ export default {
     currentAppointment: {
       type: Object,
       default: () => {},
+    },
+    status: {
+      type: String,
+      default: 'patient',
     },
   },
   data() {

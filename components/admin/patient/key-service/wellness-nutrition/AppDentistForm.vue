@@ -2,18 +2,47 @@
   <div>
     <a-form>
       <ValidationObserver ref="observer" tag="div">
+        <AppSelect
+          v-model="dentistObj.dentalClinic"
+          label="List of Dental Clinic"
+          placeholder="Select a Dental Clinic"
+          name="dental clinic"
+          :data="['YES']"
+          :remote="true"
+        />
         <AppInput
-          v-model="ailmentObj.ailment"
-          label="Ailment"
-          name="ailment"
-          required
-          rules="required"
+          v-model="dentistObj.address"
+          label="Clinic Address"
+          name="clinic address"
+        />
+        <AppSelect
+          v-model="dentistObj.dentalService"
+          label="Dental Service"
+          placeholder="Select a Dental Service"
+          name="dental service"
+          :data="['YES']"
+          :remote="true"
+        />
+        <AppInput
+          v-model="dentistObj.paymentCharge"
+          label="Payment Charge"
+          name="Payment charge"
+        />
+
+        <AppInput
+          v-model="dentistObj.startDate"
+          label="Select Start Date"
+          name="select start date"
+        />
+        <AppInput
+          v-model="dentistObj.startTime"
+          label="Select Start Time"
+          name="select start time"
         />
         <AppTextArea
-          v-model="ailmentObj.additionalInformation"
-          label="Tell us how you feel"
+          v-model="dentistObj.additionalInformation"
+          label="Briefly tell Nutritionist what you are consulting for"
         />
-        <p>Not more than 200 words</p>
       </ValidationObserver>
       <br />
       <div class="t-c">
@@ -32,12 +61,26 @@
 <script>
 import { ValidationObserver } from 'vee-validate'
 import AppInput from '@/components/AppInput'
+import AppSelect from '@/components/AppSelect'
+import AppTextArea from '@/components/AppTextArea'
 
 export default {
   name: 'AppDentistForm',
   components: {
     ValidationObserver,
     AppInput,
+    AppTextArea,
+    AppSelect,
+  },
+  data() {
+    return {
+      dentistObj: {},
+    }
+  },
+  methods: {
+    submitHandler() {
+      console.log('CLICKED')
+    },
   },
 }
 </script>

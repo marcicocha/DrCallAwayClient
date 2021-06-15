@@ -40,8 +40,8 @@
           <li>
             <span>1</span>
             <span>
-              Download the DrCallAwayTM App from the Google Play Store or iOS
-              App Store and install on your mobile device.
+              Download the DrCallAway<sup>TM</sup> App from the Google Play
+              Store or iOS App Store and install on your mobile device.
             </span>
           </li>
           <li>

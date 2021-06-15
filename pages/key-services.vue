@@ -114,13 +114,29 @@ h4 {
     object-fit: cover;
   }
 }
-.card {
-  margin-bottom: 2rem;
-}
+
 .text-container {
   width: 100%;
   @include breakpoint-up(large) {
     width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    button {
+      width: fit-content;
+    }
+  }
+}
+.card {
+  margin-bottom: 2rem;
+  min-height: 330px;
+  &:nth-child(even) {
+    .img-container {
+      order: 2;
+    }
+    .text-container {
+      order: 1;
+    }
   }
 }
 ul {

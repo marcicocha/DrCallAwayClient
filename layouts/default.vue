@@ -165,7 +165,7 @@
         </div>
       </div>
     </header>
-    <div style="min-height: 40px">
+    <div style="min-height: 40px; padding-top: 120px">
       <Nuxt />
     </div>
     <footer>

@@ -5,7 +5,6 @@
       :data-source="dataSource"
       :pagination="false"
       :row-key="(record) => record.caseId"
-      :custom-row="customRow"
     >
       <template slot="status" slot-scope="text, record">
         <div
@@ -16,6 +15,25 @@
           }"
         >
           {{ record.status }}
+        </div>
+      </template>
+      <template slot="operation" slot-scope="text, record">
+        <div style="text-align: right">
+          <a-button-group class="link-group">
+            <a-button
+              v-if="status !== 'Pending'"
+              type="link"
+              class="table__btn"
+              @click="$emit('showDeleteConfirm', record)"
+              ><img src="@/assets/images/admin/table-comment.png" alt="comment"
+            /></a-button>
+            <a-button
+              class="table__btn"
+              type="link"
+              @click="viewCaseFile(record)"
+              ><img src="@/assets/images/admin/table-view.png" alt="view"
+            /></a-button>
+          </a-button-group>
         </div>
       </template>
     </a-table>
@@ -62,24 +80,18 @@ export default {
           dataIndex: 'status',
           scopedSlots: { customRender: 'status' },
         },
-        // {
-        //  title: '',
-        //  dataIndex: 'operation1',
-        //  scopedSlots: { customRender: 'operation' },
-        // },
+        {
+          title: '',
+          dataIndex: 'operation1',
+          scopedSlots: { customRender: 'operation' },
+        },
       ]
       return columns
     },
   },
   methods: {
-    customRow(record) {
-      return {
-        on: {
-          click: (event) => {
-            this.$emit('showCaseFile', record)
-          },
-        },
-      }
+    viewCaseFile(record) {
+      this.$emit('showCaseFile', record)
     },
   },
 }

@@ -11,7 +11,7 @@
     </div>
     <a-form>
       <ValidationObserver ref="observer" tag="div">
-        <a-row :type="flex" :gutter="24">
+        <a-row type="flex" :gutter="24">
           <a-col :span="12">
             <AppInput
               v-model="caseFileObj.dateAdded"
@@ -48,9 +48,21 @@
           :row-key="(record) => record.id"
         >
         </a-table>
-        <p>
-          {{ 'Selected Pharmacy: HealthPlus (Awolowo Road, Ikoyi, Lagos)' }}
-        </p>
+        <br />
+        <div class="flex flex-jc-sb">
+          <p>
+            {{ 'Selected Pharmacy: HealthPlus (Awolowo Road, Ikoyi, Lagos)' }}
+          </p>
+          <AppButton
+            v-if="status === 'doctor'"
+            type="primary"
+            icon="plus"
+            :block="false"
+            class="admin-button"
+            @click="addHandler('prescription')"
+            >Add New Prescription</AppButton
+          >
+        </div>
       </div>
       <br />
       <div>
@@ -74,29 +86,66 @@
             </div>
           </template>
         </a-table>
-        <p>
-          {{
-            'Selected Diagnostic Center: Smith Diagnostic Center (Adeola Odeku, VI, Lagos)'
-          }}
-        </p>
+        <br />
+        <div class="flex flex-jc-sb">
+          <p>
+            {{
+              'Selected Diagnostic Center: Smith Diagnostic Center (Adeola Odeku, VI, Lagos)'
+            }}
+          </p>
+          <AppButton
+            v-if="status === 'doctor'"
+            type="primary"
+            icon="plus"
+            :block="false"
+            class="admin-button"
+            @click="addHandler('test')"
+            >Add New Test</AppButton
+          >
+        </div>
       </div>
     </div>
+    <a-modal
+      :visible="prescriptionIsVisible"
+      width="600px"
+      :confirm-loading="confirmLoading"
+      :footer="null"
+      :destroy-on-close="true"
+      :mask-style="{ background: 'rgba(61, 12, 60, 0.9)' }"
+      centered
+      @cancel="closeModal"
+    >
+      <div>
+        <h6 class="t-c">Prescription for Strong Headache</h6>
+        <a-divider />
+        <div>
+          <AppPrescriptionForm />
+        </div>
+      </div>
+    </a-modal>
   </div>
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'
 import AppInput from '@/components/AppInput'
-
+import AppButton from '@/components/AppButton'
+import AppPrescriptionForm from '@/components/admin/patient/case-file/AppPrescriptionForm'
 export default {
   name: 'AppCaseFileForm',
   components: {
     ValidationObserver,
     AppInput,
+    AppButton,
+    AppPrescriptionForm,
   },
   props: {
     currentCaseFile: {
       type: Object,
       default: () => {},
+    },
+    status: {
+      type: String,
+      default: 'patient',
     },
   },
   data() {
@@ -104,6 +153,8 @@ export default {
       caseFileObj: {},
       prescriptionDataSource: [],
       testDataSource: [],
+      prescriptionIsVisible: false,
+      confirmLoading: false,
     }
   },
   computed: {
@@ -178,10 +229,23 @@ export default {
     getImgUrl(pic) {
       return `data:image/png;base64,${pic}`
     },
+    addHandler(key) {
+      if (key === 'prescription') {
+        this.prescriptionIsVisible = true
+      } else {
+        this.$emit('showTestTab')
+      }
+    },
+    closeModal() {
+      this.prescriptionIsVisible = false
+    },
   },
 }
 </script>
 <style lang="scss" scoped>
+h6 {
+  color: $dark-purple;
+}
 .doctor__container {
   display: flex;
   align-items: center;

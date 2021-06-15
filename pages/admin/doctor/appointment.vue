@@ -89,6 +89,7 @@ export default {
       filterObj: {},
       modalIsVisible: false,
       currentAppointment: {},
+      confirmLoading: false,
       dataSource1: [
         {
           appointmentId: '#000001',

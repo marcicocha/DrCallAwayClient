@@ -164,5 +164,10 @@ export default {
       ],
     }
   },
+  methods: {
+    submitHandler() {
+      console.log('CLICKED')
+    },
+  },
 }
 </script>

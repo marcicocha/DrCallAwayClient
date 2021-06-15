@@ -67,7 +67,10 @@
         ></AppTitleDivider
       >
       <div>
-        <AppCaseFileForm :current-case-file="currentCaseFile" />
+        <AppCaseFileForm
+          :current-case-file="currentCaseFile"
+          status="patient"
+        />
       </div>
     </div>
   </div>

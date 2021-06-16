@@ -6,6 +6,7 @@
         [320, 1],
         [640, 2],
         [1024, 3],
+        [1400, 3],
       ]"
       class="dashboard__carousel"
       :scroll-per-page="true"

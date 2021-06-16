@@ -1,6 +1,12 @@
 <template>
   <a-layout id="components-layout-demo-custom-trigger">
-    <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
+    <a-layout-sider
+      v-model="collapsed"
+      :trigger="null"
+      collapsible
+      :width="230"
+      style="overflow-y: scroll"
+    >
       <div
         class="logo"
         :style="collapsed ? { margin: '1rem 0' } : { margin: '1rem' }"
@@ -73,6 +79,7 @@
           margin: '24px 0',
           padding: '0',
           minHeight: '280px',
+          'overflow-y': 'scroll',
         }"
       >
         <Nuxt />
@@ -177,8 +184,6 @@ export default {
             },
           ],
         },
-      ],
-      doctorMenu: [
         {
           key: 'dashboard',
           name: 'Dashboard',

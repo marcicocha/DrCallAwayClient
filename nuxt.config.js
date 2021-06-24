@@ -3,6 +3,8 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   target: 'static',
   ssr: false,
+  generate: { fallback: true },
+
   // mode: 'universal',
   head: {
     title: 'Dr Call Away',
@@ -40,8 +42,12 @@ export default {
     '~/assets/scss/main.scss',
   ],
 
+  server: {
+    host: '0.0.0.0',
+    port: 8080,
+  },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/antd-ui', '@/plugins/veevalidate'],
+  plugins: ['@/plugins/antd-ui.js', '@/plugins/veevalidate.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -63,7 +69,9 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: process.env.BASE_URL,
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

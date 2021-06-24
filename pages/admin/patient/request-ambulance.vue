@@ -4,43 +4,49 @@
       <AppTitleDivider title="Request an Ambulance" />
       <div class="admin-wrapper">
         <a-form>
-          <a-row type="flex" :gutter="16">
-            <a-col :span="12">
-              <AppInput
-                v-model="requestObj.pickupAddress"
-                label="Pickup Address"
-                placeholder="Enter your location"
-                name="pickup address"
-              />
-            </a-col>
-            <a-col :span="12">
-              <AppInput
-                v-model="requestObj.phoneNumber"
-                label="Phone Number"
-                placeholder="Enter your phone number"
-                name="value"
-              />
-            </a-col>
-            <a-col :span="24">
-              <AppInput
-                v-model="requestObj.additionalInformation"
-                label="Additional Information"
-                placeholder="Please enter any information that can be helpful for this request"
-                name="additional information"
-              />
-            </a-col>
-          </a-row>
-          <br />
-          <div class="t-c">
-            <AppButton
-              type="primary"
-              :block="false"
-              :loading="isLoading"
-              class="admin-button"
-              @click="submitHandler"
-              >CALLUP</AppButton
-            >
-          </div>
+          <ValidationObserver ref="observer" tag="div">
+            <a-row type="flex" :gutter="16">
+              <a-col :span="12">
+                <AppInput
+                  v-model="requestObj.pick_up_address"
+                  label="Pickup Address"
+                  placeholder="Enter your location"
+                  name="pickup address"
+                  rules="required"
+                  required
+                />
+              </a-col>
+              <a-col :span="12">
+                <AppInput
+                  v-model="requestObj.phone_number"
+                  label="Phone Number"
+                  placeholder="Enter your phone number"
+                  name="value"
+                  rules="required"
+                  required
+                />
+              </a-col>
+              <a-col :span="24">
+                <AppInput
+                  v-model="requestObj.additional_information"
+                  label="Additional Information"
+                  placeholder="Please enter any information that can be helpful for this request"
+                  name="additional information"
+                />
+              </a-col>
+            </a-row>
+            <br />
+            <div class="t-c">
+              <AppButton
+                type="primary"
+                :block="false"
+                :loading="isLoading"
+                class="admin-button"
+                @click="submitHandler"
+                >CALLUP</AppButton
+              >
+            </div>
+          </ValidationObserver>
         </a-form>
       </div>
     </div>
@@ -83,6 +89,8 @@
   </div>
 </template>
 <script>
+import { ValidationObserver } from 'vee-validate'
+import { mapActions } from 'vuex'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
@@ -95,6 +103,7 @@ export default {
     AppSelect,
     AppAmbulanceDataTable,
     AppTitleDivider,
+    ValidationObserver,
   },
   layout: 'dashboard',
   data() {
@@ -107,9 +116,35 @@ export default {
     }
   },
   methods: {
-    submitHandler() {
-      console.log('CLICKED')
+    async submitHandler() {
+      const isValid = await this.$refs.observer.validate()
+      if (!isValid) {
+        return
+      }
+      this.isLoading = true
+      try {
+        const response = await this.submitAmbulanceHandler(this.requestObj)
+        this.$notification.success({
+          message: 'Success',
+          description: response.successMessage,
+          duration: 4000,
+        })
+        this.isLoading = false
+      } catch (err) {
+        this.isLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
+    ...mapActions({
+      submitAmbulanceHandler: 'ambulanceModule/ADD_AMBULANCE',
+    }),
   },
 }
 </script>

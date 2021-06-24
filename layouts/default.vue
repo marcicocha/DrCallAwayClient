@@ -265,7 +265,7 @@
     </footer>
     <a-modal
       :visible="modalIsVisible"
-      width="420px"
+      width="500px"
       :confirm-loading="confirmLoading"
       :footer="null"
       :destroy-on-close="true"
@@ -282,50 +282,56 @@
           </div>
           <br />
           <div>
-            <ValidationObserver ref="observer" tag="div">
-              <AppInput
-                v-model="userObject.email"
-                placeholder="Email"
-                required
-              />
-              <AppInput
-                v-model="userObject.password"
-                placeholder="Password"
-                type="password"
-                required
-              />
-              <a-row type="flex" :gutter="16" align="middle"
-                ><a-col :span="12"><AppCheckbox label="Remember me" /></a-col
-                ><a-col :span="12"
-                  ><p class="t-r">
-                    <a @click="forgotPasswordIsVisibleHandler"
-                      >Forgot Password</a
-                    >
-                  </p></a-col
-                ></a-row
-              >
-            </ValidationObserver>
+            <a-form>
+              <ValidationObserver ref="obs1" tag="div">
+                <AppInput
+                  v-model="userObject.email"
+                  placeholder="Email"
+                  required
+                  rules="required"
+                />
+                <AppInput
+                  v-model="userObject.password"
+                  placeholder="Password"
+                  input-type="password"
+                  required
+                  rules="required"
+                />
+                <a-row type="flex" :gutter="16" align="middle"
+                  ><a-col :span="12"><AppCheckbox label="Remember me" /></a-col
+                  ><a-col :span="12"
+                    ><p class="t-r">
+                      <a @click="forgotPasswordIsVisibleHandler"
+                        >Forgot Password</a
+                      >
+                    </p></a-col
+                  ></a-row
+                >
+              </ValidationObserver>
+            </a-form>
             <a-row type="flex" :gutter="16"
               ><a-col :span="12"
                 ><AppButton
                   type="primary"
-                  :loading="isLoading"
-                  @click="userHandler"
+                  :loading="isSignInLoading"
+                  @click="signInHandler"
                   >Sign In</AppButton
                 ></a-col
               >
               <a-col :span="12">
                 <AppButton
                   type="default"
-                  :loading="isLoading"
+                  :loading="isSignUpLoading"
                   @click="showSignUpModal('patient')"
                   >Create an Account</AppButton
                 >
               </a-col></a-row
             >
             <br />
-            <p class="t-c">
+            <br />
+            <p class="t-c" style="font-size: 13px">
               By clicking “Sign In” you are agreeing to DrCallAway<sup>TM</sup>
+              <br />
               <br />
               <nuxt-link to="terms-conditions">Terms and Conditions</nuxt-link>
             </p>
@@ -340,81 +346,90 @@
           </div>
           <br />
           <div>
-            <AppSelect
-              v-if="mode === 'practitioner'"
-              v-model="userObject.gender"
-              placeholder="Practitioner"
-              rules="required"
-              required
-              :remote="false"
-              :data="[
-                'DOCTOR',
-                'NURSE',
-                'AMBULANCE',
-                'DIAGNOTIC CENTER',
-                'PHARMACY',
-                'NUTRITIONIST',
-              ]"
-            />
-            <a-row type="flex" :gutter="16"
-              ><a-col :span="12"
-                ><AppInput
-                  v-model="signUpObject.firstName"
-                  placeholder="First Name"
+            <a-form>
+              <ValidationObserver ref="obs2" tag="div">
+                <AppSelect
+                  v-if="mode === 'practitioner'"
+                  v-model="signUpObject.type"
+                  placeholder="Practitioner"
+                  rules="required"
+                  required
+                  :remote="false"
+                  :data="[
+                    'DOCTOR',
+                    'NURSE',
+                    'AMBULANCE',
+                    'DIAGNOTIC',
+                    'PHARMACY',
+                    'NUTRITIONIST',
+                  ]"
+                />
+                <a-row type="flex" :gutter="16"
+                  ><a-col :span="12"
+                    ><AppInput
+                      v-model="signUpObject.first_name"
+                      placeholder="First Name"
+                      name="first name"
+                      required
+                      rules="required"
+                    />
+                  </a-col>
+                  <a-col :span="12"
+                    ><AppInput
+                      v-model="signUpObject.last_name"
+                      placeholder="Last Name"
+                      name="last name"
+                      required
+                      rules="required"
+                    />
+                  </a-col>
+                </a-row>
+                <AppSelect
+                  v-if="mode === 'patient'"
+                  v-model="signUpObject.gender"
+                  placeholder="Gender"
+                  name="gender"
+                  rules="required"
+                  required
+                  :remote="false"
+                  :data="['MALE', 'FEMALE']"
+                />
+                <AppInput
+                  v-model="signUpObject.phone_number"
+                  placeholder="Phone Number"
                   required
                   rules="required"
                 />
-              </a-col>
-              <a-col :span="12"
-                ><AppInput
-                  v-model="signUpObject.lastName"
-                  placeholder="Last Name"
+                <AppInput
+                  v-model="signUpObject.email"
+                  placeholder="Email"
+                  type="email"
                   required
                   rules="required"
                 />
-              </a-col>
-            </a-row>
-            <AppSelect
-              v-if="mode === 'patient'"
-              v-model="userObject.gender"
-              placeholder="Gender"
-              rules="required"
-              required
-              :remote="false"
-              :data="['MALE', 'FEMALE']"
-            />
-            <AppInput
-              v-model="userObject.phoneNumber"
-              placeholder="Phone Number"
-              required
-              rules="required"
-            />
-            <AppInput
-              v-model="userObject.email"
-              placeholder="Email"
-              type="email"
-              required
-              rules="required"
-            />
-            <AppInput
-              v-model="userObject.password"
-              placeholder="Password"
-              type="password"
-              required
-            />
-            <AppInput
-              v-model="userObject.confirmPassword"
-              placeholder="Confirm Password"
-              type="password"
-              required
-            />
-            <AppCheckbox label="I agree with terms and conditions" />
+                <AppInput
+                  v-model="signUpObject.password"
+                  placeholder="Password"
+                  input-type="password"
+                  required
+                  rules="required"
+                />
+                <AppInput
+                  v-model="signUpObject.password_confirmation"
+                  placeholder="Confirm Password"
+                  input-type="password"
+                  required
+                  rules="required"
+                />
+                <AppCheckbox label="I agree with terms and conditions" />
+              </ValidationObserver>
+            </a-form>
             <div class="t-c">
               <AppButton
                 type="primary"
-                :loading="isLoading"
+                :loading="isSignUpLoading"
                 :block="false"
-                @click="userHandler"
+                @click="signUpHandler"
                 >Register</AppButton
               >
               <br />
@@ -422,7 +437,7 @@
                 Already have an account?
                 <a @click="showSignInModal">Sign In.</a>
               </p>
-              <p v-if="mode !== 'patient'">
+              <p v-if="mode === 'patient'">
                 Provider?
                 <a @click="showSignUpModal('practitioner')">Sign Up Here</a>
               </p>
@@ -439,20 +454,24 @@
             <p>Enter your email and we'll send you a password reset link.</p>
           </div>
           <br />
-          <AppInput
-            v-model="passwordObject.email"
-            placeholder="Email"
-            type="email"
-            required
-            rules="required"
-          />
+          <a-form>
+            <ValidationObserver ref="obs3" tag="div">
+              <AppInput
+                v-model="passwordObject.email"
+                placeholder="Email"
+                type="email"
+                required
+                rules="required"
+              />
+            </ValidationObserver>
+          </a-form>
           <br />
           <div class="t-c">
             <AppButton
               type="primary"
-              :loading="isLoading"
+              :loading="isforgotLoading"
               :block="false"
-              @click="userHandler"
+              @click="forgotPasswordHandler"
               >Send Request</AppButton
             >
             <br />
@@ -467,11 +486,11 @@
   </div>
 </template>
 <script>
+import { ValidationObserver } from 'vee-validate'
 import AppInput from '@/components/AppInput'
 import AppCheckbox from '@/components/AppCheckbox'
 import AppSelect from '@/components/AppSelect'
 import AppButton from '@/components/AppButton'
-import { ValidationObserver } from 'vee-validate'
 
 export default {
   components: {
@@ -492,9 +511,11 @@ export default {
       signInIsVisible: false,
       confirmLoading: false,
       userObject: {},
-      isLoading: false,
+      isSignInLoading: false,
+      isSignUpLoading: false,
+      isforgotLoading: false,
       mode: 'patient',
-      signUpObject: '',
+      signUpObject: {},
       forgotPasswordIsVisible: false,
       passwordObject: {},
     }
@@ -509,6 +530,91 @@ export default {
     },
   },
   methods: {
+    async signInHandler() {
+      const isValid = await this.$refs.obs1.validate()
+      if (!isValid) {
+        return
+      }
+      this.isSignInLoading = true
+      try {
+        const { data } = await this.$axios.$post('login', this.userObject)
+        console.log(data)
+        console.log(data.roles[0].name)
+        localStorage.setItem('user', JSON.stringify(data))
+
+        this.$router.push(`/admin/${data.roles[0].name}`)
+        this.isSignInLoading = false
+        this.closeModal()
+      } catch (err) {
+        this.isSignInLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
+    async signUpHandler() {
+      const isValid = await this.$refs.obs2.validate()
+      if (!isValid) {
+        return
+      }
+      this.isSignUpLoading = true
+      console.log(this.signUpObject)
+      try {
+        if (this.mode === 'practitioner') {
+          const { response } = await this.$axios.$post(
+            'partners/signup',
+            this.signUpObject
+          )
+          localStorage.setItem('user', JSON.stringify(response))
+        } else {
+          const { response } = await this.$axios.$post(
+            'signup',
+            this.signUpObject
+          )
+          localStorage.setItem('user', JSON.stringify(response))
+          this.$router.push(`/patient/doctor`)
+        }
+
+        this.isSignUpLoading = false
+      } catch (err) {
+        this.isSignUpLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
+    async forgotPasswordHandler() {
+      const isValid = await this.$refs.obs3.validate()
+      if (!isValid) {
+        return
+      }
+      this.isforgotLoading = true
+      try {
+        await this.$axios.$post('forgot-password', this.userObject)
+        this.showSignInModal()
+        this.isforgotLoading = false
+      } catch (err) {
+        this.isforgotLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
     closeModal() {
       this.modalIsVisible = false
       this.signUpIsVisible = false

@@ -1,0 +1,2 @@
+export const ADD_AMBULANCE = 'ADD_AMBULANCE'
+export const GET_AMBULANCE = 'GET_AMBULANCE'

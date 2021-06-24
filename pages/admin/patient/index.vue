@@ -24,7 +24,11 @@
           ><NuxtLink to="/admin/patient/case-file">View All ></NuxtLink></span
         ></AppTitleDivider
       >
-      <a-table :columns="columns" :data-source="dataSource" :pagination="false">
+      <a-table
+        :columns="columns"
+        :data-source="allCaseFiles"
+        :pagination="false"
+      >
         <template slot="status" slot-scope="text, record">
           <div
             :class="{
@@ -46,7 +50,7 @@
       </AppTitleDivider>
       <a-table
         :columns="columns"
-        :data-source="dataSource1"
+        :data-source="allAppointments"
         :pagination="false"
       >
         <template slot="status" slot-scope="text, record">
@@ -60,6 +64,8 @@
 </template>
 <script>
 import { Carousel, Slide } from 'vue-carousel'
+import { mapActions, mapState } from 'vuex'
+
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppTitleDivider from '@/components/AppTitleDivider'
 
@@ -73,23 +79,6 @@ export default {
   layout: 'dashboard',
   data() {
     return {
-      dataSource: [
-        {
-          caseId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          complaint: 'Malaria and Typhoid',
-          dateAdded: '23rd March, 2021',
-          status: 'Active',
-        },
-        {
-          caseId: '#000002',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          complaint: 'Malaria and Typhoid',
-          dateAdded: '23rd March, 2021',
-          status: 'Completed',
-        },
-      ],
-      dataSource1: [],
       dashboardList: [
         {
           firstText: 'Talk to a',
@@ -148,6 +137,31 @@ export default {
       ]
       return columns
     },
+    ...mapState({
+      allCaseFiles: (state) => state.caseFileModule.caseFiles,
+      allAppointments: (state) => state.appointmentModule.appointments,
+    }),
+  },
+  async mounted() {
+    try {
+      await this.getAllCaseFile()
+      await this.getAllAppointment()
+    } catch (err) {
+      const { default: errorHandler } = await import('@/utils/errorHandler')
+      errorHandler(err).forEach((msg) => {
+        this.$notification.error({
+          message: 'Error',
+          description: msg,
+          duration: 4000,
+        })
+      })
+    }
+  },
+  methods: {
+    ...mapActions({
+      getAllCaseFile: 'caseFileModule/GET_CASE_FILE',
+      getAllAppointment: 'appointmentModule/GET_APPOINTMENT',
+    }),
   },
 }
 </script>

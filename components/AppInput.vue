@@ -1,35 +1,38 @@
 <template>
-  <!-- <ValidationProvider :vid="$attrs.name" :name="name" :rules="rules" tag="div"> -->
-  <a-form-item
-    :label="label"
-    :label-col="labelCol"
-    :wrapper-col="wrapperCol"
-    :required="required"
-  >
-    <!-- slot-scope="{ errors, flags }" :validate-status="resolveState({ errors, flags })"
+  <ValidationProvider :vid="$attrs.name" :name="name" :rules="rules" tag="div">
+    <a-form-item
+      slot-scope="{ errors, flags }"
+      :label="label"
+      :label-col="labelCol"
+      :wrapper-col="wrapperCol"
+      :required="required"
+      :validate-status="resolveState({ errors, flags })"
+      :help="showErrors ? errors[0] : ''"
+    >
+      <!-- slot-scope="{ errors, flags }" :validate-status="resolveState({ errors, flags })"
     :help="showErrors ? errors[0] : ''" -->
-    <a-input
-      v-model="innerValue"
-      :type="inputType"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :size="size"
-      :class="classNames"
-      :allow-clear="allowClear"
-      :max-length="parseInt(maxLength, 10)"
-      @blur="blurHandler"
-    />
-  </a-form-item>
-  <!-- </ValidationProvider> -->
+      <a-input
+        v-model="innerValue"
+        :type="inputType"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :size="size"
+        :class="classNames"
+        :allow-clear="allowClear"
+        :max-length="parseInt(maxLength, 10)"
+        @blur="blurHandler"
+      />
+    </a-form-item>
+  </ValidationProvider>
 </template>
 
 <script>
-// import { ValidationProvider } from 'vee-validate'
+import { ValidationProvider } from 'vee-validate'
 
 export default {
   name: 'AppInput',
   components: {
-    // ValidationProvider,
+    ValidationProvider,
   },
   props: {
     value: {
@@ -177,13 +180,13 @@ export default {
         return 'error'
       }
 
-      if (flags.pending) {
-        return 'validating'
-      }
+      // if (flags.pending) {
+      //   return 'validating'
+      // }
 
-      if (flags.valid) {
-        return 'success'
-      }
+      // if (flags.valid) {
+      //   return 'success'
+      // }
 
       return ''
     },

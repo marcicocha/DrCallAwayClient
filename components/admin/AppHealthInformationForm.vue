@@ -134,6 +134,7 @@
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'
+import { mapActions } from 'vuex'
 import AppTitleDivider from '@/components/AppTitleDivider'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
@@ -165,9 +166,35 @@ export default {
     }
   },
   methods: {
-    submitHandler() {
-      console.log('CLICKED')
+    async submitHandler() {
+      const isValid = await this.$refs.observer.validate()
+      if (!isValid) {
+        return
+      }
+      this.isLoading = true
+      try {
+        const response = this.submitHealthHandler(this.healthDetails)
+        this.$notification.success({
+          message: 'Success',
+          description: response.successMessage,
+          duration: 4000,
+        })
+        this.isLoading = false
+      } catch (err) {
+        this.isLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
+    ...mapActions({
+      submitHealthHandler: 'healthInformationModule/ADD_HEALTH_INFORMATION',
+    }),
   },
 }
 </script>

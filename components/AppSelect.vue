@@ -1,54 +1,63 @@
 <template>
-  <a-form-item
-    :label="label"
-    :required="required"
-    :label-col="labelCol"
-    :wrapper-col="wrapperCol"
-  >
-    <!-- <label for="name">{{ label }}</label> -->
-    <a-select
-      v-model="innerValue"
-      mode="default"
-      show-search
-      style="width: 100%"
-      :loading="fetching"
-      :disabled="disabled"
-      :placeholder="placeholder"
-      :allow-clear="allowClear"
-      :default-value="defaultValue"
-      @blur="blurHandler"
-      @change="changeHandler"
-      @focus="searchHandler"
-      @select="selectHandler"
+  <ValidationProvider :vid="$attrs.name" :name="name" :rules="rules" tag="div">
+    <a-form-item
+      slot-scope="{ errors, flags }"
+      :label="label"
+      :required="required"
+      :label-col="labelCol"
+      :wrapper-col="wrapperCol"
+      :validate-status="resolveState({ errors, flags })"
+      :help="showErrors ? errors[0] : ''"
     >
-      <template v-if="remote && dataRemote">
-        <a-select-option
-          v-for="d in dataRemote"
-          :key="d.value"
-          :title="d.text"
-          :value="d.text"
-        >
-          {{ d.text }}
-        </a-select-option>
-      </template>
-      <template v-else>
-        <template v-if="data && data.length !== ''">
+      <!-- <label for="name">{{ label }}</label> -->
+      <a-select
+        v-model="innerValue"
+        mode="default"
+        show-search
+        style="width: 100%"
+        :loading="fetching"
+        :disabled="disabled"
+        :placeholder="placeholder"
+        :allow-clear="allowClear"
+        :default-value="defaultValue"
+        @blur="blurHandler"
+        @change="changeHandler"
+        @focus="searchHandler"
+        @select="selectHandler"
+      >
+        <template v-if="remote && dataRemote">
           <a-select-option
-            v-for="(i, index) in data"
-            :key="i + '-' + index"
-            :value="i"
+            v-for="d in dataRemote"
+            :key="d.value"
+            :title="d.text"
+            :value="d.text"
           >
-            {{ i }}
+            {{ d.text }}
           </a-select-option>
         </template>
-      </template>
-    </a-select>
-  </a-form-item>
+        <template v-else>
+          <template v-if="data && data.length !== ''">
+            <a-select-option
+              v-for="(i, index) in data"
+              :key="i + '-' + index"
+              :value="i"
+            >
+              {{ i }}
+            </a-select-option>
+          </template>
+        </template>
+      </a-select>
+    </a-form-item>
+  </ValidationProvider>
 </template>
 <script>
+import { ValidationProvider } from 'vee-validate'
+
 export default {
   name: 'AppSelect',
-  components: {},
+  components: {
+    ValidationProvider,
+  },
   props: {
     value: {
       type: String,
@@ -109,6 +118,14 @@ export default {
     defaultValue: {
       type: [String, Number, Array],
       default: () => '',
+    },
+    rules: {
+      type: [Object, String],
+      default: '',
+    },
+    showErrors: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
@@ -207,6 +224,21 @@ export default {
             })
           }
         })
+    },
+    resolveState({ errors, flags }) {
+      if (errors[0]) {
+        return 'error'
+      }
+
+      // if (flags.pending) {
+      //   return 'validating'
+      // }
+
+      // if (flags.valid) {
+      //   return 'success'
+      // }
+
+      return ''
     },
   },
 }

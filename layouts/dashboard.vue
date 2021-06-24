@@ -24,7 +24,7 @@
         :default-selected-keys="['1']"
         style="margin-top: 2rem"
       >
-        <template v-for="(menu, i) in clientMenu">
+        <template v-for="(menu, i) in menuList">
           <a-menu-item
             v-if="menu.children.length === 0"
             :key="String(i++)"
@@ -89,7 +89,134 @@
 </template>
 <script>
 import AppHeader from '@/components/AppHeader'
+const clientMenu = [
+  {
+    key: 'dashboard',
+    name: 'Dashboard',
+    path: '/admin/patient',
+    children: [],
+  },
+  {
+    key: 'medical_information',
+    name: 'Medical Information',
+    path: '/admin/patient/medical-information',
+    children: [],
+  },
+  {
+    key: 'case_file',
+    name: 'My Case File',
+    path: '/admin/patient/case-file',
+    children: [],
+  },
+  {
+    key: 'appointment',
+    name: 'Appointments',
+    path: '/admin/patient/appointment',
+    children: [],
+  },
+  {
+    key: 'prescriptions',
+    name: 'Prescriptions/Tests',
+    path: '/admin/patient/prescriptions-test',
+    children: [],
+  },
+  {
+    key: 'key_services',
+    name: 'Key Services',
+    path: '/admin/patient/key-services',
+    children: [
+      {
+        key: 'consultation',
+        name: 'Consultation',
+        path: '/admin/patient/key-services/consultation',
+        children: [],
+      },
+      {
+        key: 'book_appointment',
+        name: 'Book an Appointment',
+        path: '/admin/patient/key-services/book-appointment',
+        children: [],
+      },
+      {
+        key: 'wellness_nutrition',
+        name: 'Wellness & Nutrition',
+        path: '/admin/patient/key-services/wellness-nutrition',
+        children: [],
+      },
+      {
+        key: 'home_care',
+        name: 'Home Care',
+        path: '/admin/patient/key-services/home-care',
+        children: [],
+      },
+    ],
+  },
+  {
+    key: 'ambulance',
+    name: 'Request An Ambulance',
+    path: '/admin/patient/request-ambulance',
+    children: [],
+  },
+  {
+    key: 'self_service',
+    name: 'Self Service',
+    path: '/admin/patient/self-service',
+    children: [
+      {
+        key: 'subscribe',
+        name: 'Susbcribe',
+        path: '/admin/patient/self-service/subscribe',
+        children: [],
+      },
+      {
+        key: 'helpdesk',
+        name: 'Helpdesk',
+        path: '/admin/patient/self-service/helpdesk',
+        children: [],
+      },
+    ],
+  },
+]
 
+const doctorMenu = [
+  {
+    key: 'dashboard',
+    name: 'Dashboard',
+    path: '/admin/doctor',
+    children: [],
+  },
+  {
+    key: 'waiting-room',
+    name: 'Waiting Room',
+    path: '/admin/doctor/waiting-room',
+    children: [],
+  },
+  {
+    key: 'case-management',
+    name: 'Case Management',
+    path: '/admin/doctor/case-management',
+    children: [],
+  },
+  {
+    key: 'appointment',
+    name: 'Appointments',
+    path: '/admin/doctor/appointment',
+    children: [],
+  },
+  {
+    key: 'self_service',
+    name: 'Self Service',
+    path: '/admin/patient/self-service',
+    children: [
+      {
+        key: 'helpdesk',
+        name: 'Helpdesk',
+        path: '/admin/patient/self-service/helpdesk',
+        children: [],
+      },
+    ],
+  },
+]
 export default {
   components: {
     AppHeader,
@@ -97,132 +224,24 @@ export default {
   data() {
     return {
       collapsed: false,
-      clientMenu: [
-        {
-          key: 'dashboard',
-          name: 'Dashboard',
-          path: '/admin/patient',
-          children: [],
-        },
-        {
-          key: 'medical_information',
-          name: 'Medical Information',
-          path: '/admin/patient/medical-information',
-          children: [],
-        },
-        {
-          key: 'case_file',
-          name: 'My Case File',
-          path: '/admin/patient/case-file',
-          children: [],
-        },
-        {
-          key: 'appointment',
-          name: 'Appointments',
-          path: '/admin/patient/appointment',
-          children: [],
-        },
-        {
-          key: 'prescriptions',
-          name: 'Prescriptions/Tests',
-          path: '/admin/patient/prescriptions-test',
-          children: [],
-        },
-        {
-          key: 'key_services',
-          name: 'Key Services',
-          path: '/admin/patient/key-services',
-          children: [
-            {
-              key: 'consultation',
-              name: 'Consultation',
-              path: '/admin/patient/key-services/consultation',
-              children: [],
-            },
-            {
-              key: 'book_appointment',
-              name: 'Book an Appointment',
-              path: '/admin/patient/key-services/book-appointment',
-              children: [],
-            },
-            {
-              key: 'wellness_nutrition',
-              name: 'Wellness & Nutrition',
-              path: '/admin/patient/key-services/wellness-nutrition',
-              children: [],
-            },
-            {
-              key: 'home_care',
-              name: 'Home Care',
-              path: '/admin/patient/key-services/home-care',
-              children: [],
-            },
-          ],
-        },
-        {
-          key: 'ambulance',
-          name: 'Request An Ambulance',
-          path: '/admin/patient/request-ambulance',
-          children: [],
-        },
-        {
-          key: 'self_service',
-          name: 'Self Service',
-          path: '/admin/patient/self-service',
-          children: [
-            {
-              key: 'subscribe',
-              name: 'Susbcribe',
-              path: '/admin/patient/self-service/subscribe',
-              children: [],
-            },
-            {
-              key: 'helpdesk',
-              name: 'Helpdesk',
-              path: '/admin/patient/self-service/helpdesk',
-              children: [],
-            },
-          ],
-        },
-        {
-          key: 'dashboard',
-          name: 'Dashboard',
-          path: '/admin/doctor',
-          children: [],
-        },
-        {
-          key: 'waiting-room',
-          name: 'Waiting Room',
-          path: '/admin/doctor/waiting-room',
-          children: [],
-        },
-        {
-          key: 'case-management',
-          name: 'Case Management',
-          path: '/admin/doctor/case-management',
-          children: [],
-        },
-        {
-          key: 'appointment',
-          name: 'Appointments',
-          path: '/admin/doctor/appointment',
-          children: [],
-        },
-        {
-          key: 'self_service',
-          name: 'Self Service',
-          path: '/admin/patient/self-service',
-          children: [
-            {
-              key: 'helpdesk',
-              name: 'Helpdesk',
-              path: '/admin/patient/self-service/helpdesk',
-              children: [],
-            },
-          ],
-        },
-      ],
+      userObject: {},
+      menuList: [],
     }
+  },
+  // computed: {
+  //   menuList() {
+  //     console.log(this.userObject, 'USER OBJ')
+  //   },
+  // },
+  mounted() {
+    this.userObject = JSON.parse(localStorage.getItem('user'))
+    const role = this.userObject.roles[0].name
+
+    if (role === 'doctor') {
+      this.menuList = [...doctorMenu]
+      return
+    }
+    this.menuList = [...clientMenu]
   },
   methods: {
     goToPage(path) {

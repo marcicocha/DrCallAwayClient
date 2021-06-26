@@ -8,7 +8,7 @@
           <a-row type="flex" :gutter="24">
             <a-col :span="12">
               <AppInput
-                v-model="healthDetails.heartRate"
+                v-model="healthDetails.heart_rate"
                 label="Heart Rate"
                 required
                 rules="required"
@@ -37,7 +37,7 @@
               <a-row type="flex" :gutter="12">
                 <a-col :span="12">
                   <AppSelect
-                    v-model="healthDetails.glucoseLevel"
+                    v-model="healthDetails.glucose_level"
                     label="Glucose Level"
                     required
                     rules="required"
@@ -48,7 +48,7 @@
                 </a-col>
                 <a-col :span="12">
                   <AppInput
-                    v-model="healthDetails.glucoseValue"
+                    v-model="healthDetails.glucose_value"
                     label="Enter the Value"
                     required
                     rules="required"
@@ -59,7 +59,7 @@
             </a-col>
             <a-col :span="12">
               <AppSelect
-                v-model="healthDetails.alcoholIntake"
+                v-model="healthDetails.alcohol_intake"
                 label="Alcohol Intake"
                 name="alcohol intake"
                 :data="['HIGH']"
@@ -68,7 +68,7 @@
             </a-col>
             <a-col :span="12">
               <AppInput
-                v-model="healthDetails.howManyTimes"
+                v-model="healthDetails.alcohol_frequency"
                 label="If Yes, How many times per week?"
                 :required="healthDetails.alcoholIntake"
                 :rules="healthDetails.alcoholIntake ? 'required' : ''"
@@ -87,7 +87,7 @@
             </a-col>
             <a-col :span="12">
               <AppInput
-                v-model="healthDetails.howManyStick"
+                v-model="healthDetails.smoke_frequency"
                 label="If Yes, How many sticks per week?"
                 :required="healthDetails.smoke"
                 :rules="healthDetails.smoke ? 'required' : ''"
@@ -104,14 +104,14 @@
             <a-col :span="8">
               <span>If Other, Please specify</span>
               <AppInput
-                v-model="healthDetails.ifOthers"
+                v-model="healthDetails.if_others"
                 name="value"
                 :disabled="healthDetails.recurring !== 'Others'"
               />
             </a-col>
             <a-col :span="24">
               <AppTextArea
-                v-model="healthDetails.additionalInformation"
+                v-model="additional_information"
                 label="Additional Information"
               />
             </a-col>
@@ -156,6 +156,7 @@ export default {
     return {
       healthDetails: {},
       isLoading: false,
+      additional_information: undefined,
       options: [
         'Asthma',
         'Diabetes',
@@ -173,7 +174,13 @@ export default {
       }
       this.isLoading = true
       try {
-        const response = this.submitHealthHandler(this.healthDetails)
+        const obj = {
+          medical_info: {
+            ...this.healthDetails,
+          },
+          additional_info: this.additional_information,
+        }
+        const response = this.submitHealthHandler(obj)
         this.$notification.success({
           message: 'Success',
           description: response.successMessage,

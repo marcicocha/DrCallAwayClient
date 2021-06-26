@@ -24,22 +24,7 @@
           ><NuxtLink to="/admin/patient/case-file">View All ></NuxtLink></span
         ></AppTitleDivider
       >
-      <a-table
-        :columns="columns"
-        :data-source="allCaseFiles"
-        :pagination="false"
-      >
-        <template slot="status" slot-scope="text, record">
-          <div
-            :class="{
-              blue: record.status === 'Active',
-              green: record.status === 'Completed',
-            }"
-          >
-            {{ record.status }}
-          </div>
-        </template>
-      </a-table>
+      <AppCaseFileDataTable :pagination="false" />
     </div>
     <br />
     <div>
@@ -48,33 +33,25 @@
           ><NuxtLink to="/admin/patient/appointment">View All ></NuxtLink></span
         >
       </AppTitleDivider>
-      <a-table
-        :columns="columns"
-        :data-source="allAppointments"
-        :pagination="false"
-      >
-        <template slot="status" slot-scope="text, record">
-          <div class="t-r">
-            {{ record.status }}
-          </div>
-        </template>
-      </a-table>
+      <AppAppointmentDataTable :pagination="false" />
     </div>
   </div>
 </template>
 <script>
 import { Carousel, Slide } from 'vue-carousel'
-import { mapActions, mapState } from 'vuex'
 
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppTitleDivider from '@/components/AppTitleDivider'
-
+import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable'
+import AppAppointmentDataTable from '@/components/admin/patient/appointment/AppAppointmentDataTable'
 export default {
   components: {
     Carousel,
     Slide,
     AppDashboardCard,
     AppTitleDivider,
+    AppCaseFileDataTable,
+    AppAppointmentDataTable,
   },
   layout: 'dashboard',
   data() {
@@ -100,68 +77,6 @@ export default {
         },
       ],
     }
-  },
-  computed: {
-    columns() {
-      const columns = [
-        {
-          title: 'Case ID',
-          dataIndex: 'caseId',
-          scopedSlots: { customRender: 'caseId' },
-        },
-        {
-          title: 'Consultant Name',
-          dataIndex: 'consultantName',
-          scopedSlots: { customRender: 'consultantName' },
-        },
-        {
-          title: 'Complaint',
-          dataIndex: 'complaint',
-          scopedSlots: { customRender: 'complaint' },
-        },
-        {
-          title: 'Date Added',
-          dataIndex: 'dateAdded',
-          scopedSlots: { customRender: 'dateAdded' },
-        },
-        {
-          title: 'Status',
-          dataIndex: 'status',
-          scopedSlots: { customRender: 'status' },
-        },
-        // {
-        //  title: '',
-        //  dataIndex: 'operation1',
-        //  scopedSlots: { customRender: 'operation' },
-        // },
-      ]
-      return columns
-    },
-    ...mapState({
-      allCaseFiles: (state) => state.caseFileModule.caseFiles,
-      allAppointments: (state) => state.appointmentModule.appointments,
-    }),
-  },
-  async mounted() {
-    try {
-      await this.getAllCaseFile()
-      await this.getAllAppointment()
-    } catch (err) {
-      const { default: errorHandler } = await import('@/utils/errorHandler')
-      errorHandler(err).forEach((msg) => {
-        this.$notification.error({
-          message: 'Error',
-          description: msg,
-          duration: 4000,
-        })
-      })
-    }
-  },
-  methods: {
-    ...mapActions({
-      getAllCaseFile: 'caseFileModule/GET_CASE_FILE',
-      getAllAppointment: 'appointmentModule/GET_APPOINTMENT',
-    }),
   },
 }
 </script>

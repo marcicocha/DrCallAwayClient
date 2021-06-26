@@ -12,7 +12,7 @@
       alt="notification"
       class="notification"
     />
-    <p>Abraham Lincoln</p>
+    <p>{{ `${userObject.first_name} ${userObject.last_name}` }}</p>
     <img src="@/assets/images/user.png" alt="user-icon" class="user" />
   </div>
 </template>
@@ -30,9 +30,17 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      userObject: {},
+    }
+  },
+  mounted() {
+    this.userObject = JSON.parse(localStorage.getItem('user'))
+  },
   methods: {
     subscribeHandler() {
-      console.log('CLICKED')
+      this.$router.replace('/admin/patient/self-service/subscribe')
     },
   },
 }

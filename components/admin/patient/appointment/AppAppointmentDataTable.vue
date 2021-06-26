@@ -2,8 +2,8 @@
   <div>
     <a-table
       :columns="columns"
-      :data-source="dataSource"
-      :pagination="false"
+      :data-source="allAppointments"
+      :pagination="pagination"
       :row-key="(record) => record.appointmentId"
       :custom-row="customRow"
     >
@@ -22,6 +22,8 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
   name: 'AppAppointmentDataTable',
   props: {
@@ -29,9 +31,9 @@ export default {
       type: String,
       default: '',
     },
-    dataSource: {
-      type: Array,
-      default: () => [],
+    pagination: {
+      type: Boolean,
+      default: true,
     },
   },
   computed: {
@@ -75,6 +77,9 @@ export default {
       ]
       return columns
     },
+    ...mapState({
+      allAppointments: (state) => state.appointmentModule.appointments,
+    }),
   },
   methods: {
     customRow(record) {
@@ -86,6 +91,9 @@ export default {
         },
       }
     },
+    ...mapActions({
+      getAllAppointment: 'appointmentModule/GET_APPOINTMENT',
+    }),
   },
 }
 </script>

@@ -14,7 +14,7 @@
         <a-row type="flex" :gutter="24">
           <a-col :span="12">
             <AppInput
-              v-model="caseFileObj.dateAdded"
+              v-model="caseFileObj.created_at"
               label="Date Created"
               name="date created"
             />

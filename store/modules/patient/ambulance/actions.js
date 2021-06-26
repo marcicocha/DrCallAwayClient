@@ -18,7 +18,7 @@ export default {
   async [ADD_AMBULANCE]({ commit }, payload) {
     const user = JSON.parse(localStorage.getItem('user'))
     const config = {
-      headers: { Authorization: `Bearer ${user.token}` },
+      headers: { Authorization: `Bearer ${user.token.token}` },
     }
     const { response } = await this.$axios.$post('callUp', payload, config)
     commit(ADD_AMBULANCE, response)

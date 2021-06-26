@@ -3,12 +3,13 @@ export default {
   async [GET_CASE_FILE]({ commit }, payload) {
     const user = JSON.parse(localStorage.getItem('user'))
     const config = {
-      headers: { Authorization: `Bearer ${user.token}` },
+      headers: { Authorization: `Bearer ${user.token.token}` },
       params: {
         ...payload,
       },
     }
-    const { response } = await this.$axios.$get('cases', config)
-    commit(GET_CASE_FILE, response)
+    console.log(config, 'CONFIG')
+    const { data } = await this.$axios.$get('cases', config)
+    commit(GET_CASE_FILE, data)
   },
 }

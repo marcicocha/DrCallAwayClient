@@ -3,7 +3,7 @@ export default {
   async [GET_APPOINTMENT]({ commit }, payload) {
     const user = JSON.parse(localStorage.getItem('user'))
     const config = {
-      headers: { Authorization: `Bearer ${user.token}` },
+      headers: { Authorization: `Bearer ${user.token.token}` },
       params: {
         ...payload,
       },

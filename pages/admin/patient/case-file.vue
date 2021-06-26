@@ -3,23 +3,14 @@
     <AppTabs v-if="!viewIsVisible" v-model="activeKey">
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Cases" force-render>
-          <AppCaseFileDataTable
-            status="pending"
-            :data-source="dataSource1"
-            @showCaseFile="showCaseFile"
-          />
+          <AppCaseFileDataTable status="PENDING" @showCaseFile="showCaseFile" />
         </a-tab-pane>
-        <a-tab-pane key="2" tab="Active Cases" force-render>
-          <AppCaseFileDataTable
-            status="active"
-            :data-source="dataSource2"
-            @showCaseFile="showCaseFile"
-          />
+        <a-tab-pane key="2" tab="Active Cases">
+          <AppCaseFileDataTable status="ACTIVE" @showCaseFile="showCaseFile" />
         </a-tab-pane>
-        <a-tab-pane key="3" tab="Completed Cases" force-render>
+        <a-tab-pane key="3" tab="Completed Cases">
           <AppCaseFileDataTable
-            status="completed"
-            :data-source="dataSource3"
+            status="COMPLETED"
             @showCaseFile="showCaseFile"
           />
         </a-tab-pane>

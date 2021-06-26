@@ -541,7 +541,6 @@ export default {
         console.log(data)
         console.log(data.roles[0].name)
         localStorage.setItem('user', JSON.stringify(data))
-
         this.$router.push(`/admin/${data.roles[0].name}`)
         this.isSignInLoading = false
         this.closeModal()
@@ -577,9 +576,9 @@ export default {
             this.signUpObject
           )
           localStorage.setItem('user', JSON.stringify(response))
-          this.$router.push(`/patient/doctor`)
+          this.$router.push(`/admin/patient`)
         }
-
+        this.closeModal()
         this.isSignUpLoading = false
       } catch (err) {
         this.isSignUpLoading = false

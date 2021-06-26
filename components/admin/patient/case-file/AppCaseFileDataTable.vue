@@ -2,26 +2,29 @@
   <div>
     <a-table
       :columns="columns"
-      :data-source="dataSource"
-      :pagination="false"
+      :data-source="allCaseFiles"
+      :pagination="pagination"
       :row-key="(record) => record.caseId"
     >
       <template slot="status" slot-scope="text, record">
         <div
           :class="{
-            blue: record.status === 'Active',
-            green: record.status === 'Completed',
-            red: record.status === 'Pending',
+            blue: record.status === 'ACTIVE',
+            green: record.status === 'COMPLETED',
+            red: record.status === 'PENDING',
           }"
         >
           {{ record.status }}
         </div>
       </template>
+      <template slot="doctor" slot-scope="text, record">
+        {{ record.doctor ? record.doctor : 'Unassigned' }}
+      </template>
       <template slot="operation" slot-scope="text, record">
         <div style="text-align: right">
           <a-button-group class="link-group">
             <a-button
-              v-if="status !== 'Pending'"
+              v-if="record.status !== 'Pending'"
               type="link"
               class="table__btn"
               @click="$emit('showDeleteConfirm', record)"
@@ -40,16 +43,22 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
   name: 'AppCaseFileDataTable',
   props: {
     status: {
       type: String,
-      default: '',
+      default: undefined,
     },
-    dataSource: {
-      type: Array,
-      default: () => [],
+    pagination: {
+      type: Boolean,
+      default: true,
+    },
+    filterObj: {
+      type: Object,
+      default: () => {},
     },
   },
   computed: {
@@ -57,23 +66,23 @@ export default {
       const columns = [
         {
           title: 'Case ID',
-          dataIndex: 'caseId',
-          scopedSlots: { customRender: 'caseId' },
+          dataIndex: 'id',
+          scopedSlots: { customRender: 'id' },
         },
         {
           title: 'Consultant Name',
-          dataIndex: 'consultantName',
-          scopedSlots: { customRender: 'consultantName' },
+          dataIndex: 'doctor',
+          scopedSlots: { customRender: 'doctor' },
         },
         {
           title: 'Complaint',
-          dataIndex: 'complaint',
-          scopedSlots: { customRender: 'complaint' },
+          dataIndex: 'initial_complain',
+          scopedSlots: { customRender: 'initial_complain' },
         },
         {
           title: 'Date Added',
-          dataIndex: 'dateAdded',
-          scopedSlots: { customRender: 'dateAdded' },
+          dataIndex: 'created_at',
+          scopedSlots: { customRender: 'created_at' },
         },
         {
           title: 'Status',
@@ -88,11 +97,35 @@ export default {
       ]
       return columns
     },
+    ...mapState({
+      allCaseFiles: (state) => state.caseFileModule.caseFiles,
+    }),
+  },
+  async mounted() {
+    try {
+      const obj = {
+        ...this.filterObj,
+        status: this.status,
+      }
+      await this.getAllCaseFile(obj)
+    } catch (err) {
+      const { default: errorHandler } = await import('@/utils/errorHandler')
+      errorHandler(err).forEach((msg) => {
+        this.$notification.error({
+          message: 'Error',
+          description: msg,
+          duration: 4000,
+        })
+      })
+    }
   },
   methods: {
     viewCaseFile(record) {
       this.$emit('showCaseFile', record)
     },
+    ...mapActions({
+      getAllCaseFile: 'caseFileModule/GET_CASE_FILE',
+    }),
   },
 }
 </script>

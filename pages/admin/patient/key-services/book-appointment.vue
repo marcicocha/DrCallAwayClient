@@ -104,7 +104,7 @@
             </div>
             <br />
             <div>
-              <a-row :type="flex" :gutter="24">
+              <a-row type="flex" :gutter="24">
                 <a-col :span="8" :offset="4">
                   <AppButton
                     type="default"

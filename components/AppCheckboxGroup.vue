@@ -42,7 +42,7 @@ export default {
     value: {
       handler(newVal, oldVal) {
         if (newVal) {
-          this.innerValue = [...newVal]
+          this.innerValue = newVal
         } else {
           this.innerValue = undefined
         }
@@ -58,13 +58,14 @@ export default {
   },
   created() {
     if (this.value) {
-      this.innerValue = [...this.value]
+      this.innerValue = this.value
     } else {
       this.innerValue = undefined
     }
   },
   methods: {
     changeHandler(e) {
+      console.log(this.innerValue)
       this.$emit('blur', this.innerValue)
     },
   },

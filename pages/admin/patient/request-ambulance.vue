@@ -55,13 +55,13 @@
     <AppTabs v-model="activeKey">
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Requests" force-render>
-          <AppAmbulanceDataTable status="pending" :data-source="dataSource" />
+          <AppAmbulanceDataTable status="PENDING" />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Active Requests">
-          <AppAmbulanceDataTable status="active" :data-source="dataSource" />
+          <AppAmbulanceDataTable status="ACTIVE" />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Requests">
-          <AppAmbulanceDataTable status="completed" :data-source="dataSource" />
+          <AppAmbulanceDataTable status="COMPLETED" />
         </a-tab-pane>
       </template>
       <template slot="rightInfo">
@@ -124,9 +124,10 @@ export default {
       this.isLoading = true
       try {
         const response = await this.submitAmbulanceHandler(this.requestObj)
+        console.log(response, 'RESPONSE')
         this.$notification.success({
           message: 'Success',
-          description: response.successMessage,
+          description: response,
           duration: 4000,
         })
 

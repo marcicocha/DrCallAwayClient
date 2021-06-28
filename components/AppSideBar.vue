@@ -262,6 +262,7 @@ export default {
     },
     goToPage(path, children) {
       if (children.length === 0) {
+        console.log(this.$router.url, 'ROUTER')
         this.$router.replace(path)
         this.childMenuIsVisible = false
       } else {

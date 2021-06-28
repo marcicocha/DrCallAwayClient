@@ -6,21 +6,22 @@ export default {
   async [GET_AMBULANCE]({ commit }, payload) {
     const user = JSON.parse(localStorage.getItem('user'))
     const config = {
-      headers: { Authorization: `Bearer ${user.token}` },
+      headers: { Authorization: `Bearer ${user.token.token}` },
       params: {
         ...payload,
       },
     }
 
-    const { response } = await this.$axios.$get('callUp', config)
-    commit(GET_AMBULANCE, response)
+    const { data } = await this.$axios.$get('callUp', config)
+    commit(GET_AMBULANCE, data)
   },
   async [ADD_AMBULANCE]({ commit }, payload) {
     const user = JSON.parse(localStorage.getItem('user'))
     const config = {
       headers: { Authorization: `Bearer ${user.token.token}` },
     }
-    const { response } = await this.$axios.$post('callUp', payload, config)
-    commit(ADD_AMBULANCE, response)
+    const { data } = await this.$axios.$post('callUp', payload, config)
+    console.log(data, 'DATA')
+    commit(ADD_AMBULANCE, data)
   },
 }

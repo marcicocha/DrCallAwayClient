@@ -129,7 +129,13 @@ export default {
           description: response.successMessage,
           duration: 4000,
         })
-        this.isLoading = false
+
+        requestAnimationFrame(() => {
+          this.$refs.observer.reset()
+          this.requestObj = {}
+          this.isLoading = false
+          this.$emit('formSubmissionCompleted')
+        })
       } catch (err) {
         this.isLoading = false
         const { default: errorHandler } = await import('@/utils/errorHandler')

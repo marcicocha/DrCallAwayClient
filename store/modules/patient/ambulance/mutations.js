@@ -5,9 +5,9 @@ import {
 
 export default {
   [GET_AMBULANCE](state, payload) {
-    state.ambulance = payload
+    state.ambulances = payload
   },
   [ADD_AMBULANCE](state, payload) {
-    state.ambulance.unshift(payload)
+    state.ambulances.unshift(payload)
   },
 }

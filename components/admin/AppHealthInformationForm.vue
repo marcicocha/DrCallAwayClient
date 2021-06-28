@@ -43,7 +43,7 @@
                     rules="required"
                     name="glucose level"
                     :data="['HIGH']"
-                    :remote="true"
+                    :remote="false"
                   />
                 </a-col>
                 <a-col :span="12">
@@ -62,18 +62,20 @@
                 v-model="healthDetails.alcohol_intake"
                 label="Alcohol Intake"
                 name="alcohol intake"
-                :data="['HIGH']"
-                :remote="true"
+                :data="['YES', 'NO']"
+                :remote="false"
               />
             </a-col>
             <a-col :span="12">
               <AppInput
                 v-model="healthDetails.alcohol_frequency"
                 label="If Yes, How many times per week?"
-                :required="healthDetails.alcoholIntake"
-                :rules="healthDetails.alcoholIntake ? 'required' : ''"
+                :required="healthDetails.alcohol_intake === 'YES'"
+                :rules="
+                  healthDetails.alcohol_intake === 'YES' ? 'required' : ''
+                "
                 name="value"
-                :disabled="!healthDetails.alcoholIntake"
+                :disabled="healthDetails.alcohol_intake !== 'YES'"
               />
             </a-col>
             <a-col :span="12">
@@ -81,18 +83,18 @@
                 v-model="healthDetails.smoke"
                 label="Do you Smoke?"
                 name="smoke"
-                :data="['YES']"
-                :remote="true"
+                :data="['YES', 'NO']"
+                :remote="false"
               />
             </a-col>
             <a-col :span="12">
               <AppInput
                 v-model="healthDetails.smoke_frequency"
                 label="If Yes, How many sticks per week?"
-                :required="healthDetails.smoke"
-                :rules="healthDetails.smoke ? 'required' : ''"
+                :required="healthDetails.smoke === 'YES'"
+                :rules="healthDetails.smoke === 'YES' ? 'required' : ''"
                 name="value"
-                :disabled="!healthDetails.smoke"
+                :disabled="healthDetails.smoke !== 'YES'"
               />
             </a-col>
             <a-col :span="16">
@@ -106,7 +108,7 @@
               <AppInput
                 v-model="healthDetails.if_others"
                 name="value"
-                :disabled="healthDetails.recurring !== 'Others'"
+                :disabled="healthDetails.recurring !== 'Other'"
               />
             </a-col>
             <a-col :span="24">
@@ -156,7 +158,7 @@ export default {
     return {
       healthDetails: {},
       isLoading: false,
-      additional_information: undefined,
+      additional_information: '',
       options: [
         'Asthma',
         'Diabetes',
@@ -180,13 +182,17 @@ export default {
           },
           additional_info: this.additional_information,
         }
-        const response = this.submitHealthHandler(obj)
+        const response = await this.submitHealthHandler(obj)
         this.$notification.success({
           message: 'Success',
           description: response.successMessage,
           duration: 4000,
         })
-        this.isLoading = false
+        requestAnimationFrame(() => {
+          this.$refs.observer.reset()
+          this.isLoading = false
+          this.$emit('formSubmissionCompleted')
+        })
       } catch (err) {
         this.isLoading = false
         const { default: errorHandler } = await import('@/utils/errorHandler')

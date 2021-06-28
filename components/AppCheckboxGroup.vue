@@ -17,8 +17,8 @@ export default {
   name: 'AppCheckboxGroup',
   props: {
     value: {
-      type: Boolean,
-      default: false,
+      type: Array,
+      default: () => [],
     },
     label: {
       type: String,
@@ -35,14 +35,14 @@ export default {
   },
   data() {
     return {
-      innerValue: false,
+      innerValue: [],
     }
   },
   watch: {
     value: {
       handler(newVal, oldVal) {
         if (newVal) {
-          this.innerValue = newVal
+          this.innerValue = [...newVal]
         } else {
           this.innerValue = undefined
         }
@@ -58,7 +58,7 @@ export default {
   },
   created() {
     if (this.value) {
-      this.innerValue = this.value
+      this.innerValue = [...this.value]
     } else {
       this.innerValue = undefined
     }

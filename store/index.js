@@ -6,7 +6,7 @@ import actions from './actions'
 import caseFileModule from './modules/patient/caseFile'
 import appointmentModule from './modules/patient/appointment'
 import ambulanceModule from './modules/patient/ambulance'
-import healthInformation from './modules/patient/healthInformation'
+import healthInformationModule from './modules/patient/healthInformation'
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({}),
@@ -17,7 +17,7 @@ const createStore = () => {
       caseFileModule,
       appointmentModule,
       ambulanceModule,
-      healthInformation,
+      healthInformationModule,
     },
   })
 }

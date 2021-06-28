@@ -4,22 +4,19 @@
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Appointment" force-render>
           <AppAppointmentDataTable
-            status="pending"
-            :data-source="dataSource1"
+            status="PENDING"
             @showAppointmentModal="showAppointmentModal"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Booked Appointment" force-render>
           <AppAppointmentDataTable
-            status="booked"
-            :data-source="dataSource2"
+            status="BOOKED"
             @showAppointmentModal="showAppointmentModal"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Appointment" force-render>
           <AppAppointmentDataTable
-            status="completed"
-            :data-source="dataSource3"
+            status="COMPLETED"
             @showAppointmentModal="showAppointmentModal"
           />
         </a-tab-pane>

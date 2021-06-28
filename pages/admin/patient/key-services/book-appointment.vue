@@ -3,67 +3,73 @@
     <h6>Book an Appointment</h6>
     <div class="admin-wrapper">
       <a-form>
-        <a-row type="flex" :gutter="16">
-          <a-col :span="12">
-            <AppSelect
-              v-model="bookAppointmentObj.medicalSpecialties"
-              label="List of Medical Specialties"
-              placeholder="Select a Medical Specialty"
-              name="medical specialties"
-              :data="['YES']"
-              :remote="true"
-            />
-          </a-col>
-          <a-col :span="12">
-            <AppSelect
-              v-model="bookAppointmentObj.specialists"
-              label="List of Specialists"
-              placeholder="Select a Specialist"
-              name="specialists"
-              :data="['YES']"
-              :remote="true"
-            />
-            <small style="color: #3d0c3c"
-              >One will be automatically selected for you if you don't know whom
-              to select</small
-            >
-          </a-col>
-          <a-col :span="12">
-            <AppInput
-              v-model="bookAppointmentObj.specialistAddress"
-              label="Specialist Address"
-              name="Specialist Address"
-            />
-          </a-col>
-          <a-col :span="12">
-            <AppInput
-              v-model="bookAppointmentObj.paymentCharge"
-              label="Payment Charge"
-              name="payment charge"
-            />
-          </a-col>
-          <a-col :span="12">
-            <AppInput
-              v-model="bookAppointmentObj.proposedDate"
-              label="Select Proposed Date"
-              name="select proposed date"
-            />
-          </a-col>
-          <a-col :span="12">
-            <AppInput
-              v-model="bookAppointmentObj.proposedTime"
-              label="Select Proposed Time"
-              name="select proposed time"
-            />
-          </a-col>
-          <a-col :span="24">
-            <AppTextArea
-              v-model="bookAppointmentObj.additionalComment"
-              label="Additional Comment"
-              placeholder="Briefly tell Specialist how you are feeling"
-            />
-          </a-col>
-        </a-row>
+        <ValidationObserver ref="observer" tag="div">
+          <a-row type="flex" :gutter="16">
+            <a-col :span="12">
+              <AppSelect
+                v-model="bookAppointmentObj.medicalSpecialties"
+                label="List of Medical Specialties"
+                placeholder="Select a Medical Specialty"
+                name="medical specialties"
+                :data="['YES']"
+                :remote="false"
+                rules="required"
+                required
+              />
+            </a-col>
+            <a-col :span="12">
+              <AppSelect
+                v-model="bookAppointmentObj.specialists"
+                label="List of Specialists"
+                placeholder="Select a Specialist"
+                name="specialists"
+                :data="['YES']"
+                :remote="false"
+                rules="required"
+                required
+              />
+              <small style="color: #3d0c3c"
+                >One will be automatically selected for you if you don't know
+                whom to select</small
+              >
+            </a-col>
+            <a-col :span="12">
+              <AppInput
+                v-model="bookAppointmentObj.specialistAddress"
+                label="Specialist Address"
+                name="Specialist Address"
+              />
+            </a-col>
+            <a-col :span="12">
+              <AppInput
+                v-model="bookAppointmentObj.paymentCharge"
+                label="Payment Charge"
+                name="payment charge"
+              />
+            </a-col>
+            <a-col :span="12">
+              <AppInput
+                v-model="bookAppointmentObj.proposedDate"
+                label="Select Proposed Date"
+                name="select proposed date"
+              />
+            </a-col>
+            <a-col :span="12">
+              <AppInput
+                v-model="bookAppointmentObj.proposedTime"
+                label="Select Proposed Time"
+                name="select proposed time"
+              />
+            </a-col>
+            <a-col :span="24">
+              <AppTextArea
+                v-model="bookAppointmentObj.additionalComment"
+                label="Additional Comment"
+                placeholder="Briefly tell Specialist how you are feeling"
+              />
+            </a-col>
+          </a-row>
+        </ValidationObserver>
         <br />
         <div class="t-c">
           <AppButton
@@ -132,6 +138,8 @@
   </div>
 </template>
 <script>
+import { ValidationObserver } from 'vee-validate'
+import { mapActions } from 'vuex'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppTextArea from '@/components/AppTextArea'
@@ -142,6 +150,7 @@ export default {
     AppSelect,
     AppTextArea,
     AppButton,
+    ValidationObserver,
   },
   layout: 'dashboard',
   data() {
@@ -176,12 +185,45 @@ export default {
     },
   },
   methods: {
-    submitHandler() {
-      this.modalIsVisible = true
-    },
     closeModal() {
       this.modalIsVisible = false
     },
+    async submitHandler() {
+      const isValid = await this.$refs.observer.validate()
+      if (!isValid) {
+        return
+      }
+      this.isLoading = true
+      try {
+        const response = await this.submitAppointmentHandler(
+          this.appointmentObj
+        )
+        this.$notification.success({
+          message: 'Success',
+          description: response,
+          duration: 4000,
+        })
+        this.modalIsVisible = true
+        requestAnimationFrame(() => {
+          this.$refs.observer.reset()
+          this.isLoading = false
+          this.$emit('formSubmissionCompleted')
+        })
+      } catch (err) {
+        this.isLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
+    ...mapActions({
+      submitAppointmentHandler: 'appointmentModule/BOOK_APPOINTMENT',
+    }),
   },
 }
 </script>

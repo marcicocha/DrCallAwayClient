@@ -10,9 +10,9 @@
       <template slot="status" slot-scope="text, record">
         <div
           :class="{
-            blue: record.status === 'Active',
-            green: record.status === 'Completed',
-            red: record.status === 'Pending',
+            blue: record.status === 'ACTIVE',
+            green: record.status === 'CCOMPLETED',
+            red: record.status === 'PENDING',
           }"
         >
           {{ record.status }}
@@ -34,6 +34,10 @@ export default {
     pagination: {
       type: Boolean,
       default: true,
+    },
+    filterObj: {
+      type: Object,
+      default: () => {},
     },
   },
   computed: {
@@ -80,6 +84,24 @@ export default {
     ...mapState({
       allAppointments: (state) => state.appointmentModule.appointments,
     }),
+  },
+  async mounted() {
+    try {
+      const obj = {
+        ...this.filterObj,
+        status: this.status,
+      }
+      await this.getAllAppointment(obj)
+    } catch (err) {
+      const { default: errorHandler } = await import('@/utils/errorHandler')
+      errorHandler(err).forEach((msg) => {
+        this.$notification.error({
+          message: 'Error',
+          description: msg,
+          duration: 4000,
+        })
+      })
+    }
   },
   methods: {
     customRow(record) {

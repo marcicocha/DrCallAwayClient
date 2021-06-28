@@ -64,6 +64,7 @@
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'
+import { mapActions } from 'vuex'
 import AppInput from '@/components/AppInput'
 import AppButton from '@/components/AppButton'
 
@@ -87,6 +88,7 @@ export default {
   data() {
     return {
       appointmentObj: {},
+      isLoading: false,
     }
   },
   computed: {
@@ -110,9 +112,41 @@ export default {
     },
   },
   methods: {
-    submitHandler() {
-      console.log('CLICKED')
+    async submitHandler() {
+      const isValid = await this.$refs.observer.validate()
+      if (!isValid) {
+        return
+      }
+      this.isLoading = true
+      try {
+        const response = await this.submitAppointmentHandler(
+          this.appointmentObj
+        )
+        this.$notification.success({
+          message: 'Success',
+          description: response,
+          duration: 4000,
+        })
+        requestAnimationFrame(() => {
+          this.$refs.observer.reset()
+          this.isLoading = false
+          this.$emit('formSubmissionCompleted')
+        })
+      } catch (err) {
+        this.isLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
+    ...mapActions({
+      submitAppointmentHandler: 'appointmentModule/BOOK_APPOINTMENT',
+    }),
   },
 }
 </script>

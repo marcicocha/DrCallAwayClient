@@ -5,23 +5,23 @@
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Prescription" force-render>
           <AppPrescriptionDataTable
-            status="pending"
-            :data-source="dataSource1"
+            status="PENDING"
+            :filterObj="filterObj"
             @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>
 
         <a-tab-pane key="2" tab="Completed Prescription">
           <AppPrescriptionDataTable
-            status="completed"
-            :data-source="dataSource2"
+            status="COMPLETED"
+            :filterObj="filterObj"
             @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Declined Prescription">
           <AppPrescriptionDataTable
-            status="booked"
-            :data-source="dataSource3"
+            status="BOOKED"
+            :filterObj="filterObj"
             @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>

@@ -2,16 +2,16 @@
   <div>
     <a-table
       :columns="columns"
-      :data-source="dataSource"
+      :data-source="allTests"
       :pagination="false"
       :custom-row="customRow"
     >
       <template slot="status" slot-scope="text, record">
         <div
           :class="{
-            blue: record.status === 'Active',
-            green: record.status === 'Completed',
-            red: record.status === 'Pending',
+            blue: record.status === 'ACTIVE',
+            green: record.status === 'COMPLETED',
+            red: record.status === 'PENDING',
           }"
         >
           {{ record.status }}
@@ -21,6 +21,8 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
   name: 'AppTestDataTable',
   props: {
@@ -28,9 +30,13 @@ export default {
       type: String,
       default: '',
     },
-    dataSource: {
-      type: Array,
-      default: () => [],
+    pagination: {
+      type: Boolean,
+      default: true,
+    },
+    filterObj: {
+      type: Object,
+      default: () => {},
     },
   },
   computed: {
@@ -64,6 +70,27 @@ export default {
       ]
       return columns
     },
+    ...mapState({
+      allTests: (state) => state.testsModule.tests,
+    }),
+  },
+  async mounted() {
+    try {
+      const obj = {
+        ...this.filterObj,
+        status: this.status,
+      }
+      await this.getAllTests(obj)
+    } catch (err) {
+      const { default: errorHandler } = await import('@/utils/errorHandler')
+      errorHandler(err).forEach((msg) => {
+        this.$notification.error({
+          message: 'Error',
+          description: msg,
+          duration: 4000,
+        })
+      })
+    }
   },
   methods: {
     customRow(record) {
@@ -75,6 +102,9 @@ export default {
         },
       }
     },
+    ...mapActions({
+      getAllTests: 'testsModule/GET_TESTS',
+    }),
   },
 }
 </script>

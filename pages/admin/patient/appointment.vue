@@ -8,13 +8,13 @@
             @showAppointmentModal="showAppointmentModal"
           />
         </a-tab-pane>
-        <a-tab-pane key="2" tab="Booked Appointment" force-render>
+        <a-tab-pane key="2" tab="Booked Appointment">
           <AppAppointmentDataTable
             status="BOOKED"
             @showAppointmentModal="showAppointmentModal"
           />
         </a-tab-pane>
-        <a-tab-pane key="3" tab="Completed Appointment" force-render>
+        <a-tab-pane key="3" tab="Completed Appointment">
           <AppAppointmentDataTable
             status="COMPLETED"
             @showAppointmentModal="showAppointmentModal"

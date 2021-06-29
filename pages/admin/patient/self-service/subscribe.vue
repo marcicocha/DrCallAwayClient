@@ -10,6 +10,7 @@
                 v-model="suscriptionObj.subscriptionType"
                 label="Subscription Type"
                 name="Subscription Type"
+                disabled
               />
             </a-col>
             <a-col :span="12">
@@ -17,6 +18,7 @@
                 v-model="suscriptionObj.subscriptionPlan"
                 label="Subscription Plan"
                 name="Subscription Plan"
+                disabled
               />
             </a-col>
             <a-col :span="12">
@@ -24,6 +26,7 @@
                 v-model="suscriptionObj.expiryDate"
                 label="Expiry Date"
                 name="Expiry Date"
+                disabled
               />
             </a-col>
             <a-col :span="12">
@@ -31,6 +34,7 @@
                 v-model="suscriptionObj.status"
                 label="Status"
                 name="Status"
+                disabled
               />
             </a-col>
           </a-row>
@@ -81,11 +85,15 @@
                   v-model="currentSubscriptionObj.currentSubscriptionType"
                   label="Current Subscription Type"
                   name="Current Subscription Type"
+                  required
+                  rules="required"
                 />
                 <AppInput
                   v-model="currentSubscriptionObj.currentSubscriptionPlan"
                   label="Current Subscription Plan"
                   name="current subscription plan"
+                  required
+                  rules="required"
                 />
               </div>
               <div v-else>
@@ -95,7 +103,9 @@
                   name="New Subscription Type"
                   placeholder="New Subscription Type"
                   :data="['STANDARD']"
-                  :remote="true"
+                  :remote="false"
+                  required
+                  rules="required"
                 />
                 <AppSelect
                   v-model="newSubscriptionObj.newSubscriptionPlan"
@@ -103,7 +113,9 @@
                   name="New Subscription Plan"
                   placeholder="New Subscription Plan"
                   :data="['STANDARD']"
-                  :remote="true"
+                  :remote="false"
+                  required
+                  rules="required"
                 />
               </div>
             </ValidationObserver>
@@ -125,6 +137,8 @@
   </div>
 </template>
 <script>
+import { ValidationObserver } from 'vee-validate'
+import { mapActions, mapState } from 'vuex'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppTitleDivider from '@/components/AppTitleDivider'
@@ -133,6 +147,7 @@ export default {
     AppInput,
     AppSelect,
     AppTitleDivider,
+    ValidationObserver,
   },
   layout: 'dashboard',
   data() {
@@ -144,6 +159,25 @@ export default {
       changeIsVisible: false,
       currentSubscriptionObj: {},
       newSubscriptionObj: {},
+    }
+  },
+  computed: {
+    ...mapState({
+      allSubscription: (state) => state.subscriptionModule.subscriptionObj,
+    }),
+  },
+  async mounted() {
+    try {
+      await this.submitSubscriptionHandler()
+    } catch (err) {
+      const { default: errorHandler } = await import('@/utils/errorHandler')
+      errorHandler(err).forEach((msg) => {
+        this.$notification.error({
+          message: 'Error',
+          description: msg,
+          duration: 4000,
+        })
+      })
     }
   },
   methods: {
@@ -161,9 +195,56 @@ export default {
     closeModal() {
       this.modalIsVisible = false
     },
-    submitSubcriptionHandler() {
-      console.log('CLICKED')
+    async submitSubcriptionHandler() {
+      const isValid = await this.$refs.observer.validate()
+      if (!isValid) {
+        return
+      }
+      this.isLoading = true
+      try {
+        if (this.renewIsVisible) {
+          const response = await this.submitRenewHandler(
+            this.currentSubscriptionObj
+          )
+          this.$notification.success({
+            message: 'Success',
+            description: response,
+            duration: 4000,
+          })
+        } else {
+          const response = await this.submitChangeHandler(
+            this.newSubscriptionObj
+          )
+          this.$notification.success({
+            message: 'Success',
+            description: response,
+            duration: 4000,
+          })
+        }
+        requestAnimationFrame(() => {
+          this.$refs.observer.reset()
+          this.isLoading = false
+          this.currentSubscriptionObj = {}
+          this.newSubscriptionObj = {}
+          this.$emit('formSubmissionCompleted')
+        })
+      } catch (err) {
+        this.isLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
+    ...mapActions({
+      submitSubscriptionHandler: 'subscriptionModule/GET_SUBSCRIPTION',
+      submitRenewHandler: 'subscriptionModule/RENEW_SUBSCRIPTION',
+      submitChangeHandler: 'subscriptionModule/CHANGE_SUBSCRIPTION',
+    }),
   },
 }
 </script>

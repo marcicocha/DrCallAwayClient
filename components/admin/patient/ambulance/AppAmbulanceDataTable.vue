@@ -5,6 +5,9 @@
       :data-source="allCallUp"
       :pagination="pagination"
     >
+      <template slot="sn" slot-scope="text, record, index">
+        {{ index + 1 }}
+      </template>
       <template slot="status" slot-scope="text, record">
         <div
           :class="{

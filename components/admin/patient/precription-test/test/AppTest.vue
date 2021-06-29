@@ -5,15 +5,15 @@
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Tests" force-render>
           <AppTestDataTable
-            status="pending"
-            :data-source="dataSource1"
+            status="PENDING"
+            :filterObj="filterObj"
             @showTestModal="showTestModal"
           />
         </a-tab-pane>
-        <a-tab-pane key="3" tab="Completed Test" force-render>
+        <a-tab-pane key="3" tab="Completed Test">
           <AppTestDataTable
-            status="completed"
-            :data-source="dataSource2"
+            status="COMPLETED"
+            :filterObj="filterObj"
             @showTestModal="showTestModal"
           />
         </a-tab-pane>

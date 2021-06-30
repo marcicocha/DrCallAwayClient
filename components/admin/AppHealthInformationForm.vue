@@ -113,7 +113,7 @@
             </a-col>
             <a-col :span="24">
               <AppTextArea
-                v-model="additional_information"
+                v-model="healthDetails.additional_info"
                 label="Additional Information"
               />
             </a-col>
@@ -158,7 +158,6 @@ export default {
     return {
       healthDetails: {},
       isLoading: false,
-      additional_information: '',
       options: [
         'Asthma',
         'Diabetes',
@@ -180,12 +179,22 @@ export default {
           medical_info: {
             ...this.healthDetails,
           },
-          additional_info: this.additional_information,
+          additional_info: this.healthDetails.additional_info,
         }
-        const response = await this.submitHealthHandler(obj)
+        const user = JSON.parse(localStorage.getItem('user'))
+        const config = {
+          headers: { Authorization: `Bearer ${user.token.token}` },
+        }
+        const response = await this.$axios.$post(
+          'medical-histories',
+          obj,
+          config
+        )
+        await this.submitHealthHandler(response)
+        console.log(response, 'RESPONSE')
         this.$notification.success({
           message: 'Success',
-          description: response.successMessage,
+          description: response.message,
           duration: 4000,
         })
         requestAnimationFrame(() => {

@@ -5,7 +5,7 @@ import {
 
 export default {
   [GET_AMBULANCE](state, payload) {
-    state.ambulances = payload
+    state.ambulances = payload.data
   },
   [ADD_AMBULANCE](state, payload) {
     state.ambulances.unshift(payload)

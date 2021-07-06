@@ -123,6 +123,18 @@ export default {
       type: Boolean,
       default: false,
     },
+    spaceAllowed: {
+      type: Boolean,
+      default: true,
+    },
+    charAllowed: {
+      type: Boolean,
+      default: true,
+    },
+    textAllowed: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -140,6 +152,66 @@ export default {
   },
   watch: {
     innerValue(newVal) {
+      switch (true) {
+        case !newVal || typeof newVal === 'object':
+          this.innerValue = ''
+          break
+        // NO SPACE ALONE
+        case !this.spaceAllowed && this.charAllowed && this.textAllowed:
+          this.innerValue = String(newVal)
+            .toUpperCase()
+            .slice(0, this.maxLength)
+            .replace(this.spaceRegex, '')
+          break
+        // NO SPACE, NO SPECIAL CHARACTER
+        case !this.spaceAllowed && !this.charAllowed && this.textAllowed:
+          this.innerValue = String(newVal)
+            .slice(0, this.maxLength)
+            .replace(this.spaceRegex, '')
+            .replace(this.specialCharacterRegex, '')
+          break
+        // NO SPACE, NO SPECIAL CHARACTER, AND NO TEXT
+        case !this.spaceAllowed && !this.charAllowed && !this.textAllowed:
+          this.innerValue = String(newVal)
+            .slice(0, this.maxLength)
+            .replace(this.spaceRegex, '')
+            .replace(this.specialCharacterRegex, '')
+            .replace(this.textOnlyRegex, '')
+          break
+        // NO SPACIAL CHARACHER ALONE
+        case this.spaceAllowed && !this.charAllowed && this.textAllowed:
+          this.innerValue = String(newVal)
+            .slice(0, this.maxLength)
+            .replace(this.specialCharacterRegex, '')
+          break
+        // NO SPACIAL CHARACHER, NO TEXT
+        case this.spaceAllowed && !this.charAllowed && !this.textAllowed:
+          this.innerValue = String(newVal)
+            .slice(0, this.maxLength)
+            .replace(this.specialCharacterRegex, '')
+            .replace(this.textOnlyRegex, '')
+          break
+        // NO TEXT ALONE
+        case this.spaceAllowed && this.charAllowed && !this.textAllowed:
+          this.innerValue = String(newVal)
+            .slice(0, this.maxLength)
+            .replace(this.textOnlyRegex, '')
+          break
+        // NO TEXT NO SPECIAL CHARACTER
+        case !this.spaceAllowed &&
+          !this.charAllowed &&
+          !this.textAllowed &&
+          this.isNumber:
+          this.innerValue = String(newVal)
+            .slice(0, this.maxLength)
+            .replace(this.spaceRegex, '')
+            .replace(this.specialCharacterRegex, '')
+            .replace(this.textOnlyRegex, '')
+          break
+        default:
+          this.innerValue = String(newVal).slice(0, this.maxLength)
+          break
+      }
       this.$nextTick(() => {
         this.$emit('input', newVal)
       })
@@ -148,25 +220,9 @@ export default {
       handler(newVal) {
         if (!newVal) {
           this.innerValue = ''
-          return
-        } else if (newVal) {
-          if (this.isNumber && !this.isText && !this.isPhone) {
-            this.innerValue = String(newVal)
-              .slice(0, this.maxLength)
-              .replace(this.numberOnlyRegex, '')
-          } else if (!this.isNumber && this.isText && !this.isPhone) {
-            this.innerValue = String(newVal)
-              .slice(0, this.maxLength)
-              .replace(this.textOnlyRegex, '')
-          } else if (!this.isNumber && !this.isText && this.isPhone) {
-            this.innerValue = String(newVal)
-              .slice(0, 15)
-              .replace(this.numberOnlyRegex, '')
-          } else {
-            this.innerValue = String(newVal).slice(0, this.maxLength)
-          }
+        } else {
+          this.innerValue = newVal
         }
-        this.innerValue = newVal
       },
       immediate: true,
     },

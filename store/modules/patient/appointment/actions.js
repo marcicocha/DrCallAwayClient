@@ -20,7 +20,7 @@ export default {
       headers: { Authorization: `Bearer ${user.token.token}` },
     }
     const { response } = await this.$axios.$post(
-      'appointments',
+      '/appointments',
       payload,
       config
     )

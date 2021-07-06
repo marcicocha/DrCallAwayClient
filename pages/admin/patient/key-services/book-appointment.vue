@@ -7,7 +7,7 @@
           <a-row type="flex" :gutter="16">
             <a-col :span="12">
               <AppSelect
-                v-model="bookAppointmentObj.medicalSpecialties"
+                v-model="bookAppointmentObj.specialtyId"
                 label="List of Medical Specialties"
                 placeholder="Select a Medical Specialty"
                 name="medical specialties"
@@ -24,14 +24,21 @@
             </a-col>
             <a-col :span="12">
               <AppSelect
-                v-model="bookAppointmentObj.specialists"
+                :key="bookAppointmentObj.specialtyId"
+                v-model="bookAppointmentObj.specialistId"
                 label="List of Specialists"
                 placeholder="Select a Specialist"
                 name="specialists"
-                :data="['YES']"
-                :remote="false"
                 rules="required"
                 required
+                :url="`specialists/${bookAppointmentObj.specialtyId}`"
+                :call-back-func="
+                  (resp) => ({
+                    text: resp.user.first_name + ' - ' + resp.user.last_name,
+                    value: resp.id,
+                  })
+                "
+                @change="changeSpecialistHandler"
               />
               <small style="color: #3d0c3c"
                 >One will be automatically selected for you if you don't know
@@ -43,6 +50,7 @@
                 v-model="bookAppointmentObj.specialistAddress"
                 label="Specialist Address"
                 name="Specialist Address"
+                disabled
               />
             </a-col>
             <a-col :span="12">
@@ -53,22 +61,22 @@
               />
             </a-col>
             <a-col :span="12">
-              <AppInput
-                v-model="bookAppointmentObj.proposedDate"
+              <AppDatePicker
+                v-model="bookAppointmentObj.date"
                 label="Select Proposed Date"
                 name="select proposed date"
               />
             </a-col>
             <a-col :span="12">
-              <AppInput
-                v-model="bookAppointmentObj.proposedTime"
+              <AppTimePicker
+                v-model="bookAppointmentObj.time"
                 label="Select Proposed Time"
                 name="select proposed time"
               />
             </a-col>
             <a-col :span="24">
               <AppTextArea
-                v-model="bookAppointmentObj.additionalComment"
+                v-model="bookAppointmentObj.additional_info"
                 label="Additional Comment"
                 placeholder="Briefly tell Specialist how you are feeling"
               />
@@ -149,6 +157,9 @@ import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppTextArea from '@/components/AppTextArea'
 import AppButton from '@/components/AppButton'
+import AppDatePicker from '@/components/AppDatePicker'
+import AppTimePicker from '@/components/AppTimePicker'
+
 export default {
   components: {
     AppInput,
@@ -156,6 +167,8 @@ export default {
     AppTextArea,
     AppButton,
     ValidationObserver,
+    AppDatePicker,
+    AppTimePicker,
   },
   layout: 'dashboard',
   data() {
@@ -193,6 +206,10 @@ export default {
     closeModal() {
       this.modalIsVisible = false
     },
+    changeSpecialistHandler(e) {
+      console.log(e, 'E')
+      // this.bookAppointmentObj.specialistAddress = e
+    },
     async submitHandler() {
       const isValid = await this.$refs.observer.validate()
       if (!isValid) {
@@ -201,7 +218,7 @@ export default {
       this.isLoading = true
       try {
         const response = await this.submitAppointmentHandler(
-          this.appointmentObj
+          this.bookAppointmentObj
         )
         this.$notification.success({
           message: 'Success',

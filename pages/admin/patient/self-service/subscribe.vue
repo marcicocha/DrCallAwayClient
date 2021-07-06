@@ -132,7 +132,7 @@
               >
               <AppPayment
                 v-if="paymentIsVisible"
-                :userObj="user"
+                :user-obj="user"
                 @callback="callback"
               />
             </div>

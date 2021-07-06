@@ -30,7 +30,7 @@
             v-for="d in dataRemote"
             :key="d.value"
             :title="d.text"
-            :value="d.text"
+            :value="d.value"
           >
             {{ d.text }}
           </a-select-option>

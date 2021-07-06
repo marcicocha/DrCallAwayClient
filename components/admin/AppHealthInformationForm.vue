@@ -154,6 +154,12 @@ export default {
     AppTextArea,
     AppButton,
   },
+  props: {
+    healthInfoObj: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
       healthDetails: {},
@@ -166,6 +172,19 @@ export default {
         'Other',
       ],
     }
+  },
+  watch: {
+    healthInfoObj: {
+      handler(newHealthInfoObj) {
+        if (!newHealthInfoObj) {
+          this.healthDetails = {}
+        } else {
+          this.healthDetails = { ...newHealthInfoObj.medical_info }
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
   },
   methods: {
     async submitHandler() {

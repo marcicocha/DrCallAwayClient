@@ -122,6 +122,7 @@
             <br />
             <div class="t-c">
               <AppButton
+                v-if="!paymentIsVisible"
                 type="primary"
                 :block="false"
                 :loading="isLoading"
@@ -129,6 +130,11 @@
                 @click="submitSubcriptionHandler"
                 >CONFIRM</AppButton
               >
+              <AppPayment
+                v-if="paymentIsVisible"
+                :userObj="user"
+                @callback="callback"
+              />
             </div>
           </a-form>
         </div>
@@ -142,12 +148,14 @@ import { mapActions, mapState } from 'vuex'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppTitleDivider from '@/components/AppTitleDivider'
+import AppPayment from '@/components/AppPayment.vue'
 export default {
   components: {
     AppInput,
     AppSelect,
     AppTitleDivider,
     ValidationObserver,
+    AppPayment,
   },
   layout: 'dashboard',
   data() {
@@ -159,6 +167,9 @@ export default {
       changeIsVisible: false,
       currentSubscriptionObj: {},
       newSubscriptionObj: {},
+      paymentIsVisible: false,
+      confirmLoading: false,
+      user: {},
     }
   },
   computed: {
@@ -167,6 +178,13 @@ export default {
     }),
   },
   async mounted() {
+    const userObject = JSON.parse(localStorage.getItem('user'))
+    this.user = {
+      email: userObject.email,
+      firstName: userObject.first_name,
+      lastName: userObject.last_name,
+      amount: 100,
+    }
     try {
       await this.submitSubscriptionHandler()
     } catch (err) {
@@ -194,6 +212,26 @@ export default {
     },
     closeModal() {
       this.modalIsVisible = false
+      this.paymentIsVisible = false
+    },
+    close() {
+      // this.paymentIsVisible = false
+    },
+    callback(res) {
+      if (res.message === 'approved') {
+        this.closeModal()
+        this.$notification.success({
+          message: res.message,
+          description: 'Payment successful',
+          duration: 4000,
+        })
+        requestAnimationFrame(() => {
+          this.$refs.observer.reset()
+          this.isLoading = false
+          this.currentSubscriptionObj = {}
+          this.newSubscriptionObj = {}
+        })
+      }
     },
     async submitSubcriptionHandler() {
       const isValid = await this.$refs.observer.validate()
@@ -201,6 +239,8 @@ export default {
         return
       }
       this.isLoading = true
+      this.paymentIsVisible = true
+
       try {
         if (this.renewIsVisible) {
           const response = await this.submitRenewHandler(
@@ -221,13 +261,7 @@ export default {
             duration: 4000,
           })
         }
-        requestAnimationFrame(() => {
-          this.$refs.observer.reset()
-          this.isLoading = false
-          this.currentSubscriptionObj = {}
-          this.newSubscriptionObj = {}
-          this.$emit('formSubmissionCompleted')
-        })
+        // this.paymentIsVisible = true
       } catch (err) {
         this.isLoading = false
         const { default: errorHandler } = await import('@/utils/errorHandler')

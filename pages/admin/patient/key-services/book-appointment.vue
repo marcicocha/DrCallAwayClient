@@ -11,8 +11,13 @@
                 label="List of Medical Specialties"
                 placeholder="Select a Medical Specialty"
                 name="medical specialties"
-                :data="['YES']"
-                :remote="false"
+                url="/specialties"
+                :call-back-func="
+                  (resp) => ({
+                    text: resp.name,
+                    value: resp.id,
+                  })
+                "
                 rules="required"
                 required
               />

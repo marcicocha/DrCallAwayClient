@@ -6,7 +6,7 @@
         <a-tab-pane key="1" tab="Pending Prescription" force-render>
           <AppPrescriptionDataTable
             status="PENDING"
-            :filterObj="filterObj"
+            :filter-obj="filterObj"
             @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>
@@ -14,14 +14,14 @@
         <a-tab-pane key="2" tab="Completed Prescription">
           <AppPrescriptionDataTable
             status="COMPLETED"
-            :filterObj="filterObj"
+            :filter-obj="filterObj"
             @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Declined Prescription">
           <AppPrescriptionDataTable
             status="BOOKED"
-            :filterObj="filterObj"
+            :filter-obj="filterObj"
             @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>

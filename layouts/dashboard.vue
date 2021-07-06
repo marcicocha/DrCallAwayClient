@@ -21,7 +21,7 @@
       <a-menu
         theme="dark"
         mode="inline"
-        :default-selected-keys="['1']"
+        :default-selected-keys="['0']"
         style="margin-top: 2rem"
       >
         <template v-for="(menu, i) in menuList">

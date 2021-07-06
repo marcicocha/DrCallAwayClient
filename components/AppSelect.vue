@@ -186,19 +186,19 @@ export default {
       this.$axios
         .$get(this.url)
         .then((body) => {
-          if (body.response && Array.isArray(body.response)) {
-            const dataRemote = body.response.map(callBackFunc)
+          if (body.data && Array.isArray(body.data)) {
+            const dataRemote = body.data.map(callBackFunc)
             this.$nextTick(() => {
               this.dataRemote = dataRemote
             })
-          } else if (!body.response) {
+          } else if (!body.data) {
             const dataRemote = body.map(callBackFunc)
             this.$nextTick(() => {
               this.dataRemote = dataRemote
             })
             // this.dataRemote = dataRemote
           } else {
-            const dataRemote = body.response.content.map(callBackFunc)
+            const dataRemote = body.data.content.map(callBackFunc)
             this.$nextTick(() => {
               this.dataRemote = dataRemote
             })

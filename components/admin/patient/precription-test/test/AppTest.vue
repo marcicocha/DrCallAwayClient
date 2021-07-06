@@ -6,14 +6,14 @@
         <a-tab-pane key="1" tab="Pending Tests" force-render>
           <AppTestDataTable
             status="PENDING"
-            :filterObj="filterObj"
+            :filter-obj="filterObj"
             @showTestModal="showTestModal"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Test">
           <AppTestDataTable
             status="COMPLETED"
-            :filterObj="filterObj"
+            :filter-obj="filterObj"
             @showTestModal="showTestModal"
           />
         </a-tab-pane>

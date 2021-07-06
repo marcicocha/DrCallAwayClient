@@ -152,7 +152,7 @@ a:hover {
 }
 .admin-button {
   padding: 0 2rem;
-  
+
   // @include breakpoint-up(large) {
   //   padding: 0 2rem;
   // }
@@ -366,4 +366,13 @@ h6 {
   align-items: center;
   justify-content: space-between;
   margin-top: 1.7rem;
+}
+.payButton {
+  padding: 0 2rem;
+  background-color: #3d0c3c !important;
+  color: #fff;
+  border-color: #3d0c3c;
+  height: 40px;
+  font-size: 16px;
+  border-radius: 4px;
 }

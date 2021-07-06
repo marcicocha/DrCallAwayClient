@@ -8,6 +8,6 @@ export default {
     state.appointments = payload
   },
   [BOOK_APPOINTMENT](state, payload) {
-    state.appointments.unshift(payload)
+    // state.appointments.unshift(payload)
   },
 }

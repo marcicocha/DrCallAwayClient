@@ -87,40 +87,11 @@ export default {
       modalIsVisible: false,
       currentAppointment: {},
       confirmLoading: false,
-      dataSource1: [
-        {
-          appointmentId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          description: 'Malaria and Typhoid',
-          dateOfVisit: '23rd March, 2021',
-          timeOfVisit: '8:00am',
-          status: 'Pending',
-        },
-      ],
-      dataSource2: [
-        {
-          appointmentId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          description: 'Malaria and Typhoid',
-          dateOfVisit: '23rd March, 2021',
-          timeOfVisit: '8:00am',
-          status: 'Booked',
-        },
-      ],
-      dataSource3: [
-        {
-          appointmentId: '#000002',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          description: 'Malaria and Typhoid',
-          dateOfVisit: '23rd March, 2021',
-          timeOfVisit: '8:00am',
-          status: 'Completed',
-        },
-      ],
     }
   },
   methods: {
     showAppointmentModal(record) {
+      console.log(record, 'RECORD')
       this.currentAppointment = record
       this.modalIsVisible = true
     },

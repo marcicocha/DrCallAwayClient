@@ -3,7 +3,7 @@
     <a-form>
       <ValidationObserver ref="observer" tag="div">
         <AppInput
-          v-model="appointmentObj.appointmentId"
+          v-model="appointmentObj.id"
           label="Appointment ID"
           name="appointment id"
           :disabled="isReadOnly"
@@ -29,13 +29,13 @@
           :disabled="isReadOnly"
         />
         <AppInput
-          v-model="appointmentObj.dateOfVisit"
+          v-model="appointmentObj.date"
           label="Date of Visit"
           name="Date of Visit"
           :disabled="isReadOnly"
         />
         <AppInput
-          v-model="appointmentObj.timeOfVisit"
+          v-model="appointmentObj.time"
           label="Time of Visit"
           name="Time of Visit"
           :disabled="isReadOnly"
@@ -104,6 +104,8 @@ export default {
         } else {
           this.appointmentObj = {
             ...newcurrentAppointment,
+            consultantName: `${newcurrentAppointment.specialist.user.first_name} ${newcurrentAppointment.specialist.user.last_name}`,
+            description: newcurrentAppointment.specialty.name,
           }
         }
       },

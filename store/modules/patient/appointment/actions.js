@@ -11,19 +11,15 @@ export default {
         ...payload,
       },
     }
-    const { response } = await this.$axios.$get('appointments', config)
-    commit(GET_APPOINTMENT, response)
+    const { data } = await this.$axios.$get('appointments', config)
+    commit(GET_APPOINTMENT, data)
   },
   async [BOOK_APPOINTMENT]({ commit }, payload) {
     const user = JSON.parse(localStorage.getItem('user'))
     const config = {
       headers: { Authorization: `Bearer ${user.token.token}` },
     }
-    const { response } = await this.$axios.$post(
-      '/appointments',
-      payload,
-      config
-    )
-    commit(BOOK_APPOINTMENT, response)
+    const { data } = await this.$axios.$post('/appointments', payload, config)
+    commit(BOOK_APPOINTMENT, data)
   },
 }

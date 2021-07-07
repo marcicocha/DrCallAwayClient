@@ -18,6 +18,14 @@
           {{ record.status }}
         </div>
       </template>
+      <template slot="name" slot-scope="text, record">
+        {{
+          `${record.specialist.user.first_name} ${record.specialist.user.last_name}`
+        }}
+      </template>
+      <template slot="description" slot-scope="text, record">
+        {{ record.specialty.name }}
+      </template>
     </a-table>
   </div>
 </template>
@@ -45,13 +53,13 @@ export default {
       const columns = [
         {
           title: 'Appointment ID',
-          dataIndex: 'appointmentId',
-          scopedSlots: { customRender: 'appointmentId' },
+          dataIndex: 'id',
+          scopedSlots: { customRender: 'id' },
         },
         {
           title: 'Consultant Name',
-          dataIndex: 'consultantName',
-          scopedSlots: { customRender: 'consultantName' },
+          dataIndex: 'name',
+          scopedSlots: { customRender: 'name' },
         },
         {
           title: 'Description',
@@ -60,13 +68,13 @@ export default {
         },
         {
           title: 'Date of Visit',
-          dataIndex: 'dateOfVisit',
-          scopedSlots: { customRender: 'dateOfVisit' },
+          dataIndex: 'date',
+          scopedSlots: { customRender: 'date' },
         },
         {
           title: 'Time of Visit',
-          dataIndex: 'timeOfVisit',
-          scopedSlots: { customRender: 'timeOfVisit' },
+          dataIndex: 'time',
+          scopedSlots: { customRender: 'time' },
         },
         {
           title: 'Status',

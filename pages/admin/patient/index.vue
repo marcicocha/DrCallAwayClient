@@ -12,7 +12,11 @@
       :scroll-per-page="true"
     >
       <slide v-for="(item, i) in dashboardList" :key="i" class="slide">
-        <AppDashboardCard :card-obj="item" :color="item.color" />
+        <AppDashboardCard
+          :card-obj="item"
+          :color="item.color"
+          @click="$router.replace(item.path)"
+        />
       </slide>
     </carousel>
 
@@ -62,18 +66,21 @@ export default {
           secondText: 'DOCTOR',
           imgSrc: 'admin/patient/1.png',
           color: '#641C62',
+          path: '/admin/patient/key-services/consultation',
         },
         {
           firstText: 'Request a',
           secondText: 'Service',
           imgSrc: 'admin/patient/2.png',
           color: '#BB58B6',
+          path: '/admin/patient/key-services/wellness-nutrition',
         },
         {
           firstText: 'Case',
           secondText: 'File',
           imgSrc: 'admin/patient/3.png',
           color: '#3D0C3C',
+          path: '/admin/patient/case-file',
         },
       ],
     }

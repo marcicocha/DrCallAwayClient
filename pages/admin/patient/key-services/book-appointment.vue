@@ -124,7 +124,7 @@
             <br />
             <div>
               <a-row type="flex" :gutter="24">
-                <a-col :span="8" :offset="4">
+                <a-col :span="12">
                   <AppButton
                     type="default"
                     :loading="isLoading"
@@ -133,14 +133,10 @@
                     >GO BACK</AppButton
                   >
                 </a-col>
-                <a-col :span="8">
-                  <AppButton
-                    type="primary"
-                    :loading="isLoading"
-                    class="admin-button"
-                    @click="closeModal"
-                    >MAKE PAYMENT</AppButton
-                  >
+                <a-col :span="12">
+                  <AppPayment :user-obj="user" @callback="callback">
+                    MAKE PAYMENT
+                  </AppPayment>
                 </a-col>
               </a-row>
             </div>
@@ -159,6 +155,7 @@ import AppTextArea from '@/components/AppTextArea'
 import AppButton from '@/components/AppButton'
 import AppDatePicker from '@/components/AppDatePicker'
 import AppTimePicker from '@/components/AppTimePicker'
+import AppPayment from '@/components/AppPayment.vue'
 
 export default {
   components: {
@@ -169,6 +166,7 @@ export default {
     ValidationObserver,
     AppDatePicker,
     AppTimePicker,
+    AppPayment,
   },
   layout: 'dashboard',
   data() {
@@ -202,6 +200,15 @@ export default {
       return columns
     },
   },
+  mounted() {
+    const userObject = JSON.parse(localStorage.getItem('user'))
+    this.user = {
+      email: userObject.email,
+      firstName: userObject.first_name,
+      lastName: userObject.last_name,
+      amount: 100,
+    }
+  },
   methods: {
     closeModal() {
       this.modalIsVisible = false
@@ -210,38 +217,49 @@ export default {
       console.log(e, 'E')
       // this.bookAppointmentObj.specialistAddress = e
     },
+    async callback(res) {
+      if (res.message === 'Approved') {
+        this.$notification.success({
+          message: res.message,
+          description: 'Payment successful',
+          duration: 4000,
+        })
+        try {
+          const message = await this.submitAppointmentHandler(
+            this.bookAppointmentObj
+          )
+          this.$notification.success({
+            message: 'Success',
+            description: message,
+            duration: 4000,
+          })
+          requestAnimationFrame(() => {
+            this.$refs.observer.reset()
+            this.isLoading = false
+            this.modalIsVisible = false
+            this.bookAppointmentObj = {}
+            this.$emit('formSubmissionCompleted')
+          })
+        } catch (err) {
+          this.isLoading = false
+          const { default: errorHandler } = await import('@/utils/errorHandler')
+          errorHandler(err).forEach((msg) => {
+            this.$notification.error({
+              message: 'Error',
+              description: msg,
+              duration: 4000,
+            })
+          })
+        }
+      }
+    },
     async submitHandler() {
       const isValid = await this.$refs.observer.validate()
       if (!isValid) {
         return
       }
-      this.isLoading = true
-      try {
-        const response = await this.submitAppointmentHandler(
-          this.bookAppointmentObj
-        )
-        this.$notification.success({
-          message: 'Success',
-          description: response,
-          duration: 4000,
-        })
-        this.modalIsVisible = true
-        requestAnimationFrame(() => {
-          this.$refs.observer.reset()
-          this.isLoading = false
-          this.$emit('formSubmissionCompleted')
-        })
-      } catch (err) {
-        this.isLoading = false
-        const { default: errorHandler } = await import('@/utils/errorHandler')
-        errorHandler(err).forEach((msg) => {
-          this.$notification.error({
-            message: 'Error',
-            description: msg,
-            duration: 4000,
-          })
-        })
-      }
+      // this.isLoading = true
+      this.modalIsVisible = true
     },
     ...mapActions({
       submitAppointmentHandler: 'appointmentModule/BOOK_APPOINTMENT',
@@ -252,5 +270,8 @@ export default {
 <style lang="scss" scoped>
 h6 {
   color: $dark-purple;
+}
+.payButton {
+  width: 100%;
 }
 </style>

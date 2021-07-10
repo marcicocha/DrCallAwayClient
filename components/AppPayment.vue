@@ -10,8 +10,9 @@
     :close="close"
     :embed="false"
   >
-    <i class="fas fa-money-bill-alt"></i>
-    {{ `Make Payment of &#8358;${userObj.amount}` }}
+    <!-- <i class="fas fa-money-bill-alt"></i> -->
+    <slot></slot>
+    <!-- {{ `Make Payment of &#8358;${userObj.amount}` }} -->
   </paystack>
 </template>
 
@@ -53,7 +54,8 @@ export default {
       this.$emit('close')
     },
     nairaToKobo(amount) {
-      return (amount * 100).toFixed(0)
+      // return (amount * 100).toFixed(0)
+      return amount * 100
     },
   },
 }

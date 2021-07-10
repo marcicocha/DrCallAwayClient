@@ -121,20 +121,17 @@
             </ValidationObserver>
             <br />
             <div class="t-c">
-              <AppButton
-                v-if="!paymentIsVisible"
+              <!-- <AppButton
                 type="primary"
                 :block="false"
                 :loading="isLoading"
                 class="admin-button"
                 @click="submitSubcriptionHandler"
                 >CONFIRM</AppButton
-              >
-              <AppPayment
-                v-if="paymentIsVisible"
-                :user-obj="user"
-                @callback="callback"
-              />
+              > -->
+              <AppPayment :user-obj="user" @callback="callback">
+                CONFIRM
+              </AppPayment>
             </div>
           </a-form>
         </div>
@@ -186,7 +183,7 @@ export default {
       amount: 100,
     }
     try {
-      await this.submitSubscriptionHandler()
+      await this.getSubscriptionHandler()
     } catch (err) {
       const { default: errorHandler } = await import('@/utils/errorHandler')
       errorHandler(err).forEach((msg) => {
@@ -217,20 +214,51 @@ export default {
     close() {
       // this.paymentIsVisible = false
     },
-    callback(res) {
-      if (res.message === 'approved') {
-        this.closeModal()
+    async callback(res) {
+      if (res.message === 'Approved') {
         this.$notification.success({
           message: res.message,
           description: 'Payment successful',
           duration: 4000,
         })
-        requestAnimationFrame(() => {
-          this.$refs.observer.reset()
+        try {
+          if (this.renewIsVisible) {
+            const message = await this.submitRenewHandler(
+              this.currentSubscriptionObj
+            )
+            this.$notification.success({
+              message: 'Success',
+              description: message,
+              duration: 4000,
+            })
+          } else {
+            const message = await this.submitChangeHandler(
+              this.newSubscriptionObj
+            )
+            this.$notification.success({
+              message: 'Success',
+              description: message,
+              duration: 4000,
+            })
+          }
+          requestAnimationFrame(() => {
+            this.$refs.observer.reset()
+            this.isLoading = false
+            this.currentSubscriptionObj = {}
+            this.newSubscriptionObj = {}
+            this.closeModal()
+          })
+        } catch (err) {
           this.isLoading = false
-          this.currentSubscriptionObj = {}
-          this.newSubscriptionObj = {}
-        })
+          const { default: errorHandler } = await import('@/utils/errorHandler')
+          errorHandler(err).forEach((msg) => {
+            this.$notification.error({
+              message: 'Error',
+              description: msg,
+              duration: 4000,
+            })
+          })
+        }
       }
     },
     async submitSubcriptionHandler() {
@@ -240,42 +268,9 @@ export default {
       }
       this.isLoading = true
       this.paymentIsVisible = true
-
-      try {
-        if (this.renewIsVisible) {
-          const response = await this.submitRenewHandler(
-            this.currentSubscriptionObj
-          )
-          this.$notification.success({
-            message: 'Success',
-            description: response,
-            duration: 4000,
-          })
-        } else {
-          const response = await this.submitChangeHandler(
-            this.newSubscriptionObj
-          )
-          this.$notification.success({
-            message: 'Success',
-            description: response,
-            duration: 4000,
-          })
-        }
-        // this.paymentIsVisible = true
-      } catch (err) {
-        this.isLoading = false
-        const { default: errorHandler } = await import('@/utils/errorHandler')
-        errorHandler(err).forEach((msg) => {
-          this.$notification.error({
-            message: 'Error',
-            description: msg,
-            duration: 4000,
-          })
-        })
-      }
     },
     ...mapActions({
-      submitSubscriptionHandler: 'subscriptionModule/GET_SUBSCRIPTION',
+      getSubscriptionHandler: 'subscriptionModule/GET_SUBSCRIPTION',
       submitRenewHandler: 'subscriptionModule/RENEW_SUBSCRIPTION',
       submitChangeHandler: 'subscriptionModule/CHANGE_SUBSCRIPTION',
     }),

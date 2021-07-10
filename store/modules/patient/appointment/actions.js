@@ -19,7 +19,12 @@ export default {
     const config = {
       headers: { Authorization: `Bearer ${user.token.token}` },
     }
-    const { data } = await this.$axios.$post('/appointments', payload, config)
+    const { data, message } = await this.$axios.$post(
+      '/appointments',
+      payload,
+      config
+    )
     commit(BOOK_APPOINTMENT, data)
+    return message
   },
 }

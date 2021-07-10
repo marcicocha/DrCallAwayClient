@@ -20,8 +20,8 @@ export default {
     const config = {
       headers: { Authorization: `Bearer ${user.token.token}` },
     }
-    const { data } = await this.$axios.$post('callUp', payload, config)
-    console.log(data, 'DATA')
+    const { data, message } = await this.$axios.$post('callUp', payload, config)
     commit(ADD_AMBULANCE, data)
+    return message
   },
 }

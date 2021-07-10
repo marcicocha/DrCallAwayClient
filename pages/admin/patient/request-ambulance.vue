@@ -123,11 +123,10 @@ export default {
       }
       this.isLoading = true
       try {
-        const response = await this.submitAmbulanceHandler(this.requestObj)
-        console.log(response, 'RESPONSE')
+        const message = await this.submitAmbulanceHandler(this.requestObj)
         this.$notification.success({
           message: 'Success',
-          description: response,
+          description: message,
           duration: 4000,
         })
 

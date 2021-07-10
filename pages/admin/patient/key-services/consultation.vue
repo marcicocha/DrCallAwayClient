@@ -54,14 +54,14 @@
           <a-form>
             <ValidationObserver ref="observer" tag="div">
               <AppInput
-                v-model="ailmentObj.ailment"
+                v-model="ailmentObj.initial_complain"
                 label="Ailment"
                 name="ailment"
                 required
                 rules="required"
               />
               <AppTextArea
-                v-model="ailmentObj.additionalInformation"
+                v-model="ailmentObj.additional_info"
                 label="Tell us how you feel"
               />
               <p>Not more than 200 words</p>
@@ -244,8 +244,44 @@ export default {
       this.generalIsVisible = false
       this.specialModalIsVisible = false
     },
-    submitHandler() {
-      console.log('CLICKED')
+    async submitHandler() {
+      const isValid = await this.$refs.observer.validate()
+      if (!isValid) {
+        return
+      }
+      this.isLoading = true
+      try {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const config = {
+          headers: { Authorization: `Bearer ${user.token.token}` },
+        }
+        const { message } = await this.$axios.$post(
+          'cases',
+          this.ailmentObj,
+          config
+        )
+
+        this.$notification.success({
+          message: 'Success',
+          description: message,
+          duration: 4000,
+        })
+        requestAnimationFrame(() => {
+          this.$refs.observer.reset()
+          this.isLoading = false
+          this.generalIsVisible = false
+        })
+      } catch (err) {
+        this.isLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
     specialServiceHandler(obj) {
       this.specialModalIsVisible = true

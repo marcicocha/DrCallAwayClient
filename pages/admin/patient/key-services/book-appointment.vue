@@ -47,10 +47,9 @@
             </a-col>
             <a-col :span="12">
               <AppInput
-                v-model="bookAppointmentObj.specialistAddress"
-                label="Specialist Address"
-                name="Specialist Address"
-                disabled
+                v-model="bookAppointmentObj.address"
+                label="Address"
+                name="Address"
               />
             </a-col>
             <a-col :span="12">
@@ -58,6 +57,7 @@
                 v-model="bookAppointmentObj.paymentCharge"
                 label="Payment Charge"
                 name="payment charge"
+                disabled
               />
             </a-col>
             <a-col :span="12">
@@ -176,6 +176,7 @@ export default {
       modalIsVisible: false,
       confirmLoading: false,
       dataSource: [],
+      user: {},
     }
   },
   computed: {

@@ -180,11 +180,15 @@ export default {
       if (this.lastFetchId > 0) {
         return
       }
+      const user = JSON.parse(localStorage.getItem('user'))
+      const config = {
+        headers: { Authorization: `Bearer ${user.token.token}` },
+      }
       const callBackFunc = this.callBackFunc
       this.dataRemote = []
       this.fetching = true
       this.$axios
-        .$get(this.url)
+        .$get(this.url, config)
         .then((body) => {
           if (body.data && Array.isArray(body.data)) {
             const dataRemote = body.data.map(callBackFunc)
@@ -209,20 +213,12 @@ export default {
         })
         .catch((err) => {
           this.fetching = false
-          let errorMessage = 'Network Error'
-
-          // Error Message from Backend
-          // eslint-disable-next-line no-prototype-builtins
-          if (err.hasOwnProperty('response')) {
-            const res = err.response
-            errorMessage = res.data.errorMessage
-
-            this.$notification.error({
-              message: 'Error Message',
-              description: errorMessage,
-              duration: 4000,
-            })
-          }
+          console.log(err, 'ERR')
+          this.$notification.error({
+            message: 'Error',
+            description: err,
+            duration: 4000,
+          })
         })
     },
     resolveState({ errors, flags }) {

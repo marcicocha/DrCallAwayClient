@@ -54,14 +54,14 @@
           <a-form>
             <ValidationObserver ref="observer" tag="div">
               <AppInput
-                v-model="ailmentObj.initial_complain"
+                v-model="ailmentObj.ailment"
                 label="Ailment"
                 name="ailment"
                 required
                 rules="required"
               />
               <AppTextArea
-                v-model="ailmentObj.additional_info"
+                v-model="ailmentObj.how_you_feel"
                 label="Tell us how you feel"
               />
               <p>Not more than 200 words</p>

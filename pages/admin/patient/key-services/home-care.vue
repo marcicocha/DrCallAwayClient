@@ -37,8 +37,14 @@
                 label="List of Nurse"
                 placeholder="Select a Nurse"
                 name="nurse"
-                :data="['YES']"
-                :remote="true"
+                url="list/nurses"
+                :call-back-func="
+                  (resp) => ({
+                    text: resp.first_name + ' ' + resp.last_name,
+                    value: resp.id,
+                  })
+                "
+                @change="changeNurseHandler"
               />
               <AppSelect
                 v-if="homeCareKey === 'practitioner'"
@@ -46,14 +52,20 @@
                 label="List of General Practitioner"
                 placeholder="Select a General Practitioner"
                 name="nurse"
-                :data="['YES']"
-                :remote="true"
+                rules="required"
+                required
+                url="specialists/5"
+                :call-back-func="
+                  (resp) => ({
+                    text: resp.user.first_name + ' ' + resp.user.last_name,
+                    value: resp.id,
+                  })
+                "
+                @change="changeSpecialistHandler"
               />
               <AppInput
                 v-model="homeCareObj.noOfDays"
-                :label="`Number of Days ${
-                  homeCareKey === 'nurse' ? '(N5,000/Day)' : '(N10,000/Day)'
-                }`"
+                label="Number of Days"
                 name="number of Days"
                 placeholder="Enter Number of Days"
                 required
@@ -65,18 +77,18 @@
                 name="address"
                 placeholder="Enter Address"
               />
-              <AppInput
-                v-model="homeCareObj.startDate"
+              <AppDatePicker
+                v-model="homeCareObj.date"
                 label="Select Start Date"
                 name="select start date"
               />
-              <AppInput
-                v-model="homeCareObj.startTime"
+              <AppTimePicker
+                v-model="homeCareObj.time"
                 label="Select Start Time"
                 name="select start time"
               />
               <AppInput
-                v-model="homeCareObj.additionalComment"
+                v-model="homeCareObj.additional_info"
                 label="Additional Comment"
                 name="additional comment"
               />
@@ -136,13 +148,9 @@
               >
             </a-col>
             <a-col :span="8">
-              <AppButton
-                type="primary"
-                :loading="isLoading"
-                class="admin-button"
-                @click="closeModal"
-                >MAKE PAYMENT</AppButton
-              >
+              <AppPayment :user-obj="user" @callback="callback">
+                MAKE PAYMENT
+              </AppPayment>
             </a-col>
           </a-row>
         </div>
@@ -151,17 +159,23 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 import { ValidationObserver } from 'vee-validate'
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
-
+import AppPayment from '@/components/AppPayment.vue'
+import AppDatePicker from '@/components/AppDatePicker'
+import AppTimePicker from '@/components/AppTimePicker'
 export default {
   components: {
     AppDashboardCard,
     AppInput,
     AppSelect,
     ValidationObserver,
+    AppPayment,
+    AppTimePicker,
+    AppDatePicker,
   },
   layout: 'dashboard',
   data() {
@@ -189,6 +203,7 @@ export default {
           color: '#BB58B6',
         },
       ],
+      user: {},
     }
   },
   computed: {
@@ -213,7 +228,22 @@ export default {
       return columns
     },
   },
+  mounted() {
+    const userObject = JSON.parse(localStorage.getItem('user'))
+    this.user = {
+      email: userObject.email,
+      firstName: userObject.first_name,
+      lastName: userObject.last_name,
+      amount: 100,
+    }
+  },
   methods: {
+    changeNurseHandler() {
+      console.log('CHANGED')
+    },
+    changeSpecialistHandler() {
+      console.log('CHANGED')
+    },
     showModalhandler(key) {
       this.modalIsVisible = true
       this.homeCareKey = key
@@ -222,9 +252,53 @@ export default {
       this.modalIsVisible = false
       this.selectedModalIsVisible = false
     },
-    submitHandler() {
+    async callback(res) {
+      if (res.message === 'Approved') {
+        this.$notification.success({
+          message: res.message,
+          description: 'Payment successful',
+          duration: 4000,
+        })
+        try {
+          const message = await this.submitAppointmentHandler(
+            this.nutritionistObj
+          )
+          this.$notification.success({
+            message: 'Success',
+            description: message,
+            duration: 4000,
+          })
+          requestAnimationFrame(() => {
+            this.$refs.observer.reset()
+            this.isLoading = false
+            this.modalIsVisible = false
+            this.nutritionistObj = {}
+            this.$emit('formSubmissionCompleted')
+          })
+        } catch (err) {
+          this.isLoading = false
+          const { default: errorHandler } = await import('@/utils/errorHandler')
+          errorHandler(err).forEach((msg) => {
+            this.$notification.error({
+              message: 'Error',
+              description: msg,
+              duration: 4000,
+            })
+          })
+        }
+      }
+    },
+    async submitHandler() {
+      const isValid = await this.$refs.observer.validate()
+      if (!isValid) {
+        return
+      }
+      // this.isLoading = true
       this.selectedModalIsVisible = true
     },
+    ...mapActions({
+      submitAppointmentHandler: 'appointmentModule/BOOK_APPOINTMENT',
+    }),
   },
 }
 </script>

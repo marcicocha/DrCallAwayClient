@@ -32,23 +32,29 @@
           <a-form>
             <ValidationObserver ref="observer" tag="div">
               <AppSelect
-                v-if="homeCareKey === 'nurse'"
-                v-model="homeCareObj.nurse"
-                label="List of Nurse"
-                placeholder="Select a Nurse"
+                v-model="homeCareObj.specialistId"
+                :label="`List of ${
+                  homeCareKey === 'nurse' ? 'Nurse' : 'General Practitioner'
+                }`"
+                :placeholder="`Select a ${
+                  homeCareKey === 'nurse' ? 'Nurse' : 'General Practitioner'
+                }`"
                 name="nurse"
-                url="list/nurses"
+                :url="homeCareKey === 'nurse' ? 'list/nurses' : 'specialists/5'"
                 :call-back-func="
                   (resp) => ({
-                    text: resp.first_name + ' ' + resp.last_name,
+                    text:
+                      homeCareKey === 'nurse'
+                        ? resp.first_name + ' ' + resp.last_name
+                        : resp.user.first_name + ' ' + resp.user.last_name,
                     value: resp.id,
                   })
                 "
                 required
                 rules="required"
-                @change="changeNurseHandler"
+                @change="changeHandler"
               />
-              <AppSelect
+              <!-- <AppSelect
                 v-if="homeCareKey === 'practitioner'"
                 v-model="homeCareObj.generalPractitioner"
                 label="List of General Practitioner"
@@ -64,9 +70,9 @@
                   })
                 "
                 @change="changeSpecialistHandler"
-              />
+              /> -->
               <AppInput
-                v-model="homeCareObj.noOfDays"
+                v-model="homeCareObj.days"
                 label="Number of Days"
                 name="number of Days"
                 placeholder="Enter Number of Days"
@@ -238,10 +244,7 @@ export default {
     }
   },
   methods: {
-    changeNurseHandler() {
-      console.log('CHANGED')
-    },
-    changeSpecialistHandler() {
+    changeHandler() {
       console.log('CHANGED')
     },
     showModalhandler(key) {
@@ -260,16 +263,37 @@ export default {
           duration: 4000,
         })
         try {
-          const message = await this.submitAppointmentHandler(this.homeCareObj)
-          this.$notification.success({
-            message: 'Success',
-            description: message,
-            duration: 4000,
-          })
+          if (this.homeCareKey === 'nurse') {
+            console.log('IT GOT HERE')
+            const obj = {
+              ...this.homeCareObj,
+              partner_id: this.homeCareObj.specialistId,
+              description: this.homeCareObj.additional_info,
+            }
+            const message = await this.submitNurseHandler(obj)
+            this.$notification.success({
+              message: 'Success',
+              description: message,
+              duration: 4000,
+            })
+          } else {
+            const obj = {
+              ...this.homeCareobj,
+              specialtyId: 5,
+            }
+            const message = await this.submitAppointmentHandler(obj)
+            this.$notification.success({
+              message: 'Success',
+              description: message,
+              duration: 4000,
+            })
+          }
+
           requestAnimationFrame(() => {
             this.$refs.observer.reset()
             this.isLoading = false
             this.modalIsVisible = false
+            this.selectedModalIsVisible = false
             this.homeCareObj = {}
             this.$emit('formSubmissionCompleted')
           })
@@ -296,6 +320,7 @@ export default {
     },
     ...mapActions({
       submitAppointmentHandler: 'appointmentModule/BOOK_APPOINTMENT',
+      submitNurseHandler: 'appointmentModule/BOOK_NURSE',
     }),
   },
 }

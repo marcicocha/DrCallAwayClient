@@ -214,11 +214,11 @@ export default {
         .catch((err) => {
           this.fetching = false
           console.log(err, 'ERR')
-          this.$notification.error({
-            message: 'Error',
-            description: err,
-            duration: 4000,
-          })
+          // this.$notification.error({
+          //   message: 'Error',
+          //   description: err,
+          //   duration: 4000,
+          // })
         })
     },
     resolveState({ errors, flags }) {

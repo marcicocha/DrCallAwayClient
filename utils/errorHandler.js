@@ -1,5 +1,8 @@
 export const ErrorHandler = (err) => {
   // err.response.data.message
+  console.log(err, 'ERROR')
+  console.log(err.response.data, 'ERROR DATA')
+  console.log(err.response, 'ERROR RESPONSE')
   const errors = []
   if (err && err.response && err.response.data) {
     if (err.response.data.hasError) {
@@ -20,7 +23,14 @@ export const ErrorHandler = (err) => {
     } else if (err.response.data.errorMessage) {
       errors.push(err.response.data.response)
     } else if (err.response.data.message) {
-      errors.push(err.response.data.message)
+      if (typeof err.response.data.message === 'object') {
+        const obj = err.response.data.message
+        for (const property in obj) {
+          errors.push(obj[property])
+        }
+      } else if (typeof err.response.data.message === 'string') {
+        errors.push(err.response.data.message)
+      }
     } else if (
       err.response.data.error_description &&
       err.response.data.error_description.includes('token expired')

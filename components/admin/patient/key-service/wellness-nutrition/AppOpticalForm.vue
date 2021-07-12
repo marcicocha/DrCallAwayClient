@@ -186,6 +186,7 @@ export default {
         try {
           const obj = {
             ...this.opticalObj,
+            specialtyId: 35,
             date: moment(this.opticalObj.date).format('YYYY-MM-DD'),
           }
           const message = await this.submitAppointmentHandler(obj)

@@ -33,6 +33,7 @@
           v-model="dentistObj.date"
           label="Select Start Date"
           name="select start date"
+          :disabledDate="disabledDate"
         />
         <AppTimePicker
           v-model="dentistObj.time"
@@ -109,6 +110,7 @@
 <script>
 import { mapActions } from 'vuex'
 import { ValidationObserver } from 'vee-validate'
+import moment from 'moment'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppTextArea from '@/components/AppTextArea'
@@ -171,6 +173,10 @@ export default {
     changeNutritionistHandler() {
       console.log('CHANGED')
     },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current < moment().startOf('day')
+    },
     async callback(res) {
       if (res.message === 'Approved') {
         this.$notification.success({
@@ -179,7 +185,12 @@ export default {
           duration: 4000,
         })
         try {
-          const message = await this.submitAppointmentHandler(this.dentistObj)
+          const obj = {
+            ...this.dentistObj,
+            specialtyId: 145,
+            date: moment(this.dentistObj.date).format('YYYY-MM-DD'),
+          }
+          const message = await this.submitAppointmentHandler(obj)
           this.$notification.success({
             message: 'Success',
             description: message,

@@ -7,13 +7,16 @@
           label="List of Optical Clinic"
           placeholder="Select a Optical Clinic"
           name="optical clinic"
-          :data="['YES']"
-          :remote="true"
-        />
-        <AppInput
-          v-model="opticalObj.address"
-          label="Clinic Address"
-          name="clinic address"
+          rules="required"
+          required
+          url="specialists/35"
+          :call-back-func="
+            (resp) => ({
+              text: resp.user.first_name + ' - ' + resp.user.last_name,
+              value: resp.id,
+            })
+          "
+          @change="changeOpticianHandler"
         />
         <AppSelect
           v-model="opticalObj.opticalService"
@@ -22,6 +25,11 @@
           name="optical service"
           :data="['YES']"
           :remote="true"
+        />
+        <AppInput
+          v-model="opticalObj.address"
+          label="Clinic Address"
+          name="clinic address"
         />
         <AppInput
           v-model="opticalObj.paymentCharge"
@@ -169,7 +177,7 @@ export default {
     }
   },
   methods: {
-    changeNutritionistHandler() {
+    changeOpticianHandler() {
       console.log('CHANGED')
     },
     disabledDate(current) {

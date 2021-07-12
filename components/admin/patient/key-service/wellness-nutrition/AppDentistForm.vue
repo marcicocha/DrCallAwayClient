@@ -7,13 +7,16 @@
           label="List of Dental Clinic"
           placeholder="Select a Dental Clinic"
           name="dental clinic"
-          :data="['YES']"
-          :remote="true"
-        />
-        <AppInput
-          v-model="dentistObj.address"
-          label="Clinic Address"
-          name="clinic address"
+          rules="required"
+          required
+          url="specialists/145"
+          :call-back-func="
+            (resp) => ({
+              text: resp.user.first_name + ' - ' + resp.user.last_name,
+              value: resp.id,
+            })
+          "
+          @change="changeDentistHandler"
         />
         <AppSelect
           v-model="dentistObj.dentalService"
@@ -23,12 +26,12 @@
           :data="['YES']"
           :remote="true"
         />
+        <AppInput v-model="dentistObj.address" label="Address" name="address" />
         <AppInput
           v-model="dentistObj.paymentCharge"
           label="Payment Charge"
           name="Payment charge"
         />
-
         <AppDatePicker
           v-model="dentistObj.date"
           label="Select Start Date"
@@ -170,7 +173,7 @@ export default {
     }
   },
   methods: {
-    changeNutritionistHandler() {
+    changeDentistHandler() {
       console.log('CHANGED')
     },
     disabledDate(current) {

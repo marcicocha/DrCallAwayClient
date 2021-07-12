@@ -87,6 +87,7 @@
                 v-model="homeCareObj.date"
                 label="Select Start Date"
                 name="select start date"
+                :disabledDate="disabledDate"
               />
               <AppTimePicker
                 v-model="homeCareObj.time"
@@ -122,7 +123,7 @@
       :destroy-on-close="true"
       :mask-style="{ background: 'rgba(61, 12, 60, 0.9)' }"
       centered
-      @cancel="closeModal"
+      @cancel="closeSelectedModal"
     >
       <div>
         <h6 class="t-c">
@@ -167,6 +168,7 @@
 <script>
 import { mapActions } from 'vuex'
 import { ValidationObserver } from 'vee-validate'
+import moment from 'moment'
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
@@ -253,7 +255,13 @@ export default {
     },
     closeModal() {
       this.modalIsVisible = false
+    },
+    closeSelectedModal() {
       this.selectedModalIsVisible = false
+    },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current < moment().startOf('day')
     },
     async callback(res) {
       if (res.message === 'Approved') {
@@ -269,6 +277,7 @@ export default {
               ...this.homeCareObj,
               partner_id: this.homeCareObj.specialistId,
               description: this.homeCareObj.additional_info,
+              date: moment(this.homeCareObj.date).format('YYYY-MM-DD'),
             }
             const message = await this.submitNurseHandler(obj)
             this.$notification.success({
@@ -278,8 +287,9 @@ export default {
             })
           } else {
             const obj = {
-              ...this.homeCareobj,
+              ...this.homeCareObj,
               specialtyId: 5,
+              date: moment(this.homeCareObj.date).format('YYYY-MM-DD'),
             }
             const message = await this.submitAppointmentHandler(obj)
             this.$notification.success({

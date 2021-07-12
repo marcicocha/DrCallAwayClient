@@ -65,6 +65,7 @@
                 v-model="bookAppointmentObj.date"
                 label="Select Proposed Date"
                 name="select proposed date"
+                :disabledDate="disabledDate"
               />
             </a-col>
             <a-col :span="12">
@@ -149,6 +150,7 @@
 <script>
 import { ValidationObserver } from 'vee-validate'
 import { mapActions } from 'vuex'
+import moment from 'moment'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppTextArea from '@/components/AppTextArea'
@@ -218,6 +220,10 @@ export default {
       console.log(e, 'E')
       // this.bookAppointmentObj.specialistAddress = e
     },
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current < moment().startOf('day')
+    },
     async callback(res) {
       if (res.message === 'Approved') {
         this.$notification.success({
@@ -226,9 +232,11 @@ export default {
           duration: 4000,
         })
         try {
-          const message = await this.submitAppointmentHandler(
-            this.bookAppointmentObj
-          )
+          const obj = {
+            ...this.bookAppointmentObj,
+            date: moment(this.bookAppointmentObj.date).format('YYYY-MM-DD'),
+          }
+          const message = await this.submitAppointmentHandler(obj)
           this.$notification.success({
             message: 'Success',
             description: message,

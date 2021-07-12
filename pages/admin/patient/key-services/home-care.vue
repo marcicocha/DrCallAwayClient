@@ -44,6 +44,8 @@
                     value: resp.id,
                   })
                 "
+                required
+                rules="required"
                 @change="changeNurseHandler"
               />
               <AppSelect
@@ -68,8 +70,6 @@
                 label="Number of Days"
                 name="number of Days"
                 placeholder="Enter Number of Days"
-                required
-                rules="required"
               />
               <AppInput
                 v-model="homeCareObj.address"
@@ -138,7 +138,7 @@
         <br />
         <div>
           <a-row type="flex" :gutter="24">
-            <a-col :span="8" :offset="4">
+            <a-col :span="12">
               <AppButton
                 type="default"
                 :loading="isLoading"
@@ -147,7 +147,7 @@
                 >GO BACK</AppButton
               >
             </a-col>
-            <a-col :span="8">
+            <a-col :span="12">
               <AppPayment :user-obj="user" @callback="callback">
                 MAKE PAYMENT
               </AppPayment>
@@ -260,9 +260,7 @@ export default {
           duration: 4000,
         })
         try {
-          const message = await this.submitAppointmentHandler(
-            this.nutritionistObj
-          )
+          const message = await this.submitAppointmentHandler(this.homeCareObj)
           this.$notification.success({
             message: 'Success',
             description: message,
@@ -272,7 +270,7 @@ export default {
             this.$refs.observer.reset()
             this.isLoading = false
             this.modalIsVisible = false
-            this.nutritionistObj = {}
+            this.homeCareObj = {}
             this.$emit('formSubmissionCompleted')
           })
         } catch (err) {
@@ -305,5 +303,8 @@ export default {
 <style lang="scss" scoped>
 h6 {
   color: $dark-purple;
+}
+.payButton {
+  width: 100%;
 }
 </style>

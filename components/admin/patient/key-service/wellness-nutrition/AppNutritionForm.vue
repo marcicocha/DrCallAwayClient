@@ -220,3 +220,8 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.payButton {
+  width: 100%;
+}
+</style>

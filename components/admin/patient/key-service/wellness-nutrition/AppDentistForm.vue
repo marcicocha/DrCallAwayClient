@@ -70,7 +70,7 @@
         <div>
           <h6 class="t-c">
             {{
-              `Selected Nutritionist: ${nutritionistObj.specialist} (${nutritionistObj.specialistAddress})`
+              `Selected Nutritionist: ${dentistObj.specialist} (${dentistObj.specialistAddress})`
             }}
           </h6>
           <a-divider />
@@ -179,9 +179,7 @@ export default {
           duration: 4000,
         })
         try {
-          const message = await this.submitAppointmentHandler(
-            this.nutritionistObj
-          )
+          const message = await this.submitAppointmentHandler(this.dentistObj)
           this.$notification.success({
             message: 'Success',
             description: message,
@@ -191,7 +189,7 @@ export default {
             this.$refs.observer.reset()
             this.isLoading = false
             this.modalIsVisible = false
-            this.nutritionistObj = {}
+            this.dentistObj = {}
             this.$emit('formSubmissionCompleted')
           })
         } catch (err) {
@@ -221,3 +219,8 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.payButton {
+  width: 100%;
+}
+</style>

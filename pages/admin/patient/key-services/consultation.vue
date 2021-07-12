@@ -266,6 +266,7 @@ export default {
           description: message,
           duration: 4000,
         })
+        this.$router.replace('/admin/patient/case-file')
         requestAnimationFrame(() => {
           this.$refs.observer.reset()
           this.isLoading = false

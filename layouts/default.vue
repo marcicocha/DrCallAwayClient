@@ -593,11 +593,32 @@ export default {
       console.log(this.signUpObject)
       try {
         if (this.mode === 'practitioner') {
-          const { response } = await this.$axios.$post(
-            'partners/signup',
-            this.signUpObject
-          )
-          localStorage.setItem('user', JSON.stringify(response))
+          if (this.signUpObject.type === 'DOCTOR') {
+            const { response } = await this.$axios.$post(
+              'doctors/signup',
+              this.signUpObject
+            )
+            localStorage.setItem('user', JSON.stringify(response))
+          } else {
+            const partnerObj = {
+              ...this.signUpObject,
+              members: [
+                {
+                  first_name: this.signUpObject.first_name,
+                  last_name: this.signUpObject.last_name,
+                  email: this.signUpObject.email,
+                  password: this.signUpObject.password,
+                  password_confirmation:
+                    this.signUpObject.password_confirmation,
+                },
+              ],
+            }
+            const { response } = await this.$axios.$post(
+              'partners/signup',
+              partnerObj
+            )
+            localStorage.setItem('user', JSON.stringify(response))
+          }
         } else {
           const { response } = await this.$axios.$post(
             'signup',

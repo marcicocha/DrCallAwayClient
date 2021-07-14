@@ -16,7 +16,7 @@
               value: resp.id,
             })
           "
-          @change="changeNutritionistHandler"
+          @select="selectNutritionistHandler"
         />
         <AppInput
           v-model="nutritionistObj.address"
@@ -27,6 +27,7 @@
           v-model="nutritionistObj.paymentCharge"
           label="Payment Charge"
           name="Payment charge"
+          disabled
         />
         <AppDatePicker
           v-model="nutritionistObj.date"
@@ -69,9 +70,7 @@
       <div>
         <div>
           <h6 class="t-c">
-            {{
-              `Selected Nutritionist: ${nutritionistObj.specialist} (${nutritionistObj.specialistAddress})`
-            }}
+            {{ `Selected Nutritionist: ${nutritionist}` }}
           </h6>
           <a-divider />
           <div class="colored-table">
@@ -135,6 +134,7 @@ export default {
       confirmLoading: false,
       dataSource: [],
       user: {},
+      nutritionist: '',
     }
   },
   computed: {
@@ -169,8 +169,9 @@ export default {
     }
   },
   methods: {
-    changeNutritionistHandler() {
-      console.log('CHANGED')
+    selectNutritionistHandler(value, options) {
+      const description = options.componentOptions.propsData.title
+      this.nutritionist = description
     },
     disabledDate(current) {
       // Can not select days before today and today
@@ -194,6 +195,7 @@ export default {
             description: message,
             duration: 4000,
           })
+          this.$router.replace('/admin/patient/appointment')
           requestAnimationFrame(() => {
             this.$refs.observer.reset()
             this.isLoading = false

@@ -2,14 +2,23 @@
   <div>
     <AppTabs v-if="!viewIsVisible" v-model="activeKey">
       <template slot="default">
-        <a-tab-pane key="1" tab="Pending Cases" force-render>
-          <AppCaseFileDataTable status="PENDING" @showCaseFile="showCaseFile" />
+        <a-tab-pane key="1" tab="Pending Cases">
+          <AppCaseFileDataTable
+            :key="activeKey"
+            status="PENDING"
+            @showCaseFile="showCaseFile"
+          />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Active Cases">
-          <AppCaseFileDataTable status="ACTIVE" @showCaseFile="showCaseFile" />
+          <AppCaseFileDataTable
+            :key="activeKey"
+            status="ACTIVE"
+            @showCaseFile="showCaseFile"
+          />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Cases">
           <AppCaseFileDataTable
+            :key="activeKey"
             status="COMPLETED"
             @showCaseFile="showCaseFile"
           />

@@ -3,7 +3,7 @@
     <a-form>
       <ValidationObserver ref="observer" tag="div">
         <AppSelect
-          v-model="opticalObj.OpticalClinic"
+          v-model="opticalObj.specialistId"
           label="List of Optical Clinic"
           placeholder="Select a Optical Clinic"
           name="optical clinic"
@@ -16,7 +16,7 @@
               value: resp.id,
             })
           "
-          @change="changeOpticianHandler"
+          @select="selectOpticianHandler"
         />
         <AppSelect
           v-model="opticalObj.opticalService"
@@ -35,6 +35,7 @@
           v-model="opticalObj.paymentCharge"
           label="Payment Charge"
           name="Payment charge"
+          disabled
         />
         <AppDatePicker
           v-model="opticalObj.date"
@@ -77,9 +78,7 @@
       <div>
         <div>
           <h6 class="t-c">
-            {{
-              `Selected Optician: ${opticalObj.specialist} (${opticalObj.specialistAddress})`
-            }}
+            {{ `Selected Optician: ${optician}` }}
           </h6>
           <a-divider />
           <div class="colored-table">
@@ -143,6 +142,7 @@ export default {
       confirmLoading: false,
       dataSource: [],
       user: {},
+      optician: '',
     }
   },
   computed: {
@@ -177,8 +177,9 @@ export default {
     }
   },
   methods: {
-    changeOpticianHandler() {
-      console.log('CHANGED')
+    selectOpticianHandler(value, options) {
+      const description = options.componentOptions.propsData.title
+      this.optician = description
     },
     disabledDate(current) {
       // Can not select days before today and today
@@ -203,6 +204,7 @@ export default {
             description: message,
             duration: 4000,
           })
+          this.$router.replace('/admin/patient/appointment')
           requestAnimationFrame(() => {
             this.$refs.observer.reset()
             this.isLoading = false

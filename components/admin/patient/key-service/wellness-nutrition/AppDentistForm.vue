@@ -3,7 +3,7 @@
     <a-form>
       <ValidationObserver ref="observer" tag="div">
         <AppSelect
-          v-model="dentistObj.dentalClinic"
+          v-model="dentistObj.specialistId"
           label="List of Dental Clinic"
           placeholder="Select a Dental Clinic"
           name="dental clinic"
@@ -16,7 +16,7 @@
               value: resp.id,
             })
           "
-          @change="changeDentistHandler"
+          @select="selectDentistHandler"
         />
         <AppSelect
           v-model="dentistObj.dentalService"
@@ -31,6 +31,7 @@
           v-model="dentistObj.paymentCharge"
           label="Payment Charge"
           name="Payment charge"
+          disabled
         />
         <AppDatePicker
           v-model="dentistObj.date"
@@ -73,9 +74,7 @@
       <div>
         <div>
           <h6 class="t-c">
-            {{
-              `Selected Nutritionist: ${dentistObj.specialist} (${dentistObj.specialistAddress})`
-            }}
+            {{ `Selected Dentist: ${dentist}` }}
           </h6>
           <a-divider />
           <div class="colored-table">
@@ -139,6 +138,7 @@ export default {
       confirmLoading: false,
       dataSource: [],
       user: {},
+      dentist: '',
     }
   },
   computed: {
@@ -173,12 +173,16 @@ export default {
     }
   },
   methods: {
-    changeDentistHandler() {
-      console.log('CHANGED')
+    selectDentistHandler(value, options) {
+      const description = options.componentOptions.propsData.title
+      this.dentist = description
     },
     disabledDate(current) {
       // Can not select days before today and today
       return current && current < moment().startOf('day')
+    },
+    closeModal() {
+      this.modalIsVisible = false
     },
     async callback(res) {
       if (res.message === 'Approved') {
@@ -199,6 +203,7 @@ export default {
             description: message,
             duration: 4000,
           })
+          this.$router.replace('/admin/patient/appointment')
           requestAnimationFrame(() => {
             this.$refs.observer.reset()
             this.isLoading = false

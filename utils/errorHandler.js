@@ -1,8 +1,4 @@
 export const ErrorHandler = (err) => {
-  // err.response.data.message
-  console.log(err, 'ERROR')
-  console.log(err.response.data, 'ERROR DATA')
-  console.log(err.response, 'ERROR RESPONSE')
   const errors = []
   if (err && err.response && err.response.data) {
     if (err.response.data.hasError) {

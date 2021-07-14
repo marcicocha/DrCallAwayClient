@@ -20,6 +20,7 @@
                 "
                 rules="required"
                 required
+                @select="selectSpecialityHandler"
               />
             </a-col>
             <a-col :span="12">
@@ -38,7 +39,7 @@
                     value: resp.id,
                   })
                 "
-                @change="changeSpecialistHandler"
+                @select="selectSpecialistHandler"
               />
               <small style="color: #3d0c3c"
                 >One will be automatically selected for you if you don't know
@@ -109,9 +110,7 @@
         <div>
           <div>
             <h6 class="t-c">
-              {{
-                `Selected Specialist: ${bookAppointmentObj.specialists} (${bookAppointmentObj.specialistAddress})`
-              }}
+              {{ `Selected Specialist: ${specialist} (${speciality})` }}
             </h6>
             <a-divider />
             <div class="colored-table">
@@ -179,6 +178,8 @@ export default {
       confirmLoading: false,
       dataSource: [],
       user: {},
+      specialist: '',
+      speciality: '',
     }
   },
   computed: {
@@ -216,9 +217,13 @@ export default {
     closeModal() {
       this.modalIsVisible = false
     },
-    changeSpecialistHandler(e) {
-      console.log(e, 'E')
-      // this.bookAppointmentObj.specialistAddress = e
+    selectSpecialistHandler(value, options) {
+      const description = options.componentOptions.propsData.title
+      this.specialist = description
+    },
+    selectSpecialityHandler(value, options) {
+      const description = options.componentOptions.propsData.title
+      this.speciality = description
     },
     disabledDate(current) {
       // Can not select days before today and today

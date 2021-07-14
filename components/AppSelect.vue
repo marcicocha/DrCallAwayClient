@@ -173,9 +173,10 @@ export default {
         this.fetchDataHandler(e)
       }
     },
-    selectHandler(e) {
-      this.$emit('select', e)
+    selectHandler(e, options) {
+      this.$emit('select', e, options)
     },
+
     fetchDataHandler(value) {
       if (this.lastFetchId > 0) {
         return

@@ -52,7 +52,7 @@
                 "
                 required
                 rules="required"
-                @change="changeHandler"
+                @select="selectHandler"
               />
               <!-- <AppSelect
                 v-if="homeCareKey === 'practitioner'"
@@ -129,8 +129,8 @@
         <h6 class="t-c">
           {{
             homeCareKey === 'nurse'
-              ? `Selected Nurse: ${homeCareObj.nurse}`
-              : `Selected General Practitioner: ${homeCareObj.generalPractitioner}`
+              ? `Selected Nurse: ${name}`
+              : `Selected General Practitioner: ${name}`
           }}
         </h6>
         <a-divider />
@@ -212,6 +212,7 @@ export default {
         },
       ],
       user: {},
+      name: '',
     }
   },
   computed: {
@@ -246,8 +247,9 @@ export default {
     }
   },
   methods: {
-    changeHandler() {
-      console.log('CHANGED')
+    selectHandler(value, options) {
+      const description = options.componentOptions.propsData.title
+      this.name = description
     },
     showModalhandler(key) {
       this.modalIsVisible = true
@@ -298,7 +300,7 @@ export default {
               duration: 4000,
             })
           }
-
+          this.$router.replace('/admin/patient/appointment')
           requestAnimationFrame(() => {
             this.$refs.observer.reset()
             this.isLoading = false

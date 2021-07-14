@@ -162,6 +162,19 @@
           <div class="header__links-anchor-container" @click="showOverlay">
             <nuxt-link to="subscription"><span>Subscription</span></nuxt-link>
           </div>
+          <button
+            to="contact"
+            class="button header__button"
+            style="
+              margin-top: 3rem;
+              margin-left: 0;
+              padding: 0.5rem 0.2rem;
+              width: 100%;
+            "
+            @click="showSignInModal"
+          >
+            Talk To A Medical Practitioner
+          </button>
         </div>
       </div>
     </header>
@@ -384,6 +397,21 @@
                     />
                   </a-col>
                 </a-row>
+                <AppSelect
+                  v-if="signUpObject.type === 'DOCTOR'"
+                  v-model="signUpObject.specialtyId"
+                  placeholder="Select a Medical Specialty"
+                  name="medical specialties"
+                  url="/specialties"
+                  :call-back-func="
+                    (resp) => ({
+                      text: resp.name,
+                      value: resp.id,
+                    })
+                  "
+                  rules="required"
+                  required
+                />
                 <AppSelect
                   v-if="mode === 'patient'"
                   v-model="signUpObject.gender"
@@ -668,7 +696,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .signIn {
-  padding: 1.2rem;
+  padding: 0;
+  @include breakpoint-up(large) {
+    padding: 1.2rem;
+  }
   h1 {
     @include breakpoint-up(large) {
       font-size: 2rem;

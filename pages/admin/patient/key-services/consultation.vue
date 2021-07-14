@@ -255,11 +255,11 @@ export default {
         const config = {
           headers: { Authorization: `Bearer ${user.token.token}` },
         }
-        const { message } = await this.$axios.$post(
-          'cases',
-          this.ailmentObj,
-          config
-        )
+        const ailmentObj = {
+          ...this.ailmentObj,
+          initial_complain: this.ailmentObj.ailment,
+        }
+        const { message } = await this.$axios.$post('cases', ailmentObj, config)
 
         this.$notification.success({
           message: 'Success',

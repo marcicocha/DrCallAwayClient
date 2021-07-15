@@ -37,7 +37,7 @@
           v-model="dentistObj.date"
           label="Select Start Date"
           name="select start date"
-          :disabledDate="disabledDate"
+          :disabled-date="disabledDate"
         />
         <AppTimePicker
           v-model="dentistObj.time"

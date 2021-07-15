@@ -1,25 +1,26 @@
 <template>
   <div>
-    <AppTabs v-if="!viewIsVisible" v-model="activeKey">
+    <AppTabs
+      v-if="!viewIsVisible"
+      v-model="activeKey"
+      @tabClick="changeTabHandler"
+    >
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Cases">
           <AppCaseFileDataTable
-            :key="activeKey"
-            status="PENDING"
+            :data-source="allCaseFiles"
             @showCaseFile="showCaseFile"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Active Cases">
           <AppCaseFileDataTable
-            :key="activeKey"
-            status="ACTIVE"
+            :data-source="allCaseFiles"
             @showCaseFile="showCaseFile"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Cases">
           <AppCaseFileDataTable
-            :key="activeKey"
-            status="COMPLETED"
+            :data-source="allCaseFiles"
             @showCaseFile="showCaseFile"
           />
         </a-tab-pane>
@@ -76,6 +77,7 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
@@ -98,37 +100,14 @@ export default {
       viewIsVisible: false,
       currentCaseFile: {},
       isReadOnly: true,
-      dataSource1: [
-        {
-          caseId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          consultantPosition: 'Doctor',
-          complaint: 'Malaria and Typhoid',
-          dateAdded: '23rd March, 2021',
-          status: 'Pending',
-        },
-      ],
-      dataSource2: [
-        {
-          caseId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          consultantPosition: 'Doctor',
-          complaint: 'Malaria and Typhoid',
-          dateAdded: '23rd March, 2021',
-          status: 'Active',
-        },
-      ],
-      dataSource3: [
-        {
-          caseId: '#000002',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          consultantPosition: 'Doctor',
-          complaint: 'Malaria and Typhoid',
-          dateAdded: '23rd March, 2021',
-          status: 'Completed',
-        },
-      ],
+      counter: 0,
+      status: 'PENDING',
     }
+  },
+  computed: {
+    ...mapState({
+      allCaseFiles: (state) => state.caseFileModule.caseFiles,
+    }),
   },
   methods: {
     showCaseFile(record) {
@@ -138,6 +117,36 @@ export default {
     closeViewHandler() {
       this.viewIsVisible = false
     },
+    async changeTabHandler(key) {
+      if (key === '1') {
+        this.status = 'PENDING'
+      }
+      if (key === '2') {
+        this.status = 'ACTIVE'
+      }
+      if (key === '3') {
+        this.status = 'COMPLETED'
+      }
+      try {
+        const obj = {
+          ...this.filterObj,
+          status: this.status,
+        }
+        await this.getAllCaseFile(obj)
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
+    ...mapActions({
+      getAllCaseFile: 'caseFileModule/GET_CASE_FILE',
+    }),
   },
 }
 </script>

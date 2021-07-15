@@ -2,7 +2,7 @@
   <div>
     <a-table
       :columns="columns"
-      :data-source="allCaseFiles"
+      :data-source="dataSource"
       :pagination="pagination"
       :row-key="(record) => record.caseId"
     >
@@ -43,14 +43,12 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex'
-
 export default {
   name: 'AppCaseFileDataTable',
   props: {
-    status: {
-      type: String,
-      default: undefined,
+    dataSource: {
+      type: Array,
+      default: () => [],
     },
     pagination: {
       type: Boolean,
@@ -97,35 +95,11 @@ export default {
       ]
       return columns
     },
-    ...mapState({
-      allCaseFiles: (state) => state.caseFileModule.caseFiles,
-    }),
-  },
-  async mounted() {
-    try {
-      const obj = {
-        ...this.filterObj,
-        status: this.status,
-      }
-      await this.getAllCaseFile(obj)
-    } catch (err) {
-      const { default: errorHandler } = await import('@/utils/errorHandler')
-      errorHandler(err).forEach((msg) => {
-        this.$notification.error({
-          message: 'Error',
-          description: msg,
-          duration: 4000,
-        })
-      })
-    }
   },
   methods: {
     viewCaseFile(record) {
       this.$emit('showCaseFile', record)
     },
-    ...mapActions({
-      getAllCaseFile: 'caseFileModule/GET_CASE_FILE',
-    }),
   },
 }
 </script>

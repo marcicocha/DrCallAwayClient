@@ -1,19 +1,17 @@
 <template>
   <div>
     <h6>TESTS</h6>
-    <AppTabs v-model="activeKey">
+    <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Tests" force-render>
           <AppTestDataTable
-            status="PENDING"
-            :filter-obj="filterObj"
+            :dataSource="allTests"
             @showTestModal="showTestModal"
           />
         </a-tab-pane>
-        <a-tab-pane key="3" tab="Completed Test">
+        <a-tab-pane key="2" tab="Completed Test">
           <AppTestDataTable
-            status="COMPLETED"
-            :filter-obj="filterObj"
+            :dataSource="allTests"
             @showTestModal="showTestModal"
           />
         </a-tab-pane>
@@ -59,6 +57,7 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
@@ -81,32 +80,49 @@ export default {
       testModalIsVisible: false,
       confirmLoading: false,
       currentTestObj: {},
-      dataSource1: [
-        {
-          testId: '#000001',
-          caseAssociated: 'Dr. Michael Sanwo-Olu',
-          prescribedBy: 'Malaria and Typhoid',
-          status: 'Pending',
-        },
-      ],
-      dataSource2: [
-        {
-          testId: '#000001',
-          caseAssociated: 'Dr. Michael Sanwo-Olu',
-          prescribedBy: 'Malaria and Typhoid',
-          status: 'Active',
-        },
-      ],
+      status: 'PENDING',
     }
+  },
+  computed: {
+    ...mapState({
+      allTests: (state) => state.testsModule.tests,
+    }),
   },
   methods: {
     showTestModal(record) {
       this.testModalIsVisible = true
       this.currentTestObj = record
     },
+    async changeTabHandler(key) {
+      if (key === '1') {
+        this.status = 'PENDING'
+      }
+      if (key === '2') {
+        this.status = 'COMPLETED'
+      }
+      try {
+        const obj = {
+          ...this.filterObj,
+          status: this.status,
+        }
+        await this.getAllTests(obj)
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
     closeModal() {
       this.testModalIsVisible = false
     },
+    ...mapActions({
+      getAllTests: 'testsModule/GET_TESTS',
+    }),
   },
 }
 </script>

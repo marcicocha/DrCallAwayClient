@@ -66,7 +66,7 @@
                 v-model="bookAppointmentObj.date"
                 label="Select Proposed Date"
                 name="select proposed date"
-                :disabledDate="disabledDate"
+                :disabled-date="disabledDate"
               />
             </a-col>
             <a-col :span="12">

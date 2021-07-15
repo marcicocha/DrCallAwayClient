@@ -2,16 +2,16 @@
   <div>
     <a-table
       :columns="columns"
-      :data-source="allPrescription"
+      :data-source="dataSource"
       :pagination="pagination"
       :custom-row="customRow"
     >
       <template slot="status" slot-scope="text, record">
         <div
           :class="{
-            blue: record.status === 'ACTIVE',
+            blue: record.status === 'PENDING',
             green: record.status === 'COMPLETED',
-            red: record.status === 'BOOKED',
+            red: record.status === 'DECLINED',
           }"
         >
           {{ record.status }}
@@ -21,22 +21,16 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex'
-
 export default {
   name: 'AppPrescriptionDataTable',
   props: {
-    status: {
-      type: String,
-      default: '',
+    dataSource: {
+      type: Array,
+      default: () => [],
     },
     pagination: {
       type: Boolean,
       default: true,
-    },
-    filterObj: {
-      type: Object,
-      default: () => {},
     },
   },
   computed: {
@@ -75,27 +69,6 @@ export default {
       ]
       return columns
     },
-    ...mapState({
-      allPrescription: (state) => state.prescriptionModule.prescriptions,
-    }),
-  },
-  async mounted() {
-    try {
-      const obj = {
-        ...this.filterObj,
-        status: this.status,
-      }
-      await this.getAllPrescription(obj)
-    } catch (err) {
-      const { default: errorHandler } = await import('@/utils/errorHandler')
-      errorHandler(err).forEach((msg) => {
-        this.$notification.error({
-          message: 'Error',
-          description: msg,
-          duration: 4000,
-        })
-      })
-    }
   },
   methods: {
     customRow(record) {
@@ -107,9 +80,6 @@ export default {
         },
       }
     },
-    ...mapActions({
-      getAllPrescription: 'prescriptionModule/GET_PRESCRIPTION',
-    }),
   },
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="tab">
-    <a-tabs v-model="innerValue" default-active-key="1">
+    <a-tabs v-model="innerValue" default-active-key="1" @tabClick="tabClick">
       <slot name="default"></slot>
     </a-tabs>
 
@@ -45,6 +45,11 @@ export default {
     } else {
       this.innerValue = undefined
     }
+  },
+  methods: {
+    tabClick(key) {
+      this.$emit('tabClick', key)
+    },
   },
 }
 </script>

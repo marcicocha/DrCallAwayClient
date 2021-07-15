@@ -2,7 +2,7 @@
   <div>
     <a-table
       :columns="columns"
-      :data-source="allAppointments"
+      :data-source="dataSource"
       :pagination="pagination"
       :row-key="(record) => record.appointmentId"
       :custom-row="customRow"
@@ -11,7 +11,7 @@
         <div
           :class="{
             blue: record.status === 'ACTIVE',
-            green: record.status === 'CCOMPLETED',
+            green: record.status === 'COMPLETED',
             red: record.status === 'PENDING',
           }"
         >
@@ -30,14 +30,12 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex'
-
 export default {
   name: 'AppAppointmentDataTable',
   props: {
-    status: {
-      type: String,
-      default: '',
+    dataSource: {
+      type: Array,
+      default: () => [],
     },
     pagination: {
       type: Boolean,
@@ -89,27 +87,6 @@ export default {
       ]
       return columns
     },
-    ...mapState({
-      allAppointments: (state) => state.appointmentModule.appointments,
-    }),
-  },
-  async mounted() {
-    try {
-      const obj = {
-        ...this.filterObj,
-        status: this.status,
-      }
-      await this.getAllAppointment(obj)
-    } catch (err) {
-      const { default: errorHandler } = await import('@/utils/errorHandler')
-      errorHandler(err).forEach((msg) => {
-        this.$notification.error({
-          message: 'Error',
-          description: msg,
-          duration: 4000,
-        })
-      })
-    }
   },
   methods: {
     customRow(record) {
@@ -121,9 +98,6 @@ export default {
         },
       }
     },
-    ...mapActions({
-      getAllAppointment: 'appointmentModule/GET_APPOINTMENT',
-    }),
   },
 }
 </script>

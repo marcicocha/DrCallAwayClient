@@ -41,7 +41,7 @@
           v-model="opticalObj.date"
           label="Select Start Date"
           name="select start date"
-          :disabledDate="disabledDate"
+          :disabled-date="disabledDate"
         />
         <AppTimePicker
           v-model="opticalObj.time"

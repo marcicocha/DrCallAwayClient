@@ -1,27 +1,23 @@
 <template>
   <div>
     <h6>PRECRIPTIONS</h6>
-    <AppTabs v-model="activeKey">
+    <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Prescription" force-render>
           <AppPrescriptionDataTable
-            status="PENDING"
-            :filter-obj="filterObj"
+            :dataSource="allPrescription"
             @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>
-
         <a-tab-pane key="2" tab="Completed Prescription">
           <AppPrescriptionDataTable
-            status="COMPLETED"
-            :filter-obj="filterObj"
+            :dataSource="allPrescription"
             @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Declined Prescription">
           <AppPrescriptionDataTable
-            status="BOOKED"
-            :filter-obj="filterObj"
+            :dataSource="allPrescription"
             @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>
@@ -69,6 +65,7 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
@@ -91,35 +88,15 @@ export default {
       prescriptionModalIsVisible: false,
       confirmLoading: false,
       currentPrescriptionObj: {},
-      dataSource1: [
-        {
-          prescriptionId: '#000001',
-          prescriptionTitle: 'Prescription for Strong Headache',
-          prescribedBy: 'Dr Yomi',
-          prescriptionDate: '30th March, 2021',
-          status: 'Pending',
-        },
-      ],
-      dataSource2: [
-        {
-          prescriptionId: '#000001',
-          prescriptionTitle: 'Prescription for Strong Headache',
-          prescribedBy: 'Dr Yomi',
-          prescriptionDate: '30th March, 2021',
-          status: 'Active',
-        },
-      ],
-      dataSource3: [
-        {
-          prescriptionId: '#000001',
-          prescriptionTitle: 'Prescription for Strong Headache',
-          prescribedBy: 'Dr Yomi',
-          prescriptionDate: '30th March, 2021',
-          status: 'Active',
-        },
-      ],
+      status: 'PENDING',
     }
   },
+  computed: {
+    ...mapState({
+      allPrescription: (state) => state.prescriptionModule.prescriptions,
+    }),
+  },
+
   methods: {
     showPrescriptionModal(record) {
       this.prescriptionModalIsVisible = true
@@ -128,6 +105,36 @@ export default {
     closeModal() {
       this.prescriptionModalIsVisible = false
     },
+    async changeTabHandler(key) {
+      if (key === '1') {
+        this.status = 'PENDING'
+      }
+      if (key === '2') {
+        this.status = 'COMPLETED'
+      }
+      if (key === '3') {
+        this.status = 'DECLINED'
+      }
+      try {
+        const obj = {
+          ...this.filterObj,
+          status: this.status,
+        }
+        await this.getAllPrescription(obj)
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
+    ...mapActions({
+      getAllPrescription: 'prescriptionModule/GET_PRESCRIPTION',
+    }),
   },
 }
 </script>

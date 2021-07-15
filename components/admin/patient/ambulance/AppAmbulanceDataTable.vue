@@ -2,7 +2,7 @@
   <div>
     <a-table
       :columns="columns"
-      :data-source="allCallUp"
+      :data-source="dataSource"
       :pagination="pagination"
     >
       <template slot="sn" slot-scope="text, record, index">
@@ -12,7 +12,7 @@
         <div
           :class="{
             blue: record.status === 'ACTIVE',
-            green: record.status === 'CCOMPLETED',
+            green: record.status === 'COMPLETED',
             red: record.status === 'PENDING',
           }"
         >
@@ -23,14 +23,12 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex'
-
 export default {
   name: 'AppAmbulanceDataTable',
   props: {
-    status: {
-      type: String,
-      default: '',
+    dataSource: {
+      type: Array,
+      default: () => [],
     },
     filterObj: {
       type: Object,
@@ -77,35 +75,11 @@ export default {
       ]
       return columns
     },
-    ...mapState({
-      allCallUp: (state) => state.ambulanceModule.ambulances,
-    }),
-  },
-  async mounted() {
-    try {
-      const obj = {
-        ...this.filterObj,
-        status: this.status,
-      }
-      await this.getAllCallUpFile(obj)
-    } catch (err) {
-      const { default: errorHandler } = await import('@/utils/errorHandler')
-      errorHandler(err).forEach((msg) => {
-        this.$notification.error({
-          message: 'Error',
-          description: msg,
-          duration: 4000,
-        })
-      })
-    }
   },
   methods: {
     viewCallUp(record) {
       this.$emit('showCallUp', record)
     },
-    ...mapActions({
-      getAllCallUpFile: 'ambulanceModule/GET_AMBULANCE',
-    }),
   },
 }
 </script>

@@ -2,8 +2,8 @@
   <div>
     <a-table
       :columns="columns"
-      :data-source="allTests"
-      :pagination="false"
+      :data-source="dataSource"
+      :pagination="pagination"
       :custom-row="customRow"
     >
       <template slot="status" slot-scope="text, record">
@@ -21,22 +21,16 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex'
-
 export default {
   name: 'AppTestDataTable',
   props: {
-    status: {
-      type: String,
-      default: '',
+    dataSource: {
+      type: Array,
+      default: () => [],
     },
     pagination: {
       type: Boolean,
       default: true,
-    },
-    filterObj: {
-      type: Object,
-      default: () => {},
     },
   },
   computed: {
@@ -70,27 +64,6 @@ export default {
       ]
       return columns
     },
-    ...mapState({
-      allTests: (state) => state.testsModule.tests,
-    }),
-  },
-  async mounted() {
-    try {
-      const obj = {
-        ...this.filterObj,
-        status: this.status,
-      }
-      await this.getAllTests(obj)
-    } catch (err) {
-      const { default: errorHandler } = await import('@/utils/errorHandler')
-      errorHandler(err).forEach((msg) => {
-        this.$notification.error({
-          message: 'Error',
-          description: msg,
-          duration: 4000,
-        })
-      })
-    }
   },
   methods: {
     customRow(record) {
@@ -102,9 +75,6 @@ export default {
         },
       }
     },
-    ...mapActions({
-      getAllTests: 'testsModule/GET_TESTS',
-    }),
   },
 }
 </script>

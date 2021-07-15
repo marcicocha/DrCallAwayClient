@@ -52,16 +52,16 @@
     </div>
     <br />
     <br />
-    <AppTabs v-model="activeKey">
+    <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Requests" force-render>
-          <AppAmbulanceDataTable status="PENDING" />
+          <AppAmbulanceDataTable :data-source="allCallUp" />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Active Requests">
-          <AppAmbulanceDataTable status="ACTIVE" />
+          <AppAmbulanceDataTable :data-source="allCallUp" />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Requests">
-          <AppAmbulanceDataTable status="COMPLETED" />
+          <AppAmbulanceDataTable :data-source="allCallUp" />
         </a-tab-pane>
       </template>
       <template slot="rightInfo">
@@ -90,7 +90,7 @@
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
@@ -110,10 +110,15 @@ export default {
     return {
       activeKey: '1',
       filterObj: {},
-      dataSource: [],
       requestObj: {},
       isLoading: false,
+      status: 'PENDING',
     }
+  },
+  computed: {
+    ...mapState({
+      allCallUp: (state) => state.ambulanceModule.ambulances,
+    }),
   },
   methods: {
     async submitHandler() {
@@ -148,8 +153,36 @@ export default {
         })
       }
     },
+    async changeTabHandler(key) {
+      if (key === '1') {
+        this.status = 'PENDING'
+      }
+      if (key === '2') {
+        this.status = 'ACTIVE'
+      }
+      if (key === '3') {
+        this.status = 'COMPLETED'
+      }
+      try {
+        const obj = {
+          ...this.filterObj,
+          status: this.status,
+        }
+        await this.getAllCallUpFile(obj)
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
     ...mapActions({
       submitAmbulanceHandler: 'ambulanceModule/ADD_AMBULANCE',
+      getAllCallUpFile: 'ambulanceModule/GET_AMBULANCE',
     }),
   },
 }

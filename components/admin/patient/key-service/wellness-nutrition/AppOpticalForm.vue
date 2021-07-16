@@ -177,6 +177,9 @@ export default {
     }
   },
   methods: {
+    closeModal() {
+      this.modalIsVisible = false
+    },
     selectOpticianHandler(value, options) {
       const description = options.componentOptions.propsData.title
       this.optician = description

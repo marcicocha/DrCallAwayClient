@@ -9,7 +9,7 @@ export default {
     state.appointments = payload.data
   },
   [BOOK_APPOINTMENT](state, payload) {
-    state.appointments.unshift(payload)
+    // state.appointments.unshift(payload)
   },
   [BOOK_NURSE](state, payload) {
     // state.appointments.unshift(payload)

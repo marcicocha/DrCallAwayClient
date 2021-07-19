@@ -54,14 +54,14 @@
         /></a>
       </div>
       <br />
-      <AppTitleDivider :title="`Case File / ${currentCaseFile.caseId}`"
+      <AppTitleDivider :title="`Case File / ${currentCaseFile.case_id}`"
         ><span class="right-details"
           ><span style="color: $dark-purple">Status:</span>
           <span
             :class="{
-              blue: currentCaseFile.status === 'Active',
-              green: currentCaseFile.status === 'Completed',
-              red: currentCaseFile.status === 'Pending',
+              blue: currentCaseFile.status === 'ACTIVE',
+              green: currentCaseFile.status === 'COMPLETED',
+              red: currentCaseFile.status === 'PENDING',
             }"
             >{{ currentCaseFile.status }}</span
           ></span

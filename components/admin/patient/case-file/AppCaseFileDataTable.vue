@@ -17,6 +17,9 @@
           {{ record.status }}
         </div>
       </template>
+      <template slot="date" slot-scope="text, record">
+        {{ formatDate(record.date) }}
+      </template>
       <template slot="doctor" slot-scope="text, record">
         {{ record.doctor ? record.doctor : 'Unassigned' }}
       </template>
@@ -24,7 +27,7 @@
         <div style="text-align: right">
           <a-button-group class="link-group">
             <a-button
-              v-if="record.status !== 'Pending'"
+              v-if="record.status !== 'PENDING'"
               type="link"
               class="table__btn"
               @click="$emit('showDeleteConfirm', record)"
@@ -43,6 +46,7 @@
   </div>
 </template>
 <script>
+import moment from 'moment'
 export default {
   name: 'AppCaseFileDataTable',
   props: {
@@ -80,7 +84,7 @@ export default {
         {
           title: 'Date Added',
           dataIndex: 'created_at',
-          scopedSlots: { customRender: 'created_at' },
+          scopedSlots: { customRender: 'date' },
         },
         {
           title: 'Status',
@@ -99,6 +103,9 @@ export default {
   methods: {
     viewCaseFile(record) {
       this.$emit('showCaseFile', record)
+    },
+    formatDate(date) {
+      return moment(date).format('YYYY-MM-DD')
     },
   },
 }

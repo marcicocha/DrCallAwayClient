@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="doctor__container">
+    <div class="doctor__container" v-if="caseFileObj.doctor">
       <div class="doctor__container-img">
         <img src="" alt="doctor" />
       </div>
@@ -13,24 +13,27 @@
       <ValidationObserver ref="observer" tag="div">
         <a-row type="flex" :gutter="24">
           <a-col :span="12">
-            <AppInput
+            <AppDatePicker
               v-model="caseFileObj.created_at"
               label="Date Created"
               name="date created"
+              :disabled="status === 'patient'"
             />
           </a-col>
           <a-col :span="12">
             <AppInput
-              v-model="caseFileObj.complaint"
+              v-model="caseFileObj.initial_complain"
               label="Complaint"
               name="Complaint"
+              :disabled="status === 'patient'"
             />
           </a-col>
           <a-col :span="24">
             <AppInput
-              v-model="caseFileObj.doctorComment"
+              v-model="caseFileObj.doctor_observation"
               label="Doctor's Comment"
               name="Doctor Comment"
+              :disabled="status === 'patient'"
             />
           </a-col>
         </a-row>
@@ -51,7 +54,11 @@
         <br />
         <div class="flex flex-jc-sb">
           <p>
-            {{ 'Selected Pharmacy: HealthPlus (Awolowo Road, Ikoyi, Lagos)' }}
+            {{
+              caseFileObj.pharmacy.address
+                ? `Selected Pharmacy: ${caseFileObj.pharmacy.address}`
+                : ''
+            }}
           </p>
           <AppButton
             v-if="status === 'doctor'"
@@ -77,9 +84,9 @@
           <template slot="status" slot-scope="text, record">
             <div
               :class="{
-                blue: record.status === 'Active',
-                green: record.status === 'Completed',
-                red: record.status === 'Pending',
+                blue: record.status === 'ACTIVE',
+                green: record.status === 'COMPLETED',
+                red: record.status === 'PENDING',
               }"
             >
               {{ record.status }}
@@ -90,7 +97,9 @@
         <div class="flex flex-jc-sb">
           <p>
             {{
-              'Selected Diagnostic Center: Smith Diagnostic Center (Adeola Odeku, VI, Lagos)'
+              caseFileObj.prescription.address
+                ? `Selected Pharmacy: ${caseFileObj.prescription.address}`
+                : ''
             }}
           </p>
           <AppButton
@@ -128,6 +137,7 @@
 <script>
 import { ValidationObserver } from 'vee-validate'
 import AppInput from '@/components/AppInput'
+import AppDatePicker from '@/components/AppDatePicker'
 import AppButton from '@/components/AppButton'
 import AppPrescriptionForm from '@/components/admin/patient/case-file/AppPrescriptionForm'
 export default {
@@ -137,6 +147,7 @@ export default {
     AppInput,
     AppButton,
     AppPrescriptionForm,
+    AppDatePicker,
   },
   props: {
     currentCaseFile: {
@@ -178,11 +189,11 @@ export default {
           dataIndex: 'duration',
           scopedSlots: { customRender: 'duration' },
         },
-        {
-          title: 'Cost',
-          dataIndex: 'cost',
-          scopedSlots: { customRender: 'cost' },
-        },
+        // {
+        //   title: 'Cost',
+        //   dataIndex: 'cost',
+        //   scopedSlots: { customRender: 'cost' },
+        // },
       ]
       return columns
     },

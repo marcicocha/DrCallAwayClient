@@ -5,19 +5,19 @@
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Prescription" force-render>
           <AppPrescriptionDataTable
-            :dataSource="allPrescription"
+            :data-source="allPrescription"
             @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Completed Prescription">
           <AppPrescriptionDataTable
-            :dataSource="allPrescription"
+            :data-source="allPrescription"
             @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Declined Prescription">
           <AppPrescriptionDataTable
-            :dataSource="allPrescription"
+            :data-source="allPrescription"
             @showPrescriptionModal="showPrescriptionModal"
           />
         </a-tab-pane>

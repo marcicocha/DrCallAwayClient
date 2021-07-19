@@ -5,13 +5,13 @@
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Tests" force-render>
           <AppTestDataTable
-            :dataSource="allTests"
+            :data-source="allTests"
             @showTestModal="showTestModal"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Completed Test">
           <AppTestDataTable
-            :dataSource="allTests"
+            :data-source="allTests"
             @showTestModal="showTestModal"
           />
         </a-tab-pane>

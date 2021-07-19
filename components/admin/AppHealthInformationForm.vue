@@ -42,7 +42,7 @@
                     required
                     rules="required"
                     name="glucose level"
-                    :data="['HIGH']"
+                    :data="['FGB', 'PGB']"
                     :remote="false"
                   />
                 </a-col>

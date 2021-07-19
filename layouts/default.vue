@@ -399,7 +399,7 @@
                 </a-row>
                 <AppSelect
                   v-if="signUpObject.type === 'DOCTOR'"
-                  v-model="signUpObject.specialtyId"
+                  v-model="signUpObject.specialty_id"
                   placeholder="Select a Medical Specialty"
                   name="medical specialties"
                   url="/specialties"
@@ -599,6 +599,7 @@ export default {
               this.signUpObject
             )
             localStorage.setItem('user', JSON.stringify(response))
+            this.$router.push(`/admin/doctor`)
           } else {
             const partnerObj = {
               ...this.signUpObject,

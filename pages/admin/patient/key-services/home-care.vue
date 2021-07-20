@@ -137,10 +137,15 @@
         <div class="colored-table">
           <a-table
             :columns="columns"
-            :data-source="dataSource"
+            :data-source="priceList"
             :pagination="false"
-            :row-key="(record) => record.id"
-          ></a-table>
+            :row-key="(record, i) => i"
+          >
+            <template slot="sn" slot-scope="text, record, index">
+              {{ index + 1 }}
+            </template></a-table
+          >
+          <p class="price-total">TOTAL: {{ totalPrice }}</p>
         </div>
         <br />
         <div>
@@ -168,6 +173,7 @@
 <script>
 import { mapActions } from 'vuex'
 import { ValidationObserver } from 'vee-validate'
+import { nurse, generalPractioner } from '@/drcallawayPrices.json'
 import moment from 'moment'
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppInput from '@/components/AppInput'
@@ -195,6 +201,8 @@ export default {
       homeCareObj: {},
       selectedModalIsVisible: false,
       dataSource: [],
+      nurse,
+      generalPractioner,
       consultationCardList: [
         {
           key: 'nurse',
@@ -211,7 +219,6 @@ export default {
           color: '#BB58B6',
         },
       ],
-      user: {},
       name: '',
     }
   },
@@ -225,8 +232,8 @@ export default {
         },
         {
           title: 'NAME OF SERVICE',
-          dataIndex: 'nameOfService',
-          scopedSlots: { customRender: 'nameOfService' },
+          dataIndex: 'name',
+          scopedSlots: { customRender: 'name' },
         },
         {
           title: 'PRICE',
@@ -236,16 +243,28 @@ export default {
       ]
       return columns
     },
+    priceList() {
+      if (this.homeCareKey === 'nurse') {
+        return nurse[0].services
+      }
+      return generalPractioner[0].services
+    },
+    totalPrice() {
+      let total = 0
+      this.priceList.forEach((record) => (total += record.price))
+      return total
+    },
+    user() {
+      const userObject = JSON.parse(localStorage.getItem('user'))
+      return {
+        email: userObject.email,
+        firstName: userObject.first_name,
+        lastName: userObject.last_name,
+        amount: this.totalPrice,
+      }
+    },
   },
-  mounted() {
-    const userObject = JSON.parse(localStorage.getItem('user'))
-    this.user = {
-      email: userObject.email,
-      firstName: userObject.first_name,
-      lastName: userObject.last_name,
-      amount: 100,
-    }
-  },
+  mounted() {},
   methods: {
     selectHandler(value, options) {
       const description = options.componentOptions.propsData.title
@@ -274,7 +293,6 @@ export default {
         })
         try {
           if (this.homeCareKey === 'nurse') {
-            console.log('IT GOT HERE')
             const obj = {
               ...this.homeCareObj,
               partner_id: this.homeCareObj.specialistId,
@@ -300,7 +318,7 @@ export default {
               duration: 4000,
             })
           }
-          this.$router.replace('/admin/patient/appointment')
+
           requestAnimationFrame(() => {
             this.$refs.observer.reset()
             this.isLoading = false
@@ -309,6 +327,7 @@ export default {
             this.homeCareObj = {}
             this.$emit('formSubmissionCompleted')
           })
+          this.$router.replace('/admin/patient/appointment')
         } catch (err) {
           this.isLoading = false
           const { default: errorHandler } = await import('@/utils/errorHandler')
@@ -343,5 +362,11 @@ h6 {
 }
 .payButton {
   width: 100%;
+}
+.price-total {
+  text-align: right;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: $dark-purple;
 }
 </style>

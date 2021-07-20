@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="doctor__container" v-if="caseFileObj.doctor">
+    <div v-if="caseFileObj.doctor" class="doctor__container">
       <div class="doctor__container-img">
         <img src="" alt="doctor" />
       </div>

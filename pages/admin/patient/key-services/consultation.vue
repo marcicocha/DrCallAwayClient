@@ -99,15 +99,20 @@
         <div class="colored-table">
           <a-table
             :columns="columns"
-            :data-source="dataSource"
+            :data-source="priceList"
             :pagination="false"
             :row-key="(record) => record.id"
-          ></a-table>
+          >
+            <template slot="sn" slot-scope="text, record, index">
+              {{ index + 1 }}
+            </template></a-table
+          >
+          <p class="price-total">TOTAL: {{ totalPrice }}</p>
         </div>
         <br />
         <div>
           <a-row type="flex" :gutter="24">
-            <a-col :span="8" :offset="4">
+            <a-col :span="12">
               <AppButton
                 type="default"
                 :loading="isLoading"
@@ -116,14 +121,10 @@
                 >GO BACK</AppButton
               >
             </a-col>
-            <a-col :span="8">
-              <AppButton
-                type="primary"
-                :loading="isLoading"
-                class="admin-button"
-                @click="closeModal"
-                >MAKE PAYMENT</AppButton
-              >
+            <a-col :span="12">
+              <AppPayment :user-obj="user" @callback="callback">
+                MAKE PAYMENT
+              </AppPayment>
             </a-col>
           </a-row>
         </div>
@@ -133,6 +134,13 @@
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'
+import {
+  hivTuberculosis,
+  diabetes,
+  sickleCell,
+  psychiatry,
+} from '@/drcallawayPrices.json'
+import AppPayment from '@/components/AppPayment.vue'
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppInput from '@/components/AppInput'
 import AppTextArea from '@/components/AppTextArea'
@@ -145,6 +153,7 @@ export default {
     ValidationObserver,
     AppTextArea,
     AppButton,
+    AppPayment,
   },
   layout: 'dashboard',
   data() {
@@ -157,6 +166,10 @@ export default {
       ailmentObj: {},
       dataSource: [],
       isLoading: false,
+      diabetes,
+      hivTuberculosis,
+      sickleCell,
+      psychiatry,
       consultationCardList: [
         {
           key: 'general',
@@ -215,8 +228,8 @@ export default {
         },
         {
           title: 'NAME OF SERVICE',
-          dataIndex: 'nameOfService',
-          scopedSlots: { customRender: 'nameOfService' },
+          dataIndex: 'name',
+          scopedSlots: { customRender: 'name' },
         },
         {
           title: 'PRICE',
@@ -225,6 +238,32 @@ export default {
         },
       ]
       return columns
+    },
+    priceList() {
+      if (this.specialModalObj.secondText === 'HIV/TUBERCULOSIS') {
+        return hivTuberculosis[0].services
+      }
+      if (this.specialModalObj.secondText === 'DIABETES') {
+        return diabetes[0].services
+      }
+      if (this.specialModalObj.secondText === 'SICKLE CELL') {
+        return sickleCell[0].services
+      }
+      return psychiatry[0].services
+    },
+    totalPrice() {
+      let total = 0
+      this.priceList.forEach((record) => (total += record.price))
+      return total
+    },
+    user() {
+      const userObject = JSON.parse(localStorage.getItem('user'))
+      return {
+        email: userObject.email,
+        firstName: userObject.first_name,
+        lastName: userObject.last_name,
+        amount: this.totalPrice,
+      }
     },
   },
   methods: {
@@ -243,6 +282,15 @@ export default {
     closeModal() {
       this.generalIsVisible = false
       this.specialModalIsVisible = false
+    },
+    callback(res) {
+      if (res.message === 'Approved') {
+        this.$notification.success({
+          message: res.message,
+          description: 'Payment successful',
+          duration: 4000,
+        })
+      }
     },
     async submitHandler() {
       const isValid = await this.$refs.observer.validate()
@@ -294,5 +342,8 @@ export default {
 <style lang="scss" scoped>
 h6 {
   color: $dark-purple;
+}
+.payButton {
+  width: 100%;
 }
 </style>

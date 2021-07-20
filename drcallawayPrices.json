@@ -1,0 +1,62 @@
+{
+    "generalPractioner": [
+        {
+            "services": [
+                {
+                    "name": "Home Support",
+                    "price": 10000
+                }
+            ]
+        }
+    ],
+    "nurse": [
+        {
+            "services": [
+                {
+                    "name": "Home Support",
+                    "price": 5000
+                }
+            ]
+        }
+    ],
+    "hivTuberculosis": [
+        {
+            "services": [
+                {
+                    "name": "Consultation",
+                    "price": 10000
+                }
+            ]
+        }
+    ],
+    "diabetes": [
+        {
+            "services": [
+                {
+                    "name": "Consultation",
+                    "price": 9000
+                }
+            ]
+        }
+    ],
+    "sickleCell": [
+        {
+            "services": [
+                {
+                    "name": "Consultation",
+                    "price": 8000
+                }
+            ]
+        }
+    ],
+    "psychiatry": [
+        {
+            "services": [
+                {
+                    "name": "Consultation",
+                    "price": 7000
+                }
+            ]
+        }
+    ]
+}

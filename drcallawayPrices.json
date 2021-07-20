@@ -24,7 +24,7 @@
             "services": [
                 {
                     "name": "Consultation",
-                    "price": 10000
+                    "price": 1500
                 }
             ]
         }
@@ -34,7 +34,7 @@
             "services": [
                 {
                     "name": "Consultation",
-                    "price": 9000
+                    "price": 1500
                 }
             ]
         }
@@ -44,7 +44,7 @@
             "services": [
                 {
                     "name": "Consultation",
-                    "price": 8000
+                    "price": 1500
                 }
             ]
         }
@@ -54,7 +54,7 @@
             "services": [
                 {
                     "name": "Consultation",
-                    "price": 7000
+                    "price": 1500
                 }
             ]
         }

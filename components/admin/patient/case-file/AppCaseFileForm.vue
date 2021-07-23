@@ -55,7 +55,7 @@
         <div class="flex flex-jc-sb">
           <p>
             {{
-              caseFileObj.pharmacy.address
+              caseFileObj.pharmacy
                 ? `Selected Pharmacy: ${caseFileObj.pharmacy.address}`
                 : ''
             }}
@@ -97,7 +97,7 @@
         <div class="flex flex-jc-sb">
           <p>
             {{
-              caseFileObj.prescription.address
+              caseFileObj.prescription
                 ? `Selected Pharmacy: ${caseFileObj.prescription.address}`
                 : ''
             }}

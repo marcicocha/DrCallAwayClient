@@ -22,17 +22,21 @@
         theme="dark"
         mode="inline"
         :default-selected-keys="['0']"
+        :open-keys.sync="openKeys"
         style="margin-top: 2rem"
       >
         <template v-for="(menu, i) in menuList">
           <a-menu-item
             v-if="menu.children.length === 0"
-            :key="String(i++)"
+            :key="String(i)"
             :style="
               collapsed
                 ? { padding: '0 16px !important' }
                 : { padding: '0 0.5rem !important' }
             "
+            :class="{
+              selected: checkPathHandler(menu.path, `${String(i)}`),
+            }"
           >
             <a-icon type="user" />
             <span
@@ -41,13 +45,26 @@
               }}</a></span
             >
           </a-menu-item>
-          <a-sub-menu v-if="menu.children.length !== 0" :key="String(i++)">
+          <a-sub-menu
+            v-if="menu.children.length !== 0"
+            :key="`Sub${String(i)}`"
+            :class="{
+              selected: key === `Sub${String(i)}`,
+            }"
+            @titleClick="titleClickHandler(`Sub${String(i)}`)"
+          >
             <span slot="title"
               ><a-icon type="user" /><span style="margin-left: 5px">{{
                 menu.name
               }}</span></span
             >
-            <a-menu-item v-for="(child, j) in menu.children" :key="j">
+            <a-menu-item
+              v-for="(child, j) in menu.children"
+              :key="j"
+              :class="{
+                selected: checkPathHandler(child.path, `Sub${String(i)}`),
+              }"
+            >
               <span
                 ><a @click="goToPage(child.path)">{{ child.name }}</a></span
               ></a-menu-item
@@ -226,11 +243,17 @@ export default {
       collapsed: false,
       userObject: {},
       menuList: [],
+      key: '',
+      openKeys: [],
+      subMenuTrue: false,
     }
   },
   // computed: {
-  //   menuList() {
-  //     console.log(this.userObject, 'USER OBJ')
+  //   openKeys: {
+  //     get() {
+  //       return this.key ? [this.key] : []
+  //     },
+  //     set(val) {},
   //   },
   // },
   mounted() {
@@ -246,6 +269,28 @@ export default {
   methods: {
     goToPage(path) {
       this.$router.replace(path)
+    },
+    titleClickHandler(key) {
+      this.openKeys[0] = key
+      this.subMenuTrue = !this.subMenuTrue
+    },
+    checkPathHandler(path, key) {
+      if (this.$route.path === path) {
+        if (key) {
+          console.log(key, 'KEY')
+          this.key = key
+          console.log(this.key, 'THIS KEY')
+          this.openKeys[0] = key
+        }
+        return true
+      }
+      return false
+    },
+    checkPathChildHandler(path) {
+      if (this.$route.path === path) {
+        return true
+      }
+      return false
     },
   },
 }

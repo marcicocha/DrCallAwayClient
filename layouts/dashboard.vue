@@ -137,7 +137,7 @@ export default {
     const role = this.userObject.roles[0].name
 
     if (role === 'doctor') {
-      this.menuList = [...doctorMenu]
+      this.menuList = [...clientMenu]
       return
     }
     this.menuList = [...doctorMenu]

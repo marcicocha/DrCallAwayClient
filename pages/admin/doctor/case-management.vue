@@ -1,18 +1,22 @@
 <template>
   <div>
-    <AppTabs v-if="!viewIsVisible" v-model="activeKey">
+    <AppTabs
+      v-if="!viewIsVisible"
+      v-model="activeKey"
+      @tabClick="changeTabHandler"
+    >
       <template slot="default">
         <a-tab-pane key="1" tab="Active Cases" force-render>
           <AppCaseFileDataTable
             status="active"
-            :data-source="dataSource2"
+            :data-source="allCaseFiles"
             @showCaseFile="showCaseFile"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Completed Cases" force-render>
           <AppCaseFileDataTable
             status="completed"
-            :data-source="dataSource3"
+            :data-source="allCaseFiles"
             @showCaseFile="showCaseFile"
           />
         </a-tab-pane>
@@ -52,9 +56,9 @@
             ><span style="color: $dark-purple">Status:</span>
             <span
               :class="{
-                blue: currentCaseFile.status === 'Active',
-                green: currentCaseFile.status === 'Completed',
-                red: currentCaseFile.status === 'Pending',
+                blue: currentCaseFile.status === 'ACTIVE',
+                green: currentCaseFile.status === 'COMPLETED',
+                red: currentCaseFile.status === 'PENDING',
               }"
               >{{ currentCaseFile.status }}</span
             ></span
@@ -81,6 +85,7 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
@@ -106,37 +111,13 @@ export default {
       currentCaseFile: {},
       isReadOnly: true,
       testIsVisible: false,
-      dataSource1: [
-        {
-          caseId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          consultantPosition: 'Doctor',
-          complaint: 'Malaria and Typhoid',
-          dateAdded: '23rd March, 2021',
-          status: 'Pending',
-        },
-      ],
-      dataSource2: [
-        {
-          caseId: '#000001',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          consultantPosition: 'Doctor',
-          complaint: 'Malaria and Typhoid',
-          dateAdded: '23rd March, 2021',
-          status: 'Active',
-        },
-      ],
-      dataSource3: [
-        {
-          caseId: '#000002',
-          consultantName: 'Dr. Michael Sanwo-Olu',
-          consultantPosition: 'Doctor',
-          complaint: 'Malaria and Typhoid',
-          dateAdded: '23rd March, 2021',
-          status: 'Completed',
-        },
-      ],
+      status: 'ACTIVE',
     }
+  },
+  computed: {
+    ...mapState({
+      allCaseFiles: (state) => state.caseFileModule.caseFiles,
+    }),
   },
   methods: {
     showCaseFile(record) {
@@ -151,9 +132,33 @@ export default {
         this.testIsVisible = false
       }
     },
+    async changeTabHandler(key) {
+      if (key === '2') {
+        this.status = 'COMPLETED'
+      }
+      try {
+        const obj = {
+          ...this.filterObj,
+          status: this.status,
+        }
+        await this.getAllCaseFile(obj)
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
     showTestTab() {
       this.testIsVisible = true
     },
+    ...mapActions({
+      getAllCaseFile: 'caseFileModule/GET_CASE_FILE',
+    }),
   },
 }
 </script>

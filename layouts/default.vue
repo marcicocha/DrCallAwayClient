@@ -588,16 +588,11 @@ export default {
         return
       }
       this.isSignUpLoading = true
-      console.log(this.signUpObject)
       try {
         if (this.mode === 'practitioner') {
           if (this.signUpObject.type === 'DOCTOR') {
-            const { data } = await this.$axios.$post(
-              'doctors/signup',
-              this.signUpObject
-            )
-            localStorage.setItem('user', JSON.stringify(data))
-            this.$router.push(`/admin/doctor`)
+            await this.$axios.$post('doctors/signup', this.signUpObject)
+            // localStorage.setItem('user', JSON.stringify(data))
           } else {
             const partnerObj = {
               ...this.signUpObject,
@@ -612,18 +607,14 @@ export default {
                 },
               ],
             }
-            const { data } = await this.$axios.$post(
-              'partners/signup',
-              partnerObj
-            )
-            localStorage.setItem('user', JSON.stringify(data))
+            await this.$axios.$post('partners/signup', partnerObj)
+            // localStorage.setItem('user', JSON.stringify(data))
           }
         } else {
-          const { data } = await this.$axios.$post('signup', this.signUpObject)
-          localStorage.setItem('user', JSON.stringify(data))
-          this.$router.push(`/admin/patient`)
+          await this.$axios.$post('signup', this.signUpObject)
+          // localStorage.setItem('user', JSON.stringify(data))
         }
-        this.closeModal()
+        this.showSignInModal()
         this.isSignUpLoading = false
       } catch (err) {
         this.isSignUpLoading = false

@@ -119,6 +119,9 @@ export default {
       allCaseFiles: (state) => state.caseFileModule.caseFiles,
     }),
   },
+  mounted() {
+    this.changeTabHandler('1')
+  },
   methods: {
     showCaseFile(record) {
       this.viewIsVisible = true

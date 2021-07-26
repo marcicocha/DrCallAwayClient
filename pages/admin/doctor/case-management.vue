@@ -116,7 +116,7 @@ export default {
   },
   computed: {
     ...mapState({
-      allCaseFiles: (state) => state.caseFileModule.caseFiles,
+      allCaseFiles: (state) => state.caseFileDoctorModule.caseFiles,
     }),
   },
   mounted() {
@@ -163,7 +163,7 @@ export default {
       this.testIsVisible = true
     },
     ...mapActions({
-      getAllCaseFile: 'caseFileModule/GET_ADMIN_CASE_FILE',
+      getAllCaseFile: 'caseFileDoctorModule/GET_DOCTOR_CASE_FILE',
     }),
   },
 }

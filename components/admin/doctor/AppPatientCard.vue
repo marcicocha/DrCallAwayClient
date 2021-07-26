@@ -9,11 +9,13 @@
             </div>
           </a-col>
           <a-col :span="18" class="text-container">
-            <h6>{{ cardObj.patientName }}</h6>
+            <h6>
+              {{ `${cardObj.patient.first_name} ${cardObj.patient.last_name}` }}
+            </h6>
             <p>
-              {{ cardObj.issueDescription }}
+              {{ cardObj.how_you_feel }}
             </p>
-            <p>{{ cardObj.dateAdded }}</p>
+            <p>{{ formatDate(cardObj.created_at) }}</p>
           </a-col>
         </a-row>
       </a-col>
@@ -21,7 +23,7 @@
         <a-row type="flex" :gutter="24" align="middle">
           <a-col :span="12" class="ailment-container">
             <p>Ailment</p>
-            <p class="red">{{ cardObj.ailment }}</p>
+            <p class="red">{{ cardObj.initial_complain }}</p>
           </a-col>
           <a-col :span="12">
             <a-row
@@ -54,6 +56,7 @@
   </div>
 </template>
 <script>
+import moment from 'moment'
 import AppButton from '@/components/AppButton'
 
 export default {
@@ -73,6 +76,9 @@ export default {
     },
     checkInHandler() {
       this.$emit('checkInHandler', this.cardObj)
+    },
+    formatDate(date) {
+      return moment(date).format('YYYY-MM-DD')
     },
   },
 }

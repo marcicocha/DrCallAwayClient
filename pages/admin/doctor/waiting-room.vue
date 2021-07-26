@@ -1,12 +1,12 @@
 <template>
   <div>
     <div v-if="!caseIsVisible">
-      <AppTabs v-model="activeKey">
+      <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
         <template slot="default">
           <a-tab-pane key="1" tab="Available Patients" force-render>
             <div class="admin-wrapper">
               <AppPatientCard
-                v-for="(card, i) in patientList"
+                v-for="(card, i) in generalWaitingRoom"
                 :key="i"
                 :card-obj="card"
                 @medicalInfoHandler="medicalInfoHandler"
@@ -17,7 +17,7 @@
           <a-tab-pane key="2" tab="Specialist Requests">
             <div class="admin-wrapper">
               <AppPatientCard
-                v-for="(card, i) in patientList"
+                v-for="(card, i) in specialistWaitingRoom"
                 :key="i"
                 :card-obj="card"
                 @medicalInfoHandler="medicalInfoHandler"
@@ -77,6 +77,7 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
 import AppInput from '@/components/AppInput'
 import AppPatientCard from '@/components/admin/doctor/AppPatientCard'
 import AppHealthInformationForm from '@/components/admin/AppHealthInformationForm'
@@ -97,30 +98,54 @@ export default {
       modalIsVisible: false,
       confirmLoading: false,
       currentCaseFile: {},
-      patientList: [
-        {
-          id: 1,
-          patientName: 'Abraham Lincoln',
-          issueDescription:
-            'I feel a strong headache every now and then. I also find it difficult to eat',
-          dateAdded: '04/04/2021 8:54 AM',
-          ailment: 'Headache',
-        },
-        {
-          id: 2,
-          patientName: 'Muhammadu Buhari',
-          issueDescription:
-            'Lorem, ipsum dolor sit amet consectetur adipisicing elit.',
-          dateAdded: '04/04/2021 8:54 AM',
-          ailment: 'Food Poisoning',
-        },
-      ],
     }
+  },
+  computed: {
+    ...mapState({
+      generalWaitingRoom: (state) => state.waitingRoomModule.generalWaitingList,
+      specialistWaitingRoom: (state) =>
+        state.waitingRoomModule.specialistWaitingList,
+    }),
+  },
+  mounted() {
+    this.changeTabHandler('1')
   },
   methods: {
     checkInHandler(record) {
-      this.caseIsVisible = true
       this.currentCaseFile = record
+      const $this = this
+      this.$confirm({
+        title: 'Are you sure you want to accept this case file?',
+        content: `With ID: ${record.case_id}`,
+        okText: 'Yes',
+        okType: 'danger',
+        cancelText: 'No',
+        async onOk() {
+          // vm.showModal(false)
+          try {
+            await $this.$store.dispatch(
+              'caseFileDoctorModule/ACCEPT_CASE_FILE',
+              record.case_id
+            )
+            $this.$notification.success({
+              message: 'Success',
+              description: 'Check in Successful',
+            })
+            this.caseIsVisible = true
+          } catch (e) {
+            const { default: errorHandler } = await import(
+              '@/utils/errorHandler'
+            )
+            errorHandler(e).forEach((msg) => {
+              $this.$notification.error({
+                message: 'Error',
+                description: msg,
+              })
+            })
+          }
+        },
+        onCancel() {},
+      })
     },
     medicalInfoHandler(record) {
       this.modalIsVisible = true
@@ -131,6 +156,32 @@ export default {
     closeViewHandler() {
       this.caseIsVisible = false
     },
+    async changeTabHandler(key) {
+      try {
+        const obj = {
+          ...this.filterObj,
+        }
+        if (key === '1') {
+          await this.getGeneralWaitingRoom(obj)
+        }
+        if (key === '2') {
+          await this.getSpecialistWaitingRoom(obj)
+        }
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
+    ...mapActions({
+      getGeneralWaitingRoom: 'waitingRoomModule/GET_GENERAL_WAITING_ROOM',
+      getSpecialistWaitingRoom: 'waitingRoomModule/GET_SPECIALIST_WAITING_ROOM',
+    }),
   },
 }
 </script>

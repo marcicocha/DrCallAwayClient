@@ -1,1 +1,2 @@
 export const GET_CASE_FILE = 'GET_CASE_FILE'
+export const GET_ADMIN_CASE_FILE = 'GET_ADMIN_CASE_FILE'

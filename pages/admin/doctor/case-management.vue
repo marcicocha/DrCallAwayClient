@@ -133,6 +133,9 @@ export default {
       }
     },
     async changeTabHandler(key) {
+      if (key === '1') {
+        this.status = 'ACTIVE'
+      }
       if (key === '2') {
         this.status = 'COMPLETED'
       }
@@ -157,7 +160,7 @@ export default {
       this.testIsVisible = true
     },
     ...mapActions({
-      getAllCaseFile: 'caseFileModule/GET_CASE_FILE',
+      getAllCaseFile: 'caseFileModule/GET_ADMIN_CASE_FILE',
     }),
   },
 }

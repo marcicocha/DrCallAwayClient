@@ -566,8 +566,6 @@ export default {
       this.isSignInLoading = true
       try {
         const { data } = await this.$axios.$post('login', this.userObject)
-        console.log(data)
-        console.log(data.roles[0].name)
         localStorage.setItem('user', JSON.stringify(data))
         this.$router.push(`/admin/${data.roles[0].name}`)
         this.isSignInLoading = false

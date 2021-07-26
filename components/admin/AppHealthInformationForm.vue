@@ -128,7 +128,7 @@
             </a-col>
           </a-row>
           <br />
-          <div class="t-c" v-if="!isDoctor">
+          <div v-if="!isDoctor" class="t-c">
             <AppButton
               type="primary"
               :block="false"
@@ -186,6 +186,11 @@ export default {
       ],
     }
   },
+  computed: {
+    isDoctor() {
+      return this.mode === 'doctor'
+    },
+  },
   watch: {
     healthInfoObj: {
       handler(newHealthInfoObj) {
@@ -197,11 +202,6 @@ export default {
       },
       immediate: true,
       deep: true,
-    },
-  },
-  computed: {
-    isDoctor() {
-      return this.mode === 'doctor'
     },
   },
   methods: {

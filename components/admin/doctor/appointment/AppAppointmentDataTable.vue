@@ -4,7 +4,7 @@
       :columns="columns"
       :data-source="dataSource"
       :pagination="pagination"
-      :row-key="(record) => record.appointmentId"
+      :row-key="(record) => record.id"
       :custom-row="customRow"
     >
       <template slot="status" slot-scope="text, record">
@@ -26,10 +26,14 @@
       <template slot="description" slot-scope="text, record">
         {{ record.specialty.name }}
       </template>
+      <template slot="time" slot-scope="text, record">
+        {{ formatTime(record.time) }}
+      </template>
     </a-table>
   </div>
 </template>
 <script>
+import moment from 'moment'
 export default {
   name: 'AppAppointmentDataTable',
   props: {
@@ -51,8 +55,7 @@ export default {
       const columns = [
         {
           title: 'Appointment ID',
-          dataIndex: 'appointmentId',
-          scopedSlots: { customRender: 'appointmentId' },
+          dataIndex: 'id',
         },
         {
           title: 'Patient Name',
@@ -66,13 +69,13 @@ export default {
         },
         {
           title: 'Date of Visit',
-          dataIndex: 'dateOfVisit',
-          scopedSlots: { customRender: 'dateOfVisit' },
+          dataIndex: 'date',
+          scopedSlots: { customRender: 'date' },
         },
         {
           title: 'Time of Visit',
-          dataIndex: 'timeOfVisit',
-          scopedSlots: { customRender: 'timeOfVisit' },
+          dataIndex: 'time',
+          scopedSlots: { customRender: 'time' },
         },
         {
           title: 'Status',
@@ -97,6 +100,9 @@ export default {
           },
         },
       }
+    },
+    formatTime(time) {
+      return moment(time).format('HH:mm:ss')
     },
   },
 }

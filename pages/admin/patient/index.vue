@@ -28,7 +28,7 @@
           ><NuxtLink to="/admin/patient/case-file">View All ></NuxtLink></span
         ></AppTitleDivider
       >
-      <AppCaseFileDataTable :pagination="false" />
+      <AppCaseFileDataTable :data-source="allCaseFiles" :pagination="false" />
     </div>
     <br />
     <div>
@@ -37,13 +37,16 @@
           ><NuxtLink to="/admin/patient/appointment">View All ></NuxtLink></span
         >
       </AppTitleDivider>
-      <AppAppointmentDataTable :pagination="false" />
+      <AppAppointmentDataTable
+        :data-source="allAppointments"
+        :pagination="false"
+      />
     </div>
   </div>
 </template>
 <script>
 import { Carousel, Slide } from 'vue-carousel'
-
+import { mapActions, mapState } from 'vuex'
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppTitleDivider from '@/components/AppTitleDivider'
 import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable'
@@ -84,6 +87,33 @@ export default {
         },
       ],
     }
+  },
+  computed: {
+    ...mapState({
+      allAppointments: (state) => state.appointmentModule.appointments,
+      allCaseFiles: (state) => state.caseFileModule.caseFiles,
+    }),
+  },
+  async mounted() {
+    try {
+      await this.getAllCaseFile()
+      await this.getAllAppointment()
+    } catch (err) {
+      const { default: errorHandler } = await import('@/utils/errorHandler')
+      errorHandler(err).forEach((msg) => {
+        this.$notification.error({
+          message: 'Error',
+          description: msg,
+          duration: 4000,
+        })
+      })
+    }
+  },
+  methods: {
+    ...mapActions({
+      getAllAppointment: 'appointmentModule/GET_APPOINTMENT',
+      getAllCaseFile: 'caseFileModule/GET_CASE_FILE',
+    }),
   },
 }
 </script>

@@ -96,6 +96,9 @@ export default {
       allAppointments: (state) => state.appointmentModule.appointments,
     }),
   },
+  mounted() {
+    this.changeTabHandler('1')
+  },
   methods: {
     showAppointmentModal(record) {
       console.log(record, 'RECORD')

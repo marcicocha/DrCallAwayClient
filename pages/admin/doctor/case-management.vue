@@ -13,7 +13,7 @@
             @showCaseFile="showCaseFile"
           />
         </a-tab-pane>
-        <a-tab-pane key="2" tab="Completed Cases" force-render>
+        <a-tab-pane key="2" tab="Completed Cases">
           <AppCaseFileDataTable
             status="completed"
             :data-source="allCaseFiles"

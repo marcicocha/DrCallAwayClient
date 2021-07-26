@@ -3,15 +3,20 @@ import getters from './getters'
 import mutations from './mutations'
 import actions from './actions'
 
+// PATIENT
 import caseFileModule from './modules/patient/caseFile'
-import caseFileDoctorModule from './modules/doctor/caseFile'
 import appointmentModule from './modules/patient/appointment'
 import ambulanceModule from './modules/patient/ambulance'
 import healthInformationModule from './modules/patient/healthInformation'
 import subscriptionModule from './modules/patient/subscription'
 import testsModule from './modules/patient/tests'
 import prescriptionModule from './modules/patient/prescription'
+
+// DOCTOR
 import waitingRoomModule from './modules/doctor/waitingRoom'
+import caseFileDoctorModule from './modules/doctor/caseFile'
+import appointmentDoctorModule from './modules/doctor/appointment'
+
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({}),
@@ -19,15 +24,20 @@ const createStore = () => {
     mutations,
     actions,
     modules: {
+      // PATIENT
+
       caseFileModule,
-      caseFileDoctorModule,
       appointmentModule,
       ambulanceModule,
       healthInformationModule,
       subscriptionModule,
       testsModule,
       prescriptionModule,
+
+      // DOCTOR
       waitingRoomModule,
+      caseFileDoctorModule,
+      appointmentDoctorModule,
     },
   })
 }

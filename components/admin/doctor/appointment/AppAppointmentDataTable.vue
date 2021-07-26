@@ -3,20 +3,28 @@
     <a-table
       :columns="columns"
       :data-source="dataSource"
-      :pagination="false"
+      :pagination="pagination"
       :row-key="(record) => record.appointmentId"
       :custom-row="customRow"
     >
       <template slot="status" slot-scope="text, record">
         <div
           :class="{
-            blue: record.status === 'Active',
-            green: record.status === 'Completed',
-            red: record.status === 'Pending',
+            blue: record.status === 'BOOKED',
+            green: record.status === 'COMPLETED',
+            red: record.status === 'PENDING',
           }"
         >
           {{ record.status }}
         </div>
+      </template>
+      <template slot="name" slot-scope="text, record">
+        {{
+          `${record.specialist.user.first_name} ${record.specialist.user.last_name}`
+        }}
+      </template>
+      <template slot="description" slot-scope="text, record">
+        {{ record.specialty.name }}
       </template>
     </a-table>
   </div>
@@ -25,13 +33,17 @@
 export default {
   name: 'AppAppointmentDataTable',
   props: {
-    status: {
-      type: String,
-      default: '',
-    },
     dataSource: {
       type: Array,
       default: () => [],
+    },
+    pagination: {
+      type: Boolean,
+      default: true,
+    },
+    filterObj: {
+      type: Object,
+      default: () => {},
     },
   },
   computed: {
@@ -45,7 +57,7 @@ export default {
         {
           title: 'Patient Name',
           dataIndex: 'patientName',
-          scopedSlots: { customRender: 'patientName' },
+          scopedSlots: { customRender: 'name' },
         },
         {
           title: 'Description',

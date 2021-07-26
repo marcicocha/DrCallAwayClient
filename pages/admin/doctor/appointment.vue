@@ -1,25 +1,25 @@
 <template>
   <div>
-    <AppTabs v-model="activeKey">
+    <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Appointment" force-render>
           <AppAppointmentDataTable
-            status="pending"
-            :data-source="dataSource1"
+            status="PENDING"
+            :data-source="allAppointments"
             @showAppointmentModal="showAppointmentModal"
           />
         </a-tab-pane>
-        <a-tab-pane key="2" tab="Booked Appointment" force-render>
+        <a-tab-pane key="2" tab="Booked Appointment">
           <AppAppointmentDataTable
-            status="booked"
-            :data-source="dataSource2"
+            status="BOOKED"
+            :data-source="allAppointments"
             @showAppointmentModal="showAppointmentModal"
           />
         </a-tab-pane>
-        <a-tab-pane key="3" tab="Completed Appointment" force-render>
+        <a-tab-pane key="3" tab="Completed Appointment">
           <AppAppointmentDataTable
-            status="completed"
-            :data-source="dataSource3"
+            status="COMPLETED"
+            :data-source="allAppointments"
             @showAppointmentModal="showAppointmentModal"
           />
         </a-tab-pane>
@@ -68,6 +68,7 @@
   </div>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
@@ -90,37 +91,15 @@ export default {
       modalIsVisible: false,
       currentAppointment: {},
       confirmLoading: false,
-      dataSource1: [
-        {
-          appointmentId: '#000001',
-          patientName: 'Dr. Michael Sanwo-Olu',
-          description: 'Malaria and Typhoid',
-          dateOfVisit: '23rd March, 2021',
-          timeOfVisit: '8:00am',
-          status: 'Pending',
-        },
-      ],
-      dataSource2: [
-        {
-          appointmentId: '#000001',
-          patientName: 'Dr. Michael Sanwo-Olu',
-          description: 'Malaria and Typhoid',
-          dateOfVisit: '23rd March, 2021',
-          timeOfVisit: '8:00am',
-          status: 'Booked',
-        },
-      ],
-      dataSource3: [
-        {
-          appointmentId: '#000002',
-          patientName: 'Dr. Michael Sanwo-Olu',
-          description: 'Malaria and Typhoid',
-          dateOfVisit: '23rd March, 2021',
-          timeOfVisit: '8:00am',
-          status: 'Completed',
-        },
-      ],
     }
+  },
+  computed: {
+    ...mapState({
+      allAppointments: (state) => state.appointmentDoctorModule.appointments,
+    }),
+  },
+  mounted() {
+    this.changeTabHandler('1')
   },
   methods: {
     showAppointmentModal(record) {
@@ -130,6 +109,36 @@ export default {
     closeModal() {
       this.modalIsVisible = false
     },
+    async changeTabHandler(key) {
+      if (key === '1') {
+        this.status = 'PENDING'
+      }
+      if (key === '2') {
+        this.status = 'BOOKED'
+      }
+      if (key === '3') {
+        this.status = 'COMPLETED'
+      }
+      try {
+        const obj = {
+          ...this.filterObj,
+          status: this.status,
+        }
+        await this.getAllAppointment(obj)
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
+    ...mapActions({
+      getAllAppointment: 'appointmentDoctorModule/GET_APPOINTMENT',
+    }),
   },
 }
 </script>

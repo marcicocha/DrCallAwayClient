@@ -96,7 +96,9 @@ export default {
       allPrescription: (state) => state.prescriptionModule.prescriptions,
     }),
   },
-
+  mounted() {
+    this.changeTabHandler('1')
+  },
   methods: {
     showPrescriptionModal(record) {
       this.prescriptionModalIsVisible = true

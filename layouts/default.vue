@@ -594,11 +594,11 @@ export default {
       try {
         if (this.mode === 'practitioner') {
           if (this.signUpObject.type === 'DOCTOR') {
-            const { response } = await this.$axios.$post(
+            const { data } = await this.$axios.$post(
               'doctors/signup',
               this.signUpObject
             )
-            localStorage.setItem('user', JSON.stringify(response))
+            localStorage.setItem('user', JSON.stringify(data))
             this.$router.push(`/admin/doctor`)
           } else {
             const partnerObj = {
@@ -614,18 +614,15 @@ export default {
                 },
               ],
             }
-            const { response } = await this.$axios.$post(
+            const { data } = await this.$axios.$post(
               'partners/signup',
               partnerObj
             )
-            localStorage.setItem('user', JSON.stringify(response))
+            localStorage.setItem('user', JSON.stringify(data))
           }
         } else {
-          const { response } = await this.$axios.$post(
-            'signup',
-            this.signUpObject
-          )
-          localStorage.setItem('user', JSON.stringify(response))
+          const { data } = await this.$axios.$post('signup', this.signUpObject)
+          localStorage.setItem('user', JSON.stringify(data))
           this.$router.push(`/admin/patient`)
         }
         this.closeModal()

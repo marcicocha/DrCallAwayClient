@@ -43,14 +43,14 @@
         /></a>
       </div>
       <br />
-      <AppTitleDivider :title="`Case File / ${currentCaseFile.caseId}`"
+      <AppTitleDivider :title="`Case File / ${currentCaseFile.case_id}`"
         ><span class="right-details"
           ><span style="color: $dark-purple">Status:</span>
           <span
             :class="{
-              blue: currentCaseFile.status === 'Active',
-              green: currentCaseFile.status === 'Completed',
-              red: currentCaseFile.status === 'Pending',
+              blue: currentCaseFile.status === 'ACTIVE',
+              green: currentCaseFile.status === 'COMPLETED',
+              red: currentCaseFile.status === 'PENDING',
             }"
             >{{ currentCaseFile.status }}</span
           ></span
@@ -71,7 +71,7 @@
       @cancel="closeModal"
     >
       <div>
-        <AppHealthInformationForm />
+        <AppHealthInformationForm :health-info-obj="healthInfo" mode="doctor" />
       </div>
     </a-modal>
   </div>
@@ -105,6 +105,7 @@ export default {
       generalWaitingRoom: (state) => state.waitingRoomModule.generalWaitingList,
       specialistWaitingRoom: (state) =>
         state.waitingRoomModule.specialistWaitingList,
+      healthInfo: (state) => state.waitingRoomModule.healthInfoObj,
     }),
   },
   mounted() {
@@ -116,7 +117,7 @@ export default {
       const $this = this
       this.$confirm({
         title: 'Are you sure you want to accept this case file?',
-        content: `With ID: ${record.case_id}`,
+        content: `With ID: ${record.id}`,
         okText: 'Yes',
         okType: 'danger',
         cancelText: 'No',
@@ -125,13 +126,13 @@ export default {
           try {
             await $this.$store.dispatch(
               'caseFileDoctorModule/ACCEPT_CASE_FILE',
-              record.case_id
+              record.id
             )
             $this.$notification.success({
               message: 'Success',
               description: 'Check in Successful',
             })
-            this.caseIsVisible = true
+            $this.caseIsVisible = true
           } catch (e) {
             const { default: errorHandler } = await import(
               '@/utils/errorHandler'
@@ -147,8 +148,23 @@ export default {
         onCancel() {},
       })
     },
-    medicalInfoHandler(record) {
-      this.modalIsVisible = true
+    async medicalInfoHandler(record) {
+      try {
+        await this.$store.dispatch(
+          'waitingRoomModule/GET_HEALTH_INFORMATION',
+          record.patient_id
+        )
+        this.modalIsVisible = true
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
     closeModal() {
       this.modalIsVisible = false

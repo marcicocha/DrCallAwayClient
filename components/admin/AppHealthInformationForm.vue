@@ -13,6 +13,7 @@
                 required
                 rules="required"
                 name="heart rate"
+                :disabled="isDoctor"
               />
             </a-col>
             <a-col :span="12">
@@ -22,6 +23,7 @@
                 required
                 rules="required"
                 name="weight"
+                :disabled="isDoctor"
               />
             </a-col>
             <a-col :span="12">
@@ -31,6 +33,7 @@
                 required
                 rules="required"
                 name="height"
+                :disabled="isDoctor"
               />
             </a-col>
             <a-col :span="12">
@@ -44,6 +47,7 @@
                     name="glucose level"
                     :data="['FGB', 'PGB']"
                     :remote="false"
+                    :disabled="isDoctor"
                   />
                 </a-col>
                 <a-col :span="12">
@@ -53,6 +57,7 @@
                     required
                     rules="required"
                     name="value"
+                    :disabled="isDoctor"
                   />
                 </a-col>
               </a-row>
@@ -64,6 +69,7 @@
                 name="alcohol intake"
                 :data="['YES', 'NO']"
                 :remote="false"
+                :disabled="isDoctor"
               />
             </a-col>
             <a-col :span="12">
@@ -75,7 +81,7 @@
                   healthDetails.alcohol_intake === 'YES' ? 'required' : ''
                 "
                 name="value"
-                :disabled="healthDetails.alcohol_intake !== 'YES'"
+                :disabled="healthDetails.alcohol_intake !== 'YES' || isDoctor"
               />
             </a-col>
             <a-col :span="12">
@@ -85,6 +91,7 @@
                 name="smoke"
                 :data="['YES', 'NO']"
                 :remote="false"
+                :disabled="isDoctor"
               />
             </a-col>
             <a-col :span="12">
@@ -94,13 +101,14 @@
                 :required="healthDetails.smoke === 'YES'"
                 :rules="healthDetails.smoke === 'YES' ? 'required' : ''"
                 name="value"
-                :disabled="healthDetails.smoke !== 'YES'"
+                :disabled="healthDetails.smoke !== 'YES' || isDoctor"
               />
             </a-col>
             <a-col :span="16">
               <AppCheckboxGroup
                 v-model="healthDetails.recurring"
                 :options="options"
+                :disabled="isDoctor"
               />
             </a-col>
             <a-col :span="8">
@@ -108,18 +116,19 @@
               <AppInput
                 v-model="healthDetails.if_others"
                 name="value"
-                :disabled="healthDetails.recurring !== 'Other'"
+                :disabled="healthDetails.recurring !== 'Other' || isDoctor"
               />
             </a-col>
             <a-col :span="24">
               <AppTextArea
                 v-model="healthDetails.additional_info"
                 label="Additional Information"
+                :disabled="isDoctor"
               />
             </a-col>
           </a-row>
           <br />
-          <div class="t-c">
+          <div class="t-c" v-if="!isDoctor">
             <AppButton
               type="primary"
               :block="false"
@@ -159,6 +168,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    mode: {
+      type: String,
+      default: 'patient',
+    },
   },
   data() {
     return {
@@ -184,6 +197,11 @@ export default {
       },
       immediate: true,
       deep: true,
+    },
+  },
+  computed: {
+    isDoctor() {
+      return this.mode === 'doctor'
     },
   },
   methods: {

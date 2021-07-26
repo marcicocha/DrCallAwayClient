@@ -5,6 +5,7 @@ import actions from './actions'
 const state = () => ({
   generalWaitingList: [],
   specialistWaitingList: [],
+  healthInfoObj: {},
 })
 
 export default {

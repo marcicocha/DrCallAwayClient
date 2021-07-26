@@ -352,6 +352,10 @@ h6 {
   > td {
   background: $light-grey;
 }
+.ant-input[disabled],
+.ant-select-disabled {
+  color: rgba(0, 0, 0, 0.45);
+}
 .blue {
   color: #0031a5;
 }

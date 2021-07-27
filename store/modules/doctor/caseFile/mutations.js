@@ -5,7 +5,7 @@ import {
 
 export default {
   [GET_DOCTOR_CASE_FILE](state, payload) {
-    state.caseFiles = payload.data
+    state.caseFiles = payload
   },
   [ACCEPT_CASE_FILE](state, payload) {},
 }

@@ -116,7 +116,7 @@ export default {
       this.currentCaseFile = record
       const $this = this
       this.$confirm({
-        title: 'Are you sure you want to accept this case file?',
+        title: 'Are you sure you want to accept this Case File?',
         content: `With ID: ${record.id}`,
         okText: 'Yes',
         okType: 'danger',

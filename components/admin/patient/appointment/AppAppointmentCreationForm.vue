@@ -6,51 +6,50 @@
           v-model="appointmentObj.id"
           label="Appointment ID"
           name="appointment id"
-          :disabled="isReadOnly"
+          disabled
         />
         <AppInput
           v-if="status === 'patient'"
           v-model="appointmentObj.consultantName"
           label="Consultant Name"
           name="consultant name"
-          :disabled="isReadOnly"
+          disabled
         />
         <AppInput
           v-if="status === 'doctor'"
           v-model="appointmentObj.patientName"
           label="Patient Name"
           name="Patient name"
-          :disabled="isReadOnly"
+          disabled
         />
         <AppInput
           v-model="appointmentObj.description"
           label="Description"
           name="Description"
-          :disabled="isReadOnly"
+          disabled
         />
-        <AppInput
+        <AppDatePicker
           v-model="appointmentObj.date"
           label="Date of Visit"
           name="Date of Visit"
-          :disabled="isReadOnly"
+          disabled
         />
-        <AppInput
+        <AppTimePicker
           v-model="appointmentObj.time"
           label="Time of Visit"
           name="Time of Visit"
-          :disabled="isReadOnly"
+          disabled
         />
         <AppInput
           v-model="appointmentObj.status"
           label="Status"
           name="Status"
-          :disabled="isReadOnly"
+          disabled
         />
       </ValidationObserver>
       <br />
-      <div class="t-c">
+      <div v-if="isReadOnly" class="t-c">
         <AppButton
-          v-if="!isReadOnly"
           type="primary"
           :block="false"
           :loading="isLoading"
@@ -67,6 +66,8 @@ import { ValidationObserver } from 'vee-validate'
 import { mapActions } from 'vuex'
 import AppInput from '@/components/AppInput'
 import AppButton from '@/components/AppButton'
+import AppDatePicker from '@/components/AppDatePicker'
+import AppTimePicker from '@/components/AppTimePicker'
 
 export default {
   name: 'AppAppointmentCreationForm',
@@ -74,6 +75,8 @@ export default {
     ValidationObserver,
     AppInput,
     AppButton,
+    AppDatePicker,
+    AppTimePicker,
   },
   props: {
     currentAppointment: {
@@ -93,7 +96,9 @@ export default {
   },
   computed: {
     isReadOnly() {
-      return this.appointmentObj.status !== 'Booked'
+      return (
+        this.appointmentObj.status === 'BOOKED' && this.status === 'patient'
+      )
     },
   },
   watch: {
@@ -121,12 +126,18 @@ export default {
       }
       this.isLoading = true
       try {
-        const response = await this.submitAppointmentHandler(
-          this.appointmentObj
+        const user = JSON.parse(localStorage.getItem('user'))
+        const config = {
+          headers: { Authorization: `Bearer ${user.token.token}` },
+        }
+        const { successMessage } = await this.$axios.$patch(
+          `appointments/complete/${this.appointmentObj.id}`,
+          this.appointmentObj.id,
+          config
         )
         this.$notification.success({
           message: 'Success',
-          description: response,
+          description: successMessage,
           duration: 4000,
         })
         requestAnimationFrame(() => {

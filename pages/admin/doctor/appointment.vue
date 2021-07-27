@@ -7,6 +7,7 @@
             status="PENDING"
             :data-source="allAppointments"
             @showAppointmentModal="showAppointmentModal"
+            @acceptAppointmentHandler="acceptAppointmentHandler"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Booked Appointment">
@@ -108,6 +109,47 @@ export default {
     },
     closeModal() {
       this.modalIsVisible = false
+    },
+    acceptAppointmentHandler(record) {
+      const $this = this
+      this.$confirm({
+        title: 'Are you sure you want to accept this Appointment?',
+        content: `With ID: ${record.id}`,
+        okText: 'Yes',
+        okType: 'danger',
+        cancelText: 'No',
+        async onOk() {
+          // vm.showModal(false)
+          try {
+            const user = JSON.parse(localStorage.getItem('user'))
+            const config = {
+              headers: { Authorization: `Bearer ${user.token.token}` },
+            }
+            await $this.$axios.$patch(
+              `accept/appointments/${record.id}`,
+              record.id,
+              config
+            )
+            $this.$notification.success({
+              message: 'Success',
+              description: 'Appointment Accepted Successfully',
+            })
+            $this.caseIsVisible = true
+            $this.changeTabHandler('1')
+          } catch (e) {
+            const { default: errorHandler } = await import(
+              '@/utils/errorHandler'
+            )
+            errorHandler(e).forEach((msg) => {
+              $this.$notification.error({
+                message: 'Error',
+                description: msg,
+              })
+            })
+          }
+        },
+        onCancel() {},
+      })
     },
     async changeTabHandler(key) {
       if (key === '1') {

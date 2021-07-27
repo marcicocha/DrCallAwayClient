@@ -59,6 +59,7 @@
         <AppAppointmentCreationForm
           :current-appointment="currentAppointment"
           status="patient"
+          @formSubmissionCompleted="closeModal"
         />
       </div>
     </a-modal>

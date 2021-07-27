@@ -5,7 +5,6 @@
       :data-source="dataSource"
       :pagination="pagination"
       :row-key="(record) => record.id"
-      :custom-row="customRow"
     >
       <template slot="status" slot-scope="text, record">
         <div
@@ -28,6 +27,25 @@
       </template>
       <template slot="time" slot-scope="text, record">
         {{ formatTime(record.time) }}
+      </template>
+      <template slot="operation" slot-scope="text, record">
+        <div style="text-align: right">
+          <a-button-group class="link-group">
+            <a-button
+              class="table__btn"
+              type="link"
+              @click="$emit('showAppointmentModal', record)"
+              ><img src="@/assets/images/admin/table-view.png" alt="view"
+            /></a-button>
+            <a-button
+              v-if="record.status === 'PENDING'"
+              type="primary"
+              class="table__btn"
+              @click="$emit('acceptAppointmentHandler', record)"
+              >ACCEPT</a-button
+            >
+          </a-button-group>
+        </div>
       </template>
     </a-table>
   </div>
@@ -82,11 +100,11 @@ export default {
           dataIndex: 'status',
           scopedSlots: { customRender: 'status' },
         },
-        // {
-        //  title: '',
-        //  dataIndex: 'operation1',
-        //  scopedSlots: { customRender: 'operation' },
-        // },
+        {
+          title: '',
+          dataIndex: 'operation',
+          scopedSlots: { customRender: 'operation' },
+        },
       ]
       return columns
     },

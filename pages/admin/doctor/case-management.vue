@@ -51,7 +51,7 @@
           /></a>
         </div>
         <br />
-        <AppTitleDivider :title="`Case File / ${currentCaseFile.caseId}`"
+        <AppTitleDivider :title="`Case File / ${currentCaseFile.case_id}`"
           ><span class="right-details"
             ><span style="color: $dark-purple">Status:</span>
             <span

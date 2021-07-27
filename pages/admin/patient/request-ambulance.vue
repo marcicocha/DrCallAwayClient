@@ -120,6 +120,9 @@ export default {
       allCallUp: (state) => state.ambulanceModule.ambulances,
     }),
   },
+  mounted() {
+    this.changeTabHandler('1')
+  },
   methods: {
     async submitHandler() {
       const isValid = await this.$refs.observer.validate()

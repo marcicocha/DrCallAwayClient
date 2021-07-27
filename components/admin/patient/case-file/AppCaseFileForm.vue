@@ -46,7 +46,7 @@
 
         <a-table
           :columns="prescriptionColumns"
-          :data-source="prescriptionDataSource"
+          :data-source="prescriptionList"
           :pagination="false"
           :row-key="(record) => record.id"
         >
@@ -77,7 +77,7 @@
 
         <a-table
           :columns="testColumns"
-          :data-source="testDataSource"
+          :data-source="testList"
           :pagination="false"
           :row-key="(record) => record.id"
         >
@@ -128,13 +128,14 @@
         <h6 class="t-c">Prescription for Strong Headache</h6>
         <a-divider />
         <div>
-          <AppPrescriptionForm />
+          <AppPrescriptionForm :case-file-obj="caseFileObj" />
         </div>
       </div>
     </a-modal>
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 import { ValidationObserver } from 'vee-validate'
 import AppInput from '@/components/AppInput'
 import AppDatePicker from '@/components/AppDatePicker'
@@ -162,22 +163,20 @@ export default {
   data() {
     return {
       caseFileObj: {},
-      prescriptionDataSource: [],
-      testDataSource: [],
       prescriptionIsVisible: false,
       confirmLoading: false,
     }
   },
   computed: {
     isReadOnly() {
-      return this.caseFileObj.status !== 'Booked'
+      return this.caseFileObj.status !== 'BOOKED'
     },
     prescriptionColumns() {
       const columns = [
         {
           title: 'Name Of Drug',
-          dataIndex: 'drugName',
-          scopedSlots: { customRender: 'drugName' },
+          dataIndex: 'name',
+          scopedSlots: { customRender: 'name' },
         },
         {
           title: 'Dosage',
@@ -217,6 +216,28 @@ export default {
       ]
       return columns
     },
+    prescriptionList() {
+      let array = []
+      if (
+        this.caseFileObj.prescription.length !== 0 ||
+        this.caseFileObj.prescription !== null
+      ) {
+        array = [...array, ...this.caseFileObj.prescription.drugs]
+      }
+      if (this.allPrescription.length !== 0) {
+        array = [...array, ...this.allPrescription]
+      }
+
+      console.log(array, 'ARRAY')
+      return array
+    },
+    testList() {
+      return []
+    },
+    ...mapState({
+      allPrescription: (state) => state.caseFileDoctorModule.prescriptionList,
+      allTest: (state) => state.caseFileDoctorModule.testList,
+    }),
   },
   watch: {
     currentCaseFile: {

@@ -1,129 +1,156 @@
 {
-    "clientMenu" : [
+  "clientMenu": [
+    {
+      "key": "dashboard",
+      "name": "Dashboard",
+      "path": "/admin/patient",
+      "children": []
+    },
+    {
+      "key": "medical_information",
+      "name": "Medical Information",
+      "path": "/admin/patient/medical-information",
+      "children": []
+    },
+    {
+      "key": "case_file",
+      "name": "My Case File",
+      "path": "/admin/patient/case-file",
+      "children": []
+    },
+    {
+      "key": "appointment",
+      "name": "Appointments",
+      "path": "/admin/patient/appointment",
+      "children": []
+    },
+    {
+      "key": "prescriptions",
+      "name": "Prescriptions/Tests",
+      "path": "/admin/patient/prescriptions-test",
+      "children": []
+    },
+    {
+      "key": "key_services",
+      "name": "Key Services",
+      "path": "/admin/patient/key-services",
+      "children": [
         {
-          "key": "dashboard",
-          "name": "Dashboard",
-          "path": "/admin/patient",
+          "key": "consultation",
+          "name": "Consultation",
+          "path": "/admin/patient/key-services/consultation",
           "children": []
         },
         {
-          "key": "medical_information",
-          "name": "Medical Information",
-          "path": "/admin/patient/medical-information",
+          "key": "book_appointment",
+          "name": "Book an Appointment",
+          "path": "/admin/patient/key-services/book-appointment",
           "children": []
         },
         {
-          "key": "case_file",
-          "name": "My Case File",
-          "path": "/admin/patient/case-file",
+          "key": "wellness_nutrition",
+          "name": "Wellness & Nutrition",
+          "path": "/admin/patient/key-services/wellness-nutrition",
           "children": []
         },
         {
-          "key": "appointment",
-          "name": "Appointments",
-          "path": "/admin/patient/appointment",
+          "key": "home_care",
+          "name": "Home Care",
+          "path": "/admin/patient/key-services/home-care",
           "children": []
-        },
-        {
-          "key": "prescriptions",
-          "name": "Prescriptions/Tests",
-          "path": "/admin/patient/prescriptions-test",
-          "children": []
-        },
-        {
-          "key": "key_services",
-          "name": "Key Services",
-          "path": "/admin/patient/key-services",
-          "children": [
-            {
-              "key": "consultation",
-              "name": "Consultation",
-              "path": "/admin/patient/key-services/consultation",
-              "children": []
-            },
-            {
-              "key": "book_appointment",
-              "name": "Book an Appointment",
-              "path": "/admin/patient/key-services/book-appointment",
-              "children": []
-            },
-            {
-              "key": "wellness_nutrition",
-              "name": "Wellness & Nutrition",
-              "path": "/admin/patient/key-services/wellness-nutrition",
-              "children": []
-            },
-            {
-              "key": "home_care",
-              "name": "Home Care",
-              "path": "/admin/patient/key-services/home-care",
-              "children": []
-            }
-          ]
-        },
-        {
-          "key": "ambulance",
-          "name": "Request An Ambulance",
-          "path": "/admin/patient/request-ambulance",
-          "children": []
-        },
-        {
-          "key": "self_service",
-          "name": "Self Service",
-          "path": "/admin/patient/self-service",
-          "children": [
-            {
-              "key": "subscribe",
-              "name": "Susbcribe",
-              "path": "/admin/patient/self-service/subscribe",
-              "children": []
-            },
-            {
-              "key": "helpdesk",
-              "name": "Helpdesk",
-              "path": "/admin/patient/self-service/helpdesk",
-              "children": []
-            }
-          ]
         }
-      ],
-      "doctorMenu": [
+      ]
+    },
+    {
+      "key": "ambulance",
+      "name": "Request An Ambulance",
+      "path": "/admin/patient/request-ambulance",
+      "children": []
+    },
+    {
+      "key": "self_service",
+      "name": "Self Service",
+      "path": "/admin/patient/self-service",
+      "children": [
         {
-          "key": "dashboard",
-          "name": "Dashboard",
-          "path": "/admin/doctor",
+          "key": "subscribe",
+          "name": "Susbcribe",
+          "path": "/admin/patient/self-service/subscribe",
           "children": []
         },
         {
-          "key": "waiting-room",
-          "name": "Waiting Room",
-          "path": "/admin/doctor/waiting-room",
+          "key": "helpdesk",
+          "name": "Helpdesk",
+          "path": "/admin/patient/self-service/helpdesk",
           "children": []
-        },
-        {
-          "key": "case-management",
-          "name": "Case Management",
-          "path": "/admin/doctor/case-management",
-          "children": []
-        },
-        {
-          "key": "appointment",
-          "name": "Appointments",
-          "path": "/admin/doctor/appointment",
-          "children": []
-        },
-        {
-          "key": "self_service",
-          "name": "Self Service",
-          "path": "/admin/patient/self-service",
-          "children": [
-            {
-              "key": "helpdesk",
-              "name": "Helpdesk",
-              "path": "/admin/patient/self-service/helpdesk",
-              "children": []
-            }
-          ]
         }
-    ]
+      ]
+    }
+  ],
+  "doctorMenu": [
+    {
+      "key": "dashboard",
+      "name": "Dashboard",
+      "path": "/admin/doctor",
+      "children": []
+    },
+    {
+      "key": "waiting-room",
+      "name": "Waiting Room",
+      "path": "/admin/doctor/waiting-room",
+      "children": []
+    },
+    {
+      "key": "case-management",
+      "name": "Case Management",
+      "path": "/admin/doctor/case-management",
+      "children": []
+    },
+    {
+      "key": "appointment",
+      "name": "Appointments",
+      "path": "/admin/doctor/appointment",
+      "children": []
+    },
+    {
+      "key": "self_service",
+      "name": "Self Service",
+      "path": "/admin/patient/self-service",
+      "children": [
+        {
+          "key": "helpdesk",
+          "name": "Helpdesk",
+          "path": "/admin/patient/self-service/helpdesk",
+          "children": []
+        }
+      ]
+    }
+  ],
+  "ambulanceMenu": [
+    {
+      "key": "dashboard",
+      "name": "Dashboard",
+      "path": "/admin/ambulance",
+      "children": []
+    },
+    {
+      "key": "call_up",
+      "name": "Callups",
+      "path": "/admin/callup",
+      "children": []
+    },
+    {
+      "key": "self_service",
+      "name": "Self Service",
+      "path": "/admin/patient/self-service",
+      "children": [
+        {
+          "key": "helpdesk",
+          "name": "Helpdesk",
+          "path": "/admin/patient/self-service/helpdesk",
+          "children": []
+        }
+      ]
+    }
+  ]
 }

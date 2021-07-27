@@ -106,7 +106,7 @@
 </template>
 <script>
 import AppHeader from '@/components/AppHeader'
-import { clientMenu, doctorMenu } from '@/menu.json'
+import { clientMenu, doctorMenu, ambulanceMenu } from '@/menu.json'
 
 export default {
   components: {
@@ -122,6 +122,7 @@ export default {
       subMenuTrue: false,
       doctorMenu,
       clientMenu,
+      ambulanceMenu,
     }
   },
   // computed: {
@@ -139,6 +140,9 @@ export default {
     if (role === 'doctor') {
       this.menuList = [...doctorMenu]
       return
+    }
+    if (role === 'ambulance') {
+      this.menuList = [...ambulanceMenu]
     }
     this.menuList = [...clientMenu]
   },

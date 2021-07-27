@@ -4,6 +4,8 @@ import actions from './actions'
 
 const state = () => ({
   caseFiles: [],
+  prescriptionList: [],
+  testList: [],
 })
 
 export default {

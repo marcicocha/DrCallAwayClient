@@ -110,6 +110,7 @@ export default {
           this.appointmentObj = {
             ...newcurrentAppointment,
             consultantName: `${newcurrentAppointment.specialist.user.first_name} ${newcurrentAppointment.specialist.user.last_name}`,
+            patientName: `${newcurrentAppointment.patient.first_name} ${newcurrentAppointment.patient.last_name}`,
             description: newcurrentAppointment.specialty.name,
           }
         }

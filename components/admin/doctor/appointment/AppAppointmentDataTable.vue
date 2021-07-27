@@ -18,9 +18,7 @@
         </div>
       </template>
       <template slot="name" slot-scope="text, record">
-        {{
-          `${record.specialist.user.first_name} ${record.specialist.user.last_name}`
-        }}
+        {{ `${record.patient.first_name} ${record.patient.last_name}` }}
       </template>
       <template slot="description" slot-scope="text, record">
         {{ record.specialty.name }}

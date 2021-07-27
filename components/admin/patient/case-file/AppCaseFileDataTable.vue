@@ -21,7 +21,11 @@
         {{ formatDate(record.date) }}
       </template>
       <template slot="doctor" slot-scope="text, record">
-        {{ record.doctor ? record.doctor : 'Unassigned' }}
+        {{
+          record.doctor
+            ? `${record.doctor.first_name} ${record.doctor.last_name}`
+            : 'Unassigned'
+        }}
       </template>
       <template slot="operation" slot-scope="text, record">
         <div style="text-align: right">

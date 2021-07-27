@@ -283,13 +283,43 @@ export default {
       this.generalIsVisible = false
       this.specialModalIsVisible = false
     },
-    callback(res) {
+    async callback(res) {
       if (res.message === 'Approved') {
         this.$notification.success({
           message: res.message,
           description: 'Payment successful',
           duration: 4000,
         })
+        try {
+          const user = JSON.parse(localStorage.getItem('user'))
+          const config = {
+            headers: { Authorization: `Bearer ${user.token.token}` },
+          }
+          const obj = {
+            ailment: this.specialModalObj.secondText,
+            how_you_feel: `I need a specialist in ${this.specialModalObj.secondText}`,
+            initial_complain: this.specialModalObj.secondText,
+          }
+
+          const { message } = await this.$axios.$post('cases', obj, config)
+          this.$notification.success({
+            message: 'Success',
+            description: message,
+            duration: 4000,
+          })
+
+          this.specialModalIsVisible = false
+          this.$router.replace('/admin/patient/case-file')
+        } catch (err) {
+          const { default: errorHandler } = await import('@/utils/errorHandler')
+          errorHandler(err).forEach((msg) => {
+            this.$notification.error({
+              message: 'Error',
+              description: msg,
+              duration: 4000,
+            })
+          })
+        }
       }
     },
     async submitHandler() {

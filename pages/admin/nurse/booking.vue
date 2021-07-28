@@ -4,25 +4,25 @@
     <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Requests" force-render>
-          <AppCallUpDataTable
+          <AppBookingDataTable
             status="PENDING"
-            :data-source="allCallUp"
-            @showCallUpModal="showCallUpModal"
-            @acceptCallUpHandler="acceptCallUpHandler"
+            :data-source="allBooking"
+            @showBookingModal="showBookingModal"
+            @acceptBookingHandler="acceptBookingHandler"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Active Requests">
-          <AppCallUpDataTable
-            status="ACCEPTED"
-            :data-source="allCallUp"
-            @showCallUpModal="showCallUpModal"
+          <AppBookingDataTable
+            status="ACTIVE"
+            :data-source="allBooking"
+            @showBookingModal="showBookingModal"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Requests">
-          <AppCallUpDataTable
+          <AppBookingDataTable
             status="COMPLETED"
-            :data-source="allCallUp"
-            @showCallUpModal="showCallUpModal"
+            :data-source="allBooking"
+            @showBookingModal="showBookingModal"
           />
         </a-tab-pane>
       </template>
@@ -50,7 +50,7 @@
     </AppTabs>
     <a-modal
       :visible="modalIsVisible"
-      width="600px"
+      width="420px"
       :confirm-loading="confirmLoading"
       :footer="null"
       :destroy-on-close="true"
@@ -60,20 +60,18 @@
     >
       <div>
         <h6 class="t-c">Ambulance CallUp</h6>
-        <a-table
-          :columns="columns"
-          :data-source="callList"
-          :pagination="false"
-          :row-key="(record) => record.id"
-        >
-          <template slot="sn" slot-scope="text, record, index">
-            {{ index + 1 }}
-          </template>
-          <template slot="name" slot-scope="text, record">
-            {{ `${record.user.first_name} ${record.user.last_name}` }}
-          </template>
-        </a-table>
+
         <br />
+        <div class="t-c">
+          <AppButton
+            type="primary"
+            :block="false"
+            :loading="isLoading"
+            class="admin-button"
+            @click="submitHandler"
+            >COMPLETE</AppButton
+          >
+        </div>
       </div>
     </a-modal>
   </div>
@@ -83,14 +81,14 @@ import { mapActions, mapState } from 'vuex'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
-import AppCallUpDataTable from '@/components/admin/ambulance/AppCallUpDataTable'
+import AppBookingDataTable from '@/components/admin/nurse/AppBookingDataTable'
 
 export default {
   components: {
     AppTabs,
     AppInput,
     AppSelect,
-    AppCallUpDataTable,
+    AppBookingDataTable,
   },
   layout: 'dashboard',
   data() {
@@ -98,58 +96,58 @@ export default {
       activeKey: '1',
       filterObj: {},
       modalIsVisible: false,
-      currentCallUp: {},
+      currentBooking: {},
       confirmLoading: false,
       isLoading: false,
       status: 'PENDING',
     }
   },
   computed: {
-    columns() {
-      const columns = [
-        {
-          title: 'S/N',
-          dataIndex: 'sn',
-          scopedSlots: { customRender: 'sn' },
-        },
-        {
-          title: 'REQUESTER NAME',
-          dataIndex: 'name',
-          scopedSlots: { customRender: 'name' },
-        },
-        {
-          title: 'PICKUP ADDRESS',
-          dataIndex: 'pick_up_address',
-        },
-        {
-          title: 'PHONE NUMBER',
-          dataIndex: 'phone_number',
-        },
-      ]
-      return columns
-    },
-    callList() {
-      return [{ ...this.currentCallUp }]
-    },
     ...mapState({
-      allCallUp: (state) => state.callUpModule.callUpList,
+      allBooking: (state) => state.bookingModule.bookingList,
     }),
   },
   mounted() {
     this.changeTabHandler('1')
   },
   methods: {
-    showCallUpModal(record) {
-      this.currentCallUp = record
+    showBookingModal(record) {
+      this.currentBooking = record
       this.modalIsVisible = true
     },
     closeModal() {
       this.modalIsVisible = false
     },
-    acceptCallUpHandler(record) {
+    async submitHandler() {
+      try {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const config = {
+          headers: { Authorization: `Bearer ${user.token.token}` },
+        }
+        await this.$axios.$patch(
+          `/nurse/complete/booking/${this.currentBooking.id}`,
+          this.currentBooking.id,
+          config
+        )
+        this.$notification.success({
+          message: 'Success',
+          description: 'Request Completed',
+        })
+        this.changeTabHandler('3')
+      } catch (e) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(e).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+          })
+        })
+      }
+    },
+    acceptBookingHandler(record) {
       const $this = this
       this.$confirm({
-        title: 'Are you sure you want to accept this Requests?',
+        title: 'Are you sure you want to accept this Appointment?',
         content: `With ID: ${record.id}`,
         okText: 'Yes',
         okType: 'danger',
@@ -162,16 +160,15 @@ export default {
               headers: { Authorization: `Bearer ${user.token.token}` },
             }
             await $this.$axios.$patch(
-              `ambulance/accept/callup/${record.id}`,
+              `/nurse/accept/booking/${record.id}`,
               record.id,
               config
             )
             $this.$notification.success({
               message: 'Success',
-              description: 'Request Accepted Successfully',
+              description: 'Booking Accepted Successfully',
             })
             $this.changeTabHandler('2')
-            $this.activeKey = '2'
           } catch (e) {
             const { default: errorHandler } = await import(
               '@/utils/errorHandler'
@@ -202,7 +199,7 @@ export default {
           ...this.filterObj,
           status: this.status,
         }
-        await this.getAllCallUp(obj)
+        await this.getAllBooking(obj)
       } catch (err) {
         const { default: errorHandler } = await import('@/utils/errorHandler')
         errorHandler(err).forEach((msg) => {
@@ -215,7 +212,7 @@ export default {
       }
     },
     ...mapActions({
-      getAllCallUp: 'callUpModule/GET_CALL_UP',
+      getAllBooking: 'bookingModule/GET_BOOKING',
     }),
   },
 }

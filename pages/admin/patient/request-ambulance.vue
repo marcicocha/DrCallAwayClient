@@ -58,7 +58,10 @@
           <AppAmbulanceDataTable :data-source="allCallUp" />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Active Requests">
-          <AppAmbulanceDataTable :data-source="allCallUp" />
+          <AppAmbulanceDataTable
+            :data-source="allCallUp"
+            @acceptHandler="acceptHandler"
+          />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Requests">
           <AppAmbulanceDataTable :data-source="allCallUp" />
@@ -124,6 +127,33 @@ export default {
     this.changeTabHandler('1')
   },
   methods: {
+    async acceptHandler(record) {
+      try {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const config = {
+          headers: { Authorization: `Bearer ${user.token.token}` },
+        }
+        await this.$axios.$patch(
+          `ambulance/complete/callup/${record.id}`,
+          record.id,
+          config
+        )
+        this.$notification.success({
+          message: 'Success',
+          description: 'Request Completed',
+        })
+        this.changeTabHandler('3')
+        this.activeKey = '3'
+      } catch (e) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(e).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+          })
+        })
+      }
+    },
     async submitHandler() {
       const isValid = await this.$refs.observer.validate()
       if (!isValid) {

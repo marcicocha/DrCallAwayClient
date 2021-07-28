@@ -8,14 +8,14 @@
       <template slot="default">
         <a-tab-pane key="1" tab="Active Cases" force-render>
           <AppCaseFileDataTable
-            status="active"
+            status="ACTIVE"
             :data-source="allCaseFiles"
             @showCaseFile="showCaseFile"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Completed Cases">
           <AppCaseFileDataTable
-            status="completed"
+            status="COMPLETED"
             :data-source="allCaseFiles"
             @showCaseFile="showCaseFile"
           />

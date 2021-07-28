@@ -4,6 +4,7 @@
       :columns="columns"
       :data-source="dataSource"
       :pagination="pagination"
+      :row-key="(record) => record.id"
     >
       <template slot="sn" slot-scope="text, record, index">
         {{ index + 1 }}
@@ -23,10 +24,16 @@
         <div style="text-align: right">
           <a-button-group class="link-group">
             <a-button
-              v-if="record.status === 'ACTIVE'"
+              class="table__btn"
+              type="link"
+              @click="$emit('showCallUpModal', record)"
+              ><img src="@/assets/images/admin/table-view.png" alt="view"
+            /></a-button>
+            <a-button
+              v-if="record.status === 'PENDING'"
               type="primary"
               class="table__btn"
-              @click="$emit('acceptHandler', record)"
+              @click="$emit('acceptCallUpHandler', record)"
               >ACCEPT</a-button
             >
           </a-button-group>
@@ -37,19 +44,19 @@
 </template>
 <script>
 export default {
-  name: 'AppAmbulanceDataTable',
+  name: 'AppCallUpDataTable',
   props: {
     dataSource: {
       type: Array,
       default: () => [],
     },
-    filterObj: {
-      type: Object,
-      default: () => {},
-    },
     pagination: {
       type: Boolean,
       default: true,
+    },
+    filterObj: {
+      type: Object,
+      default: () => {},
     },
   },
   computed: {
@@ -63,17 +70,10 @@ export default {
         {
           title: 'Pickup Address',
           dataIndex: 'pick_up_address',
-          scopedSlots: { customRender: 'pick_up_address' },
         },
         {
           title: 'Phone Number',
           dataIndex: 'phone_number',
-          scopedSlots: { customRender: 'phone_number' },
-        },
-        {
-          title: 'Additional Information',
-          dataIndex: 'additional_information',
-          scopedSlots: { customRender: 'additional_information' },
         },
         {
           title: 'Status',
@@ -90,8 +90,14 @@ export default {
     },
   },
   methods: {
-    viewCallUp(record) {
-      this.$emit('showCallUp', record)
+    customRow(record) {
+      return {
+        on: {
+          click: (event) => {
+            this.$emit('showCallUpModal', record)
+          },
+        },
+      }
     },
   },
 }

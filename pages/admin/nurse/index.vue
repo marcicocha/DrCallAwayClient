@@ -23,12 +23,12 @@
     <br />
 
     <div>
-      <AppTitleDivider title="Pending Requests"
+      <AppTitleDivider title="Bookings"
         ><span class="right-details"
-          ><NuxtLink to="/admin/ambulance/callup">View All ></NuxtLink></span
+          ><NuxtLink to="/admin/nurse/my-bookings">View All ></NuxtLink></span
         ></AppTitleDivider
       >
-      <AppCallUpDataTable :data-source="allCallUp" :pagination="false" />
+      <AppBookingDataTable :data-source="allBooking" :pagination="false" />
     </div>
   </div>
 </template>
@@ -37,7 +37,7 @@ import { Carousel, Slide } from 'vue-carousel'
 import { mapActions, mapState } from 'vuex'
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppTitleDivider from '@/components/AppTitleDivider'
-import AppCallUpDataTable from '@/components/admin/ambulance/AppCallUpDataTable'
+import AppBookingDataTable from '@/components/admin/nurse/AppBookingDataTable'
 
 export default {
   components: {
@@ -45,30 +45,30 @@ export default {
     Slide,
     AppDashboardCard,
     AppTitleDivider,
-    AppCallUpDataTable,
+    AppBookingDataTable,
   },
   layout: 'dashboard',
   data() {
     return {
       dashboardList: [
         {
-          firstText: 'Call-Up',
-          secondText: 'Requests',
+          firstText: 'My',
+          secondText: 'Bookings',
           imgSrc: 'admin/ambulance/appointments.svg',
           color: '#641C62',
-          path: '/admin/ambulance/callup',
+          path: '/admin/nurse/my-bookings',
         },
       ],
     }
   },
   computed: {
     ...mapState({
-      allCallUp: (state) => state.callUpModule.callUpList,
+      allBooking: (state) => state.bookingModule.bookingList,
     }),
   },
   async mounted() {
     try {
-      await this.getAllCallUp()
+      await this.getAllBooking()
     } catch (err) {
       const { default: errorHandler } = await import('@/utils/errorHandler')
       errorHandler(err).forEach((msg) => {
@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getAllCallUp: 'callUpModule/GET_CALL_UP',
+      getAllBooking: 'bookingModule/GET_BOOOKING',
     }),
   },
 }

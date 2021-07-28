@@ -423,7 +423,7 @@
                   :data="['MALE', 'FEMALE']"
                 />
                 <AppInput
-                  v-model="signUpObject.phone_number"
+                  v-model="signUpObject.mobile_phone_number"
                   placeholder="Phone Number"
                   required
                   rules="required"
@@ -595,19 +595,14 @@ export default {
             // localStorage.setItem('user', JSON.stringify(data))
           } else {
             const partnerObj = {
-              ...this.signUpObject,
+              type: this.signUpObject.type,
               members: [
                 {
-                  first_name: this.signUpObject.first_name,
-                  last_name: this.signUpObject.last_name,
-                  email: this.signUpObject.email,
-                  password: this.signUpObject.password,
-                  password_confirmation:
-                    this.signUpObject.password_confirmation,
+                  ...this.signUpObject,
                 },
               ],
             }
-            await this.$axios.$post('partners/signup', partnerObj)
+            await this.$axios.$post('request/partners/signup', partnerObj)
             // localStorage.setItem('user', JSON.stringify(data))
           }
         } else {

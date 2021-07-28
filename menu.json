@@ -115,12 +115,12 @@
     {
       "key": "self_service",
       "name": "Self Service",
-      "path": "/admin/patient/self-service",
+      "path": "/admin/doctor/self-service",
       "children": [
         {
           "key": "helpdesk",
           "name": "Helpdesk",
-          "path": "/admin/patient/self-service/helpdesk",
+          "path": "/admin/doctor/self-service/helpdesk",
           "children": []
         }
       ]
@@ -136,18 +136,45 @@
     {
       "key": "call_up",
       "name": "Callups",
-      "path": "/admin/callup",
+      "path": "/admin/ambulance/callup",
       "children": []
     },
     {
       "key": "self_service",
       "name": "Self Service",
-      "path": "/admin/patient/self-service",
+      "path": "/admin/doctor/self-service",
       "children": [
         {
           "key": "helpdesk",
           "name": "Helpdesk",
-          "path": "/admin/patient/self-service/helpdesk",
+          "path": "/admin/doctor/self-service/helpdesk",
+          "children": []
+        }
+      ]
+    }
+  ],
+  "nurseMenu": [
+    {
+      "key": "dashboard",
+      "name": "Dashboard",
+      "path": "/admin/nurse",
+      "children": []
+    },
+    {
+      "key": "my-booking",
+      "name": "My Bookings",
+      "path": "/admin/nurse/my-bookings",
+      "children": []
+    },
+    {
+      "key": "self_service",
+      "name": "Self Service",
+      "path": "/admin/nurse/self-service",
+      "children": [
+        {
+          "key": "helpdesk",
+          "name": "Helpdesk",
+          "path": "/admin/nurse/self-service/helpdesk",
           "children": []
         }
       ]

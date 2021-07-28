@@ -13,7 +13,7 @@
         </a-tab-pane>
         <a-tab-pane key="2" tab="Active Requests">
           <AppCallUpDataTable
-            status="ACCEPTED"
+            status="ACTIVE"
             :data-source="allCallUp"
             @showCallUpModal="showCallUpModal"
           />
@@ -192,7 +192,7 @@ export default {
         this.status = 'PENDING'
       }
       if (key === '2') {
-        this.status = 'ACCEPTED'
+        this.status = 'ACTIVE'
       }
       if (key === '3') {
         this.status = 'COMPLETED'

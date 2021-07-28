@@ -163,7 +163,7 @@
     {
       "key": "my-booking",
       "name": "My Bookings",
-      "path": "/admin/nurse/my-bookings",
+      "path": "/admin/nurse/booking",
       "children": []
     },
     {

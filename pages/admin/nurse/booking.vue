@@ -1,9 +1,8 @@
 <template>
   <div>
-    <p class="page_heading">CALLUPS</p>
     <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
-        <a-tab-pane key="1" tab="Pending Requests" force-render>
+        <a-tab-pane key="1" tab="Pending Appointment" force-render>
           <AppBookingDataTable
             status="PENDING"
             :data-source="allBooking"
@@ -11,14 +10,14 @@
             @acceptBookingHandler="acceptBookingHandler"
           />
         </a-tab-pane>
-        <a-tab-pane key="2" tab="Active Requests">
+        <a-tab-pane key="2" tab="Booked Appointment">
           <AppBookingDataTable
-            status="ACTIVE"
+            status="BOOKED"
             :data-source="allBooking"
             @showBookingModal="showBookingModal"
           />
         </a-tab-pane>
-        <a-tab-pane key="3" tab="Completed Requests">
+        <a-tab-pane key="3" tab="Completed Appointment">
           <AppBookingDataTable
             status="COMPLETED"
             :data-source="allBooking"
@@ -59,19 +58,12 @@
       @cancel="closeModal"
     >
       <div>
-        <h6 class="t-c">Ambulance CallUp</h6>
-
-        <br />
-        <div class="t-c">
-          <AppButton
-            type="primary"
-            :block="false"
-            :loading="isLoading"
-            class="admin-button"
-            @click="submitHandler"
-            >COMPLETE</AppButton
-          >
-        </div>
+        <h6 class="t-c">Home Support</h6>
+        <a-divider />
+        <AppAppointmentCreationForm
+          :current-appointment="currentBooking"
+          status="nurse"
+        />
       </div>
     </a-modal>
   </div>
@@ -82,6 +74,7 @@ import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppBookingDataTable from '@/components/admin/nurse/AppBookingDataTable'
+import AppAppointmentCreationForm from '@/components/admin/patient/appointment/AppAppointmentCreationForm'
 
 export default {
   components: {
@@ -89,6 +82,7 @@ export default {
     AppInput,
     AppSelect,
     AppBookingDataTable,
+    AppAppointmentCreationForm,
   },
   layout: 'dashboard',
   data() {
@@ -189,7 +183,7 @@ export default {
         this.status = 'PENDING'
       }
       if (key === '2') {
-        this.status = 'ACCEPTED'
+        this.status = 'BOOKED'
       }
       if (key === '3') {
         this.status = 'COMPLETED'

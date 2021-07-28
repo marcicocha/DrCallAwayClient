@@ -25,7 +25,7 @@
     <div>
       <AppTitleDivider title="Bookings"
         ><span class="right-details"
-          ><NuxtLink to="/admin/nurse/my-bookings">View All ></NuxtLink></span
+          ><NuxtLink to="/admin/nurse/booking">View All ></NuxtLink></span
         ></AppTitleDivider
       >
       <AppBookingDataTable :data-source="allBooking" :pagination="false" />
@@ -56,7 +56,7 @@ export default {
           secondText: 'Bookings',
           imgSrc: 'admin/ambulance/appointments.svg',
           color: '#641C62',
-          path: '/admin/nurse/my-bookings',
+          path: '/admin/nurse/booking',
         },
       ],
     }
@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getAllBooking: 'bookingModule/GET_BOOOKING',
+      getAllBooking: 'bookingModule/GET_BOOKING',
     }),
   },
 }

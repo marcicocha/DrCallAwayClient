@@ -13,7 +13,7 @@
         <div
           :class="{
             blue: record.status === 'ACTIVE',
-            green: record.status === 'COMPLETED',
+            green: record.status === 'BOOKED',
             red: record.status === 'PENDING',
           }"
         >

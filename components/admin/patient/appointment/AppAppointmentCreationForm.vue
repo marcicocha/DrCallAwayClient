@@ -16,7 +16,7 @@
           disabled
         />
         <AppInput
-          v-if="status === 'doctor'"
+          v-if="status !== 'doctor'"
           v-model="appointmentObj.patientName"
           label="Patient Name"
           name="Patient name"

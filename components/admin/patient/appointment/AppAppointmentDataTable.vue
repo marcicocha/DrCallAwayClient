@@ -19,12 +19,19 @@
         </div>
       </template>
       <template slot="name" slot-scope="text, record">
-        {{
-          `${record.specialist.user.first_name} ${record.specialist.user.last_name}`
-        }}
+        <div v-if="record.specialist">
+          {{
+            `${record.specialist.user.first_name} ${record.specialist.user.last_name}`
+          }}
+        </div>
+        <div v-if="record.service_center">
+          {{
+            `${record.service_center.first_name} ${record.service_center.last_name}`
+          }}
+        </div>
       </template>
       <template slot="description" slot-scope="text, record">
-        {{ record.specialty.name }}
+        {{ record.specialty ? record.specialty.name : record.description }}
       </template>
       <template slot="time" slot-scope="text, record">
         {{ formatTime(record.time) }}

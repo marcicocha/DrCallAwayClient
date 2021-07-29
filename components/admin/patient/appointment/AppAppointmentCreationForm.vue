@@ -108,19 +108,25 @@ export default {
         if (!newCurrentAppointment) {
           this.appointmentObj = {}
         } else {
+          if (this.status === 'patient') {
+            this.appointmentObj = {
+              ...newCurrentAppointment,
+              consultantName: newCurrentAppointment.specialist
+                ? `${newCurrentAppointment.specialist.user.first_name} ${newCurrentAppointment.specialist.user.last_name}`
+                : newCurrentAppointment.service_center
+                ? `${newCurrentAppointment.service_center.first_name} ${newCurrentAppointment.service_center.last_name}`
+                : undefined,
+              description: newCurrentAppointment.specialty
+                ? newCurrentAppointment.specialty.name
+                : newCurrentAppointment.description,
+            }
+            return
+          }
           this.appointmentObj = {
             ...newCurrentAppointment,
-            consultantName:
-              this.status === 'patient'
-                ? `${newCurrentAppointment.specialist.user.first_name} ${newCurrentAppointment.specialist.user.last_name}`
-                : undefined,
             patientName:
               this.status !== 'patient'
                 ? `${newCurrentAppointment.patient.first_name} ${newCurrentAppointment.patient.last_name}`
-                : undefined,
-            description:
-              this.status === 'patient'
-                ? newCurrentAppointment.specialty.name
                 : undefined,
           }
         }

@@ -6,7 +6,7 @@ import {
 
 export default {
   [GET_APPOINTMENT](state, payload) {
-    state.appointments = payload.data
+    state.appointments = payload
   },
   [BOOK_APPOINTMENT](state, payload) {
     // state.appointments.unshift(payload)

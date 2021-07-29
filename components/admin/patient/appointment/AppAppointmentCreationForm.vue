@@ -108,7 +108,6 @@ export default {
         if (!newCurrentAppointment) {
           this.appointmentObj = {}
         } else {
-          console.log(newCurrentAppointment, 'CURRENT')
           this.appointmentObj = {
             ...newCurrentAppointment,
             consultantName:

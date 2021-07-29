@@ -4,6 +4,7 @@
       :columns="columns"
       :data-source="dataSource"
       :pagination="pagination"
+      :custom-row="customRow"
     >
       <template slot="sn" slot-scope="text, record, index">
         {{ index + 1 }}
@@ -11,7 +12,7 @@
       <template slot="status" slot-scope="text, record">
         <div
           :class="{
-            blue: record.status === 'ACTIVE',
+            blue: record.status === 'ACCEPTED',
             green: record.status === 'COMPLETED',
             red: record.status === 'PENDING',
           }"
@@ -23,11 +24,11 @@
         <div style="text-align: right">
           <a-button-group class="link-group">
             <a-button
-              v-if="record.status === 'ACTIVE'"
+              v-if="record.status === 'ACCEPTED'"
               type="primary"
               class="table__btn"
               @click="$emit('acceptHandler', record)"
-              >ACCEPT</a-button
+              >COMPLETE</a-button
             >
           </a-button-group>
         </div>
@@ -90,6 +91,15 @@ export default {
     },
   },
   methods: {
+    customRow(record) {
+      return {
+        on: {
+          click: (event) => {
+            this.$emit('showAppointmentModal', record)
+          },
+        },
+      }
+    },
     viewCallUp(record) {
       this.$emit('showCallUp', record)
     },

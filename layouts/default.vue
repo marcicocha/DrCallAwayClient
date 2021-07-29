@@ -436,6 +436,13 @@
                   rules="required"
                 />
                 <AppInput
+                  v-if="signUpObject.type !== 'DOCTOR' && mode !== 'patient'"
+                  v-model="signUpObject.address"
+                  placeholder="Address"
+                  required
+                  rules="required"
+                />
+                <AppInput
                   v-model="signUpObject.password"
                   placeholder="Password"
                   input-type="password"

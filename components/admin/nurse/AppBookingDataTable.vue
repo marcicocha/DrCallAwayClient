@@ -20,6 +20,9 @@
           {{ record.status }}
         </div>
       </template>
+      <template slot="name" slot-scope="text, record">
+        {{ `${record.patient.first_name} ${record.patient.last_name}` }}
+      </template>
       <template slot="time" slot-scope="text, record">
         {{ formatTime(record.time) }}
       </template>
@@ -75,7 +78,8 @@ export default {
         },
         {
           title: 'Patient Name',
-          dataIndex: 'patientName',
+          dataIndex: 'name',
+          scopedSlots: { customRender: 'name' },
         },
         {
           title: 'Description',

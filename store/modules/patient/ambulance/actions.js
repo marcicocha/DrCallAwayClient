@@ -12,7 +12,7 @@ export default {
       },
     }
 
-    const { data } = await this.$axios.$get('callUp', config)
+    const { data } = await this.$axios.$get('patient/callups', config)
     commit(GET_AMBULANCE, data)
   },
   async [ADD_AMBULANCE]({ commit }, payload) {

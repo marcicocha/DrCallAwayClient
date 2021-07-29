@@ -16,13 +16,14 @@
           disabled
         />
         <AppInput
-          v-if="status !== 'doctor'"
+          v-if="status !== 'patient'"
           v-model="appointmentObj.patientName"
           label="Patient Name"
           name="Patient name"
           disabled
         />
         <AppInput
+          v-if="status === 'patient'"
           v-model="appointmentObj.description"
           label="Description"
           name="Description"
@@ -103,15 +104,25 @@ export default {
   },
   watch: {
     currentAppointment: {
-      handler(newcurrentAppointment) {
-        if (!newcurrentAppointment) {
+      handler(newCurrentAppointment) {
+        if (!newCurrentAppointment) {
           this.appointmentObj = {}
         } else {
+          console.log(newCurrentAppointment, 'CURRENT')
           this.appointmentObj = {
-            ...newcurrentAppointment,
-            consultantName: `${newcurrentAppointment.specialist.user.first_name} ${newcurrentAppointment.specialist.user.last_name}`,
-            patientName: `${newcurrentAppointment.patient.first_name} ${newcurrentAppointment.patient.last_name}`,
-            description: newcurrentAppointment.specialty.name,
+            ...newCurrentAppointment,
+            consultantName:
+              this.status === 'patient'
+                ? `${newCurrentAppointment.specialist.user.first_name} ${newCurrentAppointment.specialist.user.last_name}`
+                : undefined,
+            patientName:
+              this.status !== 'patient'
+                ? `${newCurrentAppointment.patient.first_name} ${newCurrentAppointment.patient.last_name}`
+                : undefined,
+            description:
+              this.status === 'patient'
+                ? newCurrentAppointment.specialty.name
+                : undefined,
           }
         }
       },
@@ -131,14 +142,14 @@ export default {
         const config = {
           headers: { Authorization: `Bearer ${user.token.token}` },
         }
-        const { successMessage } = await this.$axios.$patch(
+        const { message } = await this.$axios.$patch(
           `appointments/complete/${this.appointmentObj.id}`,
           this.appointmentObj.id,
           config
         )
         this.$notification.success({
           message: 'Success',
-          description: successMessage,
+          description: message,
           duration: 4000,
         })
         requestAnimationFrame(() => {

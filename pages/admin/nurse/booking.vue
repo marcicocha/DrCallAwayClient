@@ -62,7 +62,7 @@
         <a-divider />
         <AppAppointmentCreationForm
           :current-appointment="currentBooking"
-          status="nurse"
+          status="doctor"
         />
       </div>
     </a-modal>

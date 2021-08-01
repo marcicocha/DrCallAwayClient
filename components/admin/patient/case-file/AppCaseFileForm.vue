@@ -218,10 +218,7 @@ export default {
     },
     prescriptionList() {
       let array = []
-      if (
-        this.caseFileObj.prescription.length !== 0 ||
-        this.caseFileObj.prescription !== null
-      ) {
+      if (this.caseFileObj.prescription !== null) {
         array = [...array, ...this.caseFileObj.prescription.drugs]
       }
       if (this.allPrescription.length !== 0) {

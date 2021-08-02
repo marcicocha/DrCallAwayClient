@@ -22,6 +22,9 @@ import callUpModule from './modules/ambulance/callUp'
 
 // NURSE
 import bookingModule from './modules/nurse/booking'
+
+// PHARMACY
+import prescriptionPharmacyModule from './modules/pharmacy/prescription'
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({}),
@@ -49,6 +52,9 @@ const createStore = () => {
 
       // NURSES
       bookingModule,
+
+      // PHARMACY
+      prescriptionPharmacyModule,
     },
   })
 }

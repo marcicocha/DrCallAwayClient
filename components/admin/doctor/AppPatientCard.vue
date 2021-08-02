@@ -78,7 +78,7 @@ export default {
       this.$emit('checkInHandler', this.cardObj)
     },
     formatDate(date) {
-      return moment(date).format('YYYY-MM-DD')
+      return moment(date).format('YYYY-MM-DD HH:mm:ss')
     },
   },
 }

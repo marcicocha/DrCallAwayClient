@@ -179,5 +179,32 @@
         }
       ]
     }
+  ],
+  "pharmacyMenu": [
+    {
+      "key": "dashboard",
+      "name": "Dashboard",
+      "path": "/admin/pharmacy",
+      "children": []
+    },
+    {
+      "key": "prescription",
+      "name": "Prescriptions",
+      "path": "/admin/pharmacy/prescriptions",
+      "children": []
+    },
+    {
+      "key": "self_service",
+      "name": "Self Service",
+      "path": "/admin/pharmacy/self-service",
+      "children": [
+        {
+          "key": "helpdesk",
+          "name": "Helpdesk",
+          "path": "/admin/pharmacy/self-service/helpdesk",
+          "children": []
+        }
+      ]
+    }
   ]
 }

@@ -377,7 +377,7 @@
                     'NUTRITIONIST',
                   ]"
                 />
-                <a-row type="flex" :gutter="16"
+                <a-row v-if="!isRegisteredName" type="flex" :gutter="16"
                   ><a-col :span="12"
                     ><AppInput
                       v-model="signUpObject.first_name"
@@ -397,6 +397,14 @@
                     />
                   </a-col>
                 </a-row>
+                <AppInput
+                  v-if="isRegisteredName"
+                  v-model="signUpObject.name"
+                  placeholder="Registered Name"
+                  name="Registered name"
+                  required
+                  rules="required"
+                />
                 <AppSelect
                   v-if="signUpObject.type === 'DOCTOR'"
                   v-model="signUpObject.specialty_id"
@@ -554,6 +562,15 @@ export default {
       forgotPasswordIsVisible: false,
       passwordObject: {},
     }
+  },
+  computed: {
+    isRegisteredName() {
+      return (
+        this.signUpObject.type === 'DIAGNOTIC' ||
+        this.signUpObject.type === 'AMBULANCE' ||
+        this.signUpObject.type === 'PHARMACY'
+      )
+    },
   },
   watch: {
     $route: {

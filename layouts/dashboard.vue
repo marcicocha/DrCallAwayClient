@@ -71,6 +71,10 @@
             >
           </a-sub-menu>
         </template>
+        <a-menu-item class="bottom-menu">
+          <a-icon type="logout" />
+          <span><a class="menu_anchor" @click="logoutHandler">Logout</a></span>
+        </a-menu-item>
       </a-menu>
     </a-layout-sider>
     <a-layout class="layout">
@@ -106,7 +110,13 @@
 </template>
 <script>
 import AppHeader from '@/components/AppHeader'
-import { clientMenu, doctorMenu, ambulanceMenu, nurseMenu } from '@/menu.json'
+import {
+  clientMenu,
+  doctorMenu,
+  ambulanceMenu,
+  nurseMenu,
+  pharmacyMenu,
+} from '@/menu.json'
 
 export default {
   components: {
@@ -124,6 +134,7 @@ export default {
       clientMenu,
       ambulanceMenu,
       nurseMenu,
+      pharmacyMenu,
     }
   },
   // computed: {
@@ -150,9 +161,33 @@ export default {
       this.menuList = [...nurseMenu]
       return
     }
+    if (role === 'pharmacyMenu') {
+      this.menuList = [...pharmacyMenu]
+      return
+    }
     this.menuList = [...clientMenu]
   },
   methods: {
+    async logoutHandler() {
+      try {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const config = {
+          headers: { Authorization: `Bearer ${user.token.token}` },
+        }
+        await this.$axios.$post('logout', {}, config)
+        this.$router.replace('/')
+        localStorage.clear()
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
     goToPage(path) {
       this.$router.replace(path)
     },
@@ -191,5 +226,9 @@ export default {
 }
 .menu_anchor {
   color: $medium-purple;
+}
+.bottom-menu {
+  position: absolute;
+  bottom: 1rem;
 }
 </style>

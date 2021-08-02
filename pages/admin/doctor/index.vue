@@ -25,7 +25,9 @@
     <div>
       <AppTitleDivider title="Case File"
         ><span class="right-details"
-          ><NuxtLink to="/admin/doctor/case-file">View All ></NuxtLink></span
+          ><NuxtLink to="/admin/doctor/case-management"
+            >View All ></NuxtLink
+          ></span
         ></AppTitleDivider
       >
       <AppCaseFileDataTable :data-source="allCaseFiles" :pagination="false" />

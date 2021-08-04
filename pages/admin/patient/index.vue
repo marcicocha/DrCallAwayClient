@@ -76,7 +76,7 @@ export default {
           secondText: 'Service',
           imgSrc: 'admin/patient/2.png',
           color: '#BB58B6',
-          path: '/admin/patient/key-services/wellness-nutrition',
+          path: '/admin/patient/key-services/consultation',
         },
         {
           firstText: 'Case',

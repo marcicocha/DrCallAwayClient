@@ -109,7 +109,7 @@ export default {
       this.$emit('showCaseFile', record)
     },
     formatDate(date) {
-      return moment(date).format('YYYY-MM-DD')
+      return moment(date).format('YYYY-MM-DD HH:mm:ss')
     },
   },
 }

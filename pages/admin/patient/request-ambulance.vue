@@ -185,7 +185,7 @@ export default {
         try {
           const request = {
             ...this.requestObj,
-            ambulance: record.first_name,
+            ambulance_id: record.id,
           }
           const message = await this.submitAmbulanceHandler(request)
           this.$notification.success({

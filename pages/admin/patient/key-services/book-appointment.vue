@@ -93,7 +93,7 @@
             :loading="isLoading"
             class="admin-button"
             @click="submitHandler"
-            >CALLUP</AppButton
+            >SUBMIT</AppButton
           >
         </div>
       </a-form>

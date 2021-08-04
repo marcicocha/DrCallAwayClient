@@ -68,7 +68,10 @@ export default {
   },
   async mounted() {
     try {
-      await this.getAllCallUp()
+      const obj = {
+        status: 'PENDING',
+      }
+      await this.getAllCallUp(obj)
     } catch (err) {
       const { default: errorHandler } = await import('@/utils/errorHandler')
       errorHandler(err).forEach((msg) => {

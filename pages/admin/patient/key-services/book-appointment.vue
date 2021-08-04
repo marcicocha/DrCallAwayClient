@@ -247,6 +247,7 @@ export default {
             description: message,
             duration: 4000,
           })
+
           requestAnimationFrame(() => {
             this.$refs.observer.reset()
             this.isLoading = false
@@ -254,6 +255,7 @@ export default {
             this.bookAppointmentObj = {}
             this.$emit('formSubmissionCompleted')
           })
+          this.$router.replace('/admin/patient/appointment')
         } catch (err) {
           this.isLoading = false
           const { default: errorHandler } = await import('@/utils/errorHandler')

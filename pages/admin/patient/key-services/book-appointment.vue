@@ -119,7 +119,11 @@
                 :data-source="dataSource"
                 :pagination="false"
                 :row-key="(record) => record.id"
-              ></a-table>
+              >
+                <template slot="name">
+                  {{ `Appointment with ${specialist}` }}
+                </template>
+              </a-table>
             </div>
             <br />
             <div>
@@ -193,7 +197,7 @@ export default {
         {
           title: 'NAME OF SERVICE',
           dataIndex: 'nameOfService',
-          scopedSlots: { customRender: 'nameOfService' },
+          scopedSlots: { customRender: 'name' },
         },
         {
           title: 'PRICE',

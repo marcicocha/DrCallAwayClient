@@ -229,6 +229,6 @@ export default {
 }
 .bottom-menu {
   position: absolute;
-  bottom: 1rem;
+  bottom: -3rem;
 }
 </style>

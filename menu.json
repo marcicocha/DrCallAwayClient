@@ -206,5 +206,32 @@
         }
       ]
     }
+  ],
+  "diagnosticMenu": [
+    {
+      "key": "dashboard",
+      "name": "Dashboard",
+      "path": "/admin/diagnostic-center",
+      "children": []
+    },
+    {
+      "key": "tests",
+      "name": "Tests",
+      "path": "/admin/diagnostic-center/tests",
+      "children": []
+    },
+    {
+      "key": "self_service",
+      "name": "Self Service",
+      "path": "/admin/diagnostic-center/self-service",
+      "children": [
+        {
+          "key": "helpdesk",
+          "name": "Helpdesk",
+          "path": "/admin/diagnostic-center/self-service/helpdesk",
+          "children": []
+        }
+      ]
+    }
   ]
 }

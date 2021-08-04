@@ -25,6 +25,9 @@ import bookingModule from './modules/nurse/booking'
 
 // PHARMACY
 import prescriptionPharmacyModule from './modules/pharmacy/prescription'
+
+// DIAGNOSTIC
+import testDiagnosticModule from './modules/diagnostic-center/test'
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({}),
@@ -55,6 +58,9 @@ const createStore = () => {
 
       // PHARMACY
       prescriptionPharmacyModule,
+
+      // DIAGNOSTIC
+      testDiagnosticModule,
     },
   })
 }

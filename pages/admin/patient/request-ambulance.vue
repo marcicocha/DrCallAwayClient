@@ -89,6 +89,18 @@
         </a-row>
       </template>
     </AppTabs>
+    <a-modal
+      :visible="modalIsVisible"
+      width="600px"
+      :confirm-loading="confirmLoading"
+      :footer="null"
+      :destroy-on-close="true"
+      :mask-style="{ background: 'rgba(61, 12, 60, 0.9)' }"
+      centered
+      @cancel="closeModal"
+    >
+      <AppSelectAmbulanceDataTable @callback="callback" />
+    </a-modal>
   </div>
 </template>
 <script>
@@ -99,6 +111,7 @@ import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppAmbulanceDataTable from '@/components/admin/patient/ambulance/AppAmbulanceDataTable'
 import AppTitleDivider from '@/components/AppTitleDivider'
+import AppSelectAmbulanceDataTable from '@/components/admin/patient/ambulance/AppSelectAmbulanceDataTable'
 export default {
   components: {
     AppTabs,
@@ -107,6 +120,7 @@ export default {
     AppAmbulanceDataTable,
     AppTitleDivider,
     ValidationObserver,
+    AppSelectAmbulanceDataTable,
   },
   layout: 'dashboard',
   data() {
@@ -116,6 +130,8 @@ export default {
       requestObj: {},
       isLoading: false,
       status: 'PENDING',
+      modalIsVisible: false,
+      confirmLoading: false,
     }
   },
   computed: {
@@ -127,6 +143,9 @@ export default {
     this.changeTabHandler('1')
   },
   methods: {
+    closeModal() {
+      this.modalIsVisible = false
+    },
     async acceptHandler(record) {
       try {
         const user = JSON.parse(localStorage.getItem('user'))
@@ -154,37 +173,52 @@ export default {
         })
       }
     },
+    async callback(res, record) {
+      if (res.message === 'Approved') {
+        this.$notification.success({
+          message: res.message,
+          description: 'Payment successful',
+          duration: 4000,
+        })
+        this.isLoading = true
+        console.log('record', record)
+        try {
+          const request = {
+            ...this.requestObj,
+            ambulance: record.first_name,
+          }
+          const message = await this.submitAmbulanceHandler(request)
+          this.$notification.success({
+            message: 'Success',
+            description: message,
+            duration: 4000,
+          })
+
+          requestAnimationFrame(() => {
+            this.$refs.observer.reset()
+            this.requestObj = {}
+            this.isLoading = false
+            this.modalIsVisible = false
+          })
+        } catch (err) {
+          this.isLoading = false
+          const { default: errorHandler } = await import('@/utils/errorHandler')
+          errorHandler(err).forEach((msg) => {
+            this.$notification.error({
+              message: 'Error',
+              description: msg,
+              duration: 4000,
+            })
+          })
+        }
+      }
+    },
     async submitHandler() {
       const isValid = await this.$refs.observer.validate()
       if (!isValid) {
         return
       }
-      this.isLoading = true
-      try {
-        const message = await this.submitAmbulanceHandler(this.requestObj)
-        this.$notification.success({
-          message: 'Success',
-          description: message,
-          duration: 4000,
-        })
-
-        requestAnimationFrame(() => {
-          this.$refs.observer.reset()
-          this.requestObj = {}
-          this.isLoading = false
-          this.$emit('formSubmissionCompleted')
-        })
-      } catch (err) {
-        this.isLoading = false
-        const { default: errorHandler } = await import('@/utils/errorHandler')
-        errorHandler(err).forEach((msg) => {
-          this.$notification.error({
-            message: 'Error',
-            description: msg,
-            duration: 4000,
-          })
-        })
-      }
+      this.modalIsVisible = true
     },
     async changeTabHandler(key) {
       if (key === '1') {

@@ -399,7 +399,7 @@
                 </a-row>
                 <AppInput
                   v-if="isRegisteredName"
-                  v-model="signUpObject.name"
+                  v-model="signUpObject.registered_name"
                   placeholder="Registered Name"
                   name="Registered name"
                   required

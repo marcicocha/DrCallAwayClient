@@ -9,10 +9,10 @@
           name="nurse"
           rules="required"
           required
-          :url="`specialists/`"
+          url="/nutritionists"
           :call-back-func="
             (resp) => ({
-              text: resp.user.first_name + ' - ' + resp.user.last_name,
+              text: resp.first_name + ' - ' + resp.last_name,
               value: resp.id,
             })
           "

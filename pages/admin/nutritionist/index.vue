@@ -25,7 +25,7 @@
     <div>
       <AppTitleDivider title="Case File"
         ><span class="right-details"
-          ><NuxtLink to="/admin/doctor/case-management"
+          ><NuxtLink to="/admin/nutritionist/case-management"
             >View All ></NuxtLink
           ></span
         ></AppTitleDivider
@@ -36,7 +36,9 @@
     <div>
       <AppTitleDivider title="Appointments">
         <span class="right-details"
-          ><NuxtLink to="/admin/doctor/appointment">View All ></NuxtLink></span
+          ><NuxtLink to="/admin/nutritionist/appointment"
+            >View All ></NuxtLink
+          ></span
         >
       </AppTitleDivider>
       <AppAppointmentDataTable
@@ -72,29 +74,30 @@ export default {
           secondText: 'ROOM',
           imgSrc: 'admin/doctor/1.png',
           color: '#641C62',
-          path: '/admin/doctor/waiting-room',
+          path: '/admin/nutritionist/waiting-room',
         },
         {
           firstText: 'View',
           secondText: 'APPOINTMENTS',
           imgSrc: 'admin/patient/2.png',
           color: '#BB58B6',
-          path: '/admin/doctor/appointment',
+          path: '/admin/nutritionist/appointment',
         },
         {
           firstText: 'Case',
           secondText: 'MANAGEMENT',
           imgSrc: 'admin/patient/3.png',
           color: '#3D0C3C',
-          path: '/admin/doctor/case-management',
+          path: '/admin/nutritionist/case-management',
         },
       ],
     }
   },
   computed: {
     ...mapState({
-      allAppointments: (state) => state.appointmentDoctorModule.appointments,
-      allCaseFiles: (state) => state.caseFileDoctorModule.caseFiles,
+      allAppointments: (state) =>
+        state.appointmentNutritionistModule.appointments,
+      allCaseFiles: (state) => state.caseFileNutritionistModule.caseFiles,
     }),
   },
   async mounted() {
@@ -114,8 +117,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      getAllAppointment: 'appointmentDoctorModule/GET_APPOINTMENT',
-      getAllCaseFile: 'caseFileDoctorModule/GET_DOCTOR_CASE_FILE',
+      getAllAppointment: 'appointmentNutritionistModule/GET_APPOINTMENT',
+      getAllCaseFile: 'caseFileNutritionistModule/GET_NUTRITIONIST_CASE_FILE',
     }),
   },
 }

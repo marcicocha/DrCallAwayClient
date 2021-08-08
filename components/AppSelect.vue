@@ -12,7 +12,7 @@
       <!-- <label for="name">{{ label }}</label> -->
       <a-select
         v-model="innerValue"
-        mode="default"
+        :mode="mode"
         show-search
         style="width: 100%"
         :loading="fetching"
@@ -126,6 +126,10 @@ export default {
     showErrors: {
       type: Boolean,
       default: true,
+    },
+    mode: {
+      type: String,
+      default: 'default',
     },
   },
   data() {

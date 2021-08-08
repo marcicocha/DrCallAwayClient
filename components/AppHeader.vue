@@ -12,8 +12,16 @@
       alt="notification"
       class="notification"
     />
-    <p>{{ `${userObject.first_name} ${userObject.last_name}` }}</p>
-    <img src="@/assets/images/user.png" alt="user-icon" class="user" />
+    <p>
+      {{
+        userObject.registered_name
+          ? `${userObject.registered_name}`
+          : `${userObject.first_name} ${userObject.last_name}`
+      }}
+    </p>
+    <nuxt-link to="/admin/profile">
+      <img src="@/assets/images/user.png" alt="user-icon" class="user" />
+    </nuxt-link>
   </div>
 </template>
 <script>

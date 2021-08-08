@@ -70,18 +70,18 @@
     {
       "key": "self_service",
       "name": "Self Service",
-      "path": "/admin/patient/self-service",
+      "path": "/admin/self-service",
       "children": [
         {
           "key": "subscribe",
           "name": "Susbcribe",
-          "path": "/admin/patient/self-service/subscribe",
+          "path": "/admin/self-service/subscribe",
           "children": []
         },
         {
           "key": "helpdesk",
           "name": "Helpdesk",
-          "path": "/admin/patient/self-service/helpdesk",
+          "path": "/admin/self-service/helpdesk",
           "children": []
         }
       ]
@@ -115,12 +115,12 @@
     {
       "key": "self_service",
       "name": "Self Service",
-      "path": "/admin/doctor/self-service",
+      "path": "/admin/self-service",
       "children": [
         {
           "key": "helpdesk",
           "name": "Helpdesk",
-          "path": "/admin/doctor/self-service/helpdesk",
+          "path": "/admin/self-service/helpdesk",
           "children": []
         }
       ]
@@ -142,12 +142,12 @@
     {
       "key": "self_service",
       "name": "Self Service",
-      "path": "/admin/doctor/self-service",
+      "path": "/admin/self-service",
       "children": [
         {
           "key": "helpdesk",
           "name": "Helpdesk",
-          "path": "/admin/doctor/self-service/helpdesk",
+          "path": "/admin/self-service/helpdesk",
           "children": []
         }
       ]
@@ -169,12 +169,12 @@
     {
       "key": "self_service",
       "name": "Self Service",
-      "path": "/admin/nurse/self-service",
+      "path": "/admin/self-service",
       "children": [
         {
           "key": "helpdesk",
           "name": "Helpdesk",
-          "path": "/admin/nurse/self-service/helpdesk",
+          "path": "/admin/self-service/helpdesk",
           "children": []
         }
       ]
@@ -196,12 +196,12 @@
     {
       "key": "self_service",
       "name": "Self Service",
-      "path": "/admin/pharmacy/self-service",
+      "path": "/admin/self-service",
       "children": [
         {
           "key": "helpdesk",
           "name": "Helpdesk",
-          "path": "/admin/pharmacy/self-service/helpdesk",
+          "path": "/admin/self-service/helpdesk",
           "children": []
         }
       ]
@@ -223,12 +223,51 @@
     {
       "key": "self_service",
       "name": "Self Service",
-      "path": "/admin/diagnostic-center/self-service",
+      "path": "/admin/self-service",
       "children": [
         {
           "key": "helpdesk",
           "name": "Helpdesk",
-          "path": "/admin/diagnostic-center/self-service/helpdesk",
+          "path": "/admin/self-service/helpdesk",
+          "children": []
+        }
+      ]
+    }
+  ],
+  "nutritionistMenu": [
+    {
+      "key": "dashboard",
+      "name": "Dashboard",
+      "path": "/admin/nutritionist",
+      "children": []
+    },
+    {
+      "key": "waiting-room",
+      "name": "Waiting Room",
+      "path": "/admin/nutritionist/waiting-room",
+      "children": []
+    },
+    {
+      "key": "case-management",
+      "name": "Case Management",
+      "path": "/admin/nutritionist/case-management",
+      "children": []
+    },
+    {
+      "key": "appointment",
+      "name": "Appointments",
+      "path": "/admin/nutritionist/appointment",
+      "children": []
+    },
+    {
+      "key": "self_service",
+      "name": "Self Service",
+      "path": "/admin/self-service",
+      "children": [
+        {
+          "key": "helpdesk",
+          "name": "Helpdesk",
+          "path": "/admin/self-service/helpdesk",
           "children": []
         }
       ]

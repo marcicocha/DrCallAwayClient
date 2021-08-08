@@ -2,34 +2,26 @@
   <div>
     <AppTabs v-model="activeKey">
       <template slot="default">
-        <a-tab-pane key="1" tab="Tests" force-render>
-          <div class="colored-table">
-            <AppScreeningDataTable status="tests" :data-source="dataSource" />
-          </div>
+        <a-tab-pane key="1" tab="Basic" force-render>
+          <AppScreeningDataTable status="tests" :data-source="dataSource" />
         </a-tab-pane>
-        <a-tab-pane key="2" tab="Endocrinology: Special Test">
-          <div class="colored-table">
-            <AppScreeningDataTable
-              status="special-test"
-              :data-source="dataSource"
-            />
-          </div>
+        <a-tab-pane key="2" tab="Standard">
+          <AppScreeningDataTable
+            status="special-test"
+            :data-source="dataSource"
+          />
         </a-tab-pane>
-        <a-tab-pane key="3" tab="Examinations" force-render>
-          <div class="colored-table">
-            <AppScreeningDataTable
-              status="examination"
-              :data-source="dataSource"
-            />
-          </div>
+        <a-tab-pane key="3" tab="Premium">
+          <AppScreeningDataTable
+            status="examination"
+            :data-source="dataSource"
+          />
         </a-tab-pane>
-        <a-tab-pane key="4" tab="Ultrasound Scan" force-render>
-          <div class="colored-table">
-            <AppScreeningDataTable
-              status="ultrasound"
-              :data-source="dataSource"
-            />
-          </div>
+        <a-tab-pane key="4" tab="Executive" force-render>
+          <AppScreeningDataTable
+            status="ultrasound"
+            :data-source="dataSource"
+          />
         </a-tab-pane>
       </template>
       <template slot="rightInfo">

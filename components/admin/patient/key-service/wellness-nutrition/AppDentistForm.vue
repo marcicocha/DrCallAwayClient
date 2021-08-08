@@ -46,7 +46,7 @@
         />
         <AppTextArea
           v-model="dentistObj.additional_info"
-          label="Briefly tell Nutritionist what you are consulting for"
+          label="Briefly tell Dentist what you are consulting for"
         />
       </ValidationObserver>
       <br />
@@ -119,6 +119,7 @@ import AppTextArea from '@/components/AppTextArea'
 import AppPayment from '@/components/AppPayment.vue'
 import AppDatePicker from '@/components/AppDatePicker'
 import AppTimePicker from '@/components/AppTimePicker'
+import AppButton from '@/components/AppButton'
 export default {
   name: 'AppDentistForm',
   components: {
@@ -129,6 +130,7 @@ export default {
     AppPayment,
     AppDatePicker,
     AppTimePicker,
+    AppButton,
   },
   data() {
     return {

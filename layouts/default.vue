@@ -391,7 +391,7 @@
                     ><AppInput
                       v-model="signUpObject.last_name"
                       placeholder="Last Name"
-                      name="last name"
+                      name="Last Name"
                       required
                       rules="required"
                     />
@@ -591,7 +591,11 @@ export default {
       try {
         const { data } = await this.$axios.$post('login', this.userObject)
         localStorage.setItem('user', JSON.stringify(data))
-        this.$router.push(`/admin/${data.roles[0].name}`)
+        if (data.is_first_time_login === 1) {
+          this.$router.push(`/admin/profile`)
+        } else {
+          this.$router.push(`/admin/${data.roles[0].name}`)
+        }
         this.isSignInLoading = false
         this.closeModal()
       } catch (err) {

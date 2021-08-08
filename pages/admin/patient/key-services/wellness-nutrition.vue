@@ -22,7 +22,7 @@
 
         <br />
         <div>
-          <h6>Book an Appointment</h6>
+          <h6>Locate Nearest Center</h6>
           <div class="admin-wrapper">
             <a-form>
               <a-row type="flex" align="bottom" :gutter="16">
@@ -60,7 +60,7 @@
     </div>
     <a-modal
       :visible="modalIsVisible"
-      width="420px"
+      width="500px"
       :confirm-loading="confirmLoading"
       :footer="null"
       :destroy-on-close="true"
@@ -72,6 +72,10 @@
         <h6 class="t-c">{{ modalTitle }}</h6>
         <a-divider />
         <div>
+          <AppScreeningForm
+            v-if="wellnessKey === 'screening'"
+            @showScreeningPage="showScreeningPage"
+          />
           <AppNutritionForm v-if="wellnessKey === 'nutritionist'" />
           <AppDentistForm v-if="wellnessKey === 'dentist'" />
           <AppOpticalForm v-if="wellnessKey === 'optical'" />
@@ -86,6 +90,7 @@ import AppNutritionForm from '@/components/admin/patient/key-service/wellness-nu
 import AppDentistForm from '@/components/admin/patient/key-service/wellness-nutrition/AppDentistForm'
 import AppOpticalForm from '@/components/admin/patient/key-service/wellness-nutrition/AppOpticalForm'
 import AppScreeningTab from '@/components/admin/patient/key-service/wellness-nutrition/AppScreeningTab'
+import AppScreeningForm from '@/components/admin/patient/key-service/wellness-nutrition/AppScreeningForm'
 import AppInput from '@/components/AppInput'
 import AppButton from '@/components/AppButton'
 
@@ -98,6 +103,7 @@ export default {
     AppScreeningTab,
     AppInput,
     AppButton,
+    AppScreeningForm,
   },
   layout: 'dashboard',
   data() {
@@ -108,6 +114,7 @@ export default {
       wellnessKey: false,
       isLoading: false,
       bookAppointmentObj: {},
+      screeningFrequency: '',
       wellnessList: [
         {
           key: 'screening',
@@ -142,6 +149,9 @@ export default {
   },
   computed: {
     modalTitle() {
+      if (this.wellnessKey === 'screening') {
+        return 'Medical Screening'
+      }
       if (this.wellnessKey === 'nutritionist') {
         return 'Talk to a Nutritionist'
       }
@@ -153,12 +163,13 @@ export default {
   },
   methods: {
     showModalhandler(key) {
-      if (key !== 'screening') {
-        this.modalIsVisible = true
-        this.wellnessKey = key
-      } else {
-        this.screenIsVisible = true
-      }
+      this.modalIsVisible = true
+      this.wellnessKey = key
+    },
+    showScreeningPage(frequency) {
+      this.modalIsVisible = false
+      this.screenIsVisible = true
+      this.screeningFrequency = frequency
     },
     closeModal() {
       this.modalIsVisible = false

@@ -251,6 +251,18 @@ export default {
       }
       return psychiatry[0].services
     },
+    specialtyCode() {
+      if (this.specialModalObj.secondText === 'HIV/TUBERCULOSIS') {
+        return 'SPELTY019'
+      }
+      if (this.specialModalObj.secondText === 'DIABETES') {
+        return 'SPELTY007'
+      }
+      if (this.specialModalObj.secondText === 'SICKLE CELL') {
+        return 'SPELTY009'
+      }
+      return 'SPELTY016'
+    },
     totalPrice() {
       let total = 0
       this.priceList.forEach((record) => (total += record.price))
@@ -299,6 +311,7 @@ export default {
             ailment: this.specialModalObj.secondText,
             how_you_feel: `I need a specialist in ${this.specialModalObj.secondText}`,
             initial_complain: this.specialModalObj.secondText,
+            specialty_code: this.specialtyCode,
           }
 
           const { message } = await this.$axios.$post('cases', obj, config)

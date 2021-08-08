@@ -116,6 +116,7 @@ import {
   ambulanceMenu,
   nurseMenu,
   pharmacyMenu,
+  nutritionistMenu,
 } from '@/menu.json'
 
 export default {
@@ -135,6 +136,7 @@ export default {
       ambulanceMenu,
       nurseMenu,
       pharmacyMenu,
+      nutritionistMenu,
     }
   },
   // computed: {
@@ -161,8 +163,12 @@ export default {
       this.menuList = [...nurseMenu]
       return
     }
-    if (role === 'pharmacyMenu') {
+    if (role === 'pharmacy') {
       this.menuList = [...pharmacyMenu]
+      return
+    }
+    if (role === 'nutritionist') {
+      this.menuList = [...nutritionistMenu]
       return
     }
     this.menuList = [...clientMenu]

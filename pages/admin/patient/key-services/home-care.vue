@@ -76,6 +76,12 @@
                 label="Number of Days"
                 name="number of Days"
                 placeholder="Enter Number of Days"
+                required
+                rules="required"
+                is-number
+                :space-allowed="false"
+                :char-allowed="false"
+                :text-allowed="false"
               />
               <AppInput
                 v-model="homeCareObj.address"
@@ -252,7 +258,8 @@ export default {
     totalPrice() {
       let total = 0
       this.priceList.forEach((record) => (total += record.price))
-      return total
+      const totalDays = total * this.homeCareObj.days
+      return totalDays
     },
     user() {
       const userObject = JSON.parse(localStorage.getItem('user'))

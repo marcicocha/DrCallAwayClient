@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="colored-table">
     <a-table
       :columns="columns"
       :data-source="dataSource"
@@ -28,21 +28,12 @@ export default {
           title: 'S/N',
           dataIndex: 'sn',
           scopedSlots: { customRender: 'sn' },
+          width: '7%',
         },
         {
           title: 'TEST NAME',
           dataIndex: 'testName',
           scopedSlots: { customRender: 'testName' },
-        },
-        {
-          title: 'PRICE',
-          dataIndex: 'price',
-          scopedSlots: { customRender: 'price' },
-        },
-        {
-          title: 'SELECT',
-          dataIndex: 'select',
-          scopedSlots: { customRender: 'select' },
         },
       ]
       return columns

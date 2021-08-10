@@ -116,7 +116,7 @@ export default {
   },
   computed: {
     ...mapState({
-      allCaseFiles: (state) => state.caseFileDoctorModule.caseFiles,
+      allCaseFiles: (state) => state.caseFileNutritionistModule.caseFiles,
     }),
   },
   mounted() {

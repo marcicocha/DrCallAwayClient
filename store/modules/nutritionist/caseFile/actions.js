@@ -13,7 +13,7 @@ export default {
         ...payload,
       },
     }
-    const { data } = await this.$axios.$get('doctor/cases', config)
+    const { data } = await this.$axios.$get('nutritionist/cases', config)
     commit(GET_NUTRITIONIST_CASE_FILE, data)
   },
   async [ACCEPT_CASE_FILE]({ commit }, payload) {
@@ -27,6 +27,7 @@ export default {
       config
     )
     commit(ACCEPT_CASE_FILE, data)
+    return data
   },
   async [ADD_PRESCRIPTION]({ commit }, payload) {
     const user = JSON.parse(localStorage.getItem('user'))

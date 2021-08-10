@@ -169,6 +169,9 @@ export default {
     }
   },
   methods: {
+    closeModal() {
+      this.modalIsVisible = false
+    },
     selectNutritionistHandler(value, options) {
       const description = options.componentOptions.propsData.title
       this.nutritionist = description

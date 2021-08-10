@@ -27,6 +27,7 @@ export default {
       config
     )
     commit(ACCEPT_CASE_FILE, data)
+    return data
   },
   async [ADD_PRESCRIPTION]({ commit }, payload) {
     const user = JSON.parse(localStorage.getItem('user'))

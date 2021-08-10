@@ -40,7 +40,11 @@
                   homeCareKey === 'nurse' ? 'Nurse' : 'General Practitioner'
                 }`"
                 name="nurse"
-                :url="homeCareKey === 'nurse' ? 'list/nurses' : 'specialists/5'"
+                :url="
+                  homeCareKey === 'nurse'
+                    ? 'list/nurses'
+                    : 'specialists/SPELTY022'
+                "
                 :call-back-func="
                   (resp) => ({
                     text:

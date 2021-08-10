@@ -4,12 +4,12 @@
       <ValidationObserver ref="observer" tag="div">
         <AppSelect
           v-model="dentistObj.specialistId"
-          label="List of Dental Clinic"
-          placeholder="Select a Dental Clinic"
+          label="List of Dentist"
+          placeholder="Select a Dentist"
           name="dental clinic"
           rules="required"
           required
-          url="specialists/145"
+          url="specialists/SPELTY020"
           :call-back-func="
             (resp) => ({
               text: resp.user.first_name + ' - ' + resp.user.last_name,
@@ -23,8 +23,13 @@
           label="Dental Service"
           placeholder="Select a Dental Service"
           name="dental service"
-          :data="['YES']"
-          :remote="true"
+          url="get_dentist_or_optician_list?type=dentist"
+          :call-back-func="
+            (resp) => ({
+              text: resp.name,
+              value: resp.name,
+            })
+          "
         />
         <AppInput v-model="dentistObj.address" label="Address" name="address" />
         <AppInput

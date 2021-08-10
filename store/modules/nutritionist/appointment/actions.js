@@ -8,7 +8,7 @@ export default {
         ...payload,
       },
     }
-    const { data } = await this.$axios.$get('doctor/appointments', config)
+    const { data } = await this.$axios.$get('nutritionist/appointments', config)
     commit(GET_APPOINTMENT, data)
   },
 }

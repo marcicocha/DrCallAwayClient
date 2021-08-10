@@ -96,7 +96,8 @@ export default {
   },
   computed: {
     ...mapState({
-      allAppointments: (state) => state.appointmentDoctorModule.appointments,
+      allAppointments: (state) =>
+        state.appointmentNutritionistModule.appointments,
     }),
   },
   mounted() {
@@ -126,7 +127,7 @@ export default {
               headers: { Authorization: `Bearer ${user.token.token}` },
             }
             await $this.$axios.$patch(
-              `accept/appointments/${record.id}`,
+              `nutritionist/accept/appointments/${record.id}`,
               record.id,
               config
             )
@@ -179,7 +180,7 @@ export default {
       }
     },
     ...mapActions({
-      getAllAppointment: 'appointmentDoctorModule/GET_APPOINTMENT',
+      getAllAppointment: 'appointmentNutritionistModule/GET_APPOINTMENT',
     }),
   },
 }

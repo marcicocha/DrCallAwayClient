@@ -11,7 +11,7 @@ export default {
         ...payload,
       },
     }
-    const { data } = await this.$axios.$get('cases/general-room', config)
+    const { data } = await this.$axios.$get('nutritionist/general-room', config)
     commit(GET_WAITING_ROOM, data)
   },
 

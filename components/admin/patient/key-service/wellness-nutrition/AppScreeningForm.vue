@@ -7,7 +7,7 @@
           label="Screening Frquency"
           placeholder="Select Screening Frquency"
           name="Screening Frquency"
-          :data="['Annually', 'Monthly', 'Daily']"
+          :data="['Yearly', 'Bi-annually', 'Quarterly']"
           :remote="false"
           required
           rules="required"

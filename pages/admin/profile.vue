@@ -55,10 +55,12 @@
                           value: resp,
                         })
                       "
+                      @change="selectStateHandler"
                     />
                   </a-col>
                   <a-col :span="12">
                     <AppSelect
+                      :key="counter"
                       v-model="profileObj.lga"
                       label="LGA"
                       placeholder="Select LGA"
@@ -109,7 +111,7 @@
                     />
                   </a-col>
                 </a-row>
-                <a-row type="flex" :gutter="24">
+                <a-row v-if="role !== 'patient'" type="flex" :gutter="24">
                   <a-col :span="12">
                     <AppInput
                       v-model="profileObj.nursing_school_attended"
@@ -144,7 +146,7 @@
                       label="Speciality"
                       placeholder="Speciality"
                       name="Speciality"
-                      url="/specialties"
+                      url="/specialties?showAll=true"
                       :call-back-func="
                         (resp) => ({
                           text: resp.name,
@@ -331,6 +333,7 @@ export default {
       isLoading: false,
       config,
       role,
+      counter: 0,
     }
   },
   async mounted() {
@@ -349,6 +352,9 @@ export default {
     }
   },
   methods: {
+    selectStateHandler() {
+      this.counter++
+    },
     async submitHandler() {
       const isValid = await this.$refs.observer.validate()
       if (!isValid) {

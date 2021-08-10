@@ -410,7 +410,7 @@
                   v-model="signUpObject.specialty_id"
                   placeholder="Select a Medical Specialty"
                   name="medical specialties"
-                  url="/specialties"
+                  url="/specialties?showAll=true"
                   :call-back-func="
                     (resp) => ({
                       text: resp.name,

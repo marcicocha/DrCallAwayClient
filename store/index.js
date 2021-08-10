@@ -31,8 +31,8 @@ import testDiagnosticModule from './modules/diagnostic-center/test'
 
 // NUTRITIONIST
 import waitingRoomNutritionistModule from './modules/nutritionist/waitingRoom'
-import caseFileDoctorNutritionistModule from './modules/nutritionist/caseFile'
-import appointmentDoctorNutritionistModule from './modules/nutritionist/appointment'
+import caseFileNutritionistModule from './modules/nutritionist/caseFile'
+import appointmentNutritionistModule from './modules/nutritionist/appointment'
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({}),
@@ -69,8 +69,8 @@ const createStore = () => {
 
       // NUTRITIONIST
       waitingRoomNutritionistModule,
-      caseFileDoctorNutritionistModule,
-      appointmentDoctorNutritionistModule,
+      caseFileNutritionistModule,
+      appointmentNutritionistModule,
     },
   })
 }

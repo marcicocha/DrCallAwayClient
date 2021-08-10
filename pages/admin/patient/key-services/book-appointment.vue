@@ -11,7 +11,7 @@
                 label="List of Medical Specialties"
                 placeholder="Select a Medical Specialty"
                 name="medical specialties"
-                url="/specialties"
+                url="/specialties?showAll=false"
                 :call-back-func="
                   (resp) => ({
                     text: resp.name,
@@ -25,7 +25,7 @@
             </a-col>
             <a-col :span="12">
               <AppSelect
-                :key="bookAppointmentObj.specialtyId"
+                :key="counter"
                 v-model="bookAppointmentObj.specialistId"
                 label="List of Specialists"
                 placeholder="Select a Specialist"
@@ -184,6 +184,7 @@ export default {
       user: {},
       specialist: '',
       speciality: '',
+      counter: 0,
     }
   },
   computed: {
@@ -226,6 +227,7 @@ export default {
       this.specialist = description
     },
     selectSpecialityHandler(value, options) {
+      this.counter++
       const description = options.componentOptions.propsData.title
       this.speciality = description
     },

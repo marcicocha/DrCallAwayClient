@@ -103,7 +103,6 @@ export default {
   },
   methods: {
     checkInHandler(record) {
-      this.currentCaseFile = record
       const $this = this
       this.$confirm({
         title: 'Are you sure you want to accept this Case File?',
@@ -114,7 +113,7 @@ export default {
         async onOk() {
           // vm.showModal(false)
           try {
-            await $this.$store.dispatch(
+            const response = await $this.$store.dispatch(
               'caseFileNutritionistModule/ACCEPT_CASE_FILE',
               record.id
             )
@@ -123,6 +122,7 @@ export default {
               description: 'Check in Successful',
             })
             $this.caseIsVisible = true
+            $this.currentCaseFile = response
           } catch (e) {
             const { default: errorHandler } = await import(
               '@/utils/errorHandler'

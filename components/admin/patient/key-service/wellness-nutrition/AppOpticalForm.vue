@@ -4,12 +4,12 @@
       <ValidationObserver ref="observer" tag="div">
         <AppSelect
           v-model="opticalObj.specialistId"
-          label="List of Optical Clinic"
-          placeholder="Select a Optical Clinic"
+          label="List of Optician"
+          placeholder="Select a Optician"
           name="optical clinic"
           rules="required"
           required
-          url="specialists/35"
+          url="specialists/SPELTY021"
           :call-back-func="
             (resp) => ({
               text: resp.user.first_name + ' - ' + resp.user.last_name,
@@ -23,8 +23,13 @@
           label="Optical Service"
           placeholder="Select a Optical Service"
           name="optical service"
-          :data="['YES']"
-          :remote="true"
+          url="get_dentist_or_optician_list?type=optician"
+          :call-back-func="
+            (resp) => ({
+              text: resp.name,
+              value: resp.name,
+            })
+          "
         />
         <AppInput
           v-model="opticalObj.address"

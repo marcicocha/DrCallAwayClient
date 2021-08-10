@@ -131,6 +131,10 @@ export default {
       type: String,
       default: 'default',
     },
+    noToken: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -186,9 +190,11 @@ export default {
         return
       }
       const user = JSON.parse(localStorage.getItem('user'))
-      const config = {
-        headers: { Authorization: `Bearer ${user.token.token}` },
-      }
+      const config = this.noToken
+        ? {}
+        : {
+            headers: { Authorization: `Bearer ${user.token.token}` },
+          }
       const callBackFunc = this.callBackFunc
       this.dataRemote = []
       this.fetching = true

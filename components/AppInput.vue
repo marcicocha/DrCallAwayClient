@@ -109,7 +109,7 @@ export default {
     },
     textOnlyRegex: {
       type: RegExp,
-      default: () => /[0-9]/g,
+      default: () => /[^0-9]/g,
     },
     phoneOnlyRegex: {
       type: RegExp,
@@ -169,17 +169,6 @@ export default {
             .slice(0, this.maxLength)
             .replace(this.spaceRegex, '')
             .replace(this.specialCharacterRegex, '')
-          break
-        // NO TEXT NO SPECIAL CHARACTER
-        case !this.spaceAllowed &&
-          !this.charAllowed &&
-          !this.textAllowed &&
-          this.isNumber:
-          this.innerValue = String(newVal)
-            .slice(0, this.maxLength)
-            .replace(this.spaceRegex, '')
-            .replace(this.specialCharacterRegex, '')
-            .replace(this.textOnlyRegex, '')
           break
         // NO SPACE, NO SPECIAL CHARACTER, AND NO TEXT
         case !this.spaceAllowed && !this.charAllowed && !this.textAllowed:

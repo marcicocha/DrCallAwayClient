@@ -13,7 +13,7 @@
           :call-back-func="
             (resp) => ({
               text: resp.first_name + ' - ' + resp.last_name,
-              value: resp.id,
+              value: resp.user_id,
             })
           "
           @select="selectNutritionistHandler"

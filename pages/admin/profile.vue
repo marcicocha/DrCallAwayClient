@@ -142,7 +142,7 @@
                   </a-col>
                   <a-col :span="12">
                     <AppSelect
-                      v-model="profileObj.specialtyId"
+                      v-model="profileObj.specialty_id"
                       label="Speciality"
                       placeholder="Speciality"
                       name="Speciality"
@@ -257,7 +257,7 @@
                       name="Account Number"
                       rules="required"
                       required
-                      :max-length="20"
+                      :max-length="15"
                       :space-allowed="false"
                       :char-allowed="false"
                       :text-allowed="false"
@@ -362,16 +362,29 @@ export default {
       }
       this.isLoading = true
       try {
-        const { message } = await this.$axios.$post(
-          '/update/patient',
-          this.profileObj,
-          this.config
-        )
-        this.$notification.success({
-          message: 'Success',
-          description: message,
-          duration: 4000,
-        })
+        if (this.role === 'patient') {
+          const { message } = await this.$axios.$post(
+            '/update/patient',
+            this.profileObj,
+            this.config
+          )
+          this.$notification.success({
+            message: 'Success',
+            description: message,
+            duration: 4000,
+          })
+        } else {
+          const { message } = await this.$axios.$post(
+            '/update/partners',
+            this.profileObj,
+            this.config
+          )
+          this.$notification.success({
+            message: 'Success',
+            description: message,
+            duration: 4000,
+          })
+        }
         requestAnimationFrame(() => {
           this.$refs.observer.reset()
           this.isLoading = false

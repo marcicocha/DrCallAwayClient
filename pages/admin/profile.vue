@@ -354,6 +354,7 @@ export default {
   methods: {
     selectStateHandler() {
       this.counter++
+      this.profileObj.lga = undefined
     },
     async submitHandler() {
       const isValid = await this.$refs.observer.validate()

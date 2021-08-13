@@ -17,10 +17,20 @@
           {{ record.status }}
         </div>
       </template>
+      <template slot="prescriptionBy" slot-scope="text, record">
+        <div>
+          {{ `${record.partners.first_name} ${record.partners.last_name}` }}
+        </div>
+      </template>
+      <template slot="updated_at" slot-scope="text, record">
+        {{ formatDate(record.updated_at) }}
+      </template>
     </a-table>
   </div>
 </template>
 <script>
+import moment from 'moment'
+
 export default {
   name: 'AppPrescriptionDataTable',
   props: {
@@ -38,13 +48,13 @@ export default {
       const columns = [
         {
           title: 'Prescription ID',
-          dataIndex: 'prescriptionId',
-          scopedSlots: { customRender: 'prescriptionId' },
+          dataIndex: 'case_file_id',
+          scopedSlots: { customRender: 'case_file_id' },
         },
         {
           title: 'Prescription Title',
-          dataIndex: 'prescriptionTitle',
-          scopedSlots: { customRender: 'prescriptionTitle' },
+          dataIndex: 'ailment',
+          scopedSlots: { customRender: 'ailment' },
         },
         {
           title: 'Presecription By',
@@ -54,7 +64,7 @@ export default {
         {
           title: 'Prescription Date',
           dataIndex: 'prescriptionDate',
-          scopedSlots: { customRender: 'prescriptionDate' },
+          scopedSlots: { customRender: 'updated_at' },
         },
         {
           title: 'Status',
@@ -79,6 +89,9 @@ export default {
           },
         },
       }
+    },
+    formatDate(date) {
+      return moment(date).format('YYYY-MM-DD HH:mm:ss')
     },
   },
 }

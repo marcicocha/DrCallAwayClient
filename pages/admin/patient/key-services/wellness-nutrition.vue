@@ -23,38 +23,84 @@
         <br />
         <div>
           <h6>Locate Nearest Center</h6>
-          <div class="admin-wrapper">
-            <a-form>
-              <a-row type="flex" align="bottom" :gutter="16">
-                <a-col :span="8">
-                  <AppInput
-                    v-model="bookAppointmentObj.date"
-                    label="Date of Visit"
-                    placeholder="Select Date"
-                    name="date of visit"
-                  />
-                </a-col>
-                <a-col :span="8">
-                  <AppInput
-                    v-model="bookAppointmentObj.time"
-                    label="Time of Visit"
-                    placeholder="Select Time"
-                    name="time of visit"
-                  />
-                </a-col>
-                <a-col :span="8">
-                  <AppButton
-                    type="primary"
-                    :block="false"
-                    :loading="isLoading"
-                    class="admin-button"
-                    @click="submitHandler"
-                    >BOOK</AppButton
-                  >
-                </a-col>
-              </a-row>
-            </a-form>
-          </div>
+          <a-form>
+            <a-row type="flex" align="middle" :gutter="16" class="t-c">
+              <a-col :span="16">
+                <div class="admin-wrapper">
+                  <ValidationObserver ref="observer" tag="div">
+                    <a-row type="flex" align="bottom" :gutter="16">
+                      <a-col :span="12">
+                        <AppSelect
+                          v-model="nearestDiagnosticObj.state"
+                          label="State"
+                          placeholder="State"
+                          name="state"
+                          url="/states"
+                          :call-back-func="
+                            (resp) => ({
+                              text: resp,
+                              value: resp,
+                            })
+                          "
+                          @change="selectStateHandler"
+                        />
+                      </a-col>
+                      <a-col :span="12">
+                        <AppSelect
+                          :key="counter"
+                          v-model="nearestDiagnosticObj.lga"
+                          label="LGA"
+                          placeholder="Select LGA"
+                          name="LGA"
+                          :url="`/lgas/${nearestDiagnosticObj.state}`"
+                          :call-back-func="
+                            (resp) => ({
+                              text: resp,
+                              value: resp,
+                            })
+                          "
+                          @change="selectLgaHandler"
+                        />
+                      </a-col>
+                      <a-col :span="24">
+                        <AppSelect
+                          :key="lgaCounter"
+                          v-model="nearestDiagnosticObj.diagnosticCenter"
+                          label="Select a Diagnostic Center"
+                          placeholder="Select Diagnostic Center"
+                          name="Diagnostic Center"
+                          :url="`/list/diagnostic?state=${nearestDiagnosticObj.state}&lga=${nearestDiagnosticObj.lga}`"
+                          :call-back-func="
+                            (resp) => ({
+                              text: resp,
+                              value: resp,
+                            })
+                          "
+                        />
+                      </a-col>
+                    </a-row>
+                  </ValidationObserver>
+                </div>
+              </a-col>
+              <a-col :span="8">
+                <p>Selected Diagnostic Center</p>
+                <p style="text-transform: uppercase">
+                  {{ nearestDiagnosticObj.diagnosticCenter }}
+                </p>
+                <AppButton
+                  type="primary"
+                  :block="false"
+                  :loading="isLoading"
+                  class="admin-button"
+                  @click="submitHandler"
+                  >PROCEED</AppButton
+                >
+                <p class="error">
+                  By clicking “PROCEED” you are giving your consent.
+                </p>
+              </a-col>
+            </a-row>
+          </a-form>
         </div>
       </div>
     </div>
@@ -85,13 +131,14 @@
   </div>
 </template>
 <script>
+import { ValidationObserver } from 'vee-validate'
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppNutritionForm from '@/components/admin/patient/key-service/wellness-nutrition/AppNutritionForm'
 import AppDentistForm from '@/components/admin/patient/key-service/wellness-nutrition/AppDentistForm'
 import AppOpticalForm from '@/components/admin/patient/key-service/wellness-nutrition/AppOpticalForm'
 import AppScreeningTab from '@/components/admin/patient/key-service/wellness-nutrition/AppScreeningTab'
 import AppScreeningForm from '@/components/admin/patient/key-service/wellness-nutrition/AppScreeningForm'
-import AppInput from '@/components/AppInput'
+import AppSelect from '@/components/AppSelect'
 import AppButton from '@/components/AppButton'
 
 export default {
@@ -101,9 +148,10 @@ export default {
     AppDentistForm,
     AppOpticalForm,
     AppScreeningTab,
-    AppInput,
+    AppSelect,
     AppButton,
     AppScreeningForm,
+    ValidationObserver,
   },
   layout: 'dashboard',
   data() {
@@ -113,8 +161,10 @@ export default {
       confirmLoading: false,
       wellnessKey: false,
       isLoading: false,
-      bookAppointmentObj: {},
       screeningFrequency: '',
+      counter: 0,
+      lgaCounter: 0,
+      nearestDiagnosticObj: {},
       wellnessList: [
         {
           key: 'screening',
@@ -166,6 +216,15 @@ export default {
       this.modalIsVisible = true
       this.wellnessKey = key
     },
+    selectStateHandler() {
+      this.counter++
+      this.nearestDiagnosticObj.lga = undefined
+      this.nearestDiagnosticObj.diagnosticCenter = undefined
+    },
+    selectLgaHandler() {
+      this.lgaCounter++
+      this.nearestDiagnosticObj.diagnosticCenter = undefined
+    },
     showScreeningPage(frequency) {
       this.modalIsVisible = false
       this.screenIsVisible = true
@@ -177,7 +236,11 @@ export default {
     closeViewHandler() {
       this.screenIsVisible = false
     },
-    submitHandler() {
+    async submitHandler() {
+      const isValid = await this.$refs.observer.validate()
+      if (!isValid) {
+        return
+      }
       console.log('CLICKED')
     },
   },
@@ -186,5 +249,14 @@ export default {
 <style lang="scss" scoped>
 h6 {
   color: $dark-purple;
+}
+.error {
+  color: #f04519;
+  font-weight: 400;
+  margin-top: 0.8rem;
+}
+p {
+  color: $dark-purple;
+  font-weight: bold;
 }
 </style>

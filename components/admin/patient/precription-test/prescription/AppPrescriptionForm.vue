@@ -42,7 +42,11 @@
           :columns="columns"
           :data-source="dataSource"
           :pagination="false"
-        />
+        >
+          <template slot="sn" slot-scope="text, record, index">
+            {{ index + 1 }}
+          </template>
+        </a-table>
       </div>
 
       <br />
@@ -56,7 +60,7 @@
       </div>
     </div>
     <br />
-    <div v-if="prescriptionObj.status === 'Pending'" class="t-c">
+    <div v-if="prescriptionObj.status === 'PENDING'" class="t-c">
       <AppButton
         type="primary"
         :block="false"
@@ -109,20 +113,7 @@ export default {
       confirmLoading: false,
       pharmacyModalIsVisible: false,
       isLoading: false,
-      dataSource: [
-        {
-          id: 1,
-          name: '#00001',
-          dosage: 'Mr. Kolawole Ojo',
-          duration: '30th March, 2021',
-        },
-        {
-          id: 2,
-          name: '#00002',
-          dosage: 'Mr. Kolawole Ojo',
-          duration: '30th March, 2021',
-        },
-      ],
+      dataSource: [],
       pharmacyDataSource: [
         {
           name: 'Mr. Kolawole Ojo',
@@ -188,6 +179,9 @@ export default {
           this.prescriptionObj = {
             ...newCurrentPrescriptionObj,
           }
+          this.dataSource = newCurrentPrescriptionObj.drugs
+            ? [...newCurrentPrescriptionObj.drugs]
+            : []
         }
       },
       immediate: true,

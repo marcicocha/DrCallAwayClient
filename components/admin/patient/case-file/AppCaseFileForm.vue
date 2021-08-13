@@ -125,10 +125,13 @@
       @cancel="closeModal"
     >
       <div>
-        <h6 class="t-c">Prescription for Strong Headache</h6>
+        <h6 class="t-c">{{ `Prescription for ${initial_complain}` }}</h6>
         <a-divider />
         <div>
-          <AppPrescriptionForm :case-file-obj="caseFileObj" />
+          <AppPrescriptionForm
+            :case-file-obj="caseFileObj"
+            @formSubmissionCompleted="closeModal"
+          />
         </div>
       </div>
     </a-modal>

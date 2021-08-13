@@ -144,6 +144,7 @@ export default {
       if (!isValid) {
         return
       }
+      this.isLoading = true
       this.drugs.push(this.prescriptionObj)
       this.prescriptionObj = {}
       try {

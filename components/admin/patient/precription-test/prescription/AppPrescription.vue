@@ -55,7 +55,9 @@
       @cancel="closeModal"
     >
       <div>
-        <h6 class="t-c">Prescription for Strong Headache</h6>
+        <h6 class="t-c">
+          {{ `Prescription for ${currentPrescriptionObj.ailment}` }}
+        </h6>
         <a-divider />
         <AppPrescriptionForm
           :current-prescription-obj="currentPrescriptionObj"

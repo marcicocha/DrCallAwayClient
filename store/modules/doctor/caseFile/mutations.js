@@ -11,6 +11,7 @@ export default {
   },
   [ACCEPT_CASE_FILE](state, payload) {},
   [ADD_PRESCRIPTION](state, payload) {
+    console.log(payload.drugs, 'DRUGS')
     state.prescriptionList.push(payload.drugs)
   },
   [ADD_TEST](state, payload) {},

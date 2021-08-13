@@ -31,6 +31,7 @@
             :key="d.value"
             :title="d.text"
             :value="d.value"
+            @click="$emit('selectedObject', d)"
           >
             {{ d.text }}
           </a-select-option>

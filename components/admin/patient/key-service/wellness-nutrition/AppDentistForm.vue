@@ -14,9 +14,10 @@
             (resp) => ({
               text: resp.user.first_name + ' - ' + resp.user.last_name,
               value: resp.user_id,
+              address: resp.user.address,
             })
           "
-          @select="selectDentistHandler"
+          @selectedObject="selectedObjectHandler"
         />
         <AppSelect
           v-model="dentistObj.dentalService"
@@ -31,7 +32,12 @@
             })
           "
         />
-        <AppInput v-model="dentistObj.address" label="Address" name="address" />
+        <AppInput
+          v-model="dentistObj.address"
+          label="Address"
+          name="address"
+          disabled
+        />
         <AppInput
           v-model="dentistObj.paymentCharge"
           label="Payment Charge"
@@ -180,9 +186,9 @@ export default {
     }
   },
   methods: {
-    selectDentistHandler(value, options) {
-      const description = options.componentOptions.propsData.title
-      this.dentist = description
+    selectedObjectHandler(rcd) {
+      this.dentist = rcd.text
+      this.dentistObj.address = rcd.address
     },
     disabledDate(current) {
       // Can not select days before today and today

@@ -13,15 +13,17 @@
           :call-back-func="
             (resp) => ({
               text: resp.first_name + ' - ' + resp.last_name,
-              value: resp.user_id,
+              value: resp.id,
+              address: resp.address,
             })
           "
-          @select="selectNutritionistHandler"
+          @selectedObject="selectedObjectHandler"
         />
         <AppInput
           v-model="nutritionistObj.address"
           label="Address"
           name="address"
+          disabled
         />
         <AppInput
           v-model="nutritionistObj.paymentCharge"
@@ -172,9 +174,9 @@ export default {
     closeModal() {
       this.modalIsVisible = false
     },
-    selectNutritionistHandler(value, options) {
-      const description = options.componentOptions.propsData.title
-      this.nutritionist = description
+    selectedObjectHandler(rcd) {
+      this.nutritionist = rcd.text
+      this.nutritionistObj.address = rcd.address
     },
     disabledDate(current) {
       // Can not select days before today and today

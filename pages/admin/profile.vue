@@ -140,7 +140,7 @@
                       required
                     />
                   </a-col>
-                  <a-col :span="12">
+                  <a-col v-if="role === 'doctor'" :span="12">
                     <AppSelect
                       v-model="profileObj.specialty_id"
                       label="Speciality"

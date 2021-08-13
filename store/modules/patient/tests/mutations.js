@@ -1,7 +1,13 @@
-import { GET_TESTS } from '@/utils/mutation-types/patient/tests'
+import {
+  GET_TESTS,
+  GET_ALL_MEDICAL_SCREENING,
+} from '@/utils/mutation-types/patient/tests'
 
 export default {
   [GET_TESTS](state, payload) {
     state.tests = payload
+  },
+  [GET_ALL_MEDICAL_SCREENING](state, payload) {
+    state.medicalScreenings = payload
   },
 }

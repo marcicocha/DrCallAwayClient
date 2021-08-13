@@ -2,7 +2,7 @@
   <div class="colored-table">
     <a-table
       :columns="columns"
-      :data-source="dataSource"
+      :data-source="stringToObject"
       :pagination="false"
       :row-key="(record) => record.id"
     />
@@ -22,13 +22,19 @@ export default {
     },
   },
   computed: {
+    stringToObject() {
+      const newArray = this.dataSource.map((rcd, i) => {
+        return { testName: rcd, sn: i + 1 }
+      })
+      return newArray
+    },
     columns() {
       const columns = [
         {
           title: 'S/N',
           dataIndex: 'sn',
           scopedSlots: { customRender: 'sn' },
-          width: '7%',
+          width: '10%',
         },
         {
           title: 'TEST NAME',

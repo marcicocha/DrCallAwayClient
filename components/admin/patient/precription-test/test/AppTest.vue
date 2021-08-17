@@ -88,6 +88,9 @@ export default {
       allTests: (state) => state.testsModule.tests,
     }),
   },
+  mounted() {
+    this.changeTabHandler('1')
+  },
   methods: {
     showTestModal(record) {
       this.testModalIsVisible = true

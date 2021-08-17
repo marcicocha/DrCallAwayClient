@@ -11,7 +11,7 @@ export default {
         ...payload,
       },
     }
-    const { data } = await this.$axios.$get('tests', config)
+    const { data } = await this.$axios.$get('/tests/patient/list', config)
     commit(GET_TESTS, data)
   },
   async [GET_ALL_MEDICAL_SCREENING]({ commit }, payload) {

@@ -100,6 +100,7 @@
           <a-table
             :columns="columns"
             :data-source="dataSource"
+            :loading="tableIsLoading"
             :pagination="false"
             :row-key="(record) => record.id"
           >
@@ -107,7 +108,7 @@
               {{ index + 1 }}
             </template></a-table
           >
-          <!-- <p class="price-total">TOTAL: {{ totalPrice }}</p> -->
+          <p class="price-total">TOTAL: {{ totalPrice }}</p>
         </div>
         <br />
         <div>
@@ -224,8 +225,8 @@ export default {
         },
         {
           title: 'PRICE',
-          dataIndex: 'price',
-          scopedSlots: { customRender: 'price' },
+          dataIndex: 'amount',
+          scopedSlots: { customRender: 'amount' },
         },
       ]
       return columns
@@ -242,11 +243,11 @@ export default {
       }
       return 'SPELTY016'
     },
-    // totalPrice() {
-    //   let total = 0
-    //   this.priceList.forEach((record) => (total += record.price))
-    //   return total
-    // },
+    totalPrice() {
+      let total = 0
+      this.dataSource.forEach((record) => (total += record.amount))
+      return total
+    },
     user() {
       const userObject = JSON.parse(localStorage.getItem('user'))
       return {
@@ -382,6 +383,7 @@ export default {
     specialServiceHandler(obj) {
       this.specialModalIsVisible = true
       this.specialModalObj = obj
+      this.dataSource = []
       if (obj.secondText === 'HIV/TUBERCULOSIS') {
         this.getPriceHandler('hivTuberculosis')
       }

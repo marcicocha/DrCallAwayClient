@@ -95,6 +95,9 @@ export default {
       return columns
     },
   },
+  mounted() {
+    this.fetchDiagnosticListHandler()
+  },
   methods: {
     selectHandler(record) {
       this.selectedDiagnosticObj = record
@@ -103,7 +106,7 @@ export default {
     closeModal() {
       this.selectedDiagnosticModalIsVisible = false
     },
-    async fetchPharmacyListHandler() {
+    async fetchDiagnosticListHandler() {
       try {
         const user = JSON.parse(localStorage.getItem('user'))
         const config = {

@@ -24,13 +24,17 @@
           label="Dental Service"
           placeholder="Select a Dental Service"
           name="dental service"
-          url="get_dentist_or_optician_list?type=dentist"
+          url="get_service_and_price_list?type=dentalServices"
+          rules="required"
+          required
           :call-back-func="
             (resp) => ({
               text: resp.name,
               value: resp.name,
+              amount: resp.amount,
             })
           "
+          @selectedObject="selectedDentalServiceHandler"
         />
         <AppInput
           v-model="dentistObj.address"
@@ -48,11 +52,15 @@
           v-model="dentistObj.date"
           label="Select Start Date"
           name="select start date"
+          rules="required"
+          required
           :disabled-date="disabledDate"
         />
         <AppTimePicker
           v-model="dentistObj.time"
           label="Select Start Time"
+          rules="required"
+          required
           name="select start time"
         />
         <AppTextArea
@@ -94,7 +102,11 @@
               :data-source="dataSource"
               :pagination="false"
               :row-key="(record) => record.id"
-            ></a-table>
+            >
+              <template slot="sn" slot-scope="text, record, index">
+                {{ index + 1 }}
+              </template>
+            </a-table>
           </div>
           <br />
           <div>
@@ -164,31 +176,36 @@ export default {
         },
         {
           title: 'NAME OF SERVICE',
-          dataIndex: 'nameOfService',
-          scopedSlots: { customRender: 'nameOfService' },
+          dataIndex: 'service',
         },
         {
           title: 'PRICE',
-          dataIndex: 'price',
-          scopedSlots: { customRender: 'price' },
+          dataIndex: 'amount',
         },
       ]
       return columns
     },
   },
-  mounted() {
-    const userObject = JSON.parse(localStorage.getItem('user'))
-    this.user = {
-      email: userObject.email,
-      firstName: userObject.first_name,
-      lastName: userObject.last_name,
-      amount: 100,
-    }
-  },
   methods: {
     selectedObjectHandler(rcd) {
       this.dentist = rcd.text
       this.dentistObj.address = rcd.address
+    },
+    selectedDentalServiceHandler(rcd) {
+      this.dentistObj.paymentCharge = rcd.amount
+      this.dataSource = [
+        {
+          service: rcd.text,
+          amount: rcd.amount,
+        },
+      ]
+      const userObject = JSON.parse(localStorage.getItem('user'))
+      this.user = {
+        email: userObject.email,
+        firstName: userObject.first_name,
+        lastName: userObject.last_name,
+        amount: rcd.amount,
+      }
     },
     disabledDate(current) {
       // Can not select days before today and today

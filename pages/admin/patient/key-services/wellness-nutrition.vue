@@ -24,7 +24,7 @@
         <div>
           <h6>Locate Nearest Center</h6>
           <a-form>
-            <a-row type="flex" align="middle" :gutter="16" class="t-c">
+            <a-row type="flex" align="middle" :gutter="16">
               <a-col :span="16">
                 <div class="admin-wrapper">
                   <ValidationObserver ref="observer" tag="div">
@@ -82,7 +82,7 @@
                   </ValidationObserver>
                 </div>
               </a-col>
-              <a-col :span="8">
+              <a-col :span="8" class="t-c">
                 <p>Selected Diagnostic Center</p>
                 <p style="text-transform: uppercase">
                   {{ nearestDiagnosticObj.diagnosticCenter }}

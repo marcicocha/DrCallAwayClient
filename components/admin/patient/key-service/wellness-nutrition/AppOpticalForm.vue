@@ -24,18 +24,22 @@
           label="Optical Service"
           placeholder="Select a Optical Service"
           name="optical service"
-          url="get_dentist_or_optician_list?type=optician"
+          rules="required"
+          required
+          url="get_service_and_price_list?type=opticalServices"
           :call-back-func="
             (resp) => ({
               text: resp.name,
               value: resp.name,
             })
           "
+          @selectedObject="selectedOpticalServiceHandler"
         />
         <AppInput
           v-model="opticalObj.address"
           label="Clinic Address"
           name="clinic address"
+          disabled
         />
         <AppInput
           v-model="opticalObj.paymentCharge"
@@ -47,12 +51,16 @@
           v-model="opticalObj.date"
           label="Select Start Date"
           name="select start date"
+          rules="required"
+          required
           :disabled-date="disabledDate"
         />
         <AppTimePicker
           v-model="opticalObj.time"
           label="Select Start Time"
           name="select start time"
+          rules="required"
+          required
         />
         <AppTextArea
           v-model="opticalObj.additional_info"
@@ -93,7 +101,11 @@
               :data-source="dataSource"
               :pagination="false"
               :row-key="(record) => record.id"
-            ></a-table>
+            >
+              <template slot="sn" slot-scope="text, record, index">
+                {{ index + 1 }}
+              </template>
+            </a-table>
           </div>
           <br />
           <div>
@@ -161,26 +173,15 @@ export default {
         },
         {
           title: 'NAME OF SERVICE',
-          dataIndex: 'nameOfService',
-          scopedSlots: { customRender: 'nameOfService' },
+          dataIndex: 'service',
         },
         {
           title: 'PRICE',
-          dataIndex: 'price',
-          scopedSlots: { customRender: 'price' },
+          dataIndex: 'amount',
         },
       ]
       return columns
     },
-  },
-  mounted() {
-    const userObject = JSON.parse(localStorage.getItem('user'))
-    this.user = {
-      email: userObject.email,
-      firstName: userObject.first_name,
-      lastName: userObject.last_name,
-      amount: 100,
-    }
   },
   methods: {
     closeModal() {
@@ -189,6 +190,22 @@ export default {
     selectedObjectHandler(rcd) {
       this.optician = rcd.text
       this.opticalObj.address = rcd.address
+    },
+    selectedOpticalServiceHandler(rcd) {
+      this.opticalObj.paymentCharge = rcd.amount
+      this.dataSource = [
+        {
+          service: rcd.text,
+          amount: rcd.amount,
+        },
+      ]
+      const userObject = JSON.parse(localStorage.getItem('user'))
+      this.user = {
+        email: userObject.email,
+        firstName: userObject.first_name,
+        lastName: userObject.last_name,
+        amount: rcd.amount,
+      }
     },
     disabledDate(current) {
       // Can not select days before today and today

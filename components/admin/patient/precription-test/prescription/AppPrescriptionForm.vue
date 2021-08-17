@@ -18,7 +18,7 @@
             />
           </a-col>
           <a-col :span="12">
-            <AppInput
+            <AppDatePicker
               v-model="prescriptionObj.prescriptionDate"
               label="Prescription Date"
               name="prescription date"
@@ -50,7 +50,7 @@
       </div>
 
       <br />
-      <div v-if="prescriptionObj.status !== 'Pending'">
+      <div v-if="prescriptionObj.status !== 'PENDING'">
         <p>Pharmacy Information</p>
         <a-table
           :columns="pharmacyColumns"
@@ -72,7 +72,7 @@
     </div>
     <a-modal
       :visible="pharmacyModalIsVisible"
-      width="600px"
+      width="800px"
       :confirm-loading="confirmLoading"
       :footer="null"
       :destroy-on-close="true"
@@ -83,7 +83,7 @@
       <div>
         <h6 class="t-c">Pharmacies Near You</h6>
         <a-divider />
-        <AppPharmacyTable />
+        <AppPharmacyTable :drugList="dataSource" />
       </div>
     </a-modal>
   </div>
@@ -91,6 +91,7 @@
 <script>
 import { ValidationObserver } from 'vee-validate'
 import AppInput from '@/components/AppInput'
+import AppDatePicker from '@/components/AppDatePicker'
 import AppButton from '@/components/AppButton'
 import AppPharmacyTable from '@/components/admin/patient/precription-test/prescription/AppPharmacyTable'
 export default {
@@ -100,6 +101,7 @@ export default {
     AppInput,
     AppButton,
     AppPharmacyTable,
+    AppDatePicker,
   },
   props: {
     currentPrescriptionObj: {
@@ -178,6 +180,9 @@ export default {
         } else {
           this.prescriptionObj = {
             ...newCurrentPrescriptionObj,
+            prescriptionBy: `${newCurrentPrescriptionObj.partners.first_name} ${newCurrentPrescriptionObj.partners.last_name}`,
+            prescriptionDate: newCurrentPrescriptionObj.updated_at,
+            prescriptionId: newCurrentPrescriptionObj.case_file_id,
           }
           this.dataSource = newCurrentPrescriptionObj.drugs
             ? [...newCurrentPrescriptionObj.drugs]

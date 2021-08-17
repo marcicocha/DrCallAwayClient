@@ -4,36 +4,42 @@
       "key": "dashboard",
       "name": "Dashboard",
       "path": "/admin/patient",
+      "icon": "appstore",
       "children": []
     },
     {
       "key": "medical_information",
       "name": "Medical Information",
       "path": "/admin/patient/medical-information",
+      "icon": "form",
       "children": []
     },
     {
       "key": "case_file",
       "name": "My Case File",
       "path": "/admin/patient/case-file",
+      "icon": "file-done",
       "children": []
     },
     {
       "key": "appointment",
       "name": "Appointments",
       "path": "/admin/patient/appointment",
+      "icon": "schedule",
       "children": []
     },
     {
       "key": "prescriptions",
       "name": "Prescriptions/Tests",
       "path": "/admin/patient/prescriptions-test",
+      "icon": "medicine-box",
       "children": []
     },
     {
       "key": "key_services",
       "name": "Key Services",
       "path": "/admin/patient/key-services",
+      "icon": "key",
       "children": [
         {
           "key": "consultation",
@@ -65,12 +71,14 @@
       "key": "ambulance",
       "name": "Request An Ambulance",
       "path": "/admin/patient/request-ambulance",
+      "icon": "car",
       "children": []
     },
     {
       "key": "self_service",
       "name": "Self Service",
       "path": "/admin/self-service",
+      "icon": "user",
       "children": [
         {
           "key": "subscribe",
@@ -92,30 +100,35 @@
       "key": "dashboard",
       "name": "Dashboard",
       "path": "/admin/doctor",
+      "icon": "appstore",
       "children": []
     },
     {
       "key": "waiting-room",
       "name": "Waiting Room",
       "path": "/admin/doctor/waiting-room",
+      "icon": "team",
       "children": []
     },
     {
       "key": "case-management",
       "name": "Case Management",
       "path": "/admin/doctor/case-management",
+      "icon": "file-done",
       "children": []
     },
     {
       "key": "appointment",
       "name": "Appointments",
       "path": "/admin/doctor/appointment",
+      "icon": "schedule",
       "children": []
     },
     {
       "key": "self_service",
       "name": "Self Service",
       "path": "/admin/self-service",
+      "icon": "user",
       "children": [
         {
           "key": "helpdesk",
@@ -131,18 +144,21 @@
       "key": "dashboard",
       "name": "Dashboard",
       "path": "/admin/ambulance",
+      "icon": "appstore",
       "children": []
     },
     {
       "key": "call_up",
       "name": "Callups",
       "path": "/admin/ambulance/callup",
+      "icon": "car",
       "children": []
     },
     {
       "key": "self_service",
       "name": "Self Service",
       "path": "/admin/self-service",
+      "icon": "user",
       "children": [
         {
           "key": "helpdesk",
@@ -158,18 +174,21 @@
       "key": "dashboard",
       "name": "Dashboard",
       "path": "/admin/nurse",
+      "icon": "appstore",
       "children": []
     },
     {
       "key": "my-booking",
       "name": "My Bookings",
       "path": "/admin/nurse/booking",
+      "icon": "schedule",
       "children": []
     },
     {
       "key": "self_service",
       "name": "Self Service",
       "path": "/admin/self-service",
+      "icon": "user",
       "children": [
         {
           "key": "helpdesk",
@@ -185,18 +204,21 @@
       "key": "dashboard",
       "name": "Dashboard",
       "path": "/admin/pharmacy",
+      "icon": "appstore",
       "children": []
     },
     {
       "key": "prescription",
       "name": "Prescriptions",
       "path": "/admin/pharmacy/prescriptions",
+      "icon": "medicine-box",
       "children": []
     },
     {
       "key": "self_service",
       "name": "Self Service",
       "path": "/admin/self-service",
+      "icon": "user",
       "children": [
         {
           "key": "helpdesk",
@@ -212,18 +234,21 @@
       "key": "dashboard",
       "name": "Dashboard",
       "path": "/admin/diagnostic-center",
+      "icon": "appstore",
       "children": []
     },
     {
       "key": "tests",
       "name": "Tests",
       "path": "/admin/diagnostic-center/tests",
+      "icon": "medicine-box",
       "children": []
     },
     {
       "key": "self_service",
       "name": "Self Service",
       "path": "/admin/self-service",
+      "icon": "user",
       "children": [
         {
           "key": "helpdesk",
@@ -239,30 +264,35 @@
       "key": "dashboard",
       "name": "Dashboard",
       "path": "/admin/nutritionist",
+      "icon": "appstore",
       "children": []
     },
     {
       "key": "waiting-room",
       "name": "Waiting Room",
       "path": "/admin/nutritionist/waiting-room",
+      "icon": "team",
       "children": []
     },
     {
       "key": "case-management",
       "name": "Case Management",
       "path": "/admin/nutritionist/case-management",
+      "icon": "file-done",
       "children": []
     },
     {
       "key": "appointment",
       "name": "Appointments",
       "path": "/admin/nutritionist/appointment",
+      "icon": "schedule",
       "children": []
     },
     {
       "key": "self_service",
       "name": "Self Service",
       "path": "/admin/self-service",
+      "icon": "user",
       "children": [
         {
           "key": "helpdesk",

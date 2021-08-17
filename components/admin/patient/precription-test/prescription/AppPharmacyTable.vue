@@ -7,6 +7,9 @@
         :pagination="false"
         :row-key="(record) => record.id"
       >
+        <template slot="sn" slot-scope="text, record, index">
+          {{ index + 1 }}
+        </template>
         <template slot="select" slot-scope="text, record">
           <AppButton
             type="primary"
@@ -17,6 +20,11 @@
           >
         </template>
       </a-table>
+      <br />
+      <p class="red">
+        ***Please call to confirm the availability of Drugs before selecting a
+        Pharmacy***
+      </p>
       <a-modal
         :visible="selectedPharmacyModalIsVisible"
         width="600px"
@@ -28,9 +36,11 @@
         @cancel="closeModal"
       >
         <div>
-          <h6 class="t-c">Selected Pharmacy: {{ selectedPharmacyObj.name }}</h6>
+          <h6 class="t-c">
+            Selected Pharmacy: {{ selectedPharmacyObj.registered_name }}
+          </h6>
           <a-divider />
-          <AppSelectedPharmacy />
+          <AppSelectedPharmacy :drugList="drugList" />
         </div>
       </a-modal>
     </div>
@@ -45,18 +55,18 @@ export default {
     AppButton,
     AppSelectedPharmacy,
   },
+  props: {
+    drugList: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       selectedPharmacyModalIsVisible: false,
       selectedPharmacyObj: {},
       confirmLoading: false,
-      dataSource: [
-        {
-          id: 1,
-          name: 'Medplus Pharmacy',
-          address: 'ijapo estate, Akure',
-        },
-      ],
+      dataSource: [],
     }
   },
   computed: {
@@ -69,22 +79,29 @@ export default {
         },
         {
           title: 'NAME OF PHARMACY',
-          dataIndex: 'name',
-          scopedSlots: { customRender: 'name' },
+          dataIndex: 'registered_name',
+          scopedSlots: { customRender: 'registered_name' },
         },
         {
           title: 'ADDRESS',
           dataIndex: 'address',
-          scopedSlots: { customRender: 'address' },
+        },
+        {
+          title: 'PHONE NUMBER',
+          dataIndex: 'mobile_phone_number',
         },
         {
           title: 'SELECT',
           dataIndex: 'select',
           scopedSlots: { customRender: 'select' },
+          width: '15%',
         },
       ]
       return columns
     },
+  },
+  mounted() {
+    this.fetchPharmacyListHandler()
   },
   methods: {
     selectHandler(record) {
@@ -93,6 +110,25 @@ export default {
     },
     closeModal() {
       this.selectedPharmacyModalIsVisible = false
+    },
+    async fetchPharmacyListHandler() {
+      try {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const config = {
+          headers: { Authorization: `Bearer ${user.token.token}` },
+        }
+        const { data } = await this.$axios.$get('pharmacies', config)
+        this.dataSource = data
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
   },
 }

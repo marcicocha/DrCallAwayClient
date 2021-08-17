@@ -99,7 +99,7 @@
         <div class="colored-table">
           <a-table
             :columns="columns"
-            :data-source="priceList"
+            :data-source="dataSource"
             :pagination="false"
             :row-key="(record) => record.id"
           >
@@ -107,7 +107,7 @@
               {{ index + 1 }}
             </template></a-table
           >
-          <p class="price-total">TOTAL: {{ totalPrice }}</p>
+          <!-- <p class="price-total">TOTAL: {{ totalPrice }}</p> -->
         </div>
         <br />
         <div>
@@ -134,12 +134,6 @@
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'
-import {
-  hivTuberculosis,
-  diabetes,
-  sickleCell,
-  psychiatry,
-} from '@/drcallawayPrices.json'
 import AppPayment from '@/components/AppPayment.vue'
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppInput from '@/components/AppInput'
@@ -161,15 +155,12 @@ export default {
       generalIsVisible: false,
       specialIsVisible: false,
       specialModalIsVisible: false,
+      tableIsLoading: false,
       specialModalObj: {},
       confirmLoading: false,
       ailmentObj: {},
       dataSource: [],
       isLoading: false,
-      diabetes,
-      hivTuberculosis,
-      sickleCell,
-      psychiatry,
       consultationCardList: [
         {
           key: 'general',
@@ -239,18 +230,6 @@ export default {
       ]
       return columns
     },
-    priceList() {
-      if (this.specialModalObj.secondText === 'HIV/TUBERCULOSIS') {
-        return hivTuberculosis[0].services
-      }
-      if (this.specialModalObj.secondText === 'DIABETES') {
-        return diabetes[0].services
-      }
-      if (this.specialModalObj.secondText === 'SICKLE CELL') {
-        return sickleCell[0].services
-      }
-      return psychiatry[0].services
-    },
     specialtyCode() {
       if (this.specialModalObj.secondText === 'HIV/TUBERCULOSIS') {
         return 'SPELTY019'
@@ -263,11 +242,11 @@ export default {
       }
       return 'SPELTY016'
     },
-    totalPrice() {
-      let total = 0
-      this.priceList.forEach((record) => (total += record.price))
-      return total
-    },
+    // totalPrice() {
+    //   let total = 0
+    //   this.priceList.forEach((record) => (total += record.price))
+    //   return total
+    // },
     user() {
       const userObject = JSON.parse(localStorage.getItem('user'))
       return {
@@ -279,6 +258,31 @@ export default {
     },
   },
   methods: {
+    async getPriceHandler(key) {
+      this.tableIsLoading = true
+      try {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const config = {
+          headers: { Authorization: `Bearer ${user.token.token}` },
+        }
+        const { data } = await this.$axios.$get(
+          `get_service_and_price_list?type=${key}`,
+          config
+        )
+        this.dataSource = data
+        this.tableIsLoading = false
+      } catch (err) {
+        this.tableIsLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
     changeConsultationRoute(key) {
       console.log('CLICKED')
       if (key === 'general') {
@@ -378,6 +382,18 @@ export default {
     specialServiceHandler(obj) {
       this.specialModalIsVisible = true
       this.specialModalObj = obj
+      if (obj.secondText === 'HIV/TUBERCULOSIS') {
+        this.getPriceHandler('hivTuberculosis')
+      }
+      if (obj.secondText === 'DIABETES') {
+        this.getPriceHandler('diabetes')
+      }
+      if (obj.secondText === 'SICKLE CELL') {
+        this.getPriceHandler('sickleCell')
+      }
+      if (obj.secondText === 'PSYCHIATRIST') {
+        this.getPriceHandler('psychiatry')
+      }
     },
   },
 }

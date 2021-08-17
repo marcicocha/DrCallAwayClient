@@ -38,7 +38,7 @@
               selected: checkPathHandler(menu.path, `${String(i)}`),
             }"
           >
-            <a-icon type="user" />
+            <a-icon :type="menu.icon" />
             <span
               ><a class="menu_anchor" @click="goToPage(menu.path)">{{
                 menu.name
@@ -54,7 +54,7 @@
             @titleClick="titleClickHandler(`Sub${String(i)}`)"
           >
             <span slot="title"
-              ><a-icon type="user" /><span style="margin-left: 5px">{{
+              ><a-icon :type="menu.icon" /><span style="margin-left: 5px">{{
                 menu.name
               }}</span></span
             >

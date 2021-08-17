@@ -1,9 +1,13 @@
 <template>
   <div class="colored-table">
-    <a-table :columns="columns" :data-source="dataSource" :pagination="false" />
-    <p class="t-r"><span>TOTAL</span> <span>N2,300</span></p>
+    <a-table :columns="columns" :data-source="drugList" :pagination="false">
+      <template slot="sn" slot-scope="text, record, index">
+        {{ index + 1 }}
+      </template>
+    </a-table>
+    <!-- <p class="t-r"><span>TOTAL</span> <span>N2,300</span></p> -->
     <br />
-    <div v-if="dataSource.length !== 0" class="t-c">
+    <div v-if="drugList.length !== 0" class="t-c">
       <AppButton
         type="primary"
         :block="false"
@@ -24,7 +28,7 @@ export default {
     AppButton,
   },
   props: {
-    dataSource: {
+    drugList: {
       type: Array,
       default: () => [],
     },
@@ -43,24 +47,19 @@ export default {
           scopedSlots: { customRender: 'sn' },
         },
         {
-          title: 'NAME OF DRUG',
-          dataIndex: 'nameOfDrug',
-          scopedSlots: { customRender: 'nameOfDrug' },
+          title: 'Name',
+          dataIndex: 'name',
+          scopedSlots: { customRender: 'name' },
         },
         {
-          title: 'DOSAGE',
+          title: 'Dosage',
           dataIndex: 'dosage',
           scopedSlots: { customRender: 'dosage' },
         },
         {
-          title: 'DURATION',
+          title: 'Duration (Days)',
           dataIndex: 'duration',
           scopedSlots: { customRender: 'duration' },
-        },
-        {
-          title: 'PRICE',
-          dataIndex: 'price',
-          scopedSlots: { customRender: 'price' },
         },
       ]
       return columns

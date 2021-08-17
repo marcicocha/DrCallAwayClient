@@ -40,7 +40,7 @@
             Selected Pharmacy: {{ selectedPharmacyObj.registered_name }}
           </h6>
           <a-divider />
-          <AppSelectedPharmacy :drugList="drugList" />
+          <AppSelectedPharmacy :drug-list="drugList" />
         </div>
       </a-modal>
     </div>

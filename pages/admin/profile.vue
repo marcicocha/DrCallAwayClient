@@ -261,7 +261,7 @@
                       :space-allowed="false"
                       :char-allowed="false"
                       :text-allowed="false"
-                      isNumber
+                      is-number
                     />
                   </a-col>
                   <a-col :span="12">

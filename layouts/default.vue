@@ -419,7 +419,7 @@
                   "
                   rules="required"
                   required
-                  noToken
+                  no-token
                 />
                 <AppSelect
                   v-if="mode === 'patient'"

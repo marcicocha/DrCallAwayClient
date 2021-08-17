@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AppTabs v-model="activeKey">
+    <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
         <a-tab-pane key="1" tab="Basic" force-render>
           <AppScreeningDataTable
@@ -113,7 +113,8 @@ export default {
     }
   },
   methods: {
-    async changeTabHandler(key) {
+    changeTabHandler(key) {
+      this.$emit('currentKeyHandler', key)
       // if (key === '1') {
       //   this.status = 'BASIC'
       // }
@@ -126,22 +127,22 @@ export default {
       // if (key === '4') {
       //   this.status = 'EXECUTIVE'
       // }
-      try {
-        const obj = {
-          ...this.filterObj,
-          // status: this.status,
-        }
-        await this.getAllMedicalScreening(obj)
-      } catch (err) {
-        const { default: errorHandler } = await import('@/utils/errorHandler')
-        errorHandler(err).forEach((msg) => {
-          this.$notification.error({
-            message: 'Error',
-            description: msg,
-            duration: 4000,
-          })
-        })
-      }
+      // try {
+      //   const obj = {
+      //     ...this.filterObj,
+      //     // status: this.status,
+      //   }
+      //   await this.getAllMedicalScreening(obj)
+      // } catch (err) {
+      //   const { default: errorHandler } = await import('@/utils/errorHandler')
+      //   errorHandler(err).forEach((msg) => {
+      //     this.$notification.error({
+      //       message: 'Error',
+      //       description: msg,
+      //       duration: 4000,
+      //     })
+      //   })
+      // }
     },
     ...mapActions({
       getAllMedicalScreening: 'testsModule/GET_ALL_MEDICAL_SCREENING',

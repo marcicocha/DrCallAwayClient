@@ -18,7 +18,7 @@
       </div>
       <br />
       <div>
-        <AppScreeningTab />
+        <AppScreeningTab @currentKeyHandler="currentKeyHandler" />
 
         <br />
         <div>
@@ -42,6 +42,8 @@
                               value: resp,
                             })
                           "
+                          rules="required"
+                          required
                           @change="selectStateHandler"
                         />
                       </a-col>
@@ -52,6 +54,8 @@
                           label="LGA"
                           placeholder="Select LGA"
                           name="LGA"
+                          rules="required"
+                          required
                           :url="`/lgas/${nearestDiagnosticObj.state}`"
                           :call-back-func="
                             (resp) => ({
@@ -75,6 +79,10 @@
                               text: resp,
                               value: resp,
                             })
+                          "
+                          :disabled="
+                            !nearestDiagnosticObj.state &&
+                            !nearestDiagnosticObj.lga
                           "
                         />
                       </a-col>
@@ -128,10 +136,79 @@
         </div>
       </div>
     </a-modal>
+    <a-modal
+      :visible="modalTestIsVisible"
+      width="700px"
+      :confirm-loading="confirmLoading"
+      :footer="null"
+      :destroy-on-close="true"
+      :mask-style="{ background: 'rgba(61, 12, 60, 0.9)' }"
+      centered
+      @cancel="closeTestModal"
+    >
+      <div class="colored-table">
+        <h6 class="t-c">{{ modalTestTitle }}</h6>
+        <a-table
+          :columns="columns"
+          :data-source="dataSource"
+          :pagination="false"
+        >
+          <template slot="sn" slot-scope="text, record, index">
+            {{ index + 1 }}
+          </template>
+        </a-table>
+        <br />
+        <div v-if="!showBookAppointment" class="t-c">
+          <p style="font-size: 1.2rem; color: black">FEE: {{ price }}</p>
+          <AppPayment :user-obj="user" @callback="callback">
+            MAKE PAYMENT
+          </AppPayment>
+        </div>
+        <div v-else>
+          <h6>Book Appointment</h6>
+          <ValidationObserver ref="observer2" tag="div">
+            <a-row type="flex" :gutter="16">
+              <a-col :span="12">
+                <AppDatePicker
+                  v-model="bookAppointmentObj.date"
+                  label="Date Of Visit"
+                  name="Date Of Visit"
+                  :disabled-date="disabledDate"
+                  rules="required"
+                  required
+                />
+              </a-col>
+              <a-col :span="12">
+                <AppTimePicker
+                  v-model="bookAppointmentObj.time"
+                  label="Time Of Visit"
+                  name="time of visit"
+                  rules="required"
+                  required
+                />
+              </a-col>
+            </a-row>
+          </ValidationObserver>
+          <br />
+          <div class="t-c">
+            <AppButton
+              type="primary"
+              :block="false"
+              :loading="isLoading"
+              class="admin-button"
+              @click="bookAppointmentHandler"
+              >SUBMIT</AppButton
+            >
+          </div>
+        </div>
+      </div>
+    </a-modal>
   </div>
 </template>
 <script>
+import moment from 'moment'
 import { ValidationObserver } from 'vee-validate'
+import { mapActions } from 'vuex'
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppNutritionForm from '@/components/admin/patient/key-service/wellness-nutrition/AppNutritionForm'
 import AppDentistForm from '@/components/admin/patient/key-service/wellness-nutrition/AppDentistForm'
@@ -139,7 +216,10 @@ import AppOpticalForm from '@/components/admin/patient/key-service/wellness-nutr
 import AppScreeningTab from '@/components/admin/patient/key-service/wellness-nutrition/AppScreeningTab'
 import AppScreeningForm from '@/components/admin/patient/key-service/wellness-nutrition/AppScreeningForm'
 import AppSelect from '@/components/AppSelect'
+import AppDatePicker from '@/components/AppDatePicker'
+import AppTimePicker from '@/components/AppTimePicker'
 import AppButton from '@/components/AppButton'
+import AppPayment from '@/components/AppPayment.vue'
 
 export default {
   components: {
@@ -151,6 +231,9 @@ export default {
     AppSelect,
     AppButton,
     AppScreeningForm,
+    AppDatePicker,
+    AppTimePicker,
+    AppPayment,
     ValidationObserver,
   },
   layout: 'dashboard',
@@ -162,9 +245,15 @@ export default {
       wellnessKey: false,
       isLoading: false,
       screeningFrequency: '',
+      screeningPlan: 'BASIC',
       counter: 0,
       lgaCounter: 0,
       nearestDiagnosticObj: {},
+      bookAppointmentObj: {},
+      price: 40000,
+      modalTestIsVisible: false,
+      showBookAppointment: false,
+      user: {},
       wellnessList: [
         {
           key: 'screening',
@@ -198,6 +287,36 @@ export default {
     }
   },
   computed: {
+    columns() {
+      const columns = [
+        {
+          title: 'S/N',
+          dataIndex: 'sn',
+          scopedSlots: { customRender: 'sn' },
+        },
+        {
+          title: 'SCREENING FREQUENCY',
+          dataIndex: 'frequency',
+        },
+        {
+          title: 'SCREENING PLAN',
+          dataIndex: 'plan',
+        },
+      ]
+      return columns
+    },
+    dataSource() {
+      const array = [
+        { frequency: this.screeningFrequency, plan: this.screeningPlan },
+      ]
+      return array
+    },
+    modalTestTitle() {
+      if (this.showBookAppointment) {
+        return `Selected Diagnostic Center: ${this.nearestDiagnosticObj.diagnosticCenter}`
+      }
+      return 'Recurring Medical Screening'
+    },
     modalTitle() {
       if (this.wellnessKey === 'screening') {
         return 'Medical Screening'
@@ -212,6 +331,24 @@ export default {
     },
   },
   methods: {
+    disabledDate(current) {
+      // Can not select days before today and today
+      return current && current < moment().startOf('day')
+    },
+    currentKeyHandler(key) {
+      if (key === '1') {
+        this.screeningPlan = 'BASIC'
+      }
+      if (key === '2') {
+        this.screeningPlan = 'STANDARD'
+      }
+      if (key === '3') {
+        this.screeningPlan = 'PREMIUM'
+      }
+      if (key === '4') {
+        this.screeningPlan = 'EXECUTIVE'
+      }
+    },
     showModalhandler(key) {
       this.modalIsVisible = true
       this.wellnessKey = key
@@ -233,16 +370,79 @@ export default {
     closeModal() {
       this.modalIsVisible = false
     },
+    closeTestModal() {
+      this.modalTestIsVisible = true
+    },
     closeViewHandler() {
       this.screenIsVisible = false
+    },
+    async bookAppointmentHandler() {
+      const isValid = await this.$refs.observer2.validate()
+      if (!isValid) {
+        return
+      }
+      try {
+        const obj = {
+          ...this.bookAppointmentObj,
+          specialtyId: 145,
+          date: moment(this.bookAppointmentObj.date).format('YYYY-MM-DD'),
+          screeningPlan: this.screeningPlan,
+          frequency: this.screeningFrequency,
+        }
+        const message = await this.submitAppointmentHandler(obj)
+        this.$notification.success({
+          message: 'Success',
+          description: message,
+          duration: 4000,
+        })
+        this.$router.replace('/admin/patient/appointment')
+        requestAnimationFrame(() => {
+          this.$refs.observer2.reset()
+          this.isLoading = false
+          this.modalTestIsVisible = false
+          this.showBookAppointment = false
+          this.bookAppointmentObj = {}
+          this.$emit('formSubmissionCompleted')
+        })
+      } catch (err) {
+        this.isLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
+    callback(res) {
+      if (res.message === 'Approved') {
+        this.$notification.success({
+          message: res.message,
+          description: 'Payment successful',
+          duration: 4000,
+        })
+        this.showBookAppointment = true
+      }
     },
     async submitHandler() {
       const isValid = await this.$refs.observer.validate()
       if (!isValid) {
         return
       }
-      console.log('CLICKED')
+      const userObject = JSON.parse(localStorage.getItem('user'))
+      this.user = {
+        email: userObject.email,
+        firstName: userObject.first_name,
+        lastName: userObject.last_name,
+        amount: this.price,
+      }
+      this.modalTestIsVisible = true
     },
+    ...mapActions({
+      submitAppointmentHandler: 'appointmentModule/BOOK_APPOINTMENT',
+    }),
   },
 }
 </script>

@@ -49,7 +49,7 @@
       @cancel="closeModal"
     >
       <div>
-        <h6 class="t-c">Prescription for Strong Headache</h6>
+        <h6 class="t-c">Test for Case {{ currentTestObj.case_file_id }}</h6>
         <a-divider />
         <AppTestForm :current-test-obj="currentTestObj" />
       </div>

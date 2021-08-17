@@ -38,7 +38,7 @@
       </div>
 
       <br />
-      <div v-if="testObj.status !== 'Pending'">
+      <div v-if="testObj.status !== 'PENDING'">
         <p>Diagnostic Center Information</p>
         <a-table
           :columns="diagnosticColumns"
@@ -71,7 +71,7 @@
       <div>
         <h6 class="t-c">Diagnostic Centers Near You</h6>
         <a-divider />
-        <AppDiagnosticTable />
+        <AppDiagnosticTable :test-list="dataSource" />
       </div>
     </a-modal>
   </div>
@@ -99,16 +99,8 @@ export default {
       isLoading: false,
       diagnosticModalIsVisible: false,
       confirmLoading: false,
-      dataSource: [
-        {
-          id: 1,
-          medicalTestName: 'Malaria Strip Test',
-        },
-        {
-          id: 2,
-          medicalTestName: 'WBC/Differential',
-        },
-      ],
+      selectedDiagnosticObj: {},
+      dataSource: [],
       diagnosticDataSource: [
         {
           name: 'Smith Diagnostic Center',
@@ -171,8 +163,29 @@ export default {
     },
   },
   methods: {
-    submitHandler() {
+    async submitHandler(record) {
+      this.selectedDiagnosticObj = record
       this.diagnosticModalIsVisible = true
+      try {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const config = {
+          headers: { Authorization: `Bearer ${user.token.token}` },
+        }
+        const { data } = this.$axios.$patch(
+          `/tests/assignTestToDiagnosticCenter/${this.testObj.testId}?partners_id=${this.selectedDiagnosticObj.partner_id}`,
+          config
+        )
+        console.log(data)
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
     closeModal() {
       this.diagnosticModalIsVisible = false

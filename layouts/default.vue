@@ -372,7 +372,7 @@
                     'DOCTOR',
                     'NURSE',
                     'AMBULANCE',
-                    'DIAGNOTIC',
+                    'DIAGNOSTIC',
                     'PHARMACY',
                     'NUTRITIONIST',
                   ]"

@@ -172,7 +172,7 @@ export default {
           headers: { Authorization: `Bearer ${user.token.token}` },
         }
         const { data } = this.$axios.$patch(
-          `/tests/assignTestToDiagnosticCenter/${this.testObj.testId}?partners_id=${this.selectedDiagnosticObj.partner_id}`,
+          `/tests/assignTestToDiagnosticCenter/${this.testObj.testId}?partners_id=${record.partner_id}`,
           config
         )
         console.log(data)

@@ -7,6 +7,9 @@
         :pagination="false"
         :row-key="(record) => record.id"
       >
+        <template slot="sn" slot-scope="text, record, index">
+          {{ index + 1 }}
+        </template>
         <template slot="select" slot-scope="text, record">
           <AppButton
             type="primary"
@@ -31,11 +34,11 @@
           <h6 class="t-c">
             Selected Diagnostic Center:
             {{
-              `${selectedDiagnosticObj.name} (${selectedDiagnosticObj.address})`
+              `${selectedDiagnosticObj.registered_name} (${selectedDiagnosticObj.address})`
             }}
           </h6>
           <a-divider />
-          <AppSelectedDiagnostic />
+          <AppSelectedDiagnostic :test-list="testList" />
         </div>
       </a-modal>
     </div>
@@ -50,18 +53,18 @@ export default {
     AppButton,
     AppSelectedDiagnostic,
   },
+  props: {
+    testList: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       selectedDiagnosticModalIsVisible: false,
       selectedDiagnosticObj: {},
       confirmLoading: false,
-      dataSource: [
-        {
-          id: 1,
-          name: 'Smith Diagnostic Center',
-          address: 'ijapo estate, Akure',
-        },
-      ],
+      dataSource: [],
     }
   },
   computed: {
@@ -74,8 +77,8 @@ export default {
         },
         {
           title: 'NAME OF DIAGNOSTIC',
-          dataIndex: 'name',
-          scopedSlots: { customRender: 'name' },
+          dataIndex: 'registered_name',
+          scopedSlots: { customRender: 'registered_name' },
         },
         {
           title: 'ADDRESS',
@@ -86,6 +89,7 @@ export default {
           title: 'SELECT',
           dataIndex: 'select',
           scopedSlots: { customRender: 'select' },
+          width: '15%',
         },
       ]
       return columns
@@ -98,6 +102,25 @@ export default {
     },
     closeModal() {
       this.selectedDiagnosticModalIsVisible = false
+    },
+    async fetchPharmacyListHandler() {
+      try {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const config = {
+          headers: { Authorization: `Bearer ${user.token.token}` },
+        }
+        const { data } = await this.$axios.$get('/tests/patient/list', config)
+        this.dataSource = data
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
   },
 }

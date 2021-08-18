@@ -117,6 +117,7 @@ import {
   nurseMenu,
   pharmacyMenu,
   nutritionistMenu,
+  diagnosticMenu,
 } from '@/menu.json'
 
 export default {
@@ -137,6 +138,7 @@ export default {
       nurseMenu,
       pharmacyMenu,
       nutritionistMenu,
+      diagnosticMenu,
     }
   },
   // computed: {
@@ -169,6 +171,10 @@ export default {
     }
     if (role === 'nutritionist') {
       this.menuList = [...nutritionistMenu]
+      return
+    }
+    if (role === 'diagnostic') {
+      this.menuList = [...diagnosticMenu]
       return
     }
     this.menuList = [...clientMenu]

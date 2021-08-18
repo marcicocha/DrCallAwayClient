@@ -567,7 +567,7 @@ export default {
   computed: {
     isRegisteredName() {
       return (
-        this.signUpObject.type === 'DIAGNOTIC' ||
+        this.signUpObject.type === 'DIAGNOSTIC' ||
         this.signUpObject.type === 'AMBULANCE' ||
         this.signUpObject.type === 'PHARMACY'
       )

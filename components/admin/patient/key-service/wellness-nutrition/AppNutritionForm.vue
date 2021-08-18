@@ -81,7 +81,11 @@
               :data-source="dataSource"
               :pagination="false"
               :row-key="(record) => record.id"
-            ></a-table>
+            >
+              <template slot="sn" slot-scope="text, record, index">
+                {{ index + 1 }}
+              </template>
+            </a-table>
           </div>
           <br />
           <div>
@@ -149,25 +153,45 @@ export default {
         },
         {
           title: 'NAME OF SERVICE',
-          dataIndex: 'nameOfService',
-          scopedSlots: { customRender: 'nameOfService' },
+          dataIndex: 'name',
         },
         {
           title: 'PRICE',
-          dataIndex: 'price',
-          scopedSlots: { customRender: 'price' },
+          dataIndex: 'amount',
         },
       ]
       return columns
     },
   },
-  mounted() {
-    const userObject = JSON.parse(localStorage.getItem('user'))
-    this.user = {
-      email: userObject.email,
-      firstName: userObject.first_name,
-      lastName: userObject.last_name,
-      amount: 100,
+  async mounted() {
+    try {
+      const user = JSON.parse(localStorage.getItem('user'))
+      const config = {
+        headers: { Authorization: `Bearer ${user.token.token}` },
+      }
+      const { data } = await this.$axios.$get(
+        'get_service_and_price_list?type=nutritionist',
+        config
+      )
+      this.dataSource = data
+      this.nutritionistObj.paymentCharge = data[0].amount
+      const userObject = JSON.parse(localStorage.getItem('user'))
+      this.user = {
+        email: userObject.email,
+        firstName: userObject.first_name,
+        lastName: userObject.last_name,
+        amount: data[0].amount,
+      }
+    } catch (err) {
+      this.isLoading = false
+      const { default: errorHandler } = await import('@/utils/errorHandler')
+      errorHandler(err).forEach((msg) => {
+        this.$notification.error({
+          message: 'Error',
+          description: msg,
+          duration: 4000,
+        })
+      })
     }
   },
   methods: {

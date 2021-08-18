@@ -14,7 +14,7 @@
             <template slot="default">
               <a-tab-pane key="1" tab="Personal Information" force-render>
                 <a-row type="flex" :gutter="24">
-                  <a-col :span="12">
+                  <a-col v-if="!isRegisteredName" :span="12">
                     <AppInput
                       v-model="profileObj.first_name"
                       label="First Name"
@@ -23,11 +23,29 @@
                       required
                     />
                   </a-col>
-                  <a-col :span="12">
+                  <a-col v-if="!isRegisteredName" :span="12">
                     <AppInput
                       v-model="profileObj.last_name"
                       label="Last Name"
                       name="Last Name"
+                      rules="required"
+                      required
+                    />
+                  </a-col>
+                  <a-col v-if="isRegisteredName" :span="12">
+                    <AppInput
+                      v-model="profileObj.registered_name"
+                      label="Registered Name"
+                      name="Registered Name"
+                      rules="required"
+                      required
+                    />
+                  </a-col>
+                  <a-col v-if="isRegisteredName" :span="12">
+                    <AppInput
+                      v-model="profileObj.rc_number"
+                      label="RC Number"
+                      name="RC Number"
                       rules="required"
                       required
                     />
@@ -101,7 +119,17 @@
                       required
                     />
                   </a-col>
-                  <a-col :span="12">
+                  <a-col v-if="role === 'diagnostic'" :span="12">
+                    <AppInput
+                      v-model="profileObj.nmcn_license_no"
+                      label="Licence Number"
+                      name="Licence Number"
+                      rules="required"
+                      required
+                      :max-length="20"
+                    />
+                  </a-col>
+                  <a-col v-if="!isRegisteredName" :span="12">
                     <AppDatePicker
                       v-model="profileObj.dob"
                       label="Date of Birth"
@@ -111,7 +139,11 @@
                     />
                   </a-col>
                 </a-row>
-                <a-row v-if="role !== 'patient'" type="flex" :gutter="24">
+                <a-row
+                  v-if="role !== 'patient' && !isRegisteredName"
+                  type="flex"
+                  :gutter="24"
+                >
                   <a-col :span="12">
                     <AppInput
                       v-model="profileObj.nursing_school_attended"
@@ -170,23 +202,21 @@
                       mode="multiple"
                     />
                   </a-col>
-                  <a-col :span="12">
-                    <a-col :span="12">
-                      <AppTimePicker
-                        v-model="profileObj.start_time"
-                        label="Starting Time"
-                        rules="required"
-                        required
-                      />
-                    </a-col>
-                    <a-col :span="12">
-                      <AppTimePicker
-                        v-model="profileObj.closing_time"
-                        label="Closing Time"
-                        rules="required"
-                        required
-                      />
-                    </a-col>
+                  <a-col :span="6">
+                    <AppTimePicker
+                      v-model="profileObj.start_time"
+                      label="Starting Time"
+                      rules="required"
+                      required
+                    />
+                  </a-col>
+                  <a-col :span="6">
+                    <AppTimePicker
+                      v-model="profileObj.closing_time"
+                      label="Closing Time"
+                      rules="required"
+                      required
+                    />
                   </a-col>
                 </a-row>
               </a-tab-pane>
@@ -335,6 +365,15 @@ export default {
       role,
       counter: 0,
     }
+  },
+  computed: {
+    isRegisteredName() {
+      return (
+        this.role === 'diagnostic' ||
+        this.role === 'ambulance' ||
+        this.role === 'pharmacy'
+      )
+    },
   },
   async mounted() {
     try {

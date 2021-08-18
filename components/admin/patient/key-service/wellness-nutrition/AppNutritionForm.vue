@@ -217,6 +217,7 @@ export default {
           const obj = {
             ...this.nutritionistObj,
             date: moment(this.nutritionistObj.date).format('YYYY-MM-DD'),
+            specialtyId: 0,
           }
           const message = await this.submitAppointmentHandler(obj)
           this.$notification.success({

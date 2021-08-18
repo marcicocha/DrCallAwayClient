@@ -13,7 +13,7 @@
           :call-back-func="
             (resp) => ({
               text: resp.user.first_name + ' - ' + resp.user.last_name,
-              value: resp.user_id,
+              value: resp.id,
               address: resp.user.address,
             })
           "

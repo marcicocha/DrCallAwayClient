@@ -3,6 +3,7 @@ import {
   ACCEPT_CASE_FILE,
   ADD_PRESCRIPTION,
   ADD_TEST,
+  GET_ALL_TEST,
 } from '@/utils/mutation-types/doctor/case-file'
 export default {
   async [GET_DOCTOR_CASE_FILE]({ commit }, payload) {
@@ -54,5 +55,17 @@ export default {
     )
     commit(ADD_TEST, data)
     return message
+  },
+  async [GET_ALL_TEST]({ commit }, payload) {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const config = {
+      headers: { Authorization: `Bearer ${user.token.token}` },
+      params: {
+        ...payload,
+      },
+    }
+    const data = await this.$axios.$get('test_all_list', config)
+    commit(GET_ALL_TEST, data)
+    return data
   },
 }

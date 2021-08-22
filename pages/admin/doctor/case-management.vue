@@ -79,7 +79,7 @@
           /></a>
         </div>
         <br />
-        <AppScreeningTab />
+        <AppScreeningTab :case-id="currentCaseFile.id" />
       </div>
     </div>
   </div>
@@ -91,7 +91,7 @@ import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable.vue'
 import AppCaseFileForm from '@/components/admin/patient/case-file/AppCaseFileForm'
-import AppScreeningTab from '@/components/admin/patient/key-service/wellness-nutrition/AppScreeningTab'
+import AppScreeningTab from '@/components/admin/doctor/case-file/AppScreeningTab'
 
 export default {
   components: {

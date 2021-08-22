@@ -17,6 +17,11 @@
           {{ record.status }}
         </div>
       </template>
+      <template slot="prescriptionBy" slot-scope="text, record">
+        <div>
+          {{ `${record.partners.first_name} ${record.partners.last_name}` }}
+        </div>
+      </template>
     </a-table>
   </div>
 </template>
@@ -38,13 +43,13 @@ export default {
       const columns = [
         {
           title: 'Test ID',
-          dataIndex: 'testId',
-          scopedSlots: { customRender: 'testId' },
+          dataIndex: 'test_id',
+          scopedSlots: { customRender: 'test_id' },
         },
         {
           title: 'Case Associated',
-          dataIndex: 'caseAssociated',
-          scopedSlots: { customRender: 'caseAssociated:' },
+          dataIndex: 'case_file_id',
+          scopedSlots: { customRender: 'case_file_id' },
         },
         {
           title: 'Prescribed By',

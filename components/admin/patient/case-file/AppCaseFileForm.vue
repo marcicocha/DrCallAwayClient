@@ -125,7 +125,9 @@
       @cancel="closeModal"
     >
       <div>
-        <h6 class="t-c">{{ `Prescription for ${initial_complain}` }}</h6>
+        <h6 class="t-c">
+          {{ `Prescription for ${caseFileObj.initial_complain}` }}
+        </h6>
         <a-divider />
         <div>
           <AppPrescriptionForm
@@ -227,8 +229,6 @@ export default {
       if (this.allPrescription.length !== 0) {
         array = [...array, ...this.allPrescription]
       }
-
-      console.log(array, 'ARRAY')
       return array
     },
     testList() {

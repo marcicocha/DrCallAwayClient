@@ -4,7 +4,11 @@
       <ValidationObserver ref="observer" tag="div">
         <a-row type="flex" :gutter="24">
           <a-col :span="12">
-            <AppInput v-model="testObj.testId" label="Test ID" name="test id" />
+            <AppInput
+              v-model="testObj.test_id"
+              label="Test ID"
+              name="test id"
+            />
           </a-col>
           <a-col :span="12">
             <AppInput
@@ -34,7 +38,11 @@
           :columns="columns"
           :data-source="dataSource"
           :pagination="false"
-        />
+        >
+          <template slot="sn" slot-scope="text, record, index">
+            {{ index + 1 }}
+          </template>
+        </a-table>
       </div>
 
       <br />
@@ -48,7 +56,7 @@
       </div>
     </div>
     <br />
-    <div v-if="testObj.status === 'Pending'" class="t-c">
+    <div v-if="testObj.status === 'PENDING'" class="t-c">
       <AppButton
         type="primary"
         :block="false"
@@ -120,8 +128,8 @@ export default {
         },
         {
           title: 'MEDICAL TEST NAME',
-          dataIndex: 'medicalTestName',
-          scopedSlots: { customRender: 'medicalTestName' },
+          dataIndex: 'name',
+          scopedSlots: { customRender: 'name' },
         },
       ]
       return columns
@@ -155,7 +163,11 @@ export default {
         } else {
           this.testObj = {
             ...newCurrentTestObj,
+            prescriptionBy: `${newCurrentTestObj.partners.first_name} ${newCurrentTestObj.partners.last_name}`,
           }
+          this.dataSource = newCurrentTestObj.tests
+            ? [...newCurrentTestObj.tests]
+            : []
         }
       },
       immediate: true,

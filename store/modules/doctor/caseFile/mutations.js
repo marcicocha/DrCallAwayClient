@@ -3,6 +3,7 @@ import {
   ACCEPT_CASE_FILE,
   ADD_PRESCRIPTION,
   ADD_TEST,
+  GET_ALL_TEST,
 } from '@/utils/mutation-types/doctor/case-file'
 
 export default {
@@ -15,4 +16,7 @@ export default {
     state.prescriptionList.push(payload.drugs)
   },
   [ADD_TEST](state, payload) {},
+  [GET_ALL_TEST](state, payload) {
+    state.testList = payload
+  },
 }

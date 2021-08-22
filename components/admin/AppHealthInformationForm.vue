@@ -228,7 +228,6 @@ export default {
           config
         )
         await this.submitHealthHandler(response)
-        console.log(response, 'RESPONSE')
         this.$notification.success({
           message: 'Success',
           description: response.message,

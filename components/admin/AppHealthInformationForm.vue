@@ -5,7 +5,7 @@
     <div>
       <a-form>
         <ValidationObserver ref="observer" tag="div">
-          <a-row type="flex" :gutter="24">
+          <a-row type="flex" :gutter="24" align="bottom">
             <a-col :span="12">
               <AppInput
                 v-model="healthDetails.heart_rate"
@@ -108,18 +108,19 @@
               <AppCheckboxGroup
                 v-model="healthDetails.recurring"
                 :options="options"
+                label="Recurring Medical Condition"
                 :disabled="isDoctor"
               />
             </a-col>
-            <a-col :span="8">
-              <span>If Other, Please specify</span>
+            <a-col :span="8" class="checkbox_group">
+              <span class="other_text">If Other, Please specify</span>
               <AppInput
                 v-model="healthDetails.if_others"
                 name="value"
                 :disabled="healthDetails.recurring !== 'Other' || isDoctor"
               />
             </a-col>
-            <a-col :span="24">
+            <a-col :span="24" style="margin-top: 0.8rem">
               <AppTextArea
                 v-model="healthDetails.additional_info"
                 label="Additional Information"
@@ -256,3 +257,15 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.other_text {
+  margin-right: 1rem;
+  width: 50%;
+  color: black;
+}
+.checkbox_group {
+  display: flex;
+  align-items: center;
+  // align-items: flex-end;
+}
+</style>

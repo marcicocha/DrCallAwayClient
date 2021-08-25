@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-form-item>
+    <a-form-item :label="label">
       <a-checkbox-group
         v-model="innerValue"
         :options="options"

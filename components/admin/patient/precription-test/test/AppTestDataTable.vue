@@ -17,7 +17,7 @@
           {{ record.status }}
         </div>
       </template>
-      <template slot="prescriptionBy" slot-scope="text, record">
+      <template slot="prescribedBy" slot-scope="text, record">
         <div>
           {{ `${record.partners.first_name} ${record.partners.last_name}` }}
         </div>

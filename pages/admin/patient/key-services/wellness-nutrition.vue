@@ -371,7 +371,7 @@ export default {
       this.modalIsVisible = false
     },
     closeTestModal() {
-      this.modalTestIsVisible = true
+      this.modalTestIsVisible = false
     },
     closeViewHandler() {
       this.screenIsVisible = false

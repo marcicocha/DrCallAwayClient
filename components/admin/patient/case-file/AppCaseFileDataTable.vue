@@ -31,7 +31,7 @@
         <div style="text-align: right">
           <a-button-group class="link-group">
             <a-button
-              v-if="record.status !== 'PENDING'"
+              v-if="record.status === 'ACTIVE'"
               type="link"
               class="table__btn"
               @click="$emit('showDeleteConfirm', record)"

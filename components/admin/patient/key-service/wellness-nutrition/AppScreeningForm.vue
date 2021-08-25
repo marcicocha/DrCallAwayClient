@@ -4,9 +4,9 @@
       <ValidationObserver ref="observer" tag="div">
         <AppSelect
           v-model="screeningFrequency"
-          label="Screening Frquency"
-          placeholder="Select Screening Frquency"
-          name="Screening Frquency"
+          label="Screening Frequency"
+          placeholder="Select Screening Frequency"
+          name="Screening Frequency"
           :data="['Yearly', 'Bi-annually', 'Quarterly']"
           :remote="false"
           required

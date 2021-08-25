@@ -22,7 +22,7 @@
       <a-col :span="12">
         <a-row type="flex" :gutter="24" align="middle">
           <a-col :span="12" class="ailment-container">
-            <p>Ailment</p>
+            <p>{{ specialist ? 'Specialty' : 'Ailment' }}</p>
             <p class="red">{{ cardObj.initial_complain }}</p>
           </a-col>
           <a-col :span="12">
@@ -35,6 +35,7 @@
               <a-col :span="12">
                 <AppButton
                   type="default"
+                  size="default"
                   class="admin-button"
                   @click="medicalInfoHandler"
                   >MEDICAL INFO</AppButton
@@ -43,6 +44,7 @@
               <a-col :span="12">
                 <AppButton
                   type="primary"
+                  size="default"
                   class="admin-button"
                   @click="checkInHandler"
                   >CHECK IN</AppButton
@@ -68,6 +70,10 @@ export default {
     cardObj: {
       type: Object,
       default: () => {},
+    },
+    specialist: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {

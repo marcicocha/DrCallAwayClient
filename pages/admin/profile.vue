@@ -261,6 +261,7 @@
                       name="Email"
                       rules="required"
                       required
+                      disabled
                     />
                   </a-col>
                 </a-row>
@@ -307,6 +308,8 @@
                           value: resp.code,
                         })
                       "
+                      rules="required"
+                      required
                     />
                   </a-col>
                   <a-col :span="12"> </a-col>

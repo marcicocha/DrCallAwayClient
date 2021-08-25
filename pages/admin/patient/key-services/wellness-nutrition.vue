@@ -73,6 +73,8 @@
                           label="Select a Diagnostic Center"
                           placeholder="Select Diagnostic Center"
                           name="Diagnostic Center"
+                          rules="required"
+                          required
                           :url="`/list/diagnostic?state=${nearestDiagnosticObj.state}&lga=${nearestDiagnosticObj.lga}`"
                           :call-back-func="
                             (resp) => ({

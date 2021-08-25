@@ -20,6 +20,7 @@
                 v-for="(card, i) in specialistWaitingRoom"
                 :key="i"
                 :card-obj="card"
+                specialist
                 @medicalInfoHandler="medicalInfoHandler"
                 @checkInHandler="checkInHandler"
               />

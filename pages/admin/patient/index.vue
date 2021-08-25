@@ -28,7 +28,11 @@
           ><NuxtLink to="/admin/patient/case-file">View All ></NuxtLink></span
         ></AppTitleDivider
       >
-      <AppCaseFileDataTable :data-source="allCaseFiles" :pagination="false" />
+      <AppCaseFileDataTable
+        :data-source="allCaseFiles"
+        :pagination="false"
+        :dashboard="true"
+      />
     </div>
     <br />
     <div>

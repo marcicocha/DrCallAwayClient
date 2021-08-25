@@ -66,41 +66,76 @@ export default {
       type: Object,
       default: () => {},
     },
+    dashboard: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     columns() {
-      const columns = [
-        {
-          title: 'Case ID',
-          dataIndex: 'id',
-          scopedSlots: { customRender: 'id' },
-        },
-        {
-          title: 'Consultant Name',
-          dataIndex: 'doctor',
-          scopedSlots: { customRender: 'doctor' },
-        },
-        {
-          title: 'Complaint',
-          dataIndex: 'initial_complain',
-          scopedSlots: { customRender: 'initial_complain' },
-        },
-        {
-          title: 'Date Added',
-          dataIndex: 'created_at',
-          scopedSlots: { customRender: 'date' },
-        },
-        {
-          title: 'Status',
-          dataIndex: 'status',
-          scopedSlots: { customRender: 'status' },
-        },
-        {
-          title: '',
-          dataIndex: 'operation1',
-          scopedSlots: { customRender: 'operation' },
-        },
-      ]
+      let columns
+      if (!this.dashboard) {
+        columns = [
+          {
+            title: 'Case ID',
+            dataIndex: 'id',
+            scopedSlots: { customRender: 'id' },
+          },
+          {
+            title: 'Consultant Name',
+            dataIndex: 'doctor',
+            scopedSlots: { customRender: 'doctor' },
+          },
+          {
+            title: 'Complaint',
+            dataIndex: 'initial_complain',
+            scopedSlots: { customRender: 'initial_complain' },
+          },
+          {
+            title: 'Date Added',
+            dataIndex: 'created_at',
+            scopedSlots: { customRender: 'date' },
+          },
+          {
+            title: 'Status',
+            dataIndex: 'status',
+            scopedSlots: { customRender: 'status' },
+          },
+          {
+            title: '',
+            dataIndex: 'operation1',
+            scopedSlots: { customRender: 'operation' },
+          },
+        ]
+      } else {
+        columns = [
+          {
+            title: 'Case ID',
+            dataIndex: 'id',
+            scopedSlots: { customRender: 'id' },
+          },
+          {
+            title: 'Consultant Name',
+            dataIndex: 'doctor',
+            scopedSlots: { customRender: 'doctor' },
+          },
+          {
+            title: 'Complaint',
+            dataIndex: 'initial_complain',
+            scopedSlots: { customRender: 'initial_complain' },
+          },
+          {
+            title: 'Date Added',
+            dataIndex: 'created_at',
+            scopedSlots: { customRender: 'date' },
+          },
+          {
+            title: 'Status',
+            dataIndex: 'status',
+            scopedSlots: { customRender: 'status' },
+          },
+        ]
+      }
       return columns
     },
   },

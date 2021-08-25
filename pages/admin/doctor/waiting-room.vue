@@ -26,7 +26,7 @@
             </div>
           </a-tab-pane>
         </template>
-        <template slot="rightInfo">
+        <template v-if="false" slot="rightInfo">
           <AppInput
             v-model="filterObj.filterValue"
             placeholder="Search"

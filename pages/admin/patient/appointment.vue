@@ -21,7 +21,7 @@
           />
         </a-tab-pane>
       </template>
-      <template slot="rightInfo">
+      <template v-if="false" slot="rightInfo">
         <a-row type="flex" :gutter="16" class="right-info">
           <a-col :span="12">
             <AppSelect

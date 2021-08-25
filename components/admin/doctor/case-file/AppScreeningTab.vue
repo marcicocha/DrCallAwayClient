@@ -31,7 +31,7 @@
           />
         </a-tab-pane>
       </template>
-      <template slot="rightInfo">
+      <template v-if="false" slot="rightInfo">
         <div class="right-info">
           <AppInput
             v-model="filterObj.filterValue"

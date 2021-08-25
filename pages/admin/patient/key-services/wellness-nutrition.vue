@@ -257,7 +257,7 @@ export default {
       wellnessList: [
         {
           key: 'screening',
-          firstText: 'Request routine',
+          firstText: 'Request Routine',
           secondText: 'MEDICAL SCREENING',
           imgSrc: 'admin/patient/2.png',
           color: '#641C62',

@@ -115,6 +115,8 @@ export default {
                 ? `${newCurrentAppointment.specialist.user.first_name} ${newCurrentAppointment.specialist.user.last_name}`
                 : newCurrentAppointment.service_center
                 ? `${newCurrentAppointment.service_center.first_name} ${newCurrentAppointment.service_center.last_name}`
+                : newCurrentAppointment.specialist_nutrition
+                ? `${newCurrentAppointment.specialist_nutrition.first_name} ${newCurrentAppointment.specialist_nutrition.last_name}`
                 : undefined,
               description: newCurrentAppointment.specialty
                 ? newCurrentAppointment.specialty.name

@@ -54,7 +54,18 @@
       @cancel="closeModal"
     >
       <div>
-        <h6 class="t-c">Medical Checkup</h6>
+        <h6 class="t-c">
+          Appointment
+          {{
+            currentAppointment.specialist
+              ? ` with ${currentAppointment.specialist.user.first_name} ${currentAppointment.specialist.user.last_name}`
+              : currentAppointment.service_center
+              ? ` with ${currentAppointment.service_center.first_name} ${currentAppointment.service_center.last_name}`
+              : currentAppointment.specialist_nutrition
+              ? ` with ${currentAppointment.specialist_nutrition.first_name} ${currentAppointment.specialist_nutrition.last_name}`
+              : ''
+          }}
+        </h6>
         <a-divider />
         <AppAppointmentCreationForm
           :current-appointment="currentAppointment"

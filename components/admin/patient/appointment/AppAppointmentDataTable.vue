@@ -29,6 +29,11 @@
             `${record.service_center.first_name} ${record.service_center.last_name}`
           }}
         </div>
+        <!-- <div v-if="record.specialist_nutrition">
+          {{
+            `${record.specialist_nutrition.first_name} ${record.specialist_nutrition.last_name}`
+          }}
+        </div> -->
       </template>
       <template slot="description" slot-scope="text, record">
         {{ record.specialty ? record.specialty.name : record.description }}

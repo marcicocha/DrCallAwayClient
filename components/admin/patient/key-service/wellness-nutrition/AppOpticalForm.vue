@@ -31,6 +31,7 @@
             (resp) => ({
               text: resp.name,
               value: resp.name,
+              amount: resp.amount,
             })
           "
           @selectedObject="selectedOpticalServiceHandler"

@@ -18,7 +18,7 @@
         </div>
       </template>
       <template slot="date" slot-scope="text, record">
-        {{ formatDate(record.date) }}
+        {{ formatDate(record.created_at) }}
       </template>
       <template slot="doctor" slot-scope="text, record">
         {{

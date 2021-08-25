@@ -52,11 +52,12 @@
                         ? resp.first_name + ' ' + resp.last_name
                         : resp.user.first_name + ' ' + resp.user.last_name,
                     value: resp.id,
+                    address: resp.address,
                   })
                 "
                 required
                 rules="required"
-                @select="selectHandler"
+                @selectedObject="selectedObjectHandler"
               />
               <!-- <AppSelect
                 v-if="homeCareKey === 'practitioner'"
@@ -91,7 +92,7 @@
                 v-model="homeCareObj.address"
                 label="Address"
                 name="address"
-                placeholder="Enter Address"
+                disabled
               />
               <AppDatePicker
                 v-model="homeCareObj.date"
@@ -165,7 +166,7 @@
                 type="default"
                 :loading="isLoading"
                 class="admin-button"
-                @click="closeModal"
+                @click="closeSelectedModal"
                 >GO BACK</AppButton
               >
             </a-col>
@@ -181,10 +182,10 @@
   </div>
 </template>
 <script>
+import moment from 'moment'
 import { mapActions } from 'vuex'
 import { ValidationObserver } from 'vee-validate'
-import { nurse, generalPractioner } from '@/drcallawayPrices.json'
-import moment from 'moment'
+import { nurse, generalPractitioner } from '@/drcallawayPrices.json'
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
@@ -212,7 +213,7 @@ export default {
       selectedModalIsVisible: false,
       dataSource: [],
       nurse,
-      generalPractioner,
+      generalPractitioner,
       consultationCardList: [
         {
           key: 'nurse',
@@ -257,7 +258,7 @@ export default {
       if (this.homeCareKey === 'nurse') {
         return nurse[0].services
       }
-      return generalPractioner[0].services
+      return generalPractitioner[0].services
     },
     totalPrice() {
       let total = 0
@@ -277,9 +278,13 @@ export default {
   },
   mounted() {},
   methods: {
-    selectHandler(value, options) {
-      const description = options.componentOptions.propsData.title
-      this.name = description
+    // selectHandler(value, options) {
+    //   const description = options.componentOptions.propsData.title
+    //   this.name = description
+    // },
+    selectedObjectHandler(rcd) {
+      this.name = rcd.text
+      this.homeCareObj.address = rcd.address
     },
     showModalhandler(key) {
       this.modalIsVisible = true
@@ -287,6 +292,7 @@ export default {
     },
     closeModal() {
       this.modalIsVisible = false
+      this.homeCareObj = {}
     },
     closeSelectedModal() {
       this.selectedModalIsVisible = false

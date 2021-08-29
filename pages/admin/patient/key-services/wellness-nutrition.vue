@@ -102,6 +102,7 @@
                   :block="false"
                   :loading="isLoading"
                   class="admin-button"
+                  :disabled="!nearestDiagnosticObj.diagnosticCenter"
                   @click="submitHandler"
                   >PROCEED</AppButton
                 >

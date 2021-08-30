@@ -325,7 +325,7 @@ export default {
           } else {
             const obj = {
               ...this.homeCareObj,
-              specialtyId: 5,
+              specialtyId: 215,
               date: moment(this.homeCareObj.date).format('YYYY-MM-DD'),
             }
             const message = await this.submitAppointmentHandler(obj)

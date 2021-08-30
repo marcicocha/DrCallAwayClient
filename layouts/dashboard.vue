@@ -11,12 +11,14 @@
         class="logo"
         :style="collapsed ? { margin: '1rem 0' } : { margin: '1rem' }"
       >
-        <img
-          v-if="collapsed"
-          src="../assets/images/minimized-logo.png"
-          alt="logo"
-        />
-        <img v-else src="../assets/images/logo.png" alt="logo" />
+        <nuxt-link to="/">
+          <img
+            v-if="collapsed"
+            src="../assets/images/minimized-logo.png"
+            alt="logo"
+          />
+          <img v-else src="../assets/images/logo.png" alt="logo" />
+        </nuxt-link>
       </div>
       <a-menu
         theme="dark"

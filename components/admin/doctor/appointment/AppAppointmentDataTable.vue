@@ -21,7 +21,7 @@
         {{ `${record.patient.first_name} ${record.patient.last_name}` }}
       </template>
       <template slot="description" slot-scope="text, record">
-        {{ record.specialty.name }}
+        {{ record.specialty ? record.specialty.name : null }}
       </template>
       <template slot="time" slot-scope="text, record">
         {{ formatTime(record.time) }}

@@ -233,14 +233,14 @@
     {
       "key": "dashboard",
       "name": "Dashboard",
-      "path": "/admin/diagnostic-center",
+      "path": "/admin/diagnostic",
       "icon": "appstore",
       "children": []
     },
     {
       "key": "tests",
       "name": "Tests",
-      "path": "/admin/diagnostic-center/tests",
+      "path": "/admin/diagnostic/tests",
       "icon": "medicine-box",
       "children": []
     },

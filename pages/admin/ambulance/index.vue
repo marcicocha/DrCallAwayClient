@@ -28,7 +28,11 @@
           ><NuxtLink to="/admin/ambulance/callup">View All ></NuxtLink></span
         ></AppTitleDivider
       >
-      <AppCallUpDataTable :data-source="allCallUp" :pagination="false" />
+      <AppCallUpDataTable
+        :data-source="allCallUp"
+        :pagination="false"
+        dashboard
+      />
     </div>
   </div>
 </template>

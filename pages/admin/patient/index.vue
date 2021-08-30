@@ -31,7 +31,7 @@
       <AppCaseFileDataTable
         :data-source="allCaseFiles"
         :pagination="false"
-        :dashboard="true"
+        dashboard
       />
     </div>
     <br />

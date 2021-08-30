@@ -58,34 +58,63 @@ export default {
       type: Object,
       default: () => {},
     },
+    dashboard: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     columns() {
-      const columns = [
-        {
-          title: 'S/N',
-          dataIndex: 'sn',
-          scopedSlots: { customRender: 'sn' },
-        },
-        {
-          title: 'Pickup Address',
-          dataIndex: 'pick_up_address',
-        },
-        {
-          title: 'Phone Number',
-          dataIndex: 'phone_number',
-        },
-        {
-          title: 'Status',
-          dataIndex: 'status',
-          scopedSlots: { customRender: 'status' },
-        },
-        {
-          title: '',
-          dataIndex: 'operation',
-          scopedSlots: { customRender: 'operation' },
-        },
-      ]
+      let columns
+      if (!this.dashboard) {
+        columns = [
+          {
+            title: 'S/N',
+            dataIndex: 'sn',
+            scopedSlots: { customRender: 'sn' },
+          },
+          {
+            title: 'Pickup Address',
+            dataIndex: 'pick_up_address',
+          },
+          {
+            title: 'Phone Number',
+            dataIndex: 'phone_number',
+          },
+          {
+            title: 'Status',
+            dataIndex: 'status',
+            scopedSlots: { customRender: 'status' },
+          },
+          {
+            title: '',
+            dataIndex: 'operation',
+            scopedSlots: { customRender: 'operation' },
+          },
+        ]
+      } else {
+        columns = [
+          {
+            title: 'S/N',
+            dataIndex: 'sn',
+            scopedSlots: { customRender: 'sn' },
+          },
+          {
+            title: 'Pickup Address',
+            dataIndex: 'pick_up_address',
+          },
+          {
+            title: 'Phone Number',
+            dataIndex: 'phone_number',
+          },
+          {
+            title: 'Status',
+            dataIndex: 'status',
+            scopedSlots: { customRender: 'status' },
+          },
+        ]
+      }
+
       return columns
     },
   },

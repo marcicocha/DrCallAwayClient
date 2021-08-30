@@ -224,8 +224,10 @@ export default {
         try {
           const obj = {
             ...this.dentistObj,
-            specialtyId: 145,
+            // specialtyId: 145,
+            specialtyId: 'SPELTY020',
             date: moment(this.dentistObj.date).format('YYYY-MM-DD'),
+            time: moment(this.dentistObj.time).format('HH:mm:ss'),
           }
           const message = await this.submitAppointmentHandler(obj)
           this.$notification.success({

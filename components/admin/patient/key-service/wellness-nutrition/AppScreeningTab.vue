@@ -5,25 +5,25 @@
         <a-tab-pane key="1" tab="Basic" force-render>
           <AppScreeningDataTable
             status="basic"
-            :data-source="basicDataSource"
+            :data-source="basicDataSource.test_name"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Standard">
           <AppScreeningDataTable
             status="standard"
-            :data-source="standardDataSource"
+            :data-source="standardDataSource.test_name"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Premium">
           <AppScreeningDataTable
             status="premium"
-            :data-source="premiumDataSource"
+            :data-source="premiumDataSource.test_name"
           />
         </a-tab-pane>
         <a-tab-pane key="4" tab="Executive" force-render>
           <AppScreeningDataTable
             status="executive"
-            :data-source="executiveDataSource"
+            :data-source="executiveDataSource.test_name"
           />
         </a-tab-pane>
       </template>
@@ -69,10 +69,11 @@ export default {
       activeKey: '1',
       filterObj: {},
       status: '',
-      basicDataSource: [],
-      premiumDataSource: [],
-      executiveDataSource: [],
-      standardDataSource: [],
+      basicDataSource: {},
+      premiumDataSource: {},
+      executiveDataSource: {},
+      standardDataSource: {},
+      price: 0,
     }
   },
   computed: {
@@ -89,16 +90,16 @@ export default {
       const data = await this.getAllMedicalScreening(obj)
       data.forEach((rcd) => {
         if (rcd.package_name === 'Basic') {
-          this.basicDataSource = rcd.test_name
+          this.basicDataSource = rcd
         }
         if (rcd.package_name === 'Standard') {
-          this.standardDataSource = rcd.test_name
+          this.standardDataSource = rcd
         }
         if (rcd.package_name === 'Premium') {
-          this.premiumDataSource = rcd.test_name
+          this.premiumDataSource = rcd
         }
         if (rcd.package_name === 'Executive') {
-          this.executiveDataSource = rcd.test_name
+          this.executiveDataSource = rcd
         }
       })
     } catch (err) {
@@ -114,19 +115,20 @@ export default {
   },
   methods: {
     changeTabHandler(key) {
-      this.$emit('currentKeyHandler', key)
-      // if (key === '1') {
-      //   this.status = 'BASIC'
-      // }
-      // if (key === '2') {
-      //   this.status = 'STANDARD'
-      // }
-      // if (key === '3') {
-      //   this.status = 'PREMIUM'
-      // }
-      // if (key === '4') {
-      //   this.status = 'EXECUTIVE'
-      // }
+      let price
+      if (key === '1') {
+        price = this.basicDataSource.price
+      }
+      if (key === '2') {
+        price = this.standardDataSource.price
+      }
+      if (key === '3') {
+        price = this.premiumDataSource.price
+      }
+      if (key === '4') {
+        price = this.executiveDataSource.price
+      }
+      this.$emit('currentKeyHandler', key, price)
       // try {
       //   const obj = {
       //     ...this.filterObj,

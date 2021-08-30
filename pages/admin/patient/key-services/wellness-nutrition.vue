@@ -75,17 +75,19 @@
                           name="Diagnostic Center"
                           rules="required"
                           required
-                          :url="`/list/diagnostic?state=${nearestDiagnosticObj.state}&lga=${nearestDiagnosticObj.lga}`"
+                          :url="`/list/diagnostic?state=${nearestDiagnosticObj.state}&city=${nearestDiagnosticObj.lga}`"
                           :call-back-func="
                             (resp) => ({
-                              text: resp,
-                              value: resp,
+                              text: resp.registered_name,
+                              value: resp.registered_name,
+                              id: resp.id,
                             })
                           "
                           :disabled="
                             !nearestDiagnosticObj.state &&
                             !nearestDiagnosticObj.lga
                           "
+                          @selectedObject="selectedObjectHandler"
                         />
                       </a-col>
                     </a-row>
@@ -334,11 +336,14 @@ export default {
     },
   },
   methods: {
+    selectedObjectHandler(rcd) {
+      this.nearestDiagnosticObj.specialistId = rcd.id
+    },
     disabledDate(current) {
       // Can not select days before today and today
       return current && current < moment().startOf('day')
     },
-    currentKeyHandler(key) {
+    currentKeyHandler(key, price) {
       if (key === '1') {
         this.screeningPlan = 'BASIC'
       }
@@ -351,6 +356,7 @@ export default {
       if (key === '4') {
         this.screeningPlan = 'EXECUTIVE'
       }
+      this.price = price
     },
     showModalhandler(key) {
       this.modalIsVisible = true
@@ -387,8 +393,8 @@ export default {
       try {
         const obj = {
           ...this.bookAppointmentObj,
-          specialtyId: 145,
           date: moment(this.bookAppointmentObj.date).format('YYYY-MM-DD'),
+          time: moment(this.bookAppointmentObj.time).format('HH:mm:ss'),
           screeningPlan: this.screeningPlan,
           frequency: this.screeningFrequency,
         }

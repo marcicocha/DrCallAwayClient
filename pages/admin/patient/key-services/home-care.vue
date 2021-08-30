@@ -315,6 +315,7 @@ export default {
               partner_id: this.homeCareObj.specialistId,
               description: this.homeCareObj.additional_info,
               date: moment(this.homeCareObj.date).format('YYYY-MM-DD'),
+              time: moment(this.homeCareObj.time).format('HH:mm:ss'),
             }
             const message = await this.submitNurseHandler(obj)
             this.$notification.success({

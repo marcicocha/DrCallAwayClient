@@ -224,6 +224,7 @@ export default {
             ...this.opticalObj,
             specialtyId: 35,
             date: moment(this.opticalObj.date).format('YYYY-MM-DD'),
+            time: moment(this.opticalObj.time).format('HH:mm:ss'),
           }
           const message = await this.submitAppointmentHandler(obj)
           this.$notification.success({

@@ -24,7 +24,7 @@
           {{
             homeCareKey === 'nurse'
               ? 'Request a Nurse'
-              : 'Request a General Practioner'
+              : 'Request a General Practitioner'
           }}
         </h6>
         <a-divider />
@@ -92,7 +92,6 @@
                 v-model="homeCareObj.address"
                 label="Address"
                 name="address"
-                disabled
               />
               <AppDatePicker
                 v-model="homeCareObj.date"
@@ -284,7 +283,7 @@ export default {
     // },
     selectedObjectHandler(rcd) {
       this.name = rcd.text
-      this.homeCareObj.address = rcd.address
+      // this.homeCareObj.address = rcd.address
     },
     showModalhandler(key) {
       this.modalIsVisible = true

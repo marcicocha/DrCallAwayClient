@@ -117,16 +117,16 @@ export default {
     changeTabHandler(key) {
       let price
       if (key === '1') {
-        price = this.basicDataSource.price
+        price = this.basicDataSource.amount
       }
       if (key === '2') {
-        price = this.standardDataSource.price
+        price = this.standardDataSource.amount
       }
       if (key === '3') {
-        price = this.premiumDataSource.price
+        price = this.premiumDataSource.amount
       }
       if (key === '4') {
-        price = this.executiveDataSource.price
+        price = this.executiveDataSource.amount
       }
       this.$emit('currentKeyHandler', key, price)
       // try {

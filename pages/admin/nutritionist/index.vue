@@ -30,7 +30,11 @@
           ></span
         ></AppTitleDivider
       >
-      <AppCaseFileDataTable :data-source="allCaseFiles" :pagination="false" />
+      <AppCaseFileDataTable
+        :data-source="allCaseFiles"
+        :pagination="false"
+        dashboard
+      />
     </div>
     <br />
     <div>
@@ -44,6 +48,7 @@
       <AppAppointmentDataTable
         :data-source="allAppointments"
         :pagination="false"
+        dashboard
       />
     </div>
   </div>

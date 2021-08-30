@@ -65,45 +65,84 @@ export default {
       type: Object,
       default: () => {},
     },
+    dashboard: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     columns() {
-      const columns = [
-        {
-          title: 'Appointment ID',
-          dataIndex: 'id',
-        },
-        {
-          title: 'Patient Name',
-          dataIndex: 'patientName',
-          scopedSlots: { customRender: 'name' },
-        },
-        {
-          title: 'Description',
-          dataIndex: 'description',
-          scopedSlots: { customRender: 'description' },
-        },
-        {
-          title: 'Date of Visit',
-          dataIndex: 'date',
-          scopedSlots: { customRender: 'date' },
-        },
-        {
-          title: 'Time of Visit',
-          dataIndex: 'time',
-          scopedSlots: { customRender: 'time' },
-        },
-        {
-          title: 'Status',
-          dataIndex: 'status',
-          scopedSlots: { customRender: 'status' },
-        },
-        {
-          title: '',
-          dataIndex: 'operation',
-          scopedSlots: { customRender: 'operation' },
-        },
-      ]
+      let columns
+      if (!this.dashboard) {
+        columns = [
+          {
+            title: 'Appointment ID',
+            dataIndex: 'id',
+          },
+          {
+            title: 'Patient Name',
+            dataIndex: 'patientName',
+            scopedSlots: { customRender: 'name' },
+          },
+          {
+            title: 'Description',
+            dataIndex: 'description',
+            scopedSlots: { customRender: 'description' },
+          },
+          {
+            title: 'Date of Visit',
+            dataIndex: 'date',
+            scopedSlots: { customRender: 'date' },
+          },
+          {
+            title: 'Time of Visit',
+            dataIndex: 'time',
+            scopedSlots: { customRender: 'time' },
+          },
+          {
+            title: 'Status',
+            dataIndex: 'status',
+            scopedSlots: { customRender: 'status' },
+          },
+          {
+            title: '',
+            dataIndex: 'operation',
+            scopedSlots: { customRender: 'operation' },
+          },
+        ]
+      } else {
+        columns = [
+          {
+            title: 'Appointment ID',
+            dataIndex: 'id',
+          },
+          {
+            title: 'Patient Name',
+            dataIndex: 'patientName',
+            scopedSlots: { customRender: 'name' },
+          },
+          {
+            title: 'Description',
+            dataIndex: 'description',
+            scopedSlots: { customRender: 'description' },
+          },
+          {
+            title: 'Date of Visit',
+            dataIndex: 'date',
+            scopedSlots: { customRender: 'date' },
+          },
+          {
+            title: 'Time of Visit',
+            dataIndex: 'time',
+            scopedSlots: { customRender: 'time' },
+          },
+          {
+            title: 'Status',
+            dataIndex: 'status',
+            scopedSlots: { customRender: 'status' },
+          },
+        ]
+      }
       return columns
     },
   },

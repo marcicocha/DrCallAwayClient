@@ -28,7 +28,11 @@
           ><NuxtLink to="/admin/nurse/booking">View All ></NuxtLink></span
         ></AppTitleDivider
       >
-      <AppBookingDataTable :data-source="allBooking" :pagination="false" />
+      <AppBookingDataTable
+        :data-source="allBooking"
+        :pagination="false"
+        dashboard
+      />
     </div>
   </div>
 </template>

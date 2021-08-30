@@ -65,6 +65,7 @@
 <script>
 import { ValidationObserver } from 'vee-validate'
 import { mapActions } from 'vuex'
+import moment from 'moment'
 import AppInput from '@/components/AppInput'
 import AppButton from '@/components/AppButton'
 import AppDatePicker from '@/components/AppDatePicker'
@@ -121,6 +122,7 @@ export default {
               description: newCurrentAppointment.specialty
                 ? newCurrentAppointment.specialty.name
                 : newCurrentAppointment.description,
+              time: moment(newCurrentAppointment.time, 'HH:mm:ss'),
             }
             return
           }
@@ -130,6 +132,7 @@ export default {
               this.status !== 'patient'
                 ? `${newCurrentAppointment.patient.first_name} ${newCurrentAppointment.patient.last_name}`
                 : undefined,
+            time: moment(newCurrentAppointment.time, 'HH:mm:ss'),
           }
         }
       },

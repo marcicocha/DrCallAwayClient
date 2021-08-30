@@ -15,12 +15,12 @@
                 :call-back-func="
                   (resp) => ({
                     text: resp.name,
-                    value: resp.id,
+                    value: resp.code,
                   })
                 "
                 rules="required"
                 required
-                @select="selectSpecialityHandler"
+                @selectedObject="selectSpecialityHandler"
               />
             </a-col>
             <a-col :span="12">
@@ -37,9 +37,10 @@
                   (resp) => ({
                     text: resp.user.first_name + ' - ' + resp.user.last_name,
                     value: resp.user_id,
+                    address: resp.user.address,
                   })
                 "
-                @select="selectSpecialistHandler"
+                @selectedObject="selectSpecialistHandler"
               />
               <small style="color: #3d0c3c"
                 >One will be automatically selected for you if you don't know
@@ -51,6 +52,7 @@
                 v-model="bookAppointmentObj.address"
                 label="Address"
                 name="Address"
+                disabled
               />
             </a-col>
             <a-col :span="12">
@@ -222,14 +224,14 @@ export default {
     closeModal() {
       this.modalIsVisible = false
     },
-    selectSpecialistHandler(value, options) {
-      const description = options.componentOptions.propsData.title
-      this.specialist = description
+    selectSpecialistHandler(rcd) {
+      this.specialist = rcd.text
+      this.bookAppointmentObj.address = rcd.address
     },
-    selectSpecialityHandler(value, options) {
+    selectSpecialityHandler(rcd) {
       this.counter++
-      const description = options.componentOptions.propsData.title
-      this.speciality = description
+      // this.bookAppointmentObj.specialtyId = rcd.id
+      this.speciality = rcd.text
     },
     disabledDate(current) {
       // Can not select days before today and today
@@ -246,6 +248,7 @@ export default {
           const obj = {
             ...this.bookAppointmentObj,
             date: moment(this.bookAppointmentObj.date).format('YYYY-MM-DD'),
+            time: moment(this.bookAppointmentObj.time).format('HH:mm:ss'),
           }
           const message = await this.submitAppointmentHandler(obj)
           this.$notification.success({

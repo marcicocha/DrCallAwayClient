@@ -29,18 +29,18 @@
             `${record.service_center.first_name} ${record.service_center.last_name}`
           }}
         </div>
-        <div v-else>
+        <!-- <div v-else>
           {{
             `${record.specialist_nutrition.first_name} ${record.specialist_nutrition.last_name}`
           }}
-        </div>
+        </div> -->
       </template>
       <template slot="description" slot-scope="text, record">
         {{ record.specialty ? record.specialty.name : record.description }}
       </template>
-      <template slot="time" slot-scope="text, record">
+      <!-- <template slot="time" slot-scope="text, record">
         {{ formatTime(record.time) }}
-      </template>
+      </template> -->
     </a-table>
   </div>
 </template>

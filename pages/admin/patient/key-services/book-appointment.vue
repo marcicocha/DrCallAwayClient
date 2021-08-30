@@ -7,7 +7,7 @@
           <a-row type="flex" :gutter="16">
             <a-col :span="12">
               <AppSelect
-                v-model="bookAppointmentObj.specialtyId"
+                v-model="bookAppointmentObj.specialtyCode"
                 label="List of Medical Specialties"
                 placeholder="Select a Medical Specialty"
                 name="medical specialties"
@@ -16,6 +16,7 @@
                   (resp) => ({
                     text: resp.name,
                     value: resp.code,
+                    id: resp.id,
                   })
                 "
                 rules="required"
@@ -32,7 +33,7 @@
                 name="specialists"
                 rules="required"
                 required
-                :url="`specialists/${bookAppointmentObj.specialtyId}`"
+                :url="`specialists/${bookAppointmentObj.specialtyCode}`"
                 :call-back-func="
                   (resp) => ({
                     text: resp.user.first_name + ' - ' + resp.user.last_name,
@@ -230,7 +231,7 @@ export default {
     },
     selectSpecialityHandler(rcd) {
       this.counter++
-      // this.bookAppointmentObj.specialtyId = rcd.id
+      this.bookAppointmentObj.specialtyId = rcd.id
       this.speciality = rcd.text
     },
     disabledDate(current) {

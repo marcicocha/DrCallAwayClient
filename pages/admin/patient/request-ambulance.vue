@@ -67,9 +67,9 @@
           <AppAmbulanceDataTable :data-source="allCallUp" />
         </a-tab-pane>
       </template>
-      <template v-if="false" slot="rightInfo">
-        <a-row type="flex" :gutter="16" class="right-info">
-          <a-col :span="12">
+      <template slot="rightInfo">
+        <a-row type="flex" :gutter="16" class="right-info" justify="end">
+          <a-col v-if="false" :span="12">
             <AppSelect
               v-model="filterObj.filterKey"
               placeholder="Select filter option"

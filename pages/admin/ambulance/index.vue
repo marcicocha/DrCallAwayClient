@@ -29,7 +29,7 @@
         ></AppTitleDivider
       >
       <AppCallUpDataTable
-        :data-source="allCallUp"
+        :data-source="callUpDataSource"
         :pagination="false"
         dashboard
       />
@@ -69,6 +69,10 @@ export default {
     ...mapState({
       allCallUp: (state) => state.callUpModule.callUpList,
     }),
+    callUpDataSource() {
+      const newArray = this.allCallUp.filter((rcd, i) => i < 5)
+      return newArray
+    },
   },
   async mounted() {
     try {

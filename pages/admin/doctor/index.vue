@@ -30,7 +30,7 @@
           ></span
         ></AppTitleDivider
       >
-      <AppCaseFileDataTable :data-source="allCaseFiles" :pagination="false" />
+      <AppCaseFileDataTable :data-source="caseDataSource" :pagination="false" />
     </div>
     <br />
     <div>
@@ -40,7 +40,7 @@
         >
       </AppTitleDivider>
       <AppAppointmentDataTable
-        :data-source="allAppointments"
+        :data-source="appointmentDataSource"
         :pagination="false"
       />
     </div>
@@ -96,6 +96,14 @@ export default {
       allAppointments: (state) => state.appointmentDoctorModule.appointments,
       allCaseFiles: (state) => state.caseFileDoctorModule.caseFiles,
     }),
+    caseDataSource() {
+      const newArray = this.allCaseFiles.filter((rcd, i) => i < 5)
+      return newArray
+    },
+    appointmentDataSource() {
+      const newArray = this.allAppointments.filter((rcd, i) => i < 5)
+      return newArray
+    },
   },
   async mounted() {
     try {

@@ -30,7 +30,7 @@
           ></span
         ></AppTitleDivider
       >
-      <AppTestDataTable :data-source="allTest" :pagination="false" />
+      <AppTestDataTable :data-source="testDataSource" :pagination="false" />
     </div>
   </div>
 </template>
@@ -67,6 +67,10 @@ export default {
     ...mapState({
       allTest: (state) => state.testDiagnosticModule.tests,
     }),
+    testDataSource() {
+      const newArray = this.allTest.filter((rcd, i) => i < 5)
+      return newArray
+    },
   },
   async mounted() {
     try {

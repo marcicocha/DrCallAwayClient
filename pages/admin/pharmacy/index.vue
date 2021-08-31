@@ -31,7 +31,7 @@
         ></AppTitleDivider
       >
       <AppPrescriptionDataTable
-        :data-source="allPrescription"
+        :data-source="prescriptionDataSource"
         :pagination="false"
       />
     </div>
@@ -70,6 +70,10 @@ export default {
     ...mapState({
       allPrescription: (state) => state.prescriptionPharmacyModule.prescription,
     }),
+    prescriptionDataSource() {
+      const newArray = this.allPrescription.filter((rcd, i) => i < 5)
+      return newArray
+    },
   },
   async mounted() {
     try {

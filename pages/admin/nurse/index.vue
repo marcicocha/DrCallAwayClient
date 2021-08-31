@@ -29,7 +29,7 @@
         ></AppTitleDivider
       >
       <AppBookingDataTable
-        :data-source="allBooking"
+        :data-source="bookingDataSource"
         :pagination="false"
         dashboard
       />
@@ -69,6 +69,10 @@ export default {
     ...mapState({
       allBooking: (state) => state.bookingModule.bookingList,
     }),
+    bookingDataSource() {
+      const newArray = this.allBooking.filter((rcd, i) => i < 5)
+      return newArray
+    },
   },
   async mounted() {
     try {

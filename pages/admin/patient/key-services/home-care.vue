@@ -78,7 +78,7 @@
               /> -->
               <AppInput
                 v-model="homeCareObj.days"
-                label="Number of Days"
+                :label="`Number of Days (N${totalPrice}/Day)`"
                 name="number of Days"
                 placeholder="Enter Number of Days"
                 required
@@ -155,7 +155,7 @@
               {{ index + 1 }}
             </template></a-table
           >
-          <p class="price-total">TOTAL: {{ totalPrice }}</p>
+          <p class="price-total">TOTAL: {{ totalPriceAndDays }}</p>
           <p class="red bold">
             ***Session covers 1hour, new booking to be made to extend session***
           </p>
@@ -265,7 +265,10 @@ export default {
     totalPrice() {
       let total = 0
       this.priceList.forEach((record) => (total += record.price))
-      const totalDays = total * this.homeCareObj.days
+      return total
+    },
+    totalPriceAndDays() {
+      const totalDays = this.totalPrice * this.homeCareObj.days
       return totalDays
     },
     user() {
@@ -274,7 +277,7 @@ export default {
         email: userObject.email,
         firstName: userObject.first_name,
         lastName: userObject.last_name,
-        amount: this.totalPrice,
+        amount: this.totalPriceAndDays,
       }
     },
   },

@@ -156,6 +156,9 @@
             </template></a-table
           >
           <p class="price-total">TOTAL: {{ totalPrice }}</p>
+          <p class="red bold">
+            ***Session covers 1hour, new booking to be made to extend session***
+          </p>
         </div>
         <br />
         <div>

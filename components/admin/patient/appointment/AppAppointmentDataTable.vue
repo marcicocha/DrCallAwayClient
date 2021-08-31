@@ -29,11 +29,12 @@
             `${record.service_center.first_name} ${record.service_center.last_name}`
           }}
         </div>
-        <!-- <div v-else>
+        <div v-else-if="record.specialist_data.length !== 0">
           {{
-            `${record.specialist_nutrition.first_name} ${record.specialist_nutrition.last_name}`
+            `${record.specialist_data[0].first_name} ${record.specialist_data[0].last_name}`
           }}
-        </div> -->
+        </div>
+        <div v-else></div>
       </template>
       <template slot="description" slot-scope="text, record">
         {{ record.specialty ? record.specialty.name : record.description }}

@@ -98,18 +98,18 @@ export default {
       allCaseFiles: (state) => state.caseFileModule.caseFiles,
     }),
     caseDataSource() {
-      const newArray = this.allCaseFiles.filter((rcd, i) => i > 4)
+      const newArray = this.allCaseFiles.filter((rcd, i) => i < 5)
       return newArray
     },
     appointmentDataSource() {
-      const newArray = this.allAppointments.filter((rcd, i) => i > 4)
+      const newArray = this.allAppointments.filter((rcd, i) => i < 5)
       return newArray
     },
   },
   async mounted() {
     try {
-      await this.getAllCaseFile()
-      await this.getAllAppointment()
+      this.getAllCaseFile()
+      this.getAllAppointment()
     } catch (err) {
       const { default: errorHandler } = await import('@/utils/errorHandler')
       errorHandler(err).forEach((msg) => {

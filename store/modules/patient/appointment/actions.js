@@ -2,6 +2,7 @@ import {
   GET_APPOINTMENT,
   BOOK_APPOINTMENT,
   BOOK_NURSE,
+  RESET_APPOINTMENT,
 } from '@/utils/mutation-types/patient/appointment'
 export default {
   async [GET_APPOINTMENT]({ commit }, payload) {
@@ -40,5 +41,8 @@ export default {
     )
     commit(BOOK_NURSE, data)
     return message
+  },
+  [RESET_APPOINTMENT]({ commit }) {
+    commit(RESET_APPOINTMENT)
   },
 }

@@ -111,6 +111,9 @@ export default {
   mounted() {
     this.changeTabHandler('1')
   },
+  destroyed() {
+    this.resetAppointment()
+  },
   methods: {
     showAppointmentModal(record) {
       console.log(record, 'RECORD')
@@ -149,6 +152,7 @@ export default {
     },
     ...mapActions({
       getAllAppointment: 'appointmentModule/GET_APPOINTMENT',
+      resetAppointment: 'appointmentModule/RESET_APPOINTMENT',
     }),
   },
 }

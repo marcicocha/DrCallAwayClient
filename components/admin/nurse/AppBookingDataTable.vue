@@ -23,9 +23,6 @@
       <template slot="name" slot-scope="text, record">
         {{ `${record.patient.first_name} ${record.patient.last_name}` }}
       </template>
-      <template slot="time" slot-scope="text, record">
-        {{ formatTime(record.time) }}
-      </template>
       <template slot="date" slot-scope="text, record">
         {{ formatDate(record.date) }}
       </template>

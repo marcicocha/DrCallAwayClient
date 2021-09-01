@@ -19,7 +19,7 @@
         />
       </slide>
     </carousel>
-
+    <!-- 
     <br />
 
     <div>
@@ -35,7 +35,7 @@
         :pagination="false"
         dashboard
       />
-    </div>
+    </div> -->
     <br />
     <div>
       <AppTitleDivider title="Appointments">
@@ -58,7 +58,7 @@ import { Carousel, Slide } from 'vue-carousel'
 import { mapActions, mapState } from 'vuex'
 import AppDashboardCard from '@/components/AppDashboardCard'
 import AppTitleDivider from '@/components/AppTitleDivider'
-import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable.vue'
+// import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable.vue'
 import AppAppointmentDataTable from '@/components/admin/doctor/appointment/AppAppointmentDataTable'
 
 export default {
@@ -67,7 +67,7 @@ export default {
     Slide,
     AppDashboardCard,
     AppTitleDivider,
-    AppCaseFileDataTable,
+    // AppCaseFileDataTable,
     AppAppointmentDataTable,
   },
   layout: 'dashboard',
@@ -119,7 +119,7 @@ export default {
   },
   async mounted() {
     try {
-      await this.getAllCaseFile()
+      // await this.getAllCaseFile()
       await this.getAllAppointment()
     } catch (err) {
       const { default: errorHandler } = await import('@/utils/errorHandler')

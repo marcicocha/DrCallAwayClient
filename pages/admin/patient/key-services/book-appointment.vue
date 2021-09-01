@@ -70,6 +70,8 @@
                 label="Select Proposed Date"
                 name="select proposed date"
                 :disabled-date="disabledDate"
+                rules="required"
+                required
               />
             </a-col>
             <a-col :span="12">
@@ -77,6 +79,8 @@
                 v-model="bookAppointmentObj.time"
                 label="Select Proposed Time"
                 name="select proposed time"
+                rules="required"
+                required
               />
             </a-col>
             <a-col :span="24">
@@ -183,7 +187,7 @@ export default {
       isLoading: false,
       modalIsVisible: false,
       confirmLoading: false,
-      dataSource: [],
+      dataSource: [{ sn: 1, name: 'Consultation', price: 30000 }],
       user: {},
       specialist: '',
       speciality: '',
@@ -200,7 +204,7 @@ export default {
         },
         {
           title: 'NAME OF SERVICE',
-          dataIndex: 'nameOfService',
+          dataIndex: 'name',
           scopedSlots: { customRender: 'name' },
         },
         {
@@ -212,15 +216,6 @@ export default {
       return columns
     },
   },
-  mounted() {
-    const userObject = JSON.parse(localStorage.getItem('user'))
-    this.user = {
-      email: userObject.email,
-      firstName: userObject.first_name,
-      lastName: userObject.last_name,
-      amount: 100,
-    }
-  },
   methods: {
     closeModal() {
       this.modalIsVisible = false
@@ -228,6 +223,7 @@ export default {
     selectSpecialistHandler(rcd) {
       this.specialist = rcd.text
       this.bookAppointmentObj.address = rcd.address
+      this.bookAppointmentObj.paymentCharge = 30000
     },
     selectSpecialityHandler(rcd) {
       this.counter++
@@ -285,6 +281,13 @@ export default {
         return
       }
       // this.isLoading = true
+      const userObject = JSON.parse(localStorage.getItem('user'))
+      this.user = {
+        email: userObject.email,
+        firstName: userObject.first_name,
+        lastName: userObject.last_name,
+        amount: this.bookAppointmentObj.paymentCharge,
+      }
       this.modalIsVisible = true
     },
     ...mapActions({

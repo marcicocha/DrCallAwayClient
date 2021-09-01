@@ -319,6 +319,7 @@ export default {
           description: 'Payment successful',
           duration: 4000,
         })
+        this.isLoading = true
         try {
           if (this.homeCareKey === 'nurse') {
             const obj = {

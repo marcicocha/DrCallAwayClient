@@ -340,6 +340,7 @@ export default {
               ...this.homeCareObj,
               specialtyId: 215,
               date: moment(this.homeCareObj.date).format('YYYY-MM-DD'),
+              time: moment(this.homeCareObj.time).format('HH:mm:ss'),
             }
             const message = await this.submitAppointmentHandler(obj)
             this.$notification.success({

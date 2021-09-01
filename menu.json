@@ -268,13 +268,6 @@
       "children": []
     },
     {
-      "key": "waiting-room",
-      "name": "Waiting Room",
-      "path": "/admin/nutritionist/waiting-room",
-      "icon": "team",
-      "children": []
-    },
-    {
       "key": "case-management",
       "name": "Case Management",
       "path": "/admin/nutritionist/case-management",

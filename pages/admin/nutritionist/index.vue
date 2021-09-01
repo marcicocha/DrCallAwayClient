@@ -74,13 +74,13 @@ export default {
   data() {
     return {
       dashboardList: [
-        {
-          firstText: 'Waiting',
-          secondText: 'ROOM',
-          imgSrc: 'admin/doctor/1.png',
-          color: '#641C62',
-          path: '/admin/nutritionist/waiting-room',
-        },
+        // {
+        //   firstText: 'Waiting',
+        //   secondText: 'ROOM',
+        //   imgSrc: 'admin/doctor/1.png',
+        //   color: '#641C62',
+        //   path: '/admin/nutritionist/waiting-room',
+        // },
         {
           firstText: 'View',
           secondText: 'APPOINTMENTS',

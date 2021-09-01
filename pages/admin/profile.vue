@@ -79,7 +79,7 @@
                   <a-col :span="12">
                     <AppSelect
                       :key="counter"
-                      v-model="profileObj.lga"
+                      v-model="profileObj.city"
                       label="LGA"
                       placeholder="Select LGA"
                       name="LGA"
@@ -396,7 +396,7 @@ export default {
   methods: {
     selectStateHandler() {
       this.counter++
-      this.profileObj.lga = undefined
+      this.profileObj.city = undefined
     },
     async submitHandler() {
       const isValid = await this.$refs.observer.validate()

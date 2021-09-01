@@ -98,16 +98,22 @@
                 label="Select Start Date"
                 name="select start date"
                 :disabled-date="disabledDate"
+                rules="required"
+                required
               />
               <AppTimePicker
                 v-model="homeCareObj.time"
                 label="Select Start Time"
                 name="select start time"
+                rules="required"
+                required
               />
               <AppInput
                 v-model="homeCareObj.additional_info"
                 label="Additional Comment"
                 name="additional comment"
+                rules="required"
+                required
               />
             </ValidationObserver>
             <br />

@@ -15,6 +15,7 @@
               text: resp.user.first_name + ' - ' + resp.user.last_name,
               value: resp.id,
               address: resp.user.address,
+              specialtyId: resp.specialty_id,
             })
           "
           @selectedObject="selectedObjectHandler"
@@ -191,6 +192,7 @@ export default {
     selectedObjectHandler(rcd) {
       this.optician = rcd.text
       this.opticalObj.address = rcd.address
+      this.opticalObj.specialtyId = rcd.specialtyId
     },
     selectedOpticalServiceHandler(rcd) {
       this.opticalObj.paymentCharge = rcd.amount
@@ -222,7 +224,6 @@ export default {
         try {
           const obj = {
             ...this.opticalObj,
-            specialtyId: 35,
             date: moment(this.opticalObj.date).format('YYYY-MM-DD'),
             time: moment(this.opticalObj.time).format('HH:mm:ss'),
           }

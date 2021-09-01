@@ -15,6 +15,7 @@
               text: resp.user.first_name + ' - ' + resp.user.last_name,
               value: resp.id,
               address: resp.user.address,
+              specialtyId: resp.specialty_id,
             })
           "
           @selectedObject="selectedObjectHandler"
@@ -190,6 +191,7 @@ export default {
     selectedObjectHandler(rcd) {
       this.dentist = rcd.text
       this.dentistObj.address = rcd.address
+      this.dentistObj.specialtyId = rcd.specialtyId
     },
     selectedDentalServiceHandler(rcd) {
       this.dentistObj.paymentCharge = rcd.amount
@@ -225,7 +227,6 @@ export default {
           const obj = {
             ...this.dentistObj,
             // specialtyId: 145,
-            specialtyId: 'SPELTY020',
             date: moment(this.dentistObj.date).format('YYYY-MM-DD'),
             time: moment(this.dentistObj.time).format('HH:mm:ss'),
           }

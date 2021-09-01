@@ -81,6 +81,7 @@
                               text: resp.registered_name,
                               value: resp.registered_name,
                               id: resp.id,
+                              address: resp.address,
                             })
                           "
                           :disabled="
@@ -97,7 +98,11 @@
               <a-col :span="8" class="t-c">
                 <p>Selected Diagnostic Center</p>
                 <p style="text-transform: uppercase">
-                  {{ nearestDiagnosticObj.diagnosticCenter }}
+                  {{
+                    nearestDiagnosticObj.diagnosticCenter
+                      ? `${nearestDiagnosticObj.diagnosticCenter} (${nearestDiagnosticObj.address}) `
+                      : ''
+                  }}
                 </p>
                 <AppButton
                   type="primary"
@@ -338,6 +343,7 @@ export default {
   methods: {
     selectedObjectHandler(rcd) {
       this.nearestDiagnosticObj.specialistId = rcd.id
+      this.nearestDiagnosticObj.address = rcd.address
     },
     disabledDate(current) {
       // Can not select days before today and today

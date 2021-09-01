@@ -70,7 +70,9 @@ export default {
       allCallUp: (state) => state.callUpModule.callUpList,
     }),
     callUpDataSource() {
-      const newArray = this.allCallUp.filter((rcd, i) => i < 5)
+      const newArray = this.allCallUp
+        ? this.allCallUp.filter((rcd, i) => i < 5)
+        : []
       return newArray
     },
   },

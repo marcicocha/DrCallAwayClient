@@ -75,7 +75,7 @@
                           name="Diagnostic Center"
                           rules="required"
                           required
-                          :url="`/list/diagnostic?state=${nearestDiagnosticObj.state}&city=${nearestDiagnosticObj.lga}`"
+                          :url="`/list/diagnostic?state=${nearestDiagnosticObj.state}&lga=${nearestDiagnosticObj.lga}`"
                           :call-back-func="
                             (resp) => ({
                               text: resp.registered_name,

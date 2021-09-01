@@ -71,7 +71,9 @@ export default {
       allPrescription: (state) => state.prescriptionPharmacyModule.prescription,
     }),
     prescriptionDataSource() {
-      const newArray = this.allPrescription.filter((rcd, i) => i < 5)
+      const newArray = this.allPrescription
+        ? this.allPrescription.filter((rcd, i) => i < 5)
+        : []
       return newArray
     },
   },

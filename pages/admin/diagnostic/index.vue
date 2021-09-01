@@ -68,7 +68,9 @@ export default {
       allTest: (state) => state.testDiagnosticModule.tests,
     }),
     testDataSource() {
-      const newArray = this.allTest.filter((rcd, i) => i < 5)
+      const newArray = this.allTest
+        ? this.allTest.filter((rcd, i) => i < 5)
+        : []
       return newArray
     },
   },

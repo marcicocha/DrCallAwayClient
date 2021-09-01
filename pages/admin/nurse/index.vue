@@ -70,7 +70,9 @@ export default {
       allBooking: (state) => state.bookingModule.bookingList,
     }),
     bookingDataSource() {
-      const newArray = this.allBooking.filter((rcd, i) => i < 5)
+      const newArray = this.allBooking
+        ? this.allBooking.filter((rcd, i) => i < 5)
+        : []
       return newArray
     },
   },

@@ -98,11 +98,15 @@ export default {
       allCaseFiles: (state) => state.caseFileModule.caseFiles,
     }),
     caseDataSource() {
-      const newArray = this.allCaseFiles.filter((rcd, i) => i < 5)
+      const newArray = this.allCaseFiles
+        ? this.allCaseFiles.filter((rcd, i) => i < 5)
+        : []
       return newArray
     },
     appointmentDataSource() {
-      const newArray = this.allAppointments.filter((rcd, i) => i < 5)
+      const newArray = this.allAppointments
+        ? this.allAppointments.filter((rcd, i) => i < 5)
+        : []
       return newArray
     },
   },

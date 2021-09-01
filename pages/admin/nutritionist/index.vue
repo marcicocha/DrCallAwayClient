@@ -88,13 +88,13 @@ export default {
           color: '#BB58B6',
           path: '/admin/nutritionist/appointment',
         },
-        {
-          firstText: 'Case',
-          secondText: 'MANAGEMENT',
-          imgSrc: 'admin/patient/3.png',
-          color: '#3D0C3C',
-          path: '/admin/nutritionist/case-management',
-        },
+        // {
+        //   firstText: 'Case',
+        //   secondText: 'MANAGEMENT',
+        //   imgSrc: 'admin/patient/3.png',
+        //   color: '#3D0C3C',
+        //   path: '/admin/nutritionist/case-management',
+        // },
       ],
     }
   },

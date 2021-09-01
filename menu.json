@@ -268,13 +268,6 @@
       "children": []
     },
     {
-      "key": "case-management",
-      "name": "Case Management",
-      "path": "/admin/nutritionist/case-management",
-      "icon": "file-done",
-      "children": []
-    },
-    {
       "key": "appointment",
       "name": "Appointments",
       "path": "/admin/nutritionist/appointment",

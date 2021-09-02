@@ -9,18 +9,21 @@
         <a-tab-pane key="1" tab="Pending Cases">
           <AppCaseFileDataTable
             :data-source="allCaseFiles"
+            :columns="columns"
             @showCaseFile="showCaseFile"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Active Cases">
           <AppCaseFileDataTable
             :data-source="allCaseFiles"
+            :columns="columns"
             @showCaseFile="showCaseFile"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Cases">
           <AppCaseFileDataTable
             :data-source="allCaseFiles"
+            :columns="columns"
             @showCaseFile="showCaseFile"
           />
         </a-tab-pane>
@@ -105,6 +108,41 @@ export default {
     }
   },
   computed: {
+    columns() {
+      const columns = [
+        {
+          title: 'Case ID',
+          dataIndex: 'id',
+          scopedSlots: { customRender: 'id' },
+        },
+        {
+          title: 'Consultant Name',
+          dataIndex: 'doctor',
+          scopedSlots: { customRender: 'doctor' },
+        },
+        {
+          title: 'Complaint',
+          dataIndex: 'initial_complain',
+          scopedSlots: { customRender: 'initial_complain' },
+        },
+        {
+          title: 'Date Added',
+          dataIndex: 'created_at',
+          scopedSlots: { customRender: 'date' },
+        },
+        {
+          title: 'Status',
+          dataIndex: 'status',
+          scopedSlots: { customRender: 'status' },
+        },
+        {
+          title: '',
+          dataIndex: 'operation1',
+          scopedSlots: { customRender: 'operation' },
+        },
+      ]
+      return columns
+    },
     ...mapState({
       allCaseFiles: (state) => state.caseFileModule.caseFiles,
     }),

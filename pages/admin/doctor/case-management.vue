@@ -10,6 +10,7 @@
           <AppCaseFileDataTable
             status="ACTIVE"
             :data-source="allCaseFiles"
+            :columns="columns"
             @showCaseFile="showCaseFile"
           />
         </a-tab-pane>
@@ -17,6 +18,7 @@
           <AppCaseFileDataTable
             status="COMPLETED"
             :data-source="allCaseFiles"
+            :columns="columns"
             @showCaseFile="showCaseFile"
           />
         </a-tab-pane>
@@ -115,6 +117,41 @@ export default {
     }
   },
   computed: {
+    columns() {
+      const columns = [
+        {
+          title: 'Case ID',
+          dataIndex: 'id',
+          scopedSlots: { customRender: 'id' },
+        },
+        {
+          title: 'Patient Name',
+          dataIndex: 'patient',
+          scopedSlots: { customRender: 'patient' },
+        },
+        {
+          title: 'Complaint',
+          dataIndex: 'initial_complain',
+          scopedSlots: { customRender: 'initial_complain' },
+        },
+        {
+          title: 'Date Added',
+          dataIndex: 'created_at',
+          scopedSlots: { customRender: 'date' },
+        },
+        {
+          title: 'Status',
+          dataIndex: 'status',
+          scopedSlots: { customRender: 'status' },
+        },
+        {
+          title: '',
+          dataIndex: 'operation1',
+          scopedSlots: { customRender: 'operation' },
+        },
+      ]
+      return columns
+    },
     ...mapState({
       allCaseFiles: (state) => state.caseFileDoctorModule.caseFiles,
     }),

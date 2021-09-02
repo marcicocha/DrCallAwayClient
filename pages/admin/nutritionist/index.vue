@@ -33,7 +33,8 @@
       <AppCaseFileDataTable
         :data-source="caseDataSource"
         :pagination="false"
-        dashboard
+        :columns="columns"
+
       />
     </div> -->
     <br />
@@ -48,7 +49,7 @@
       <AppAppointmentDataTable
         :data-source="appointmentDataSource"
         :pagination="false"
-        dashboard
+        :columns="columns"
       />
     </div>
   </div>
@@ -99,6 +100,36 @@ export default {
     }
   },
   computed: {
+    columns() {
+      const columns = [
+        {
+          title: 'Case ID',
+          dataIndex: 'id',
+          scopedSlots: { customRender: 'id' },
+        },
+        {
+          title: 'Patient Name',
+          dataIndex: 'patient',
+          scopedSlots: { customRender: 'patient' },
+        },
+        {
+          title: 'Complaint',
+          dataIndex: 'initial_complain',
+          scopedSlots: { customRender: 'initial_complain' },
+        },
+        {
+          title: 'Date Added',
+          dataIndex: 'created_at',
+          scopedSlots: { customRender: 'date' },
+        },
+        {
+          title: 'Status',
+          dataIndex: 'status',
+          scopedSlots: { customRender: 'status' },
+        },
+      ]
+      return columns
+    },
     ...mapState({
       allAppointments: (state) =>
         state.appointmentNutritionistModule.appointments,

@@ -27,6 +27,13 @@
             : 'Unassigned'
         }}
       </template>
+      <template slot="patient" slot-scope="text, record">
+        {{
+          record.doctor
+            ? `${record.patient.first_name} ${record.patient.last_name}`
+            : ''
+        }}
+      </template>
       <template slot="operation" slot-scope="text, record">
         <div style="text-align: right">
           <a-button-group class="link-group">
@@ -66,77 +73,9 @@ export default {
       type: Object,
       default: () => {},
     },
-    dashboard: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  computed: {
-    columns() {
-      let columns
-      if (!this.dashboard) {
-        columns = [
-          {
-            title: 'Case ID',
-            dataIndex: 'id',
-            scopedSlots: { customRender: 'id' },
-          },
-          {
-            title: 'Consultant Name',
-            dataIndex: 'doctor',
-            scopedSlots: { customRender: 'doctor' },
-          },
-          {
-            title: 'Complaint',
-            dataIndex: 'initial_complain',
-            scopedSlots: { customRender: 'initial_complain' },
-          },
-          {
-            title: 'Date Added',
-            dataIndex: 'created_at',
-            scopedSlots: { customRender: 'date' },
-          },
-          {
-            title: 'Status',
-            dataIndex: 'status',
-            scopedSlots: { customRender: 'status' },
-          },
-          {
-            title: '',
-            dataIndex: 'operation1',
-            scopedSlots: { customRender: 'operation' },
-          },
-        ]
-      } else {
-        columns = [
-          {
-            title: 'Case ID',
-            dataIndex: 'id',
-            scopedSlots: { customRender: 'id' },
-          },
-          {
-            title: 'Consultant Name',
-            dataIndex: 'doctor',
-            scopedSlots: { customRender: 'doctor' },
-          },
-          {
-            title: 'Complaint',
-            dataIndex: 'initial_complain',
-            scopedSlots: { customRender: 'initial_complain' },
-          },
-          {
-            title: 'Date Added',
-            dataIndex: 'created_at',
-            scopedSlots: { customRender: 'date' },
-          },
-          {
-            title: 'Status',
-            dataIndex: 'status',
-            scopedSlots: { customRender: 'status' },
-          },
-        ]
-      }
-      return columns
+    columns: {
+      type: Array,
+      default: () => [],
     },
   },
   methods: {

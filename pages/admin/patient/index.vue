@@ -31,7 +31,7 @@
       <AppCaseFileDataTable
         :data-source="caseDataSource"
         :pagination="false"
-        dashboard
+        :columns="columns"
       />
     </div>
     <br />
@@ -93,6 +93,36 @@ export default {
     }
   },
   computed: {
+    columns() {
+      const columns = [
+        {
+          title: 'Case ID',
+          dataIndex: 'id',
+          scopedSlots: { customRender: 'id' },
+        },
+        {
+          title: 'Consultant Name',
+          dataIndex: 'doctor',
+          scopedSlots: { customRender: 'doctor' },
+        },
+        {
+          title: 'Complaint',
+          dataIndex: 'initial_complain',
+          scopedSlots: { customRender: 'initial_complain' },
+        },
+        {
+          title: 'Date Added',
+          dataIndex: 'created_at',
+          scopedSlots: { customRender: 'date' },
+        },
+        {
+          title: 'Status',
+          dataIndex: 'status',
+          scopedSlots: { customRender: 'status' },
+        },
+      ]
+      return columns
+    },
     ...mapState({
       allAppointments: (state) => state.appointmentModule.appointments,
       allCaseFiles: (state) => state.caseFileModule.caseFiles,

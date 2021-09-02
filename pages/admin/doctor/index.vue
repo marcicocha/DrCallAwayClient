@@ -30,7 +30,11 @@
           ></span
         ></AppTitleDivider
       >
-      <AppCaseFileDataTable :data-source="caseDataSource" :pagination="false" />
+      <AppCaseFileDataTable
+        :data-source="caseDataSource"
+        :pagination="false"
+        :columns="columns"
+      />
     </div>
     <br />
     <div>
@@ -92,6 +96,36 @@ export default {
     }
   },
   computed: {
+    columns() {
+      const columns = [
+        {
+          title: 'Case ID',
+          dataIndex: 'id',
+          scopedSlots: { customRender: 'id' },
+        },
+        {
+          title: 'Patient Name',
+          dataIndex: 'patient',
+          scopedSlots: { customRender: 'patient' },
+        },
+        {
+          title: 'Complaint',
+          dataIndex: 'initial_complain',
+          scopedSlots: { customRender: 'initial_complain' },
+        },
+        {
+          title: 'Date Added',
+          dataIndex: 'created_at',
+          scopedSlots: { customRender: 'date' },
+        },
+        {
+          title: 'Status',
+          dataIndex: 'status',
+          scopedSlots: { customRender: 'status' },
+        },
+      ]
+      return columns
+    },
     ...mapState({
       allAppointments: (state) => state.appointmentDoctorModule.appointments,
       allCaseFiles: (state) => state.caseFileDoctorModule.caseFiles,

@@ -37,7 +37,13 @@
         <div v-else></div>
       </template>
       <template slot="description" slot-scope="text, record">
-        {{ record.specialty ? record.specialty.name : record.description }}
+        {{
+          record.specialty
+            ? record.specialty.name
+            : record.description
+            ? record.description
+            : record.additional_info
+        }}
       </template>
       <!-- <template slot="time" slot-scope="text, record">
         {{ formatTime(record.time) }}

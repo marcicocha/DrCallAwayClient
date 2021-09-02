@@ -122,7 +122,9 @@ export default {
               description: newCurrentAppointment.specialty
                 ? newCurrentAppointment.specialty.name
                 : newCurrentAppointment.description,
-              time: moment(newCurrentAppointment.time, 'HH:mm:ss'),
+              time: newCurrentAppointment.time
+                ? moment(newCurrentAppointment.time, 'HH:mm:ss')
+                : undefined,
             }
             return
           }
@@ -132,7 +134,9 @@ export default {
               this.status !== 'patient'
                 ? `${newCurrentAppointment.patient.first_name} ${newCurrentAppointment.patient.last_name}`
                 : undefined,
-            time: moment(newCurrentAppointment.time, 'HH:mm:ss'),
+            time: newCurrentAppointment.time
+              ? moment(newCurrentAppointment.time, 'HH:mm:ss')
+              : undefined,
           }
         }
       },

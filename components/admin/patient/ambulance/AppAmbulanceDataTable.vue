@@ -20,6 +20,9 @@
           {{ record.status }}
         </div>
       </template>
+      <template slot="date" slot-scope="text, record">
+        {{ formatDate(record.created_at) }}
+      </template>
       <template slot="operation" slot-scope="text, record">
         <div style="text-align: right">
           <a-button-group class="link-group">
@@ -37,6 +40,8 @@
   </div>
 </template>
 <script>
+import moment from 'moment'
+
 export default {
   name: 'AppAmbulanceDataTable',
   props: {
@@ -77,6 +82,11 @@ export default {
           scopedSlots: { customRender: 'additional_information' },
         },
         {
+          title: 'Date',
+          dataIndex: 'date',
+          scopedSlots: { customRender: 'date' },
+        },
+        {
           title: 'Status',
           dataIndex: 'status',
           scopedSlots: { customRender: 'status' },
@@ -102,6 +112,9 @@ export default {
     },
     viewCallUp(record) {
       this.$emit('showCallUp', record)
+    },
+    formatDate(record) {
+      return moment(record).format('DD-MM-YYYY')
     },
   },
 }

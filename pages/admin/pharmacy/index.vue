@@ -25,7 +25,7 @@
     <div>
       <AppTitleDivider title="Prescriptions"
         ><span class="right-details"
-          ><NuxtLink to="/admin/pharmacy/prescription"
+          ><NuxtLink to="/admin/pharmacy/prescriptions"
             >View All ></NuxtLink
           ></span
         ></AppTitleDivider

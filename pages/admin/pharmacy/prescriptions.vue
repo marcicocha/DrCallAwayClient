@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="page_heading">CALLUPS</p>
+    <p class="page_heading">PRESCRIPTIONS</p>
     <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Prescription" force-render>

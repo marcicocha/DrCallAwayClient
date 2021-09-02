@@ -50,13 +50,23 @@
                       required
                     />
                   </a-col>
-                  <a-col :span="role !== 'patient' ? 12 : 24">
+                  <a-col :span="12">
                     <AppInput
                       v-model="profileObj.address"
                       label="Address"
                       name="Address"
                       rules="required"
                       required
+                    />
+                  </a-col>
+                  <a-col v-if="role === 'patient'" :span="12">
+                    <AppSelect
+                      v-model="profileObj.gender"
+                      label="Gender"
+                      placeholder="Gender"
+                      name="gender"
+                      :remote="true"
+                      :data="['Male', 'Female']"
                     />
                   </a-col>
                   <a-col v-if="role !== 'patient'" :span="12"> </a-col>

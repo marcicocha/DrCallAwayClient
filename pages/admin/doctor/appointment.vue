@@ -153,7 +153,7 @@ export default {
             })
             $this.caseIsVisible = true
             $this.changeTabHandler('2')
-            $this.activeKey('2')
+            $this.activeKey = '2'
           } catch (e) {
             const { default: errorHandler } = await import(
               '@/utils/errorHandler'

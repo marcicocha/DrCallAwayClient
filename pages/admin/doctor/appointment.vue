@@ -152,7 +152,8 @@ export default {
               description: 'Appointment Accepted Successfully',
             })
             $this.caseIsVisible = true
-            $this.changeTabHandler('1')
+            $this.changeTabHandler('2')
+            $this.activeKey('2')
           } catch (e) {
             const { default: errorHandler } = await import(
               '@/utils/errorHandler'

@@ -46,7 +46,6 @@
   </div>
 </template>
 <script>
-import moment from 'moment'
 export default {
   name: 'AppAppointmentDataTable',
   props: {
@@ -152,9 +151,6 @@ export default {
           },
         },
       }
-    },
-    formatTime(time) {
-      return moment(time).format('HH:mm:ss')
     },
   },
 }

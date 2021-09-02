@@ -69,7 +69,6 @@
                 v-model="bookAppointmentObj.date"
                 label="Select Proposed Date"
                 name="select proposed date"
-                :disabled-date="disabledDate"
                 rules="required"
                 required
               />

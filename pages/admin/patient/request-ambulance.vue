@@ -99,6 +99,7 @@
       centered
       @cancel="closeModal"
     >
+      <br />
       <AppSelectAmbulanceDataTable @callback="callback" />
     </a-modal>
   </div>

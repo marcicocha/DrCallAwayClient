@@ -70,7 +70,7 @@
         <AppAppointmentCreationForm
           :current-appointment="currentAppointment"
           status="patient"
-          @formSubmissionCompleted="closeModal"
+          @formSubmissionCompleted="completedCloseModal"
         />
       </div>
     </a-modal>
@@ -119,6 +119,11 @@ export default {
       console.log(record, 'RECORD')
       this.currentAppointment = record
       this.modalIsVisible = true
+    },
+    completedCloseModal() {
+      this.modalIsVisible = false
+      this.changeTabHandler('3')
+      this.activeKey = '3'
     },
     closeModal() {
       this.modalIsVisible = false

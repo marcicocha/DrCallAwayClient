@@ -23,9 +23,6 @@
       <template slot="description" slot-scope="text, record">
         {{ record.specialty ? record.specialty.name : null }}
       </template>
-      <template slot="time" slot-scope="text, record">
-        {{ formatTime(record.time) }}
-      </template>
       <template slot="operation" slot-scope="text, record">
         <div style="text-align: right">
           <a-button-group class="link-group">

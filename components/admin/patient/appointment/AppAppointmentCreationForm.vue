@@ -114,6 +114,8 @@ export default {
               ...newCurrentAppointment,
               consultantName: newCurrentAppointment.specialist
                 ? `${newCurrentAppointment.specialist.user.first_name} ${newCurrentAppointment.specialist.user.last_name}`
+                : newCurrentAppointment.specialist_data
+                ? `${newCurrentAppointment.specialist_data[0].first_name} ${newCurrentAppointment.specialist_data[0].last_name}`
                 : newCurrentAppointment.service_center
                 ? `${newCurrentAppointment.service_center.first_name} ${newCurrentAppointment.service_center.last_name}`
                 : newCurrentAppointment.specialist_nutrition

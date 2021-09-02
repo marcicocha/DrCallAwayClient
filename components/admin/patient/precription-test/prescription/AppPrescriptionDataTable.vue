@@ -19,7 +19,11 @@
       </template>
       <template slot="prescribedBy" slot-scope="text, record">
         <div>
-          {{ `${record.partners.first_name} ${record.partners.last_name}` }}
+          {{
+            record.partners
+              ? `${record.partners.first_name} ${record.partners.last_name}`
+              : ''
+          }}
         </div>
       </template>
       <template slot="updated_at" slot-scope="text, record">

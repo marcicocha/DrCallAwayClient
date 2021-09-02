@@ -2,10 +2,23 @@
   <div>
     <p class="page_heading">Profile Information</p>
     <div class="admin-wrapper">
-      <p>Profile Wrapper</p>
-      <figure>
-        <img src="" />
-      </figure>
+      <p class="profile_text">Profile Wrapper</p>
+      <div class="profile">
+        <a-upload
+          name="avatar"
+          list-type="picture-card"
+          class="avatar-uploader"
+          :show-upload-list="false"
+          :before-upload="beforeUpload"
+          @change="handleChange"
+        >
+          <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
+          <div v-else>
+            <a-icon :type="loading ? 'loading' : 'plus'" />
+            <div class="ant-upload-text">Upload</div>
+          </div>
+        </a-upload>
+      </div>
 
       <br />
       <div>
@@ -352,7 +365,11 @@ import AppSelect from '@/components/AppSelect'
 import AppDatePicker from '@/components/AppDatePicker'
 import AppButton from '@/components/AppButton'
 import AppTimePicker from '@/components/AppTimePicker'
-
+function getBase64(img, callback) {
+  const reader = new FileReader()
+  reader.addEventListener('load', () => callback(reader.result))
+  reader.readAsDataURL(img)
+}
 export default {
   components: {
     AppTabs,
@@ -377,6 +394,8 @@ export default {
       config,
       role,
       counter: 0,
+      loading: false,
+      imageUrl: '',
     }
   },
   computed: {
@@ -407,6 +426,30 @@ export default {
     selectStateHandler() {
       this.counter++
       this.profileObj.city = undefined
+    },
+    handleChange(info) {
+      if (info.file.status === 'uploading') {
+        this.loading = true
+        return
+      }
+      if (info.file.status === 'done') {
+        // Get this url from response in real world.
+        getBase64(info.file.originFileObj, (imageUrl) => {
+          this.imageUrl = imageUrl
+          this.loading = false
+        })
+      }
+    },
+    beforeUpload(file) {
+      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
+      if (!isJpgOrPng) {
+        this.$message.error('You can only upload JPG file!')
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isLt2M) {
+        this.$message.error('Image must smaller than 2MB!')
+      }
+      return isJpgOrPng && isLt2M
     },
     async submitHandler() {
       const isValid = await this.$refs.observer.validate()
@@ -467,5 +510,11 @@ figure {
     width: 100%;
     height: 100%;
   }
+}
+.profile_text {
+  color: $dark-purple;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
 }
 </style>

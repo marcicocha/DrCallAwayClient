@@ -163,44 +163,42 @@ export default {
       return columns
     },
   },
-  async mounted() {
-    try {
-      const user = JSON.parse(localStorage.getItem('user'))
-      const config = {
-        headers: { Authorization: `Bearer ${user.token.token}` },
-      }
-      const { data } = await this.$axios.$get(
-        'get_service_and_price_list?type=nutritionist',
-        config
-      )
-      this.dataSource = data
-      this.nutritionistObj.paymentCharge = data[0].amount
-      const userObject = JSON.parse(localStorage.getItem('user'))
-      this.user = {
-        email: userObject.email,
-        firstName: userObject.first_name,
-        lastName: userObject.last_name,
-        amount: data[0].amount,
-      }
-    } catch (err) {
-      this.isLoading = false
-      const { default: errorHandler } = await import('@/utils/errorHandler')
-      errorHandler(err).forEach((msg) => {
-        this.$notification.error({
-          message: 'Error',
-          description: msg,
-          duration: 4000,
-        })
-      })
-    }
-  },
   methods: {
     closeModal() {
       this.modalIsVisible = false
     },
-    selectedObjectHandler(rcd) {
+    async selectedObjectHandler(rcd) {
       this.nutritionist = rcd.text
       this.nutritionistObj.address = rcd.address
+      try {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const config = {
+          headers: { Authorization: `Bearer ${user.token.token}` },
+        }
+        const { data } = await this.$axios.$get(
+          'get_service_and_price_list?type=nutritionist',
+          config
+        )
+        this.dataSource = data
+        this.nutritionistObj.paymentCharge = data[0].amount
+        const userObject = JSON.parse(localStorage.getItem('user'))
+        this.user = {
+          email: userObject.email,
+          firstName: userObject.first_name,
+          lastName: userObject.last_name,
+          amount: data[0].amount,
+        }
+      } catch (err) {
+        this.isLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
     disabledDate(current) {
       // Can not select days before today and today
@@ -219,6 +217,7 @@ export default {
             date: moment(this.nutritionistObj.date).format('YYYY-MM-DD'),
             time: moment(this.nutritionistObj.time).format('HH:mm:ss'),
             specialtyId: 0,
+            description: 'Nutritionist',
           }
           const message = await this.submitAppointmentHandler(obj)
           this.$notification.success({
@@ -252,7 +251,29 @@ export default {
       if (!isValid) {
         return
       }
-      // this.isLoading = true
+      this.isLoading = true
+      const userObject = JSON.parse(localStorage.getItem('user'))
+      const config = {
+        headers: { Authorization: `Bearer ${userObject.token.token}` },
+      }
+      const { isFree } = await this.$axios.$get(
+        `/appointment/checkIfFree?date=${moment(
+          this.nutritionistObj.date
+        ).format('YYYY-MM-DD')}&time=${moment(this.nutritionistObj.time).format(
+          'HH:mm:ss'
+        )}&specialistId=${this.nutritionistObj.specialistId}`,
+        config
+      )
+      if (!isFree) {
+        this.$notification.error({
+          message: 'Error',
+          description: 'Specialist is Booked for that time',
+          duration: 4000,
+        })
+        this.isLoading = false
+        return
+      }
+      this.isLoading = false
       this.modalIsVisible = true
     },
     ...mapActions({

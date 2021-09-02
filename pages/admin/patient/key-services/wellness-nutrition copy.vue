@@ -91,25 +91,6 @@
                           @selectedObject="selectedObjectHandler"
                         />
                       </a-col>
-                      <a-col :span="12">
-                        <AppDatePicker
-                          v-model="nearestDiagnosticObj.date"
-                          label="Date Of Visit"
-                          name="Date Of Visit"
-                          :disabled-date="disabledDate"
-                          rules="required"
-                          required
-                        />
-                      </a-col>
-                      <a-col :span="12">
-                        <AppTimePicker
-                          v-model="nearestDiagnosticObj.time"
-                          label="Time Of Visit"
-                          name="time of visit"
-                          rules="required"
-                          required
-                        />
-                      </a-col>
                     </a-row>
                   </ValidationObserver>
                 </div>
@@ -187,11 +168,48 @@
           </template>
         </a-table>
         <br />
-        <div class="t-c">
+        <div v-if="!showBookAppointment" class="t-c">
           <p style="font-size: 1.2rem; color: black">FEE: {{ price }}</p>
           <AppPayment :user-obj="user" @callback="callback">
             MAKE PAYMENT
           </AppPayment>
+        </div>
+        <div v-else>
+          <h6>Book Appointment</h6>
+          <ValidationObserver ref="observer2" tag="div">
+            <a-row type="flex" :gutter="16">
+              <a-col :span="12">
+                <AppDatePicker
+                  v-model="bookAppointmentObj.date"
+                  label="Date Of Visit"
+                  name="Date Of Visit"
+                  :disabled-date="disabledDate"
+                  rules="required"
+                  required
+                />
+              </a-col>
+              <a-col :span="12">
+                <AppTimePicker
+                  v-model="bookAppointmentObj.time"
+                  label="Time Of Visit"
+                  name="time of visit"
+                  rules="required"
+                  required
+                />
+              </a-col>
+            </a-row>
+          </ValidationObserver>
+          <br />
+          <div class="t-c">
+            <AppButton
+              type="primary"
+              :block="false"
+              :loading="isLoading"
+              class="admin-button"
+              @click="bookAppointmentHandler"
+              >SUBMIT</AppButton
+            >
+          </div>
         </div>
       </div>
     </a-modal>
@@ -373,49 +391,54 @@ export default {
     closeViewHandler() {
       this.screenIsVisible = false
     },
-    async callback(res) {
+    async bookAppointmentHandler() {
+      const isValid = await this.$refs.observer2.validate()
+      if (!isValid) {
+        return
+      }
+      try {
+        const obj = {
+          ...this.bookAppointmentObj,
+          date: moment(this.bookAppointmentObj.date).format('YYYY-MM-DD'),
+          time: moment(this.bookAppointmentObj.time).format('HH:mm:ss'),
+          screeningPlan: this.screeningPlan,
+          frequency: this.screeningFrequency,
+        }
+        const message = await this.submitAppointmentHandler(obj)
+        this.$notification.success({
+          message: 'Success',
+          description: message,
+          duration: 4000,
+        })
+        this.$router.replace('/admin/patient/appointment')
+        requestAnimationFrame(() => {
+          this.$refs.observer2.reset()
+          this.isLoading = false
+          this.modalTestIsVisible = false
+          this.showBookAppointment = false
+          this.bookAppointmentObj = {}
+          this.$emit('formSubmissionCompleted')
+        })
+      } catch (err) {
+        this.isLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
+    callback(res) {
       if (res.message === 'Approved') {
         this.$notification.success({
           message: res.message,
           description: 'Payment successful',
           duration: 4000,
         })
-        try {
-          const obj = {
-            ...this.nearestDiagnosticObj,
-            date: moment(this.nearestDiagnosticObj.date).format('YYYY-MM-DD'),
-            time: moment(this.nearestDiagnosticObj.time).format('HH:mm:ss'),
-            screeningPlan: this.screeningPlan,
-            frequency: this.screeningFrequency,
-            description: 'Medical Screening',
-            specialtyId: '0',
-          }
-          const message = await this.submitAppointmentHandler(obj)
-          this.$notification.success({
-            message: 'Success',
-            description: message,
-            duration: 4000,
-          })
-          this.$router.replace('/admin/patient/appointment')
-          requestAnimationFrame(() => {
-            this.$refs.observer2.reset()
-            this.isLoading = false
-            this.modalTestIsVisible = false
-            this.showBookAppointment = false
-            this.bookAppointmentObj = {}
-            this.$emit('formSubmissionCompleted')
-          })
-        } catch (err) {
-          this.isLoading = false
-          const { default: errorHandler } = await import('@/utils/errorHandler')
-          errorHandler(err).forEach((msg) => {
-            this.$notification.error({
-              message: 'Error',
-              description: msg,
-              duration: 4000,
-            })
-          })
-        }
+        this.showBookAppointment = true
       }
     },
     async submitHandler() {
@@ -430,30 +453,6 @@ export default {
         lastName: userObject.last_name,
         amount: this.price,
       }
-      this.isLoading = true
-      const config = {
-        headers: { Authorization: `Bearer ${userObject.token.token}` },
-      }
-      const { isFree } = await this.$axios.$get(
-        `/appointment/checkIfFree?date=${moment(
-          this.nearestDiagnosticObj.date
-        ).format('YYYY-MM-DD')}&time=${moment(
-          this.nearestDiagnosticObj.time
-        ).format('HH:mm:ss')}&specialistId=${
-          this.nearestDiagnosticObj.specialistId
-        }`,
-        config
-      )
-      if (!isFree) {
-        this.$notification.error({
-          message: 'Error',
-          description: 'Specialist is Booked for that time',
-          duration: 4000,
-        })
-        this.isLoading = false
-        return
-      }
-      this.isLoading = false
       this.modalTestIsVisible = true
     },
     ...mapActions({

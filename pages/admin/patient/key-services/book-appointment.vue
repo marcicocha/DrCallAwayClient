@@ -241,6 +241,7 @@ export default {
           description: 'Payment successful',
           duration: 4000,
         })
+        this.isLoading = true
         try {
           const obj = {
             ...this.bookAppointmentObj,
@@ -280,13 +281,35 @@ export default {
       if (!isValid) {
         return
       }
-      // this.isLoading = true
+      this.isLoading = true
       const userObject = JSON.parse(localStorage.getItem('user'))
       this.user = {
         email: userObject.email,
         firstName: userObject.first_name,
         lastName: userObject.last_name,
         amount: this.bookAppointmentObj.paymentCharge,
+      }
+      const config = {
+        headers: { Authorization: `Bearer ${userObject.token.token}` },
+      }
+      const { isFree } = await this.$axios.$get(
+        `/appointment/checkIfFree?date=${moment(
+          this.bookAppointmentObj.date
+        ).format('YYYY-MM-DD')}&time=${moment(
+          this.bookAppointmentObj.time
+        ).format('HH:mm:ss')}&specialistId=${
+          this.bookAppointmentObj.specialistId
+        }`,
+        config
+      )
+      if (!isFree) {
+        this.$notification.error({
+          message: 'Error',
+          description: 'Specialist is Booked for that time',
+          duration: 4000,
+        })
+        this.isLoading = false
+        return
       }
       this.modalIsVisible = true
     },

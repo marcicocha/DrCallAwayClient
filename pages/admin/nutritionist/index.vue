@@ -49,7 +49,7 @@
       <AppAppointmentDataTable
         :data-source="appointmentDataSource"
         :pagination="false"
-        :columns="columns"
+        dashboard
       />
     </div>
   </div>

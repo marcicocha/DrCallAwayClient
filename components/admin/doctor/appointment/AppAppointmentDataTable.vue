@@ -20,9 +20,9 @@
       <template slot="name" slot-scope="text, record">
         {{ `${record.patient.first_name} ${record.patient.last_name}` }}
       </template>
-      <template slot="description" slot-scope="text, record">
+      <!-- <template slot="description" slot-scope="text, record">
         {{ record.specialty ? record.specialty.name : null }}
-      </template>
+      </template> -->
       <template slot="operation" slot-scope="text, record">
         <div style="text-align: right">
           <a-button-group class="link-group">
@@ -82,8 +82,8 @@ export default {
           },
           {
             title: 'Description',
-            dataIndex: 'description',
-            scopedSlots: { customRender: 'description' },
+            dataIndex: 'additional_info',
+            scopedSlots: { customRender: 'additional_info' },
           },
           {
             title: 'Date of Visit',
@@ -119,8 +119,8 @@ export default {
           },
           {
             title: 'Description',
-            dataIndex: 'description',
-            scopedSlots: { customRender: 'description' },
+            dataIndex: 'additional_info',
+            scopedSlots: { customRender: 'additional_info' },
           },
           {
             title: 'Date of Visit',

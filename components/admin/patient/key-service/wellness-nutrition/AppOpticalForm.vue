@@ -226,6 +226,7 @@ export default {
             ...this.opticalObj,
             date: moment(this.opticalObj.date).format('YYYY-MM-DD'),
             time: moment(this.opticalObj.time).format('HH:mm:ss'),
+            description: 'Optician',
           }
           const message = await this.submitAppointmentHandler(obj)
           this.$notification.success({
@@ -259,7 +260,29 @@ export default {
       if (!isValid) {
         return
       }
-      // this.isLoading = true
+      this.isLoading = true
+      const userObject = JSON.parse(localStorage.getItem('user'))
+      const config = {
+        headers: { Authorization: `Bearer ${userObject.token.token}` },
+      }
+      const { isFree } = await this.$axios.$get(
+        `/appointment/checkIfFree?date=${moment(this.opticalObj.date).format(
+          'YYYY-MM-DD'
+        )}&time=${moment(this.opticalObj.time).format(
+          'HH:mm:ss'
+        )}&specialistId=${this.opticalObj.specialistId}`,
+        config
+      )
+      if (!isFree) {
+        this.$notification.error({
+          message: 'Error',
+          description: 'Specialist is Booked for that time',
+          duration: 4000,
+        })
+        this.isLoading = false
+        return
+      }
+      this.isLoading = false
       this.modalIsVisible = true
     },
     ...mapActions({

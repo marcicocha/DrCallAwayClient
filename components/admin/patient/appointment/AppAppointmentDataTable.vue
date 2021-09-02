@@ -31,19 +31,16 @@
         </div>
         <div v-else-if="record.specialist_data.length !== 0">
           {{
-            `${record.specialist_data[0].first_name} ${record.specialist_data[0].last_name}`
+            record.specialist_data[0].first_name ||
+            record.specialist_data[0].last_name
+              ? `${record.specialist_data[0].first_name} ${record.specialist_data[0].last_name}`
+              : `${record.specialist_data[0].registered_name}`
           }}
         </div>
         <div v-else></div>
       </template>
       <template slot="description" slot-scope="text, record">
-        {{
-          record.specialty
-            ? record.specialty.name
-            : record.description
-            ? record.description
-            : record.additional_info
-        }}
+        {{ record.specialty ? record.specialty.name : record.description }}
       </template>
       <!-- <template slot="time" slot-scope="text, record">
         {{ formatTime(record.time) }}

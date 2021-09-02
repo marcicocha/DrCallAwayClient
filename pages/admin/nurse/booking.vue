@@ -163,6 +163,7 @@ export default {
               description: 'Booking Accepted Successfully',
             })
             $this.changeTabHandler('2')
+            $this.activeKey = '2'
           } catch (e) {
             const { default: errorHandler } = await import(
               '@/utils/errorHandler'

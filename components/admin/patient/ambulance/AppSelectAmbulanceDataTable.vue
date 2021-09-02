@@ -59,8 +59,8 @@ export default {
         },
         {
           title: 'AMBULANCE NAME',
-          dataIndex: 'first_name',
-          scopedSlots: { customRender: 'first_name' },
+          dataIndex: 'registered_name',
+          scopedSlots: { customRender: 'registered_name' },
         },
         {
           title: 'ADDRESS',

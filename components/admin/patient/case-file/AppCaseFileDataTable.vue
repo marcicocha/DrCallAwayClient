@@ -29,7 +29,7 @@
       </template>
       <template slot="patient" slot-scope="text, record">
         {{
-          record.doctor
+          record.patient
             ? `${record.patient.first_name} ${record.patient.last_name}`
             : ''
         }}
@@ -41,7 +41,7 @@
               v-if="record.status === 'ACTIVE'"
               type="link"
               class="table__btn"
-              @click="$emit('showDeleteConfirm', record)"
+              @click="$emit('showChatDrawer', record)"
               ><img src="@/assets/images/admin/table-comment.png" alt="comment"
             /></a-button>
             <a-button

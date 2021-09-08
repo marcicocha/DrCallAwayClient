@@ -18,6 +18,7 @@
             :data-source="allCaseFiles"
             :columns="columns"
             @showCaseFile="showCaseFile"
+            @showChatDrawer="showChatDrawer"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Cases">
@@ -77,6 +78,15 @@
         />
       </div>
     </div>
+    <a-drawer
+      :title="doctor"
+      width="60%"
+      placement="right"
+      :closable="true"
+      :visible="chatDrawerIsVisible"
+      @close="onClose"
+    >
+    </a-drawer>
   </div>
 </template>
 <script>
@@ -105,6 +115,7 @@ export default {
       isReadOnly: true,
       counter: 0,
       status: 'PENDING',
+      chatDrawerIsVisible: false,
     }
   },
   computed: {
@@ -143,6 +154,12 @@ export default {
       ]
       return columns
     },
+    doctor() {
+      if (this.currentCaseFile.doctor) {
+        return `${this.currentCaseFile.doctor.first_name} ${this.currentCaseFile.doctor.last_name}`
+      }
+      return ''
+    },
     ...mapState({
       allCaseFiles: (state) => state.caseFileModule.caseFiles,
     }),
@@ -151,6 +168,13 @@ export default {
     this.changeTabHandler('1')
   },
   methods: {
+    onClose() {
+      this.chatDrawerIsVisible = false
+    },
+    showChatDrawer(record) {
+      this.chatDrawerIsVisible = true
+      this.currentCaseFile = record
+    },
     showCaseFile(record) {
       this.viewIsVisible = true
       this.currentCaseFile = record
@@ -197,5 +221,8 @@ export default {
   right: 0;
   top: 0;
   width: 35%;
+}
+.ant-drawer-title {
+  color: $dark-purple !important;
 }
 </style>

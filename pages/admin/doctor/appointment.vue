@@ -77,7 +77,7 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
-import moment from 'moment'
+// import moment from 'moment'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
@@ -119,15 +119,15 @@ export default {
       this.modalIsVisible = false
     },
     acceptAppointmentHandler(record) {
-      const currentDate = moment()
-      const recordDate = moment(record.date + ' ' + record.time)
-      if (currentDate > recordDate) {
-        this.$notification.error({
-          message: 'Error',
-          description: 'Booked Date has passed',
-        })
-        return
-      }
+      // const currentDate = moment()
+      // const recordDate = moment(record.date + ' ' + record.time)
+      // if (currentDate > recordDate) {
+      //   this.$notification.error({
+      //     message: 'Error',
+      //     description: 'Booked Date has passed',
+      //   })
+      //   return
+      // }
       const $this = this
       this.$confirm({
         title: 'Are you sure you want to accept this Appointment?',

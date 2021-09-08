@@ -60,7 +60,6 @@ export default {
     '@nuxtjs/stylelint-module',
     '@nuxtjs/style-resources',
   ],
-
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
@@ -69,7 +68,9 @@ export default {
     '@nuxtjs/auth-next',
     '@nuxtjs/laravel-echo',
   ],
-
+  echo: {
+    optionsPath: './laravel-echo/options.js',
+  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL: process.env.BASE_URL,

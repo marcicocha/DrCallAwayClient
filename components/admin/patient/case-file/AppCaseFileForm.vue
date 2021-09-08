@@ -5,8 +5,21 @@
         <img src="" alt="doctor" />
       </div>
       <div class="doctor__container-text">
-        <h6>{{ caseFileObj.consultantName }}</h6>
-        <p>{{ caseFileObj.consultantPosition }}</p>
+        <h6>
+          {{
+            status === 'patient'
+              ? `${caseFileObj.doctor.first_name} ${caseFileObj.doctor.last_name}`
+              : `${caseFileObj.patient.first_name} ${caseFileObj.patient.last_name}`
+          }}
+        </h6>
+        <p>
+          {{ status === 'patient' ? 'Medical Doctor' : 'Patient' }}
+        </p>
+        <div class="flex image_container">
+          <img src="@/assets/images/admin/message.png" alt="message" />
+          <img src="@/assets/images/admin/call.png" alt="call" />
+          <img src="@/assets/images/admin/video.png" alt="video" />
+        </div>
       </div>
     </div>
     <a-form>
@@ -291,12 +304,20 @@ h6 {
   }
   &-text {
     h6 {
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.1rem;
       color: $dark-purple;
+      font-size: 1.5rem;
     }
     p {
       color: $purple;
       font-weight: 600;
+      font-size: 0.875rem;
+    }
+    .image_container {
+      display: flex;
+      img {
+        margin-right: 1rem;
+      }
     }
   }
 }

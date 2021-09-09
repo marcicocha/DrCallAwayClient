@@ -78,15 +78,11 @@
         />
       </div>
     </div>
-    <a-drawer
-      :title="doctor"
-      width="60%"
-      placement="right"
-      :closable="true"
-      :visible="chatDrawerIsVisible"
-      @close="onClose"
-    >
-    </a-drawer>
+    <AppChatDrawer
+      :doctor="doctor"
+      :chatDrawerIsVisible="chatDrawerIsVisible"
+      @onClose="onClose"
+    />
   </div>
 </template>
 <script>
@@ -96,7 +92,7 @@ import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable.vue'
 import AppCaseFileForm from '@/components/admin/patient/case-file/AppCaseFileForm'
-
+import AppChatDrawer from '@/components/AppChatDrawer'
 export default {
   components: {
     AppTabs,
@@ -104,6 +100,7 @@ export default {
     AppSelect,
     AppCaseFileDataTable,
     AppCaseFileForm,
+    AppChatDrawer,
   },
   layout: 'dashboard',
   data() {
@@ -221,8 +218,5 @@ export default {
   right: 0;
   top: 0;
   width: 35%;
-}
-.ant-drawer-title {
-  color: $dark-purple !important;
 }
 </style>

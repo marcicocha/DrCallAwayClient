@@ -8,10 +8,10 @@ export default function (ctx) {
     // authEndpoint: 'http://cheermeapp.test/api/broadcasting/auth',
     key: process.env.PUSHER_APP_KEY,
     cluster: process.env.PUSHER_APP_CLUSTER,
-    secret: process.env.PUSHER_APP_SECRET,
-    app_id: process.env.PUSHER_APP_ID,
-    // wsHost: 'cheermeapp.test',
-    // wsPort: '8080',
+    // secret: process.env.PUSHER_APP_SECRET,
+    // app_id: process.env.PUSHER_APP_ID,
+    wsHost: window.location.hostname,
+    wsPort: '8080',
     // authorizer: (channel) => ({
     //   authorize: (socketId, authorizerCallback) =>
     //     ctx.app.$axios

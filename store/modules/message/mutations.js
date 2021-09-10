@@ -4,5 +4,7 @@ export default {
   [GET_MESSAGE](state, payload) {
     state.messageList = payload
   },
-  [POST_MESSAGE](state, payload) {},
+  [POST_MESSAGE](state, payload) {
+    state.messageList.push(payload)
+  },
 }

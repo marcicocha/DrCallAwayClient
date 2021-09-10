@@ -80,7 +80,8 @@
     </div>
     <AppChatDrawer
       :doctor="doctor"
-      :chatDrawerIsVisible="chatDrawerIsVisible"
+      :current-case-file="currentCaseFile"
+      :chat-drawer-is-visible="chatDrawerIsVisible"
       @onClose="onClose"
     />
   </div>
@@ -168,9 +169,21 @@ export default {
     onClose() {
       this.chatDrawerIsVisible = false
     },
-    showChatDrawer(record) {
+    async showChatDrawer(record) {
       this.chatDrawerIsVisible = true
       this.currentCaseFile = record
+      try {
+        await this.getMessageHandler(this.currentCaseFile.id)
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
     showCaseFile(record) {
       this.viewIsVisible = true
@@ -208,6 +221,7 @@ export default {
     },
     ...mapActions({
       getAllCaseFile: 'caseFileModule/GET_CASE_FILE',
+      getMessageHandler: 'messageModule/GET_MESSAGE',
     }),
   },
 }

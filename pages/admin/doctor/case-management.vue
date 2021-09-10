@@ -12,6 +12,7 @@
             :data-source="allCaseFiles"
             :columns="columns"
             @showCaseFile="showCaseFile"
+            @showChatDrawer="showChatDrawer"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Completed Cases">
@@ -84,6 +85,12 @@
         <AppScreeningTab :case-id="currentCaseFile.id" />
       </div>
     </div>
+    <AppChatDrawer
+      :doctor="doctor"
+      :current-case-file="currentCaseFile"
+      :chat-drawer-is-visible="chatDrawerIsVisible"
+      @onClose="onClose"
+    />
   </div>
 </template>
 <script>
@@ -94,6 +101,7 @@ import AppSelect from '@/components/AppSelect'
 import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable.vue'
 import AppCaseFileForm from '@/components/admin/patient/case-file/AppCaseFileForm'
 import AppScreeningTab from '@/components/admin/doctor/case-file/AppScreeningTab'
+import AppChatDrawer from '@/components/AppChatDrawer'
 
 export default {
   components: {
@@ -103,6 +111,7 @@ export default {
     AppCaseFileDataTable,
     AppCaseFileForm,
     AppScreeningTab,
+    AppChatDrawer,
   },
   layout: 'dashboard',
   data() {
@@ -152,6 +161,12 @@ export default {
       ]
       return columns
     },
+    doctor() {
+      if (this.currentCaseFile.patient) {
+        return `${this.currentCaseFile.patient.first_name} ${this.currentCaseFile.patient.last_name}`
+      }
+      return ''
+    },
     ...mapState({
       allCaseFiles: (state) => state.caseFileDoctorModule.caseFiles,
     }),
@@ -160,6 +175,25 @@ export default {
     this.changeTabHandler('1')
   },
   methods: {
+    onClose() {
+      this.chatDrawerIsVisible = false
+    },
+    async showChatDrawer(record) {
+      this.chatDrawerIsVisible = true
+      this.currentCaseFile = record
+      try {
+        await this.getMessageHandler(this.currentCaseFile.id)
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
+    },
     showCaseFile(record) {
       this.viewIsVisible = true
       this.currentCaseFile = record
@@ -201,6 +235,7 @@ export default {
     },
     ...mapActions({
       getAllCaseFile: 'caseFileDoctorModule/GET_DOCTOR_CASE_FILE',
+      getMessageHandler: 'messageModule/GET_MESSAGE',
     }),
   },
 }

@@ -47,7 +47,11 @@ export default {
     port: 8080,
   },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/antd-ui.js', '@/plugins/veevalidate.js'],
+  plugins: [
+    '@/plugins/antd-ui.js',
+    '@/plugins/veevalidate.js',
+    { src: './plugins/echo', mode: 'client' },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -66,11 +70,9 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
     '@nuxtjs/auth-next',
-    '@nuxtjs/laravel-echo',
+    // '@nuxtjs/laravel-echo',
   ],
-  echo: {
-    optionsPath: './laravel-echo/options.js',
-  },
+  // echo: {},
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL: process.env.BASE_URL,

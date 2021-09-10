@@ -78,15 +78,12 @@
         />
       </div>
     </div>
-    <a-drawer
-      :title="doctor"
-      width="60%"
-      placement="right"
-      :closable="true"
-      :visible="chatDrawerIsVisible"
-      @close="onClose"
-    >
-    </a-drawer>
+    <AppChatDrawer
+      :doctor="doctor"
+      :current-case-file="currentCaseFile"
+      :chat-drawer-is-visible="chatDrawerIsVisible"
+      @onClose="onClose"
+    />
   </div>
 </template>
 <script>
@@ -96,7 +93,7 @@ import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable.vue'
 import AppCaseFileForm from '@/components/admin/patient/case-file/AppCaseFileForm'
-
+import AppChatDrawer from '@/components/AppChatDrawer'
 export default {
   components: {
     AppTabs,
@@ -104,6 +101,7 @@ export default {
     AppSelect,
     AppCaseFileDataTable,
     AppCaseFileForm,
+    AppChatDrawer,
   },
   layout: 'dashboard',
   data() {
@@ -171,9 +169,21 @@ export default {
     onClose() {
       this.chatDrawerIsVisible = false
     },
-    showChatDrawer(record) {
+    async showChatDrawer(record) {
       this.chatDrawerIsVisible = true
       this.currentCaseFile = record
+      try {
+        await this.getMessageHandler(this.currentCaseFile.id)
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
     showCaseFile(record) {
       this.viewIsVisible = true
@@ -211,6 +221,7 @@ export default {
     },
     ...mapActions({
       getAllCaseFile: 'caseFileModule/GET_CASE_FILE',
+      getMessageHandler: 'messageModule/GET_MESSAGE',
     }),
   },
 }
@@ -221,8 +232,5 @@ export default {
   right: 0;
   top: 0;
   width: 35%;
-}
-.ant-drawer-title {
-  color: $dark-purple !important;
 }
 </style>

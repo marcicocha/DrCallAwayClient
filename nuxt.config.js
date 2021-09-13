@@ -50,6 +50,7 @@ export default {
   plugins: [
     '@/plugins/antd-ui.js',
     '@/plugins/veevalidate.js',
+    '@/plugins/firebase.js',
     { src: './plugins/echo', mode: 'client' },
   ],
 

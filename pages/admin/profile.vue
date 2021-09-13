@@ -57,8 +57,8 @@
                   <a-col v-if="isRegisteredName" :span="12">
                     <AppInput
                       v-model="profileObj.rc_number"
-                      label="RC Number"
-                      name="RC Number"
+                      :label="rcLabel"
+                      :name="rcLabel"
                       rules="required"
                       required
                     />
@@ -82,7 +82,14 @@
                       :data="['Male', 'Female']"
                     />
                   </a-col>
-                  <a-col v-if="role !== 'patient'" :span="12"> </a-col>
+                  <a-col v-if="role !== 'patient'" :span="12">
+                    <AppUpload
+                      label="Upload License"
+                      placeholder="click here to upload licence"
+                      :extenstion="['pdf', 'jpg', 'png']"
+                      @change="documentHandler($event, 'license')"
+                    />
+                  </a-col>
                   <a-col :span="12">
                     <AppSelect
                       v-model="profileObj.state"
@@ -318,7 +325,7 @@
                       is-number
                     />
                   </a-col>
-                  <a-col :span="12">
+                  <a-col :span="24">
                     <AppSelect
                       v-model="profileObj.bank_name"
                       label="Bank Name"
@@ -335,7 +342,7 @@
                       required
                     />
                   </a-col>
-                  <a-col :span="12"> </a-col>
+                  <!-- <a-col :span="12"> </a-col> -->
                 </a-row>
               </a-tab-pane>
             </template>
@@ -358,6 +365,8 @@
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'
+import { getDownloadURL } from 'firebase/storage'
+import { storage } from '~/plugins/firebase.js'
 // import { mapActions } from 'vuex'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
@@ -365,6 +374,7 @@ import AppSelect from '@/components/AppSelect'
 import AppDatePicker from '@/components/AppDatePicker'
 import AppButton from '@/components/AppButton'
 import AppTimePicker from '@/components/AppTimePicker'
+import AppUpload from '@/components/AppUpload'
 function getBase64(img, callback) {
   const reader = new FileReader()
   reader.addEventListener('load', () => callback(reader.result))
@@ -379,6 +389,7 @@ export default {
     ValidationObserver,
     AppButton,
     AppTimePicker,
+    AppUpload,
   },
   layout: 'dashboard',
   data() {
@@ -406,11 +417,23 @@ export default {
         this.role === 'pharmacy'
       )
     },
+    rcLabel() {
+      if (this.role === 'ambulance') {
+        return 'Ambulance Reg Number'
+      }
+      if (this.role === 'pharmacy') {
+        return 'PCN Reg Number'
+      }
+      return 'Rc Number'
+    },
   },
   async mounted() {
     try {
       const { data } = await this.$axios.$get('/me', this.config)
       this.profileObj = { ...data }
+      if (data.profile_pic) {
+        this.imageUrl = data.profile_pic
+      }
     } catch (err) {
       const { default: errorHandler } = await import('@/utils/errorHandler')
       errorHandler(err).forEach((msg) => {
@@ -438,18 +461,36 @@ export default {
           this.imageUrl = imageUrl
           this.loading = false
         })
+        const storageRef = storage.ref('profile/' + info.file.name)
+        const uploadTask = storageRef.put(info.file.originFileObj)
+        uploadTask.on('state_changed', () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            this.profileObj.profile_pic = downloadURL
+          })
+        })
       }
     },
     beforeUpload(file) {
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
       if (!isJpgOrPng) {
-        this.$message.error('You can only upload JPG file!')
+        this.$message.error('You can only upload JPG or PNG file!')
       }
       const isLt2M = file.size / 1024 / 1024 < 2
       if (!isLt2M) {
         this.$message.error('Image must smaller than 2MB!')
       }
       return isJpgOrPng && isLt2M
+    },
+    documentHandler(file, key) {
+      const storageRef = storage.ref('licence/' + file.name)
+      const uploadTask = storageRef.put(file.originFileObj)
+      uploadTask.on('state_changed', () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          if (key === 'license') {
+            this.profileObj.license_link = downloadURL
+          }
+        })
+      })
     },
     async submitHandler() {
       const isValid = await this.$refs.observer.validate()

@@ -51,7 +51,7 @@
                       homeCareKey === 'nurse'
                         ? resp.first_name + ' ' + resp.last_name
                         : resp.user.first_name + ' ' + resp.user.last_name,
-                    value: resp.id,
+                    value: homeCareKey === 'nurse' ? resp.id : resp.user.id,
                     address: resp.address,
                   })
                 "

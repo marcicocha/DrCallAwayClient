@@ -457,9 +457,9 @@ export default {
     },
     selectedObjectHandler(rcd, key) {
       if (key === 'specialty') {
-        this.profile.specialty = rcd.text
+        this.profile.specialty_description = rcd.text
       }
-      this.profileObj.bank = rcd.text
+      this.profileObj.bank_description = rcd.text
     },
     handleChange(info) {
       if (info.file.status === 'uploading') {

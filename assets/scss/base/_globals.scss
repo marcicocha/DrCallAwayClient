@@ -301,6 +301,18 @@ h6 {
     }
   }
 }
+.file_upload {
+  .ant-upload {
+    width: 100%;
+    .ant-btn {
+      text-align: left;
+      padding: 4px 11px;
+    }
+  }
+  .ant-upload-list {
+    display: none !important;
+  }
+}
 .signIn {
   .ant-input,
   .ant-select-selection {
@@ -419,6 +431,7 @@ h6 {
 .ant-btn-primary[disabled].active {
   background-color: #f5f5f5 !important;
 }
+
 .profile {
   .ant-upload {
     border: 1px solid #bbc5d5 !important;
@@ -432,6 +445,7 @@ h6 {
     }
   }
 }
+
 .chat-drawer {
   .ant-drawer-title {
     color: $dark-purple !important;

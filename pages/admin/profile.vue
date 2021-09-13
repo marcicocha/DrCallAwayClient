@@ -217,6 +217,9 @@
                       "
                       rules="required"
                       required
+                      @selectedObject="
+                        selectedObjectHandler($event, 'specialty')
+                      "
                     />
                   </a-col>
                   <a-col :span="12">
@@ -340,6 +343,7 @@
                       "
                       rules="required"
                       required
+                      @selectedObject="selectedObjectHandler($event, 'bank')"
                     />
                   </a-col>
                   <!-- <a-col :span="12"> </a-col> -->
@@ -431,6 +435,7 @@ export default {
     try {
       const { data } = await this.$axios.$get('/me', this.config)
       this.profileObj = { ...data }
+      this.profileObj.bank_name = data.bank
       if (data.profile_pic) {
         this.imageUrl = data.profile_pic
       }
@@ -449,6 +454,12 @@ export default {
     selectStateHandler() {
       this.counter++
       this.profileObj.city = undefined
+    },
+    selectedObjectHandler(rcd, key) {
+      if (key === 'specialty') {
+        this.profile.specialty_description = rcd.text
+      }
+      this.profileObj.bank_description = rcd.text
     },
     handleChange(info) {
       if (info.file.status === 'uploading') {

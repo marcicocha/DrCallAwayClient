@@ -202,7 +202,7 @@
                   type="flex"
                   :gutter="24"
                 >
-                  <a-col :span="12">
+                  <a-col v-if="role !== 'nutritionist'" :span="12">
                     <AppInput
                       v-model="profileObj.nursing_school_attended"
                       :label="nurseLabel.schoolLabel"
@@ -211,7 +211,7 @@
                       required
                     />
                   </a-col>
-                  <a-col :span="12">
+                  <a-col v-if="role !== 'nutritionist'" :span="12">
                     <AppInput
                       v-model="profileObj.nmcn_license_no"
                       :label="nurseLabel.licenseNo"
@@ -221,7 +221,7 @@
                       :max-length="20"
                     />
                   </a-col>
-                  <a-col :span="12">
+                  <a-col v-if="role !== 'nutritionist'" :span="12">
                     <AppInput
                       v-model="profileObj.year_of_graduation"
                       label="Year of Graduation"

@@ -177,8 +177,8 @@
                   <a-col :span="12">
                     <AppInput
                       v-model="profileObj.nursing_school_attended"
-                      label="Medical School Attended"
-                      name="Medical School Attended"
+                      :label="nurseLabel.schoolLabel"
+                      :name="nurseLabel.schoolLabel"
                       rules="required"
                       required
                     />
@@ -186,8 +186,8 @@
                   <a-col :span="12">
                     <AppInput
                       v-model="profileObj.nmcn_license_no"
-                      label="MDCN No."
-                      name="MDCN No."
+                      :label="nurseLabel.licenseNo"
+                      :name="nurseLabel.licenseNo"
                       rules="required"
                       required
                       :max-length="20"
@@ -200,6 +200,20 @@
                       name="Year of Graduation"
                       rules="required"
                       required
+                    />
+                  </a-col>
+                  <a-col v-if="role === 'nurse'" :span="12">
+                    <AppInput
+                      v-model="profileObj.year_of_experience"
+                      label="Years of Experience"
+                      name="Years of Experience"
+                      rules="required"
+                      required
+                      :max-length="15"
+                      :space-allowed="false"
+                      :char-allowed="false"
+                      :text-allowed="false"
+                      is-number
                     />
                   </a-col>
                   <a-col v-if="role === 'doctor'" :span="12">
@@ -429,6 +443,15 @@ export default {
         return 'PCN Reg Number'
       }
       return 'Rc Number'
+    },
+    nurseLabel() {
+      if (this.role === 'nurse') {
+        return {
+          schoolLabel: 'Nursing School Attended',
+          licenseNo: 'NMCN License No',
+        }
+      }
+      return { schoolLabel: 'Medical School Attended', licenseNo: 'MDCN No.' }
     },
   },
   async mounted() {

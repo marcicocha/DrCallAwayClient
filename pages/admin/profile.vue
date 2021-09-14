@@ -563,7 +563,7 @@ export default {
       return isJpgOrPng && isLt2M
     },
     documentHandler(file, key) {
-      const storageRef = storage.ref('licence/' + file.name)
+      const storageRef = storage.ref('license/' + file.name)
       const uploadTask = storageRef.put(file.originFileObj)
       uploadTask.on('state_changed', () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {

@@ -184,7 +184,6 @@
                       name="Professional Training"
                       rules="required"
                       required
-                      :max-length="20"
                     />
                   </a-col>
                   <a-col :span="12">

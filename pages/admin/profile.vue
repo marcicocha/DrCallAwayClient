@@ -372,7 +372,7 @@
                   </a-col>
                   <a-col :span="24">
                     <AppSelect
-                      v-model="profileObj.bank_name"
+                      v-model="profileObj.bank_description"
                       label="Bank Name"
                       placeholder="Select Bank"
                       name="bank name"
@@ -380,7 +380,8 @@
                       :call-back-func="
                         (resp) => ({
                           text: resp.name,
-                          value: resp.code,
+                          value: resp.name,
+                          code: resp.code,
                         })
                       "
                       rules="required"
@@ -510,7 +511,7 @@ export default {
       if (key === 'specialty') {
         this.profile.specialty_description = rcd.text
       }
-      this.profileObj.bank_description = rcd.text
+      this.profileObj.bank_name = rcd.code
     },
     handleChange(info) {
       if (info.file.status === 'uploading') {

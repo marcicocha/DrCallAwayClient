@@ -176,6 +176,28 @@
                     />
                   </a-col>
                 </a-row>
+                <a-row v-if="role == 'nutritionist'" type="flex" :gutter="24">
+                  <a-col :span="12">
+                    <AppInput
+                      v-model="profileObj.professional_training"
+                      label="Professional Training"
+                      name="Professional Training"
+                      rules="required"
+                      required
+                      :max-length="20"
+                    />
+                  </a-col>
+                  <a-col :span="12">
+                    <AppUpload
+                      label="Upload Professional Certificate"
+                      placeholder="click here to upload professional certificate"
+                      :extenstion="['pdf', 'jpg', 'png']"
+                      @change="
+                        documentHandler($event, 'professional_certificate')
+                      "
+                    />
+                  </a-col>
+                </a-row>
                 <a-row
                   v-if="role !== 'patient' && !isRegisteredName"
                   type="flex"
@@ -529,6 +551,9 @@ export default {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           if (key === 'license') {
             this.profileObj.license_link = downloadURL
+          }
+          if (key === 'professional_certificate') {
+            this.profileObj.professional_certificate_link = downloadURL
           }
         })
       })

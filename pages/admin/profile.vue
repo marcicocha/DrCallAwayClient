@@ -151,7 +151,7 @@
                   </a-col>
                   <a-col v-if="role === 'pharmacy'" :span="12">
                     <AppInput
-                      v-model="profileObj.premise_reg"
+                      v-model="profileObj.premise_reg_no"
                       label="Premise Reg Number"
                       name="Premise Reg Number"
                     />

@@ -147,6 +147,7 @@
                       name="Email"
                       rules="required"
                       required
+                      disabled
                     />
                   </a-col>
                   <a-col v-if="role === 'pharmacy'" :span="12">
@@ -336,7 +337,6 @@
                       name="Email"
                       rules="required"
                       required
-                      disabled
                     />
                   </a-col>
                 </a-row>

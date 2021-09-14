@@ -82,12 +82,23 @@
                       :data="['Male', 'Female']"
                     />
                   </a-col>
-                  <a-col v-if="role !== 'patient'" :span="12">
+                  <a-col
+                    v-if="role !== 'patient' && role !== 'ambulance'"
+                    :span="12"
+                  >
                     <AppUpload
                       label="Upload License"
                       placeholder="click here to upload licence"
                       :extenstion="['pdf', 'jpg', 'png']"
                       @change="documentHandler($event, 'license')"
+                    />
+                  </a-col>
+                  <a-col v-if="role === 'ambulance'" :span="12">
+                    <AppUpload
+                      label="Certificate of Operation"
+                      placeholder="click here to upload certificate of operation"
+                      :extenstion="['pdf', 'jpg', 'png']"
+                      @change="documentHandler($event, 'operation')"
                     />
                   </a-col>
                   <a-col :span="12">
@@ -155,6 +166,13 @@
                       v-model="profileObj.premise_reg_no"
                       label="Premise Reg Number"
                       name="Premise Reg Number"
+                    />
+                  </a-col>
+                  <a-col v-if="role === 'ambulance'" :span="12">
+                    <AppInput
+                      v-model="profileObj.vehicle_reg_no"
+                      label="Vehicle Reg Number"
+                      name="Vehicle Reg Number"
                     />
                   </a-col>
                   <a-col v-if="role === 'diagnostic'" :span="12">
@@ -545,7 +563,7 @@ export default {
       return isJpgOrPng && isLt2M
     },
     documentHandler(file, key) {
-      const storageRef = storage.ref('licence/' + file.name)
+      const storageRef = storage.ref('license/' + file.name)
       const uploadTask = storageRef.put(file.originFileObj)
       uploadTask.on('state_changed', () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -554,6 +572,9 @@ export default {
           }
           if (key === 'professional_certificate') {
             this.profileObj.professional_certificate_link = downloadURL
+          }
+          if (key === 'operation') {
+            this.profileObj.certificate_of_operation_link = downloadURL
           }
         })
       })

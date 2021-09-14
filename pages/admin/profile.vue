@@ -149,6 +149,13 @@
                       required
                     />
                   </a-col>
+                  <a-col v-if="role === 'pharmacy'" :span="12">
+                    <AppInput
+                      v-model="profileObj.premise_reg"
+                      label="Premise Reg Number"
+                      name="Premise Reg Number"
+                    />
+                  </a-col>
                   <a-col v-if="role === 'diagnostic'" :span="12">
                     <AppInput
                       v-model="profileObj.nmcn_license_no"

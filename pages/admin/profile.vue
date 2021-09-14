@@ -448,10 +448,10 @@ export default {
       if (this.role === 'nurse') {
         return {
           schoolLabel: 'Nursing School Attended',
-          licenceNo: 'NMCN License No',
+          licenseNo: 'NMCN License No',
         }
       }
-      return { schoolLabel: 'Medical School Attended', licenceNo: 'MDCN No.' }
+      return { schoolLabel: 'Medical School Attended', licenseNo: 'MDCN No.' }
     },
   },
   async mounted() {

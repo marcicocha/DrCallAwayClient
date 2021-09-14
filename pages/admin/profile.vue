@@ -149,6 +149,13 @@
                       required
                     />
                   </a-col>
+                  <a-col v-if="role === 'pharmacy'" :span="12">
+                    <AppInput
+                      v-model="profileObj.premise_reg_no"
+                      label="Premise Reg Number"
+                      name="Premise Reg Number"
+                    />
+                  </a-col>
                   <a-col v-if="role === 'diagnostic'" :span="12">
                     <AppInput
                       v-model="profileObj.nmcn_license_no"
@@ -169,12 +176,33 @@
                     />
                   </a-col>
                 </a-row>
+                <a-row v-if="role == 'nutritionist'" type="flex" :gutter="24">
+                  <a-col :span="12">
+                    <AppInput
+                      v-model="profileObj.professional_training"
+                      label="Professional Training"
+                      name="Professional Training"
+                      rules="required"
+                      required
+                    />
+                  </a-col>
+                  <a-col :span="12">
+                    <AppUpload
+                      label="Upload Professional Certificate"
+                      placeholder="click here to upload professional certificate"
+                      :extenstion="['pdf', 'jpg', 'png']"
+                      @change="
+                        documentHandler($event, 'professional_certificate')
+                      "
+                    />
+                  </a-col>
+                </a-row>
                 <a-row
                   v-if="role !== 'patient' && !isRegisteredName"
                   type="flex"
                   :gutter="24"
                 >
-                  <a-col :span="12">
+                  <a-col v-if="role !== 'nutritionist'" :span="12">
                     <AppInput
                       v-model="profileObj.nursing_school_attended"
                       :label="nurseLabel.schoolLabel"
@@ -183,7 +211,7 @@
                       required
                     />
                   </a-col>
-                  <a-col :span="12">
+                  <a-col v-if="role !== 'nutritionist'" :span="12">
                     <AppInput
                       v-model="profileObj.nmcn_license_no"
                       :label="nurseLabel.licenseNo"
@@ -193,7 +221,7 @@
                       :max-length="20"
                     />
                   </a-col>
-                  <a-col :span="12">
+                  <a-col v-if="role !== 'nutritionist'" :span="12">
                     <AppInput
                       v-model="profileObj.year_of_graduation"
                       label="Year of Graduation"
@@ -344,7 +372,7 @@
                   </a-col>
                   <a-col :span="24">
                     <AppSelect
-                      v-model="profileObj.bank_name"
+                      v-model="profileObj.bank_description"
                       label="Bank Name"
                       placeholder="Select Bank"
                       name="bank name"
@@ -352,7 +380,8 @@
                       :call-back-func="
                         (resp) => ({
                           text: resp.name,
-                          value: resp.code,
+                          value: resp.name,
+                          code: resp.code,
                         })
                       "
                       rules="required"
@@ -482,7 +511,7 @@ export default {
       if (key === 'specialty') {
         this.profile.specialty_description = rcd.text
       }
-      this.profileObj.bank_description = rcd.text
+      this.profileObj.bank_name = rcd.code
     },
     handleChange(info) {
       if (info.file.status === 'uploading') {
@@ -522,6 +551,9 @@ export default {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           if (key === 'license') {
             this.profileObj.license_link = downloadURL
+          }
+          if (key === 'professional_certificate') {
+            this.profileObj.professional_certificate_link = downloadURL
           }
         })
       })

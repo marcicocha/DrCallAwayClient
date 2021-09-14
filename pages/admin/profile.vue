@@ -232,7 +232,7 @@
                   </a-col>
                   <a-col v-if="role === 'nurse'" :span="12">
                     <AppInput
-                      v-model="profileObj.year_of_experience"
+                      v-model="profileObj.years_of_experience"
                       label="Years of Experience"
                       name="Years of Experience"
                       rules="required"

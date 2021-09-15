@@ -123,6 +123,7 @@ export default {
       isReadOnly: true,
       testIsVisible: false,
       status: 'ACTIVE',
+      chatDrawerIsVisible: false,
     }
   },
   computed: {

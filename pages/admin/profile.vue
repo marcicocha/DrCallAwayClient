@@ -90,6 +90,7 @@
                       label="Upload License"
                       placeholder="click here to upload licence"
                       :extenstion="['pdf', 'jpg', 'png']"
+                      :uploadedFileName="profileObj.license_link"
                       @change="documentHandler($event, 'license')"
                     />
                   </a-col>
@@ -98,6 +99,9 @@
                       label="Certificate of Operation"
                       placeholder="click here to upload certificate of operation"
                       :extenstion="['pdf', 'jpg', 'png']"
+                      :uploadedFileName="
+                        profileObj.certificate_of_operation_link
+                      "
                       @change="documentHandler($event, 'operation')"
                     />
                   </a-col>
@@ -210,6 +214,9 @@
                       label="Upload Professional Certificate"
                       placeholder="click here to upload professional certificate"
                       :extenstion="['pdf', 'jpg', 'png']"
+                      :uploadedFileName="
+                        profileObj.professional_certificate_link
+                      "
                       @change="
                         documentHandler($event, 'professional_certificate')
                       "

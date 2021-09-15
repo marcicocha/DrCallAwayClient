@@ -6,9 +6,21 @@
     :required="required"
     class="file_upload"
   >
-    <a-upload name="file" @change="handleChange" style="width: 100%">
+    <a-upload
+      name="file"
+      @change="handleChange"
+      style="width: 100%"
+      supportServerRender
+    >
       <a-button block> {{ inputLabel }} </a-button>
     </a-upload>
+    <a
+      v-if="uploadedFileName"
+      :href="uploadedFileName"
+      target="_blank"
+      class="view_file"
+      >View Previously Uploaded File</a
+    >
   </a-form-item>
 </template>
 <script>
@@ -55,6 +67,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    uploadedFileName: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -85,3 +101,8 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.view_file {
+  color: $dark-purple;
+}
+</style>

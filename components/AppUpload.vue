@@ -8,9 +8,9 @@
   >
     <a-upload
       name="file"
-      @change="handleChange"
       style="width: 100%"
-      @customRequest="customRequest"
+      :before-upload="beforeUpload"
+      @change="handleChange"
     >
       <a-button block> {{ inputLabel }} </a-button>
     </a-upload>
@@ -98,10 +98,8 @@ export default {
         this.$message.error(`${info.file.name} file upload failed.`)
       }
     },
-    customRequest({ file, onSuccess }) {
-      setTimeout(() => {
-        onSuccess('ok')
-      }, 0)
+    beforeUpload(file) {
+      return false
     },
   },
 }

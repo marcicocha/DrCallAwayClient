@@ -377,7 +377,28 @@ export default {
       if (!isValid) {
         return
       }
-      // this.isLoading = true
+      this.isLoading = true
+      const userObject = JSON.parse(localStorage.getItem('user'))
+      const config = {
+        headers: { Authorization: `Bearer ${userObject.token.token}` },
+      }
+      const { isFree, message } = await this.$axios.$get(
+        `/appointment/checkIfFree?date=${moment(this.homeCareObj.date).format(
+          'YYYY-MM-DD'
+        )}&time=${moment(this.homeCareObj.time).format(
+          'HH:mm:ss'
+        )}&specialistId=${this.homeCareObj.specialistId}`,
+        config
+      )
+      if (!isFree) {
+        this.$notification.error({
+          message: 'Error',
+          description: message,
+          duration: 4000,
+        })
+        this.isLoading = false
+        return
+      }
       this.selectedModalIsVisible = true
     },
     ...mapActions({

@@ -6,12 +6,7 @@
     :required="required"
     class="file_upload"
   >
-    <a-upload
-      name="file"
-      style="width: 100%"
-      :before-upload="beforeUpload"
-      @change="handleChange"
-    >
+    <a-upload name="file" style="width: 100%" :before-upload="beforeUpload">
       <a-button block> {{ inputLabel }} </a-button>
     </a-upload>
     <a
@@ -80,25 +75,26 @@ export default {
   computed: {
     inputLabel() {
       if (this.file) {
-        return this.file
+        return this.file.name
       }
       return this.placeholder
     },
   },
   methods: {
-    handleChange(info) {
-      // if (info.file.status !== 'uploading') {
-      //   console.log(info.file, info.fileList)
-      // }
-      if (info.file.status === 'done') {
-        this.$emit('change', info.file)
-        this.file = info.file.name
-        // this.$message.success(`${info.file.name} file uploaded successfully`)
-      } else if (info.file.status === 'error') {
-        this.$message.error(`${info.file.name} file upload failed.`)
-      }
-    },
+    // handleChange(info) {
+    //   // if (info.file.status !== 'uploading') {
+    //   //   console.log(info.file, info.fileList)
+    //   // }
+    //   if (info.file.status === 'done') {
+    //     this.$emit('change', info.file)
+    //     this.file = info.file.name
+    //     // this.$message.success(`${info.file.name} file uploaded successfully`)
+    //   } else if (info.file.status === 'error') {
+    //     this.$message.error(`${info.file.name} file upload failed.`)
+    //   }
+    // },
     beforeUpload(file) {
+      this.file = file
       return false
     },
   },

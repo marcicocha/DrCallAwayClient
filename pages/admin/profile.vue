@@ -90,7 +90,7 @@
                       label="Upload License"
                       placeholder="click here to upload licence"
                       :extenstion="['pdf', 'jpg', 'png']"
-                      :uploadedFileName="profileObj.license_link"
+                      :uploaded-file-name="profileObj.license_link"
                       @change="documentHandler($event, 'license')"
                     />
                   </a-col>
@@ -99,7 +99,7 @@
                       label="Certificate of Operation"
                       placeholder="click here to upload certificate of operation"
                       :extenstion="['pdf', 'jpg', 'png']"
-                      :uploadedFileName="
+                      :uploaded-file-name="
                         profileObj.certificate_of_operation_link
                       "
                       @change="documentHandler($event, 'operation')"
@@ -214,7 +214,7 @@
                       label="Upload Professional Certificate"
                       placeholder="click here to upload professional certificate"
                       :extenstion="['pdf', 'jpg', 'png']"
-                      :uploadedFileName="
+                      :uploaded-file-name="
                         profileObj.professional_certificate_link
                       "
                       @change="
@@ -568,12 +568,12 @@ export default {
       //   this.$message.error('Image must smaller than 2MB!')
       // }
       // return isJpgOrPng && isLt2M
-      getBase64(file.originFileObj, (imageUrl) => {
+      getBase64(file, (imageUrl) => {
         this.imageUrl = imageUrl
         this.loading = false
       })
       const storageRef = storage.ref('profile/' + file.name)
-      const uploadTask = storageRef.put(file.originFileObj)
+      const uploadTask = storageRef.put(file)
       uploadTask.on('state_changed', () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           this.profileObj.profile_pic = downloadURL

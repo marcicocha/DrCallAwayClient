@@ -26,19 +26,21 @@ export const ErrorHandler = (err) => {
         }
       } else if (typeof err.response.data.message === 'string') {
         errors.push(err.response.data.message)
+        if (err.response.data.message === 'Unauthenticated.') {
+          console.log('Unauthenticated.')
+          window.location.href = '/'
+          localStorage.clear()
+        }
       }
     } else if (
       err.response.data.error_description &&
       err.response.data.error_description.includes('token expired')
     ) {
       errors.push('Session expired!!!')
+      console.log('this is where it got to8')
     }
   } else if (err && err.message) {
     errors.push(err.message)
-    if (err.message === 'Unauthenticated.') {
-      this.$router.replace('/')
-      localStorage.clear()
-    }
   }
   return errors
 }

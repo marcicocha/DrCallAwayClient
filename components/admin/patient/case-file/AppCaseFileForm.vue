@@ -16,7 +16,9 @@
           {{ status === 'patient' ? 'Medical Doctor' : 'Patient' }}
         </p>
         <div class="flex image_container">
-          <img src="@/assets/images/admin/message.png" alt="message" />
+          <a @click="showChatHandler"
+            ><img src="@/assets/images/admin/message.png" alt="message"
+          /></a>
           <img src="@/assets/images/admin/call.png" alt="call" />
           <img src="@/assets/images/admin/video.png" alt="video" />
         </div>
@@ -150,6 +152,12 @@
         </div>
       </div>
     </a-modal>
+    <AppChatDrawer
+      :doctor="doctor"
+      :current-case-file="caseFileObj"
+      :chat-drawer-is-visible="chatDrawerIsVisible"
+      @onClose="onClose"
+    />
   </div>
 </template>
 <script>
@@ -159,6 +167,8 @@ import AppInput from '@/components/AppInput'
 import AppDatePicker from '@/components/AppDatePicker'
 import AppButton from '@/components/AppButton'
 import AppPrescriptionForm from '@/components/admin/patient/case-file/AppPrescriptionForm'
+import AppChatDrawer from '@/components/AppChatDrawer'
+
 export default {
   name: 'AppCaseFileForm',
   components: {
@@ -167,6 +177,7 @@ export default {
     AppButton,
     AppPrescriptionForm,
     AppDatePicker,
+    AppChatDrawer,
   },
   props: {
     currentCaseFile: {
@@ -183,11 +194,25 @@ export default {
       caseFileObj: {},
       prescriptionIsVisible: false,
       confirmLoading: false,
+      chatDrawerIsVisible: false,
     }
   },
   computed: {
     isReadOnly() {
       return this.caseFileObj.status !== 'BOOKED'
+    },
+    doctor() {
+      if (this.status === 'patient') {
+        if (this.caseFileObj.doctor) {
+          return `${this.caseFileObj.doctor.first_name} ${this.caseFileObj.doctor.last_name}`
+        }
+      }
+      if (this.status === 'doctor') {
+        if (this.caseFileObj.patient) {
+          return `${this.currentCaseFile.patient.first_name} ${this.currentCaseFile.patient.last_name}`
+        }
+      }
+      return ''
     },
     prescriptionColumns() {
       const columns = [
@@ -283,6 +308,12 @@ export default {
     },
     closeModal() {
       this.prescriptionIsVisible = false
+    },
+    showChatHandler() {
+      this.chatDrawerIsVisible = true
+    },
+    onClose() {
+      this.chatDrawerIsVisible = false
     },
   },
 }

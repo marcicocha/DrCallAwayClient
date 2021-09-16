@@ -272,7 +272,7 @@
                   </a-col>
                   <a-col v-if="role === 'doctor'" :span="12">
                     <AppSelect
-                      v-model="profileObj.specialty_id"
+                      v-model="profileObj.specialty_description"
                       label="Speciality"
                       placeholder="Speciality"
                       name="Speciality"
@@ -280,7 +280,8 @@
                       :call-back-func="
                         (resp) => ({
                           text: resp.name,
-                          value: resp.id,
+                          value: resp.name,
+                          id: resp.id,
                         })
                       "
                       rules="required"
@@ -534,7 +535,7 @@ export default {
     },
     selectedObjectHandler(rcd, key) {
       if (key === 'specialty') {
-        this.profile.specialty_description = rcd.text
+        this.profileObj.specialty_id = rcd.id
       }
       this.profileObj.bank_name = rcd.code
     },

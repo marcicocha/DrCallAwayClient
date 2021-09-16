@@ -95,6 +95,7 @@ export default {
     // },
     beforeUpload(file) {
       this.file = file
+      this.$emit('change', file)
       return false
     },
   },

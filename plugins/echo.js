@@ -7,8 +7,8 @@ export default (_, inject) => {
     broadcaster: process.env.BROADCAST_DRIVER,
     key: process.env.PUSHER_APP_KEY,
     cluster: process.env.PUSHER_APP_CLUSTER,
-    // wsHost: window.location.hostname,
-    // wsPort: window.location.port,
+    wsHost: window.location.hostname,
+    wsPort: window.location.port,
     disableStats: true,
     forceTLS: false,
   })

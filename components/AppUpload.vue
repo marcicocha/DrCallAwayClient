@@ -9,7 +9,7 @@
     <a-upload
       name="file"
       style="width: 100%"
-      :beforeUpload="beforeUpload"
+      :before-upload="beforeUpload"
       @change="handleChange"
     >
       <a-button block> {{ inputLabel }} </a-button>

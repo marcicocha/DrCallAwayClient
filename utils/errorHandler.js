@@ -35,6 +35,10 @@ export const ErrorHandler = (err) => {
     }
   } else if (err && err.message) {
     errors.push(err.message)
+    if (err.message === 'Unauthenticated.') {
+      this.$router.replace('/')
+      localStorage.clear()
+    }
   }
   return errors
 }

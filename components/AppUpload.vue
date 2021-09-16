@@ -8,9 +8,9 @@
   >
     <a-upload
       name="file"
-      @change="handleChange"
       style="width: 100%"
-      @customRequest="customRequest"
+      :customRequest="customRequest"
+      @change="handleChange"
     >
       <a-button block> {{ inputLabel }} </a-button>
     </a-upload>

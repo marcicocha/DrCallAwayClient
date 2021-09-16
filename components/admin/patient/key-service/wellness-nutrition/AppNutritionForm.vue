@@ -256,7 +256,7 @@ export default {
       const config = {
         headers: { Authorization: `Bearer ${userObject.token.token}` },
       }
-      const { isFree } = await this.$axios.$get(
+      const { isFree, message } = await this.$axios.$get(
         `/appointment/checkIfFree?date=${moment(
           this.nutritionistObj.date
         ).format('YYYY-MM-DD')}&time=${moment(this.nutritionistObj.time).format(
@@ -267,7 +267,7 @@ export default {
       if (!isFree) {
         this.$notification.error({
           message: 'Error',
-          description: 'Specialist is Booked for that time',
+          description: message,
           duration: 4000,
         })
         this.isLoading = false

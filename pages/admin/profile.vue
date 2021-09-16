@@ -90,7 +90,7 @@
                       label="Upload License"
                       placeholder="click here to upload licence"
                       :extenstion="['pdf', 'jpg', 'png']"
-                      :uploaded-file-name="profileObj.license_link"
+                      :uploadedFileName="profileObj.license_link"
                       @change="documentHandler($event, 'license')"
                     />
                   </a-col>
@@ -99,7 +99,7 @@
                       label="Certificate of Operation"
                       placeholder="click here to upload certificate of operation"
                       :extenstion="['pdf', 'jpg', 'png']"
-                      :uploaded-file-name="
+                      :uploadedFileName="
                         profileObj.certificate_of_operation_link
                       "
                       @change="documentHandler($event, 'operation')"
@@ -214,7 +214,7 @@
                       label="Upload Professional Certificate"
                       placeholder="click here to upload professional certificate"
                       :extenstion="['pdf', 'jpg', 'png']"
-                      :uploaded-file-name="
+                      :uploadedFileName="
                         profileObj.professional_certificate_link
                       "
                       @change="
@@ -538,36 +538,48 @@ export default {
       }
       this.profileObj.bank_name = rcd.code
     },
-    handleChange(info) {
-      if (info.file.status === 'uploading') {
-        this.loading = true
-        return
-      }
-      if (info.file.status === 'done') {
-        // Get this url from response in real world.
-        getBase64(info.file.originFileObj, (imageUrl) => {
-          this.imageUrl = imageUrl
-          this.loading = false
-        })
-        const storageRef = storage.ref('profile/' + info.file.name)
-        const uploadTask = storageRef.put(info.file.originFileObj)
-        uploadTask.on('state_changed', () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            this.profileObj.profile_pic = downloadURL
-          })
-        })
-      }
-    },
+    // handleChange(info) {
+    //   if (info.file.status === 'uploading') {
+    //     this.loading = true
+    //     return
+    //   }
+    //   if (info.file.status === 'done') {
+    //     // Get this url from response in real world.
+    //     getBase64(info.file.originFileObj, (imageUrl) => {
+    //       this.imageUrl = imageUrl
+    //       this.loading = false
+    //     })
+    //     const storageRef = storage.ref('profile/' + info.file.name)
+    //     const uploadTask = storageRef.put(info.file.originFileObj)
+    //     uploadTask.on('state_changed', () => {
+    //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+    //         this.profileObj.profile_pic = downloadURL
+    //       })
+    //     })
+    //   }
+    // },
     beforeUpload(file) {
-      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
-      if (!isJpgOrPng) {
-        this.$message.error('You can only upload JPG or PNG file!')
-      }
-      const isLt2M = file.size / 1024 / 1024 < 2
-      if (!isLt2M) {
-        this.$message.error('Image must smaller than 2MB!')
-      }
-      return isJpgOrPng && isLt2M
+      // const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
+      // if (!isJpgOrPng) {
+      //   this.$message.error('You can only upload JPG or PNG file!')
+      // }
+      // const isLt2M = file.size / 1024 / 1024 < 2
+      // if (!isLt2M) {
+      //   this.$message.error('Image must smaller than 2MB!')
+      // }
+      // return isJpgOrPng && isLt2M
+      getBase64(file.originFileObj, (imageUrl) => {
+        this.imageUrl = imageUrl
+        this.loading = false
+      })
+      const storageRef = storage.ref('profile/' + file.name)
+      const uploadTask = storageRef.put(file.originFileObj)
+      uploadTask.on('state_changed', () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          this.profileObj.profile_pic = downloadURL
+        })
+      })
+      return false
     },
     documentHandler(file, key) {
       const storageRef = storage.ref('license/' + file.name)

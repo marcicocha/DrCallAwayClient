@@ -19,8 +19,12 @@
           <a @click="showChatHandler"
             ><img src="@/assets/images/admin/message.png" alt="message"
           /></a>
-          <img src="@/assets/images/admin/call.png" alt="call" />
-          <img src="@/assets/images/admin/video.png" alt="video" />
+          <a @click="showVideoHandler"
+            ><img src="@/assets/images/admin/call.png" alt="call"
+          /></a>
+          <a @click="showVideoHandler"
+            ><img src="@/assets/images/admin/video.png" alt="video"
+          /></a>
         </div>
       </div>
     </div>
@@ -152,6 +156,18 @@
         </div>
       </div>
     </a-modal>
+    <a-modal
+      :visible="videoModalIsVisible"
+      width="700px"
+      :confirm-loading="confirmLoading"
+      :footer="null"
+      :destroy-on-close="true"
+      :mask-style="{ background: 'rgba(61, 12, 60, 0.9)' }"
+      centered
+      @cancel="onClose"
+    >
+      <AppVideoAudio :current-case-file="caseFileObj" />
+    </a-modal>
     <AppChatDrawer
       :doctor="doctor"
       :current-case-file="caseFileObj"
@@ -168,7 +184,7 @@ import AppDatePicker from '@/components/AppDatePicker'
 import AppButton from '@/components/AppButton'
 import AppPrescriptionForm from '@/components/admin/patient/case-file/AppPrescriptionForm'
 import AppChatDrawer from '@/components/AppChatDrawer'
-
+import AppVideoAudio from '@/components/AppVideoAudio.vue'
 export default {
   name: 'AppCaseFileForm',
   components: {
@@ -178,6 +194,7 @@ export default {
     AppPrescriptionForm,
     AppDatePicker,
     AppChatDrawer,
+    AppVideoAudio,
   },
   props: {
     currentCaseFile: {
@@ -195,6 +212,7 @@ export default {
       prescriptionIsVisible: false,
       confirmLoading: false,
       chatDrawerIsVisible: false,
+      videoModalIsVisible: false,
     }
   },
   computed: {
@@ -312,8 +330,12 @@ export default {
     showChatHandler() {
       this.chatDrawerIsVisible = true
     },
+    showVideoHandler() {
+      this.videoModalIsVisible = true
+    },
     onClose() {
       this.chatDrawerIsVisible = false
+      this.videoModalIsVisible = false
     },
   },
 }

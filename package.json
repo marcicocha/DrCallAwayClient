@@ -40,6 +40,7 @@
     "pusher-js": "4.3.1",
     "sass-loader": "^10.1.1",
     "surge": "^0.23.0",
+    "twilio-video": "2.8.0",
     "vee-validate": "^3.4.9",
     "vue-carousel": "^0.18.0",
     "vue-paystack": "^2.0.4",

@@ -93,7 +93,14 @@ export default {
   methods: {
     // Access token generation using username and room name
     async getAccessToken() {
-      return await this.$axios.get(`start/call/${this.currentCaseFile.id}`)
+      const user = JSON.parse(localStorage.getItem('user'))
+      const config = {
+        headers: { Authorization: `Bearer ${user.token.token}` },
+      }
+      return await this.$axios.get(
+        `start/call/${this.currentCaseFile.id}`,
+        config
+      )
     },
     // Click connect AppButton
     showRoom(room) {

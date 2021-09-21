@@ -93,9 +93,7 @@ export default {
   methods: {
     // Access token generation using username and room name
     async getAccessToken() {
-      return await this.$axios.get(
-        `http://127.0.0.1:8000/api/start/call/${this.currentCaseFile.id}`
-      )
+      return await this.$axios.get(`start/call/${this.currentCaseFile.id}`)
     },
     // Click connect AppButton
     showRoom(room) {

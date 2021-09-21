@@ -54,8 +54,6 @@ export default {
     // },
   },
   data() {
-    const user = JSON.parse(localStorage.getItem('user'))
-    const token = user.token.token
     return {
       loading: false,
       data: {},
@@ -66,7 +64,6 @@ export default {
       identity: '',
       roomName: null,
       microphone: true,
-      token,
     }
   },
   watch: {
@@ -96,33 +93,39 @@ export default {
   methods: {
     // Access token generation using username and room name
     async getAccessToken() {
+      const user = JSON.parse(localStorage.getItem('user'))
       const config = {
-        headers: { Authorization: `Bearer ${this.token}` },
+        headers: { Authorization: `Bearer ${user.token.token}` },
       }
       return await this.$axios.get(
         `start/call/${this.currentCaseFile.id}`,
         config
       )
     },
-
+    // Click connect AppButton
+    showRoom(room) {
+      this.room_name = room
+      this.createChat(this.room_name)
+      window.addEventListener('beforeunload', this.leaveRoomIfJoined)
+      this.startDate = new Date()
+      console.log('start date', this.startDate)
+    },
     // Trigger log events
     dispatchLog(message) {
       // EventBus.$emit('new_log', message)
     },
-
     // Attach the Tracks to the DOM.
     attachTracks(tracks, container) {
       tracks.forEach(function (track) {
         container.appendChild(track.attach())
       })
     },
-
     // Attach the Participant's Tracks to the DOM.
+
     attachParticipantTracks(participant, container) {
       const tracks = Array.from(participant.tracks.values())
       this.attachTracks(tracks, container)
     },
-
     // Detach the Tracks from the DOM.
     detachTracks(tracks) {
       tracks.forEach((track) => {
@@ -143,15 +146,6 @@ export default {
         console.log('Left the room: ')
       }
     },
-    // Click connect AppButton
-    showRoom(room) {
-      this.room_name = room
-      this.createChat(this.room_name)
-      window.addEventListener('beforeunload', this.leaveRoomIfJoined)
-      this.startDate = new Date()
-      console.log('start date', this.startDate)
-    },
-
     audioHandler() {
       if (this.microphone) {
         // mute audio of video chat
@@ -179,13 +173,12 @@ export default {
       const VueThis = this
       this.getAccessToken().then((data) => {
         console.log(data, 'DATA')
-        const token = VueThis.token
-
         VueThis.roomName = null
+        const token = data.data.token
         const connectOptions = {
           name,
           audio: true,
-          video: { width: 600 },
+          video: { width: '100%' },
         }
         // before a user enters a new room,
         // disconnect the user from they joined already
@@ -193,6 +186,8 @@ export default {
         // remove any remote track when joining a new room
         document.getElementById('remoteTrack').innerHTML = ''
         Twilio.connect(token, connectOptions).then(function (room) {
+          // console.log('Successfully joined a Room: ', room);
+          VueThis.dispatchLog('Successfully joined the Room')
           // set active room
           VueThis.activeRoom = room
           VueThis.roomName = name
@@ -250,7 +245,7 @@ export default {
   z-index: -1;
   position: absolute;
 }
-#video {
+#localTrack video {
   width: 100px !important;
   background-repeat: no-repeat;
   height: 100px;

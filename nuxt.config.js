@@ -33,6 +33,9 @@ export default {
       {
         src: 'https://use.fontawesome.com/100875b2bb.js',
       },
+      {
+        src: 'https://kit.fontawesome.com/f270f2319d.js',
+      },
     ],
   },
 

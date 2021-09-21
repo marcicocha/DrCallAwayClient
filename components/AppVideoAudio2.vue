@@ -1,38 +1,19 @@
 <template>
   <div>
     <div class="Video">
-      <AppButton style="top: 5px; left: 5px" @click="showRoom(room_name)">
+      <!-- <AppButton style="top: 5px; left: 5px" @click="showRoom(room_name)">
         CONNECT
+      </AppButton> -->
+      <AppButton style="top: 5px; left: 5px" @click="audioHandler">
+        <i v-if="microphone" class="fas fa-microphone"></i>
+        <i v-else class="fas fa-microphone-slash"></i>
       </AppButton>
       <AppButton
-        v-if="microphone"
-        style="top: 5px; left: 5px"
-        @click="mute_audio"
-        ><i class="fa fa-microphone"></i
-      ></AppButton>
-      <AppButton
-        v-if="!microphone"
-        style="top: 5px; left: 5px"
-        @click="unmute_audio"
-      >
-        <i class="fas fa-microphone-slash"></i
-      ></AppButton>
-      <AppButton v-if="camera" style="top: 5px; left: 5px" @click="mute_video"
-        ><i class="fas fa-video"></i
-      ></AppButton>
-      <AppButton
-        v-if="!camera"
-        style="top: 5px; left: 5px"
-        @click="unmute_video"
-        ><i class="fas fa-video-slash"></i
-      ></AppButton>
-      <AppButton
-        type="submit"
-        size="sm"
+        type="danger"
         style="top: 5px; left: 5px"
         @click="leaveRoomIfJoined(activeRoom)"
       >
-        LEAVE
+        <i class="fas fa-phone-slash"></i>
       </AppButton>
     </div>
     <div class="embed-responsive embed-responsive-16by9">
@@ -63,6 +44,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    camera: {
+      type: Boolean,
+      default: false,
+    },
     // roomName: {
     //   type: String,
     //   default: '',
@@ -79,8 +64,28 @@ export default {
       identity: '',
       roomName: null,
       microphone: true,
-      camera: false,
     }
+  },
+  watch: {
+    camera: {
+      handler(newCamera) {
+        if (!newCamera) {
+          this.activeRoom.localParticipant.videoTracks.forEach(function (
+            videoTrack
+          ) {
+            console.log('videoTrack-- ' + videoTrack)
+            videoTrack.disable()
+          })
+        } else {
+          this.activeRoom.localParticipant.videoTracks.forEach(function (
+            videoTrack
+          ) {
+            console.log('videoTrack-- ' + videoTrack)
+            videoTrack.enable()
+          })
+        }
+      },
+    },
   },
   created() {},
   methods: {
@@ -134,45 +139,26 @@ export default {
         console.log('Left the room: ')
       }
     },
-    // mute audio of video chat
-    mute_audio() {
-      this.activeRoom.localParticipant.audioTracks.forEach(function (
-        audioTrack
-      ) {
-        console.log('audioTrack-- ' + audioTrack)
-        audioTrack.disable()
-      })
-      this.microphone = false
-    },
-    // unmute audio of video chat
-    unmute_audio() {
-      this.activeRoom.localParticipant.audioTracks.forEach(function (
-        audioTrack
-      ) {
-        console.log('audioTrack-- ' + audioTrack)
-        audioTrack.enable()
-      })
-      this.microphone = true
-    },
-    // mute video
-    mute_video() {
-      this.activeRoom.localParticipant.videoTracks.forEach(function (
-        videoTrack
-      ) {
-        console.log('videoTrack-- ' + videoTrack)
-        videoTrack.disable()
-      })
-      this.camera = false
-    },
-    // unmute video
-    unmute_video() {
-      this.activeRoom.localParticipant.videoTracks.forEach(function (
-        videoTrack
-      ) {
-        console.log('videoTrack-- ' + videoTrack)
-        videoTrack.enable()
-      })
-      this.camera = true
+    audioHandler() {
+      if (this.microphone) {
+        // mute audio of video chat
+        this.activeRoom.localParticipant.audioTracks.forEach(function (
+          audioTrack
+        ) {
+          console.log('audioTrack-- ' + audioTrack)
+          audioTrack.disable()
+        })
+        this.microphone = false
+      } else {
+        // unmute audio of video chat
+        this.activeRoom.localParticipant.audioTracks.forEach(function (
+          audioTrack
+        ) {
+          console.log('audioTrack-- ' + audioTrack)
+          audioTrack.enable()
+        })
+        this.microphone = true
+      }
     },
     // Create a new chat
     createChat(name) {

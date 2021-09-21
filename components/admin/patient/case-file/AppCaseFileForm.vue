@@ -19,10 +19,10 @@
           <a @click="showChatHandler"
             ><img src="@/assets/images/admin/message.png" alt="message"
           /></a>
-          <a @click="showVideoHandler"
+          <a @click="showVideoHandler('audio')"
             ><img src="@/assets/images/admin/call.png" alt="call"
           /></a>
-          <a @click="showVideoHandler"
+          <a @click="showVideoHandler('video')"
             ><img src="@/assets/images/admin/video.png" alt="video"
           /></a>
         </div>
@@ -158,7 +158,7 @@
     </a-modal>
     <a-modal
       :visible="videoModalIsVisible"
-      width="700px"
+      width="800px"
       :confirm-loading="confirmLoading"
       :footer="null"
       :destroy-on-close="true"
@@ -166,7 +166,7 @@
       centered
       @cancel="onClose"
     >
-      <AppVideoAudio :current-case-file="caseFileObj" />
+      <AppVideoAudio :current-case-file="caseFileObj" :camera="camera" />
     </a-modal>
     <AppChatDrawer
       :doctor="doctor"
@@ -213,6 +213,7 @@ export default {
       confirmLoading: false,
       chatDrawerIsVisible: false,
       videoModalIsVisible: false,
+      camera: false,
     }
   },
   computed: {
@@ -330,8 +331,13 @@ export default {
     showChatHandler() {
       this.chatDrawerIsVisible = true
     },
-    showVideoHandler() {
+    showVideoHandler(key) {
       this.videoModalIsVisible = true
+      if (key === 'audio') {
+        this.camera = false
+        return
+      }
+      this.camera = true
     },
     onClose() {
       this.chatDrawerIsVisible = false

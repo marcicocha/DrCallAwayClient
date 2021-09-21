@@ -87,7 +87,9 @@ export default {
       },
     },
   },
-  created() {},
+  created() {
+    this.createChat(this.roomName)
+  },
   methods: {
     // Access token generation using username and room name
     async getAccessToken() {

@@ -100,7 +100,7 @@ export default {
         headers: { Authorization: `Bearer ${this.token}` },
       }
       return await this.$axios.get(
-        `join/call/${this.currentCaseFile.id}`,
+        `join/start/${this.currentCaseFile.id}`,
         config
       )
     },

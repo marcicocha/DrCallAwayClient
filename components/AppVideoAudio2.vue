@@ -4,12 +4,17 @@
       <!-- <AppButton style="top: 5px; left: 5px" @click="showRoom(room_name)">
         CONNECT
       </AppButton> -->
-      <AppButton style="top: 5px; left: 5px" @click="audioHandler">
+      <AppButton
+        style="top: 5px; left: 5px"
+        :block="false"
+        @click="audioHandler"
+      >
         <i v-if="microphone" class="fas fa-microphone"></i>
         <i v-else class="fas fa-microphone-slash"></i>
       </AppButton>
       <AppButton
         type="danger"
+        :block="false"
         style="top: 5px; left: 5px"
         @click="leaveRoomIfJoined(activeRoom)"
       >

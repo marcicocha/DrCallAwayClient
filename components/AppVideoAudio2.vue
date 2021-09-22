@@ -179,7 +179,7 @@ export default {
       const VueThis = this
       this.getAccessToken().then((data) => {
         console.log(data, 'DATA')
-        const token = VueThis.token
+        const token = data.data.token
 
         VueThis.roomName = null
         const connectOptions = {

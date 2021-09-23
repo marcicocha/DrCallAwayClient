@@ -102,21 +102,49 @@ export default {
       // EventBus.$emit('new_log', message)
     },
 
-    // Attach the Tracks to the DOM.
-    attachTracks(tracks, container) {
-      tracks.forEach(function (track) {
-        container.appendChild(track.attach())
+    // // Attach the Tracks to the DOM OLD.
+    // attachTracks(tracks, container) {
+    //   tracks.forEach(function (track) {
+    //     container.appendChild(track.attach())
+    //   })
+    // },
+
+    // // Attach the Participant's Tracks to the DOM OLD.
+    // attachParticipantTracks(participant, container) {
+    //   const tracks = participant.tracks
+    //   this.attachTracks(tracks, container)
+    // },
+
+    // Attach the Tracks to the DOM NEW.
+    attachTracks(track, container) {
+      container.appendChild(track.attach())
+    },
+    // Attach the Participant's Tracks to the DOM NEW.
+    attachParticipantTracks(participant, container) {
+      participant.tracks.forEach((part) => {
+        if (part.isSubscribed) this.attachTracks(part.track, container)
+
+        if (!part.isSubscribed)
+          part.on('subscribed', (track) => {
+            this.attachTracks(track, container)
+          })
       })
     },
+    // // Detach the Tracks from the DOM OLD.
+    // detachTracks(tracks) {
+    //   tracks.forEach((track) => {
+    //     track.detach().forEach((detachedElement) => {
+    //       detachedElement.remove()
+    //     })
+    //   })
+    // },
+    // // Detach the Participant's Tracks from the DOM OLD.
+    // detachParticipantTracks(participant) {
+    //   const tracks = Array.from(participant.tracks.values())
+    //   this.detachTracks(tracks)
+    // },
 
-    // Attach the Participant's Tracks to the DOM.
-    attachParticipantTracks(participant, container) {
-      // const tracks = Array.from(participant.tracks.values())
-      const tracks = participant.tracks
-      this.attachTracks(tracks, container)
-    },
-
-    // Detach the Tracks from the DOM.
+    // Detach the Tracks from the DOM OLD.
     detachTracks(tracks) {
       tracks.forEach((track) => {
         track.detach().forEach((detachedElement) => {
@@ -124,10 +152,10 @@ export default {
         })
       })
     },
-    // Detach the Participant's Tracks from the DOM.
+
+    // Detach the Participant's Tracks from the DOM OLD.
     detachParticipantTracks(participant) {
-      // const tracks = Array.from(participant.tracks.values())
-      const tracks = participant.tracks
+      const tracks = Array.from(participant.tracks.values())
       this.detachTracks(tracks)
     },
     // Leave Room.

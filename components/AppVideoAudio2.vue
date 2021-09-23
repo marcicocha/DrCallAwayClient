@@ -144,7 +144,7 @@ export default {
     //   this.detachTracks(tracks)
     // },
 
-    // Detach the Tracks from the DOM OLD.
+    // Detach the Tracks from the DOM NEW.
     detachTracks(tracks) {
       tracks.forEach((track) => {
         track.detach().forEach((detachedElement) => {
@@ -271,13 +271,25 @@ export default {
           // When a Participant joins the Room, log the event.
           room.on('participantConnected', function (participant) {
             VueThis.dispatchLog("Joining: '" + participant.identity + "'")
+            const previewContainer = document.getElementById('remoteTrack')
+            VueThis.attachParticipantTracks(participant, previewContainer)
+            participant.on('trackPublished', (track) => {
+              previewContainer.appendChild(track.attach())
+            })
           })
+
           // When a Participant adds a Track, attach it to the DOM.
-          room.on('trackAdded', function (track, participant) {
+          room.on('trackPublished', (track, participant) => {
             VueThis.dispatchLog(participant.identity + ' enabled ' + track.kind)
             const previewContainer = document.getElementById('remoteTrack')
             VueThis.attachTracks([track], previewContainer)
           })
+          // // When a Participant adds a Track, attach it to the DOM.
+          // room.on('trackAdded', function (track, participant) {
+          //   VueThis.dispatchLog(participant.identity + ' enabled ' + track.kind)
+          //   const previewContainer = document.getElementById('remoteTrack')
+          //   VueThis.attachTracks([track], previewContainer)
+          // })
           // When a Participant removes a Track, detach it from the DOM.
           room.on('trackRemoved', function (track, participant) {
             VueThis.dispatchLog(

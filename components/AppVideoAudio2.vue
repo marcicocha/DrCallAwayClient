@@ -193,13 +193,20 @@ export default {
       this.loading = true
       const VueThis = this
       this.getAccessToken().then((data) => {
-        console.log(data, 'DATA')
+        if (data.data.statusCode === 201) {
+          VueThis.$notification.error({
+            message: 'Error',
+            description: data.data.message,
+            duration: 4000,
+          })
+          return
+        }
         const token = data.data.token
         VueThis.roomName = null
         const connectOptions = {
           name,
           audio: true,
-          video: { width: 600 },
+          video: { width: '100%' },
         }
         // before a user enters a new room,
         // disconnect the user from they joined already

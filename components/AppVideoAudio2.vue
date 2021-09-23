@@ -85,14 +85,14 @@ export default {
             videoTrack
           ) {
             console.log('videoTrack-- ' + videoTrack)
-            videoTrack.disable()
+            videoTrack.track.disable()
           })
         } else {
           this.activeRoom.localParticipant.videoTracks.forEach(function (
             videoTrack
           ) {
             console.log('videoTrack-- ' + videoTrack)
-            videoTrack.enable()
+            videoTrack.track.enable()
           })
         }
       },

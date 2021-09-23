@@ -338,7 +338,6 @@ export default {
       this.chatDrawerIsVisible = true
     },
     showVideoHandler(key) {
-      console.log(key, 'Camera')
       this.videoModalIsVisible = true
       if (key === 'audio') {
         this.camera = false

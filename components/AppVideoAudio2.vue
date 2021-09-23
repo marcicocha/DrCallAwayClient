@@ -162,6 +162,7 @@ export default {
       console.log('start date', this.startDate)
     },
     cameraHandler() {
+      console.log('it got here')
       if (!this.camera) {
         this.activeRoom.localParticipant.videoTracks.forEach(function (
           videoTrack

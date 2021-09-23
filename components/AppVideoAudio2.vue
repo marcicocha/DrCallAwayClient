@@ -160,6 +160,9 @@ export default {
         while (previewContainer.firstChild) {
           previewContainer.removeChild(previewContainer.firstChild)
         }
+        track.detach().forEach((detachedElement) => {
+          detachedElement.remove()
+        })
       })
     },
     // Leave Room.
@@ -306,6 +309,33 @@ export default {
           room.on('participantDisconnected', function (participant) {
             VueThis.dispatchLog(participant.identity + ' left the room')
             VueThis.detachParticipantTracks(participant)
+          })
+          room.once('disconnected', (room) => {
+            room.localParticipant.tracks.forEach((track) => {
+              track.track.stop()
+              const attachedElements = track.track.detach()
+              attachedElements.forEach((element) => element.remove())
+              room.localParticipant.videoTracks.forEach((video) => {
+                const trackConst = [video][0].track
+                trackConst.stop()
+
+                trackConst.detach().forEach((element) => element.remove())
+
+                room.localParticipant.unpublishTrack(trackConst)
+              })
+
+              const previewContainer = document.getElementById('remoteTrack')
+              while (previewContainer.firstChild) {
+                previewContainer.removeChild(previewContainer.firstChild)
+              }
+              const localMediaContainer = document.getElementById('localTrack')
+              while (localMediaContainer.firstChild) {
+                localMediaContainer.removeChild(localMediaContainer.firstChild)
+              }
+              setTimeout(() => {
+                window.location.reload()
+              }, 1000)
+            })
           })
           // if local preview is not active, create it
           if (!VueThis.localTrack) {

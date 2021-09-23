@@ -151,10 +151,28 @@ export default {
       this.detachTracks(tracks)
     },
     // Leave Room.
-    leaveRoomIfJoined(activeRoom) {
+    async leaveRoomIfJoined(activeRoom) {
       if (this.activeRoom) {
-        this.activeRoom.disconnect()
-        console.log('Left the room: ')
+        try {
+          const config = {
+            headers: { Authorization: `Bearer ${this.token}` },
+          }
+          await this.$axios.get(
+            `/complete/call/${this.currentCaseFile.id}`,
+            config
+          )
+          this.activeRoom.disconnect()
+          this.$emit('close')
+        } catch (err) {
+          const { default: errorHandler } = await import('@/utils/errorHandler')
+          errorHandler(err).forEach((msg) => {
+            this.$notification.error({
+              message: 'Error',
+              description: msg,
+              duration: 4000,
+            })
+          })
+        }
       }
     },
     // Click connect AppButton

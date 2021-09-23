@@ -166,12 +166,12 @@
       centered
       :closeable="false"
       class="video_modal"
-      @cancel="onClose"
     >
       <AppVideoAudio
         :status="status"
         :current-case-file="caseFileObj"
         :camera="camera"
+        @close="onClose"
       />
     </a-modal>
     <AppChatDrawer

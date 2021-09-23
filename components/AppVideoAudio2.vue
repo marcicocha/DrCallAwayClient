@@ -328,13 +328,13 @@ export default {
               while (previewContainer.firstChild) {
                 previewContainer.removeChild(previewContainer.firstChild)
               }
-              const localMediaContainer = document.getElementById('localTrack')
-              while (localMediaContainer.firstChild) {
-                localMediaContainer.removeChild(localMediaContainer.firstChild)
-              }
-              setTimeout(() => {
-                window.location.reload()
-              }, 1000)
+              // const localMediaContainer = document.getElementById('localTrack')
+              // while (localMediaContainer.firstChild) {
+              //   localMediaContainer.removeChild(localMediaContainer.firstChild)
+              // }
+              // setTimeout(() => {
+              //   window.location.reload()
+              // }, 1000)
             })
           })
           // if local preview is not active, create it

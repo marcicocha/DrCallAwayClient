@@ -5,18 +5,14 @@
         CONNECT
       </AppButton> -->
       <div class="button-container">
-        <AppButton
-          style="top: 5px; left: 5px"
-          :block="false"
-          @click="audioHandler"
-        >
+        <AppButton :block="false" @click="audioHandler">
           <i v-if="microphone" class="fas fa-microphone"></i>
           <i v-else class="fas fa-microphone-slash"></i>
         </AppButton>
         <AppButton
           type="danger"
           :block="false"
-          style="top: 5px; left: 1rem"
+          style="left: 1rem"
           @click="leaveRoomIfJoined(activeRoom)"
         >
           <i class="fas fa-phone-slash"></i>
@@ -171,6 +167,7 @@ export default {
     },
 
     audioHandler() {
+      console.log(this.activeRoom, 'ACTIVE ROOM')
       if (this.microphone) {
         // mute audio of video chat
         this.activeRoom.localParticipant.audioTracks.forEach(function (
@@ -198,7 +195,6 @@ export default {
       this.getAccessToken().then((data) => {
         console.log(data, 'DATA')
         const token = data.data.token
-
         VueThis.roomName = null
         const connectOptions = {
           name,
@@ -211,6 +207,7 @@ export default {
         // remove any remote track when joining a new room
         document.getElementById('remoteTrack').innerHTML = ''
         Twilio.connect(token, connectOptions).then(function (room) {
+          console.log(room, 'ROOM')
           // set active room
           VueThis.activeRoom = room
           VueThis.roomName = name

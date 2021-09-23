@@ -164,6 +164,8 @@
       :destroy-on-close="true"
       :mask-style="{ background: 'rgba(61, 12, 60, 0.9)' }"
       centered
+      :closeable="false"
+      class="video_modal"
       @cancel="onClose"
     >
       <AppVideoAudio

@@ -358,6 +358,7 @@ export default {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 200000;
 }
 #remoteTrack {
   video {

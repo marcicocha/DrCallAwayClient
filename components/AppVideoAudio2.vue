@@ -4,22 +4,24 @@
       <!-- <AppButton style="top: 5px; left: 5px" @click="showRoom(room_name)">
         CONNECT
       </AppButton> -->
-      <AppButton
-        style="top: 5px; left: 5px"
-        :block="false"
-        @click="audioHandler"
-      >
-        <i v-if="microphone" class="fas fa-microphone"></i>
-        <i v-else class="fas fa-microphone-slash"></i>
-      </AppButton>
-      <AppButton
-        type="danger"
-        :block="false"
-        style="top: 5px; left: 5px"
-        @click="leaveRoomIfJoined(activeRoom)"
-      >
-        <i class="fas fa-phone-slash"></i>
-      </AppButton>
+      <div class="button-container">
+        <AppButton
+          style="top: 5px; left: 5px"
+          :block="false"
+          @click="audioHandler"
+        >
+          <i v-if="microphone" class="fas fa-microphone"></i>
+          <i v-else class="fas fa-microphone-slash"></i>
+        </AppButton>
+        <AppButton
+          type="danger"
+          :block="false"
+          style="top: 5px; left: 1rem"
+          @click="leaveRoomIfJoined(activeRoom)"
+        >
+          <i class="fas fa-phone-slash"></i>
+        </AppButton>
+      </div>
     </div>
     <div class="embed-responsive embed-responsive-16by9">
       <div class="row remote_video_container"></div>
@@ -53,6 +55,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    status: {
+      type: String,
+      default: 'patient',
+    },
     // roomName: {
     //   type: String,
     //   default: '',
@@ -77,6 +83,7 @@ export default {
   watch: {
     camera: {
       handler(newCamera) {
+        console.log(newCamera, 'CAMERA')
         if (!newCamera) {
           this.activeRoom.localParticipant.videoTracks.forEach(function (
             videoTrack
@@ -104,8 +111,14 @@ export default {
       const config = {
         headers: { Authorization: `Bearer ${this.token}` },
       }
+      if (this.status === 'doctor') {
+        return await this.$axios.get(
+          `start/call/${this.currentCaseFile.id}`,
+          config
+        )
+      }
       return await this.$axios.get(
-        `start/call/${this.currentCaseFile.id}`,
+        `join/call/${this.currentCaseFile.id}`,
         config
       )
     },
@@ -273,5 +286,12 @@ export default {
 .col-md-10 {
   background-color: lightgray;
   height: auto;
+}
+.button-container {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

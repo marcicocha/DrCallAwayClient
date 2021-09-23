@@ -166,7 +166,11 @@
       centered
       @cancel="onClose"
     >
-      <AppVideoAudio :current-case-file="caseFileObj" :camera="camera" />
+      <AppVideoAudio
+        :status="status"
+        :current-case-file="caseFileObj"
+        :camera="camera"
+      />
     </a-modal>
     <AppChatDrawer
       :doctor="doctor"

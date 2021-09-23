@@ -466,3 +466,16 @@ h6 {
     }
   }
 }
+#remoteTrack {
+  video {
+    width: 100% !important;
+  }
+}
+#localTrack {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  video {
+    width: 200px !important;
+  }
+}

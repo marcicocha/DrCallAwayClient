@@ -153,10 +153,14 @@ export default {
       })
     },
 
-    // Detach the Participant's Tracks from the DOM OLD.
+    // Detach the Participant's Tracks from the DOM NEW.
     detachParticipantTracks(participant) {
-      const tracks = Array.from(participant.tracks.values())
-      this.detachTracks(tracks)
+      participant.tracks.forEach((track) => {
+        const previewContainer = document.getElementById('remoteTrack')
+        while (previewContainer.firstChild) {
+          previewContainer.removeChild(previewContainer.firstChild)
+        }
+      })
     },
     // Leave Room.
     async leaveRoomIfJoined(activeRoom) {
@@ -329,9 +333,6 @@ export default {
   z-index: -1;
   position: absolute;
 }
-.row {
-  display: flex;
-}
 #video {
   width: 100% !important;
   background-repeat: no-repeat;
@@ -368,7 +369,7 @@ export default {
   bottom: 0;
   right: 0;
   video {
-    width: 200px;
+    width: 200px !important;
   }
 }
 </style>

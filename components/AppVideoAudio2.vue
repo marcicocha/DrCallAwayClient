@@ -111,7 +111,8 @@ export default {
 
     // Attach the Participant's Tracks to the DOM.
     attachParticipantTracks(participant, container) {
-      const tracks = Array.from(participant.tracks.values())
+      // const tracks = Array.from(participant.tracks.values())
+      const tracks = participant.tracks
       this.attachTracks(tracks, container)
     },
 
@@ -125,7 +126,8 @@ export default {
     },
     // Detach the Participant's Tracks from the DOM.
     detachParticipantTracks(participant) {
-      const tracks = Array.from(participant.tracks.values())
+      // const tracks = Array.from(participant.tracks.values())
+      const tracks = participant.tracks
       this.detachTracks(tracks)
     },
     // Leave Room.
@@ -162,7 +164,6 @@ export default {
       console.log('start date', this.startDate)
     },
     cameraHandler() {
-      console.log('it got here')
       if (!this.camera) {
         this.activeRoom.localParticipant.videoTracks.forEach(function (
           videoTrack

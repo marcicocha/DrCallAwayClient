@@ -192,7 +192,7 @@ export default {
           audioTrack
         ) {
           console.log('audioTrack-- ' + audioTrack)
-          audioTrack.disable()
+          audioTrack.track.disable()
         })
         this.microphone = false
       } else {
@@ -201,7 +201,7 @@ export default {
           audioTrack
         ) {
           console.log('audioTrack-- ' + audioTrack)
-          audioTrack.enable()
+          audioTrack.track.enable()
         })
         this.microphone = true
       }

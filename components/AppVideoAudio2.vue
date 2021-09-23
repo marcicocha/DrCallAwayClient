@@ -217,6 +217,7 @@ export default {
             description: data.data.message,
             duration: 4000,
           })
+          this.$emit('close')
           return
         }
         const token = data.data.token
@@ -268,6 +269,7 @@ export default {
           // if local preview is not active, create it
           if (!VueThis.localTrack) {
             createLocalVideoTrack().then((track) => {
+              console.log(track, 'TRACK')
               const localMediaContainer = document.getElementById('localTrack')
               localMediaContainer.appendChild(track.attach())
               VueThis.localTrack = true

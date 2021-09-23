@@ -461,5 +461,8 @@ h6 {
 .video_modal {
   .ant-modal-content {
     background: #000 !important;
+    .ant-modal-body {
+      padding: 0 !important;
+    }
   }
 }

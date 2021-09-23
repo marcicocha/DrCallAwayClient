@@ -307,7 +307,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .remote_video_container {
   left: 0;
   margin: 0;
@@ -317,8 +317,11 @@ export default {
   z-index: -1;
   position: absolute;
 }
+.row {
+  display: flex;
+}
 #video {
-  width: 100px !important;
+  width: 100% !important;
   background-repeat: no-repeat;
   height: 100px;
   position: absolute;
@@ -329,7 +332,7 @@ export default {
   width: 100%;
 }
 .Video {
-  padding: 4px;
+  // padding: 4px;
   color: rgb(3, 11, 19);
 }
 .col-md-10 {
@@ -342,5 +345,18 @@ export default {
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
+}
+#remoteTrack {
+  video {
+    width: 100% !important;
+  }
+}
+#localTrack {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  video {
+    width: 200px;
+  }
 }
 </style>

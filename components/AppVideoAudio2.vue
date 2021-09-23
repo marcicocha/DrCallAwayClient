@@ -76,28 +76,6 @@ export default {
       token,
     }
   },
-  watch: {
-    camera: {
-      handler(newCamera) {
-        console.log(newCamera, 'CAMERA')
-        if (!newCamera) {
-          this.activeRoom.localParticipant.videoTracks.forEach(function (
-            videoTrack
-          ) {
-            console.log('videoTrack-- ' + videoTrack)
-            videoTrack.track.disable()
-          })
-        } else {
-          this.activeRoom.localParticipant.videoTracks.forEach(function (
-            videoTrack
-          ) {
-            console.log('videoTrack-- ' + videoTrack)
-            videoTrack.track.enable()
-          })
-        }
-      },
-    },
-  },
   created() {
     this.createChat(this.roomName)
   },
@@ -183,7 +161,23 @@ export default {
       this.startDate = new Date()
       console.log('start date', this.startDate)
     },
-
+    cameraHandler() {
+      if (!this.camera) {
+        this.activeRoom.localParticipant.videoTracks.forEach(function (
+          videoTrack
+        ) {
+          console.log('videoTrack-- ' + videoTrack)
+          videoTrack.track.disable()
+        })
+      } else {
+        this.activeRoom.localParticipant.videoTracks.forEach(function (
+          videoTrack
+        ) {
+          console.log('videoTrack-- ' + videoTrack)
+          videoTrack.track.enable()
+        })
+      }
+    },
     audioHandler() {
       console.log(this.activeRoom, 'ACTIVE ROOM')
       if (this.microphone) {
@@ -238,6 +232,7 @@ export default {
           VueThis.activeRoom = room
           VueThis.roomName = name
           VueThis.loading = false
+          VueThis.cameraHandler()
           // Attach the Tracks of all the remote Participants.
           room.participants.forEach(function (participant) {
             const previewContainer = document.getElementById('remoteTrack')

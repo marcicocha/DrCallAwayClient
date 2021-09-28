@@ -331,18 +331,18 @@ export default {
             margin-left: 1.5rem;
           }
         }
-        // &:first-child,
-        // &:nth-child(2) {
-        //   span {
-        //     &:first-child {
-        //       &::after {
-        //         @include breakpoint-up(xxlarge) {
-        //           height: 8rem;
-        //         }
-        //       }
-        //     }
-        //   }
-        // }
+        &:first-child,
+        &:nth-child(2) {
+          span {
+            &:first-child {
+              &::after {
+                @include breakpoint-up(xxlarge) {
+                  height: 8rem;
+                }
+              }
+            }
+          }
+        }
         &:last-child {
           span {
             &:first-child {

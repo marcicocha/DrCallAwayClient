@@ -6,5 +6,6 @@ module.exports = {
     'at-rule-no-unknown': null,
     'font-family-no-missing-generic-family-keyword': null,
     'length-zero-no-unit': null,
+    'no-descending-specificity': null,
   },
 }

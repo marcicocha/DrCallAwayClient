@@ -64,7 +64,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 h1 {
-  font-family: $square721;
+  font-family: $RegularFont;
   text-shadow: 0px 16px 21px #00000029;
 }
 .slide {
@@ -87,7 +87,7 @@ h1 {
       border-radius: 10px;
       p {
         margin: 0;
-        font-family: $square721;
+        font-family: $RegularFont;
         font-weight: bold;
         color: $white;
         width: 100%;

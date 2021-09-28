@@ -266,7 +266,7 @@ export default {
         position: relative;
         text-shadow: 0px 16px 21px rgba(0, 0, 0, 0.16);
         font-weight: bold;
-        font-family: $square721;
+        font-family: $RegularFont;
         margin-bottom: 2rem;
         opacity: 0.4;
         a {

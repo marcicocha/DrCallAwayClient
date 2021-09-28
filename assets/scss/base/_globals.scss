@@ -2,18 +2,7 @@
 //   font-family: Square721;
 //   src: url('@/assets/fonts/square-721-bt.ttf') format('truetype');
 // }
-@font-face {
-  font-family: Square721;
-  src: url('@/assets/fonts/Square-721-BT_42058.ttf') format('truetype');
-}
-@font-face {
-  font-family: Square721-Bold;
-  src: url('@/assets/fonts/Square-721-Bold-BT_42055.ttf') format('truetype');
-}
-@font-face {
-  font-family: Square721-normal;
-  src: url('@/assets/fonts/square-721-bt.ttf') format('truetype');
-}
+
 html {
   box-sizing: border-box;
   font-size: 100%;
@@ -34,7 +23,7 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.5;
-  font-family: $source-sans;
+  font-family: $RegularFont;
   font-size: 16px;
   color: $medium-grey;
   overflow-x: hidden;
@@ -132,14 +121,14 @@ a:hover {
   border: 0 transparent;
   outline: none;
   font-size: $font-medium;
-  font-family: $square721;
+  font-family: $RegularFont;
   font-weight: bold;
   cursor: pointer;
   @include breakpoint-up(large) {
     padding: 0.6rem 1.8rem;
   }
   @include breakpoint-up(xxlarge) {
-    font-size: 18px;
+    // font-size: 18px;
     padding: 0.75rem 1.8rem;
   }
   &:focus {
@@ -170,25 +159,25 @@ span {
   }
 }
 h1 {
-  font-family: $Square721-Bold;
+  font-family: $BoldFont;
   color: $purple;
   font-weight: 700;
   font-size: 2rem;
   line-height: 2.5rem;
   text-shadow: 0px 16px 21px #00000029;
   text-transform: capitalize;
-  // font-family: $square721;
+  // font-family: $RegularFont;
   @include breakpoint-up(large) {
-    font-size: 2.25rem;
+    font-size: 2.5rem;
     line-height: 3rem;
   }
   @include breakpoint-up(xxlarge) {
-    font-size: 2.5rem;
+    font-size: 3rem;
     line-height: 4rem;
   }
 }
 h2 {
-  font-family: $Square721-Bold;
+  font-family: $BoldFont;
   color: $purple;
   line-height: 2rem;
   font-size: 1.75rem;
@@ -202,7 +191,7 @@ h2 {
   }
 }
 h3 {
-  font-family: $Square721-Bold;
+  font-family: $BoldFont;
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 2.2rem;
@@ -212,7 +201,7 @@ h3 {
   }
 }
 h4 {
-  font-family: $Square721-Bold;
+  font-family: $BoldFont;
   font-size: 1.2rem;
   font-weight: 700;
   @include breakpoint-up(large) {
@@ -223,7 +212,7 @@ h4 {
   }
 }
 h5 {
-  font-family: $Square721-Bold;
+  font-family: $BoldFont;
   // font-weight: 700;
   font-size: 1.2rem;
   margin: 1.2rem 0;
@@ -255,15 +244,35 @@ h6 {
   }
 }
 .intro__carousel {
+  position: relative;
+  .VueCarousel-inner {
+    transition: none !important;
+    // transition: transform 137.333ms ease 0ms !important;
+  }
+
+  .VueCarousel-slide {
+    opacity: 0 !important;
+    // flex-basis: 0;
+  }
+
+  .VueCarousel-slide-active {
+    transition: all 2s !important;
+    opacity: 1 !important;
+  }
   .VueCarousel-pagination {
     @include breakpoint-up(large) {
-      margin-top: 2rem;
+      // margin-top: 2rem;
+      position: absolute;
+      bottom: 13%;
+      right: 11%;
+      width: auto !important;
     }
 
     .VueCarousel-dot-container {
       @include breakpoint-down(medium) {
         margin-top: 0 !important;
       }
+
       .VueCarousel-dot {
         height: 4px !important;
         width: 2rem !important;
@@ -454,7 +463,7 @@ h6 {
   }
   .ant-drawer-body {
     background-color: rgba(230, 212, 229, 0.2) !important;
-    height: 92.5%;
+    height: 94%;
   }
 }
 

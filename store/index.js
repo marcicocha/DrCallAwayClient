@@ -1,4 +1,4 @@
-import Vuex from 'vuex'
+import { Store } from 'vuex'
 import getters from './getters'
 import mutations from './mutations'
 import actions from './actions'
@@ -37,7 +37,7 @@ import appointmentNutritionistModule from './modules/nutritionist/appointment'
 // MESSAGE
 import messageModule from './modules/message'
 const createStore = () => {
-  return new Vuex.Store({
+  return new Store({
     state: () => ({}),
     getters,
     mutations,

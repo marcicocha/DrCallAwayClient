@@ -143,7 +143,7 @@ export default {
         text-shadow: 0px 16px 21px rgba(0, 0, 0, 0.16);
         font-weight: bold;
         margin-bottom: 2rem;
-        font-family: $square721;
+        font-family: $RegularFont;
         opacity: 0.4;
         a {
           color: $purple;

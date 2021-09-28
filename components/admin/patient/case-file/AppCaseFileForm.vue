@@ -176,6 +176,7 @@
     </a-modal>
     <AppChatDrawer
       :doctor="doctor"
+      :status="status"
       :current-case-file="caseFileObj"
       :chat-drawer-is-visible="chatDrawerIsVisible"
       @onClose="onClose"

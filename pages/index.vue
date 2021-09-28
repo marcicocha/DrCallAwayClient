@@ -1,15 +1,7 @@
 <template>
   <div>
-    <section class="container flex flex-ai-c">
-      <div class="intro__text">
-        <AppIntroCarousel />
-      </div>
-      <div class="intro__image">
-        <img
-          src="@/assets/images/homepage/doctor-smiling.png"
-          alt="doctor smiling"
-        />
-      </div>
+    <section class="container">
+      <AppIntroCarousel />
     </section>
     <section class="service">
       <div
@@ -145,28 +137,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.intro {
-  &__image {
-    width: 100%;
-    order: 1;
-    img {
-      width: 100%;
-    }
-    @include breakpoint-up(large) {
-      width: 60%;
-    }
-    @include breakpoint-up(xxlarge) {
-      width: 50%;
-    }
-  }
-  &__text {
-    order: 2;
-    width: 100%;
-    @include breakpoint-up(large) {
-      width: 40%;
-    }
-  }
-}
 .service {
   position: relative;
   padding-bottom: 5rem;

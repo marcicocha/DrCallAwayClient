@@ -87,6 +87,7 @@
     </div>
     <AppChatDrawer
       :doctor="doctor"
+      status="doctor"
       :current-case-file="currentCaseFile"
       :chat-drawer-is-visible="chatDrawerIsVisible"
       @onClose="onClose"

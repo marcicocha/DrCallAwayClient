@@ -16,6 +16,9 @@ import AppConversation from '@/components/AppConversation.vue'
 
 export default {
   name: 'AppChatDrawer',
+  components: {
+    AppConversation,
+  },
   props: {
     chatDrawerIsVisible: {
       type: Boolean,
@@ -33,9 +36,6 @@ export default {
       type: Object,
       default: () => {},
     },
-  },
-  components: {
-    AppConversation,
   },
   methods: {
     onClose() {

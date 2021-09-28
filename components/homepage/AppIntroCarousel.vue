@@ -87,7 +87,6 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      console.log(this.$refs.slide, 'SLIDE')
       this.$refs.slide.$el.classList.add('VueCarousel-slide-active')
     })
   },

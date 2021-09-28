@@ -66,7 +66,7 @@
         </ul>
       </div>
       <div class="howitworks__image">
-        <img src="@/assets/images/homepage/phone.png" alt="phone" />
+        <AppHowItWorksCarousel />
       </div>
     </section>
     <section class="container ailment">
@@ -126,13 +126,14 @@
   </div>
 </template>
 <script>
-import AppIntroCarousel from '@/components/homepage/AppIntroCarousel.vue'
-import AppServiceCarousel from '@/components/homepage/AppServiceCarousel.vue'
-
+import AppIntroCarousel from '@/components/homepage/AppIntroCarousel'
+import AppServiceCarousel from '@/components/homepage/AppServiceCarousel'
+import AppHowItWorksCarousel from '@/components/homepage/AppHowItWorksCarousel'
 export default {
   components: {
     AppIntroCarousel,
     AppServiceCarousel,
+    AppHowItWorksCarousel,
   },
 }
 </script>
@@ -263,16 +264,17 @@ export default {
     padding: $padding-mobile;
   }
   @include breakpoint-up(large) {
-    width: 50%;
+    width: 60%;
     margin: 0 auto;
   }
   &__image {
     padding: 0 2rem;
     @include breakpoint-up(large) {
-      width: 50%;
+      width: 45%;
     }
     @include breakpoint-up(xxlarge) {
       padding: 0 5rem;
+      width: 50%;
     }
     img {
       width: 100%;
@@ -304,8 +306,12 @@ export default {
             font-weight: bold;
             border-radius: 100%;
             height: 1.8rem;
+            width: 1.8rem;
             position: relative;
             @include breakpoint-up(large) {
+              padding: 0.2rem 0.6rem;
+            }
+            @include breakpoint-up(xxlarge) {
               padding: 0 0.6rem;
             }
             &::after {
@@ -316,12 +322,27 @@ export default {
               width: 1px;
               height: 6rem;
               background: $purple;
+              @include breakpoint-up(xxlarge) {
+                height: 7rem;
+              }
             }
           }
           &:last-child {
             margin-left: 1.5rem;
           }
         }
+        // &:first-child,
+        // &:nth-child(2) {
+        //   span {
+        //     &:first-child {
+        //       &::after {
+        //         @include breakpoint-up(xxlarge) {
+        //           height: 8rem;
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
         &:last-child {
           span {
             &:first-child {

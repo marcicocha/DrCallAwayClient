@@ -124,13 +124,13 @@ a:hover {
   font-family: $RegularFont;
   font-weight: bold;
   cursor: pointer;
-  @include breakpoint-up(large) {
-    padding: 0.6rem 1.8rem;
-  }
-  @include breakpoint-up(xxlarge) {
-    // font-size: 18px;
-    padding: 0.75rem 1.8rem;
-  }
+  // @include breakpoint-up(large) {
+  //   padding: 0.6rem 1.8rem;
+  // }
+  // @include breakpoint-up(xxlarge) {
+  //   // font-size: 18px;
+  //   padding: 0.75rem 1.8rem;
+  // }
   &:focus {
     border: 0 transparent;
     outline: none;
@@ -219,9 +219,9 @@ h5 {
   @include breakpoint-up(large) {
     font-size: 1.5rem;
   }
-  @include breakpoint-up(xxlarge) {
-    font-size: 1.8rem;
-  }
+  // @include breakpoint-up(xxlarge) {
+  //   font-size: 1.8rem;
+  // }
 }
 h6 {
   // font-family: $nunito;

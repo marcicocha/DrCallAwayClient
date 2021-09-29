@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="container">
+    <section class="container intro_container">
       <AppIntroCarousel />
     </section>
     <section class="service">
@@ -138,6 +138,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.intro_container {
+  @include breakpoint-up(large) {
+    margin-top: -4rem;
+  }
+}
 .service {
   position: relative;
   padding-bottom: 5rem;

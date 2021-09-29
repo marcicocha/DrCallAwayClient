@@ -49,7 +49,27 @@ export default {
           imgSrc: 'img3.png',
         },
         {
-          description: 'Special Ailments',
+          description: 'Homecare',
+          imgSrc: 'img3.png',
+        },
+        {
+          description: 'Wellness & Nutrition',
+          imgSrc: 'img3.png',
+        },
+        {
+          description: 'Medical Loans',
+          imgSrc: 'img3.png',
+        },
+        {
+          description: 'Request an Ambulance',
+          imgSrc: 'img3.png',
+        },
+        {
+          description: 'Find a Diagnostic Center',
+          imgSrc: 'img3.png',
+        },
+        {
+          description: 'Find a Pharmacy',
           imgSrc: 'img3.png',
         },
       ],

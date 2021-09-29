@@ -11,16 +11,16 @@
       <img src="@/assets/images/homepage/phone/phone1.png" alt="phone" />
     </slide>
     <slide>
-      <img src="@/assets/images/homepage/phone/phone1.png" alt="phone"
+      <img src="@/assets/images/homepage/phone/phone2.png" alt="phone"
     /></slide>
     <slide>
-      <img src="@/assets/images/homepage/phone/phone1.png" alt="phone"
+      <img src="@/assets/images/homepage/phone/phone3.png" alt="phone"
     /></slide>
     <slide>
-      <img src="@/assets/images/homepage/phone/phone1.png" alt="phone"
+      <img src="@/assets/images/homepage/phone/phone4.png" alt="phone"
     /></slide>
     <slide>
-      <img src="@/assets/images/homepage/phone/phone1.png" alt="phone"
+      <img src="@/assets/images/homepage/phone/phone5.png" alt="phone"
     /></slide>
   </carousel>
 </template>

@@ -111,21 +111,22 @@ footer {
       a {
         display: block;
         // font-weight: bold;
-        font-size: 16px;
+        font-size: 0.875rem;
         margin-bottom: 0.8rem;
         text-shadow: 0px 16px 21px #00000029;
         font-weight: bold;
         @include breakpoint-up(xxlarge) {
-          font-size: 18px;
+          font-size: 1rem;
         }
       }
       p {
-        font-size: 16px;
+        font-size: 0.875rem;
       }
       h6 {
         color: $purple;
         text-decoration: underline;
         margin-top: 0.5rem;
+        font-size: 1rem;
       }
     }
     &:last-child {
@@ -134,18 +135,16 @@ footer {
       text-align: center;
       color: $white;
       font-weight: bold;
-      @include breakpoint-down(medium) {
-        font-size: 0.875rem;
-      }
+      font-size: 10px;
     }
   }
   small {
     display: block;
-    font-size: 12px;
+    font-size: 10px;
     line-height: 2;
     text-align: center;
     @include breakpoint-up(xxlarge) {
-      font-size: 14px;
+      font-size: 12px;
     }
   }
 }

@@ -198,7 +198,7 @@
           <div class="flex flex-jc-sb">
             <div class="image-container">
               <img src="@/assets/images/logo.png" alt="logo" class="logo" />
-              <p>
+              <p style="margin-top: 1rem">
                 Savon Nettoyage Nigeria is a telehealth company and manages the
                 DrCallAway<sup>TM</sup> service in Nigeria.
               </p>

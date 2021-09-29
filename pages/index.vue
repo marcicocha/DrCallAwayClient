@@ -320,7 +320,7 @@ export default {
               top: 24px;
               left: 50%;
               width: 1px;
-              height: 6rem;
+              height: 5rem;
               background: $purple;
               @include breakpoint-up(xxlarge) {
                 height: 7rem;
@@ -329,6 +329,13 @@ export default {
           }
           &:last-child {
             margin-left: 1.5rem;
+          }
+        }
+        &:first-child {
+          span {
+            &:first-child {
+              padding: 0.1rem 0.7rem;
+            }
           }
         }
         &:first-child,

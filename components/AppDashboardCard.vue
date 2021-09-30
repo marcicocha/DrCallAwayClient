@@ -50,7 +50,7 @@ export default {
     color: white;
     font-weight: 400;
     margin-bottom: 0;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Lato', sans-serif;
     @include breakpoint-up(large) {
       font-size: 24px;
     }

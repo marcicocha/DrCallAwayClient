@@ -231,9 +231,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-body {
-  font-family: 'Lato', sans-serif !important;
-}
+@import '@/assets/scss/elements/test.scss';
 #components-layout-demo-custom-trigger .trigger {
   font-size: 18px;
   line-height: 64px;

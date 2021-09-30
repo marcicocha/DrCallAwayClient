@@ -11,8 +11,8 @@
         <img :src="getImgHandler(service.imgSrc)" />
       </div>
       <div class="text-container">
-        <h4>{{ service.title }}</h4>
-        <p v-if="service.description">{{ service.description }}</p>
+        <h4 v-html="service.title"></h4>
+        <p v-if="service.description" v-html="service.description"></p>
         <button class="button">Explore More</button>
       </div>
     </AppCard>
@@ -38,9 +38,9 @@ export default {
           imgSrc: 'laboratory.png',
         },
         {
-          title: 'DrCallAwayTM Special Ailments',
+          title: 'DrCallAway<sup>TM</sup> Special Ailments',
           description:
-            'Has a loved one suddenly fallen sick or does someone need to get to the hospital urgently? No need to worry, DrCallAwayTM is your trusted link, 24/7 at your service.',
+            'Has a loved one suddenly fallen sick or does someone need to get to the hospital urgently? No need to worry, DrCallAway<sup>TM</sup> is your trusted link, 24/7 at your service.',
           imgSrc: 'ambulance.png',
         },
       ],

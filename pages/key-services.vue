@@ -11,11 +11,11 @@
         <img :src="getImgHandler(service.imgSrc)" />
       </div>
       <div class="text-container">
-        <h4>{{ service.title }}</h4>
-        <p v-if="service.description">{{ service.description }}</p>
+        <h4 v-html="service.title"></h4>
+        <p v-if="service.description" v-html="service.description"></p>
         <ul v-if="service.features">
           <li v-for="(feature, m) in service.features" :key="m">
-            {{ feature }}
+            <span v-html="feature"></span>
           </li>
         </ul>
         <button class="button">Explore More</button>
@@ -31,7 +31,7 @@ export default {
     return {
       keyServicesList: [
         {
-          title: 'DrCallAwayTM Consultation',
+          title: `DrCallAway<sup>TM</sup> Consultation`,
           features: [
             'Consult with a qualified medical doctor 24/7 from the comfort of your home or office via limitless calls and video calls.',
             'Avoid long queues and delays in the hospital',
@@ -40,32 +40,32 @@ export default {
           imgSrc: 'img1.png',
         },
         {
-          title: 'DrCallAwayTM Book An Appointment',
+          title: 'DrCallAway<sup>TM</sup> Book An Appointment',
           features: [
-            'DrCallAwayTM has a wide network of renowned specialists in Nigeria and around the world. We can refer you to see a specialist closest to you. Click to book an appointment.',
+            'DrCallAway<sup>TM</sup> has a wide network of renowned specialists in Nigeria and around the world. We can refer you to see a specialist closest to you. Click to book an appointment.',
           ],
           imgSrc: 'img2.png',
         },
         {
-          title: 'DrCallAwayTM Special Ailments',
+          title: 'DrCallAway<sup>TM</sup> Special Ailments',
           description:
-            'People living with chronic ailments require support and management to maintain a good quality of life. Let DrCallAwayTM link you to a specialist who has the expertise and experience to care for you and render the necessary counselling and guidance.',
+            'People living with chronic ailments require support and management to maintain a good quality of life. Let DrCallAway<sup>TM</sup> link you to a specialist who has the expertise and experience to care for you and render the necessary counselling and guidance.',
           features: [
             'Specialists in management of HIV/TB, Diabetes, Hypertension, Sickle cell, Mental health.',
           ],
           imgSrc: 'img3.png',
         },
         {
-          title: 'DrCallAwayTM Wellness And Nutrition',
+          title: 'DrCallAway<sup>TM</sup> Wellness And Nutrition',
           description:
             'No more hassles to know your overall key numbers. We are here to help you keep track of your health status. Talk to a nutritionist, fitness coach or do your annual medical screenings. You are just a click away!',
           imgSrc: 'img4.png',
           features: [],
         },
         {
-          title: 'DrCallAwayTM Home Care',
+          title: 'DrCallAway<sup>TM</sup> Home Care',
           description:
-            'Do you have aged parents , relatives or people living with disabilities who require special homecare? DrCallAwayTM will make that process seamless by linking you to professional health care-givers depending on your need.',
+            'Do you have aged parents , relatives or people living with disabilities who require special homecare? DrCallAway<sup>TM</sup> will make that process seamless by linking you to professional health care-givers depending on your need.',
           imgSrc: 'img5.png',
           features: [],
         },

@@ -11,16 +11,18 @@
         <h5>Who We Are</h5>
         <p>
           Savon Nettoyage Nigeria Limited (SNNL) is a telehealth company that
-          manages the DrCallAwayTM service in Nigeria. The company was founded
-          in 2020 to provide affordable and quality healthcare services to
-          individuals, small to medium sized business owners and a large
-          informal sector, irrespective of any Health Insurance scheme or Health
-          Management Organization one is registered with.
+          manages the DrCallAway<sup>TM</sup> service in Nigeria. The company
+          was founded in 2020 to provide affordable and quality healthcare
+          services to individuals, small to medium sized business owners and a
+          large informal sector, irrespective of any Health Insurance scheme or
+          Health Management Organization one is registered with.
         </p>
         <p>
           Savon Nettoyage Nigeria Limited (SNNL) is run by respected and highly
           experienced medical practitioners and business leaders, who have all
-          excelled in various fields of endeavour. Through the DrCallAwayTM
+          excelled in various fields of endeavour. Through the DrCallAway<sup
+            >TM</sup
+          >
           platform, families will be healthier, and challenges of
           self-medication and misdiagnosis will be greatly minimized.
         </p>
@@ -29,6 +31,7 @@
     <section class="container">
       <div class="t-c vision">
         <h5>Our Vision</h5>
+        <br />
         <p>
           To provide convenient access and linkages to general and specialist
           healthcare services through digital platforms to all categories of

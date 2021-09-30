@@ -4,7 +4,7 @@
       <h1>Subscriptions</h1>
     </div>
     <div class="container">
-      <p class="sub-title">DrCallAwayTM plans are in two tiers.</p>
+      <p class="sub-title">DrCallAway<sup>TM</sup> plans are in two tiers.</p>
       <div class="flex flex-jc-sb">
         <AppCard
           v-for="(suscription, i) in suscriptionList"

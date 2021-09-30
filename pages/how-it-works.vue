@@ -12,7 +12,7 @@
             <h5>Step {{ i + 1 }}</h5>
           </div>
           <br />
-          <p>{{ step.description }}</p>
+          <p v-html="step.description"></p>
         </AppCard>
       </div>
     </div>
@@ -28,7 +28,7 @@ export default {
       stepList: [
         {
           description:
-            'Download the DrCallAwayTM from the Google Play Store or iOS App Store unto your smartphone or device',
+            'Download the DrCallAway<sup>TM</sup> from the Google Play Store or iOS App Store unto your smartphone or device',
           imgSrc: 'download.png',
         },
         {

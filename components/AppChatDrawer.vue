@@ -8,7 +8,11 @@
     class="chat-drawer"
     @close="onClose"
   >
-    <AppConversation />
+    <AppConversation
+      :currentCaseFile="currentCaseFile"
+      :status="status"
+      :doctor="doctor"
+    />
   </a-drawer>
 </template>
 <script>

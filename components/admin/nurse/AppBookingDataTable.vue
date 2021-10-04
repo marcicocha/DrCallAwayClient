@@ -21,7 +21,7 @@
         </div>
       </template>
       <template slot="name" slot-scope="text, record">
-        {{ `${record.patient.first_name} ${record.patient.last_name}` }}
+        {{ `${record.patient[0].first_name} ${record.patient[0].last_name}` }}
       </template>
       <template slot="date" slot-scope="text, record">
         {{ formatDate(record.date) }}

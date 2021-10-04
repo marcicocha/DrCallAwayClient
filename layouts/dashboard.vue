@@ -237,7 +237,6 @@ export default {
   line-height: 64px;
   padding: 0 24px;
   cursor: pointer;
-  transition: color 0.3s;
 }
 .menu_anchor {
   color: $medium-purple;

@@ -26,9 +26,9 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
-// import _ from  'lodash'
+import _ from 'lodash'
 import moment from 'moment'
-import { Client as ConversationsClient } from '@twilio/conversations'
+import Chat from 'twilio-chat'
 import AppInput from '@/components/AppInput'
 import AppButton from '@/components/AppButton'
 export default {
@@ -120,20 +120,22 @@ export default {
       const config = {
         headers: { Authorization: `Bearer ${this.token}` },
       }
+      console.log(this.user)
       if (this.status === 'doctor') {
-        const response = await this.$axios.post(
+        return await this.$axios.post(
           `start/conversation/${this.currentCaseFile.id}`,
-          this.currentCaseFile.id,
+          {
+            identity: this.user.id,
+            device: 'browser',
+          },
           config
         )
-        return response
       }
-      const response = await this.$axios.post(
+      return await this.$axios.post(
         `join/conversation/${this.currentCaseFile.id}`,
         this.currentCaseFile.id,
         config
       )
-      return response
       //  Send chat - http://127.0.0.1:8000/api/create/conversation/2 (post request)
 
       // List chat - http://127.0.0.1:8000/api/list/conversation/2 (get request)
@@ -163,25 +165,33 @@ export default {
     },
 
     // Create a new chat
-    async createChat(name) {
-      window.conversationsClient = ConversationsClient
-      const { data } = await this.getAccessToken()
-      if (data.statusCode === 201) {
-        this.$notification.error({
-          message: 'Error',
-          description: data.message,
-          duration: 4000,
+    createChat(name) {
+      this.loading = true
+      const VueThis = this
+      this.getAccessToken().then((data) => {
+        if (data.data.statusCode === 201) {
+          VueThis.$notification.error({
+            message: 'Error',
+            description: data.data.message,
+            duration: 4000,
+          })
+          this.$emit('close')
+          return
+        }
+        const token = data.data.token
+        console.log(Chat.create, 'CHAT')
+        Chat.create(token).then(function (client) {
+          console.log(token, 'TOKEN')
+          console.log(client, 'CLIENT')
+          // set active room
+          VueThis.tc.messagingClient = client
+          VueThis.updateConnectedUI()
+          VueThis.loadChannelList(VueThis.joinGeneralChannel)
+          client.on('channelAdded', _.throttle(VueThis.loadChannelList))
+          client.on('channelRemoved', _.throttle(VueThis.loadChannelList))
+          client.on('tokenExpired', VueThis.getAccessToken)
         })
-        this.$emit('close')
-        // return
-      }
-      const token = data.token
-      this.conversationsClient = await ConversationsClient.create(token)
-      const newConversation = await this.conversationsClient.createConversation(
-        { uniqueName: 'chat' }
-      )
-      console.log(this.conversationsClient, 'CLIENT')
-      console.log(newConversation, 'CLIENT')
+      })
     },
     updateConnectedUI() {
       this.connected = true

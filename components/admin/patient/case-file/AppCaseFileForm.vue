@@ -36,7 +36,7 @@
               v-model="caseFileObj.created_at"
               label="Date Created"
               name="date created"
-              :disabled="status === 'patient'"
+              disabled
             />
           </a-col>
           <a-col :span="12">
@@ -44,7 +44,7 @@
               v-model="caseFileObj.initial_complain"
               label="Complaint"
               name="Complaint"
-              :disabled="status === 'patient'"
+              disabled
             />
           </a-col>
           <a-col :span="24">

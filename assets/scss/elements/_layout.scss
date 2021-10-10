@@ -6,6 +6,17 @@
   .ant-layout-sider {
     background: white;
     padding: 0.5rem 1rem;
+    &::-webkit-scrollbar {
+      width: 3px;
+      background-color: $light-purple;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: $medium-purple;
+      // border-radius: 10px;
+      &:hover {
+        background-color: $dark-purple;
+      }
+    }
   }
   .trigger {
     color: $medium-purple;
@@ -169,6 +180,21 @@
   }
   .ant-layout-content {
     background: #f7f8fa !important;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+      width: 4px;
+      background-color: $light-purple;
+    }
+    // &::-webkit-scrollbar-track {
+    //   background-color: #fff;
+    // }
+    &::-webkit-scrollbar-thumb {
+      background-color: $medium-purple;
+      // border-radius: 10px;
+      &:hover {
+        background-color: $dark-purple;
+      }
+    }
   }
   .ant-layout-header {
     height: fit-content;

@@ -54,7 +54,6 @@ export default {
     '@/plugins/antd-ui.js',
     '@/plugins/veevalidate.js',
     '@/plugins/firebase.js',
-    { src: './plugins/echo', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

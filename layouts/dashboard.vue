@@ -5,7 +5,7 @@
       :trigger="null"
       collapsible
       :width="230"
-      style="overflow-y: scroll"
+      style="overflow-y: auto"
     >
       <div
         class="logo"
@@ -102,7 +102,7 @@
           margin: '24px 0',
           padding: '0',
           minHeight: '280px',
-          'overflow-y': 'scroll',
+          'overflow-y': 'auto',
         }"
       >
         <Nuxt />

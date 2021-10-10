@@ -16,7 +16,7 @@
   </a-drawer>
 </template>
 <script>
-import AppConversation from '@/components/AppConversation.vue'
+import AppConversation from '~/components/AppConversation.vue'
 
 export default {
   name: 'AppChatDrawer',

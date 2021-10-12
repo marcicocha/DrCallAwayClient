@@ -2,7 +2,7 @@
   <div>
     <div v-if="caseFileObj.doctor" class="doctor__container">
       <div class="doctor__container-img">
-        <img src="" alt="doctor" />
+        <img :src="imgLink" alt="doctor" />
       </div>
       <div class="doctor__container-text">
         <h6>
@@ -52,7 +52,9 @@
               v-model="caseFileObj.doctor_observation"
               label="Doctor's Comment"
               name="Doctor Comment"
-              :disabled="status === 'patient'"
+              :disabled="
+                status === 'patient' || caseFileObj.status === 'COMPLETED'
+              "
             />
           </a-col>
         </a-row>
@@ -82,7 +84,7 @@
             }}
           </p>
           <AppButton
-            v-if="status === 'doctor'"
+            v-if="status === 'doctor' && caseFileObj.status === 'ACTIVE'"
             type="primary"
             icon="plus"
             :block="false"
@@ -126,7 +128,7 @@
             }}
           </p>
           <AppButton
-            v-if="status === 'doctor'"
+            v-if="status === 'doctor' && caseFileObj.status === 'ACTIVE'"
             type="primary"
             icon="plus"
             :block="false"
@@ -335,6 +337,13 @@ export default {
       }
       return array
     },
+    imgLink() {
+      if (status === 'patient') {
+        return this.caseFileObj.partner.profile_pic
+      } else {
+        return this.caseFileObj.patient.profile_pic
+      }
+    },
     ...mapState({
       allPrescription: (state) => state.caseFileDoctorModule.prescriptionList,
       allTest: (state) => state.caseFileDoctorModule.testList,
@@ -434,6 +443,11 @@ h6 {
     width: 11.25rem;
     height: 11.25rem;
     margin-right: 2rem;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   }
   &-text {
     h6 {

@@ -2,6 +2,6 @@ import { GET_ALL_PRESCRIPTION } from '@/utils/mutation-types/pharmacy/prescripti
 
 export default {
   [GET_ALL_PRESCRIPTION](state, payload) {
-    state.prescriptions = payload
+    state.prescriptions = payload.data
   },
 }

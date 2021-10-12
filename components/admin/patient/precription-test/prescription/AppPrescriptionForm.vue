@@ -86,6 +86,7 @@
         <AppPharmacyTable
           :drug-list="dataSource"
           :prescriptionObj="prescriptionObj"
+          @onClose="closeModal"
         />
       </div>
     </a-modal>

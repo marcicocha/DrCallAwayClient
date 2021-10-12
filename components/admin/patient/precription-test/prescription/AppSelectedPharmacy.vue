@@ -89,7 +89,7 @@ export default {
           obj,
           config
         )
-        this.$emit('switchToCompleteTab')
+        this.$emit('closeModal')
         this.$notification.success({
           message: 'Success',
           description: message,

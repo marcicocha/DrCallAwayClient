@@ -44,6 +44,7 @@
             :drug-list="drugList"
             :selectedPharmacyObj="selectedPharmacyObj"
             :prescriptionObj="prescriptionObj"
+            @closeModal="onClose"
           />
         </div>
       </a-modal>
@@ -118,6 +119,10 @@ export default {
     },
     closeModal() {
       this.selectedPharmacyModalIsVisible = false
+    },
+    onClose() {
+      this.$emit('onClose')
+      this.closeModal()
     },
     async fetchPharmacyListHandler() {
       try {

@@ -34,7 +34,7 @@ export default {
             'Dr Apapa is a member of many professional organisations in the United States as well as in Nigeria namely, American Association of Oral & Maxillofacial Surgeons in the USA, Ohio State Society of Oral & Maxillofacial Surgeons and West African College of Surgeons. He is also a Fellow of the American Dental Society of Anaesthesiology.',
             'He is a graduate of both College of Medicine, University of Lagos and New York University.Dr Apapa has numerous other business interests in Nigeria including Farewell Funeral Homes Limited, a public mortuary at the Isolo General Hospital in Lagos, and Maskil Consultants LLC, a consultancy firm which serves businesses both in the United States of America and in Nigeria.',
           ],
-          imgSrc: 'icon.png',
+          imgSrc: 'bamidele.png',
         },
         {
           title: 'DR. ADETAYO OGUNNAIKE',
@@ -44,7 +44,7 @@ export default {
             'He is currently a director of Farewell Funeral Homes Limited, a public mortuary at the Isolo General Hospital in Lagos, under a Public-Private-Partnership arrangement with the Lagos State Government.',
             'Dr Ogunnaike was responsible for rolling out the funeral home and leading all stages of the project, from conception to financing, building and equipping of the mortuary. Today, Farewell Funeral Homes is widely acknowledged as one of the best mortuaries in Nigeria.',
           ],
-          imgSrc: 'icon.png',
+          imgSrc: 'adetayo.png',
         },
         {
           title: 'DR.TUNDE OLATINWO',
@@ -60,7 +60,7 @@ export default {
         },
         {
           title: 'MRS LIZZIE AMKPA',
-          imgSrc: 'icon.png',
+          imgSrc: 'lizzie.png',
           description: [
             'Elizabeth “Lizzie” Amkpa is an experienced business leader and sales management specialist with vast experience in financial services, pay-television services and media.',
             'She has over 25 years impressive track record in corporate, commercial and retail selling, banking and finance, sales management, business negotiation, innovation and strategic planning - especially in the areas of marketing, business development and ‘Blue Ocean strategic thinking.’',

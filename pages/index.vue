@@ -11,7 +11,7 @@
           <h5>Our Services</h5>
           <p>
             Our Integration of modern technology with primary healthcare gives
-            all categories of people, however remote, round- the-clock access to
+            all categories of people, however remote, round-the-clock access to
             affordable and quality healthcare services.
           </p>
         </div>
@@ -109,7 +109,7 @@
         <img src="@/assets/images/homepage/boy-patient.png" alt="boy-patient" />
       </div>
       <div class="column-6 text-container">
-        <h5>Designed To Be Rewarding For Patients</h5>
+        <h5>Designed To Be Rewarding For Everyone</h5>
         <br />
         <ul>
           <li>Get Medical Care for Non Emergency Conditions</li>

@@ -38,7 +38,7 @@ export default {
         },
         {
           description:
-            'Pay for your chosen plan online through Quickteller, Paga, Kudi, Opay or other payment platforms. You will receive a unique identification (ID) number.',
+            'Pay for your chosen plan online the available payment platforms. You will receive a unique identification (ID) number',
           imgSrc: 'card.png',
         },
         {

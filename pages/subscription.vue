@@ -57,7 +57,6 @@ export default {
           features: [
             'Unlimited video and audio consultations with a doctor and get prescriptions',
             'Enjoy 50% higher discounts from our partners',
-            'Get Drug subsidy of ₦2000/semi-annually at partner pharmacies (non-cummulative)',
             'Get hospital referrals and book appointments',
             'Get notifications bi-annually to keep track of your key health indicators; Blood Pressure, Blood sugar, Blood Cholesterol, BMI, etc',
           ],

@@ -18,7 +18,7 @@
         <p>
           Welcome to DrCallAway, home of quality telemedicine services. Our
           Medical team is available 24/7 to assist you and your family from the
-          comfort of your home, office and anywhere you are.
+          comfort of your home, office or anywhere you are.
         </p>
         <br />
         <button class="button">Start Consultation</button>
@@ -38,8 +38,8 @@
           PHONE AND VIDEO
         </h1>
         <p>
-          Our telehealth solutions make it easy for people to access
-          best-in-class care whenever and wherever, while driving down overall
+          Our telehealth solutions make it easy for people to access best
+          in-class care whenever and wherever, while driving down overall
           healthcare costs.
         </p>
         <br />

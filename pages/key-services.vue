@@ -33,7 +33,7 @@ export default {
         {
           title: `DrCallAway<sup>TM</sup> Consultation`,
           features: [
-            'Consult with a qualified medical doctor 24/7 from the comfort of your home or office via limitless calls and video calls.',
+            'Consult with a qualified medical doctor 24/7 from the comfort of your home or office via limitless audio and video calls.',
             'Avoid long queues and delays in the hospital',
             'Get prescriptions',
           ],

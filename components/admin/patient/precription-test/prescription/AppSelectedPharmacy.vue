@@ -14,7 +14,7 @@
         :loading="isLoading"
         class="admin-button"
         @click="submitHandler"
-        >MAKE PAYMENT</AppButton
+        >SUBMIT</AppButton
       >
     </div>
   </div>

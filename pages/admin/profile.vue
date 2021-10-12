@@ -474,6 +474,7 @@ export default {
       profileObj: {},
       activeKey: '1',
       isLoading: false,
+      user,
       config,
       role,
       counter: 0,
@@ -627,6 +628,9 @@ export default {
             description: message,
             duration: 4000,
           })
+        }
+        if (this.user.is_first_time_login === 1) {
+          this.$router.push(`/admin/self-service/subscribe`)
         }
         requestAnimationFrame(() => {
           this.$refs.observer.reset()

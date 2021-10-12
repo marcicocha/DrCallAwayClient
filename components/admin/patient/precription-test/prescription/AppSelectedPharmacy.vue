@@ -82,7 +82,7 @@ export default {
       try {
         const obj = {
           partners_id: this.selectedPharmacyObj.id,
-          status: 'Active',
+          status: 'PENDING',
         }
         const { message } = await this.$axios.patch(
           `prescriptions/${this.prescriptionObj.id}/pharmacies`,

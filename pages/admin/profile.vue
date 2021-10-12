@@ -339,8 +339,8 @@
                   <a-col :span="12">
                     <AppInput
                       v-model="profileObj.kin_last_name"
-                      label="First Name"
-                      name="First Name"
+                      label="Last Name"
+                      name="Last Name"
                       rules="required"
                       required
                     />

@@ -136,18 +136,11 @@ export default {
           case_file_id: this.caseId,
           tests: [...this.selectedList],
         }
-        const user = JSON.parse(localStorage.getItem('user'))
-        const config = {
-          headers: { Authorization: `Bearer ${user.token.token}` },
-        }
-        const response = await this.$axios.$post(
-          '/diagnosis/tests',
-          obj,
-          config
-        )
+        const message = await this.submitTestsHandler(obj)
+
         this.$notification.success({
           message: 'Success',
-          description: response.message,
+          description: message,
           duration: 4000,
         })
         this.isLoading = false
@@ -196,6 +189,7 @@ export default {
     },
     ...mapActions({
       getAllMedicalScreening: 'caseFileDoctorModule/GET_ALL_TEST',
+      submitTestsHandler: 'caseFileDoctorModule/ADD_TEST',
     }),
   },
 }

@@ -12,10 +12,11 @@ export default {
   },
   [ACCEPT_CASE_FILE](state, payload) {},
   [ADD_PRESCRIPTION](state, payload) {
-    console.log(payload.drugs, 'DRUGS')
-    state.prescriptionList.push(payload.drugs)
+    state.prescriptionList = [...state.prescriptionList, ...payload.drugs]
   },
-  [ADD_TEST](state, payload) {},
+  [ADD_TEST](state, payload) {
+    state.testList = [...state.testList, ...payload.tests]
+  },
   [GET_ALL_TEST](state, payload) {
     state.testList = payload
   },

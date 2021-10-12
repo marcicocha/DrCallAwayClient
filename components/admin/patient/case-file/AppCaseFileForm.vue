@@ -74,8 +74,10 @@
         <div class="flex flex-jc-sb">
           <p>
             {{
-              caseFileObj.pharmacy
-                ? `Selected Pharmacy: ${caseFileObj.pharmacy.address}`
+              caseFileObj.prescription
+                ? caseFileObj.prescription.partners
+                  ? `Selected Pharmacy: ${caseFileObj.prescription.partners.registered_name}`
+                  : ''
                 : ''
             }}
           </p>
@@ -116,8 +118,10 @@
         <div class="flex flex-jc-sb">
           <p>
             {{
-              caseFileObj.prescription
-                ? `Selected Pharmacy: ${caseFileObj.prescription.address}`
+              caseFileObj.diagnosis
+                ? caseFileObj.diagnosis.partners
+                  ? `Selected Diagnostic Center: ${caseFileObj.diagnosis.partners.registered_name}`
+                  : ''
                 : ''
             }}
           </p>
@@ -131,6 +135,17 @@
             >Add New Test</AppButton
           >
         </div>
+      </div>
+      <br />
+      <div class="t-c">
+        <AppButton
+          v-if="status === 'doctor' && caseFileObj.status === 'ACTIVE'"
+          type="primary"
+          :block="false"
+          class="admin-button"
+          @click="closeCaseHandler"
+          >CLOSE CASE</AppButton
+        >
       </div>
     </div>
     <a-modal
@@ -266,23 +281,38 @@ export default {
       return columns
     },
     testColumns() {
-      const columns = [
-        {
-          title: 'Name Of Test',
-          dataIndex: 'testName',
-          scopedSlots: { customRender: 'testName' },
-        },
-        {
-          title: 'Cost',
-          dataIndex: 'cost',
-          scopedSlots: { customRender: 'cost' },
-        },
-        {
-          title: 'Action',
-          dataIndex: 'operation',
-          scopedSlots: { customRender: 'operation' },
-        },
-      ]
+      const columns =
+        this.status === 'patient'
+          ? [
+              {
+                title: 'Name Of Test',
+                dataIndex: 'name',
+                scopedSlots: { customRender: 'name' },
+              },
+              {
+                title: 'Cost',
+                dataIndex: 'price_in_minor_unit',
+                scopedSlots: { customRender: 'price_in_minor_unit' },
+              },
+              {
+                title: 'Action',
+                dataIndex: 'operation',
+                scopedSlots: { customRender: 'operation' },
+              },
+            ]
+          : [
+              {
+                title: 'Name Of Test',
+                dataIndex: 'name',
+                scopedSlots: { customRender: 'name' },
+                width: '85%',
+              },
+              {
+                title: 'Action',
+                dataIndex: 'operation',
+                scopedSlots: { customRender: 'operation' },
+              },
+            ]
       return columns
     },
     prescriptionList() {
@@ -296,7 +326,14 @@ export default {
       return array
     },
     testList() {
-      return []
+      let array = []
+      if (this.caseFileObj.diagnosis !== null) {
+        array = [...array, ...this.caseFileObj.diagnosis.tests]
+      }
+      if (this.allTest.length !== 0) {
+        array = [...array, ...this.allTest]
+      }
+      return array
     },
     ...mapState({
       allPrescription: (state) => state.caseFileDoctorModule.prescriptionList,
@@ -349,6 +386,14 @@ export default {
     onClose() {
       this.chatDrawerIsVisible = false
       this.videoModalIsVisible = false
+    },
+    async closeCaseHandler() {
+      const { message } = await this.$axios.post('')
+      this.$notification.success({
+        message: 'Success',
+        description: message,
+        duration: 4000,
+      })
     },
   },
 }

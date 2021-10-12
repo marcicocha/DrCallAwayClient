@@ -145,14 +145,14 @@ export default {
         return
       }
       this.isLoading = true
-      this.drugs.push(this.prescriptionObj)
-      this.prescriptionObj = {}
+      const newDrugs = []
+      newDrugs.push(this.prescriptionObj)
       try {
         const obj = {
           case_file_id: this.caseFileObj.id,
           ailment: this.caseFileObj.initial_complain,
           diagnosis: this.caseFileObj.doctor_observation,
-          drugs: [...this.drugs],
+          drugs: [...this.drugs, ...newDrugs],
         }
         const message = await this.submitPrecriptionHandler(obj)
         this.$notification.success({
@@ -163,6 +163,7 @@ export default {
         requestAnimationFrame(() => {
           this.$refs.observer.reset()
           this.isLoading = false
+          this.prescriptionObj = {}
           this.$emit('formSubmissionCompleted')
         })
       } catch (err) {

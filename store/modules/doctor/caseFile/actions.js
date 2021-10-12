@@ -35,12 +35,12 @@ export default {
     const config = {
       headers: { Authorization: `Bearer ${user.token.token}` },
     }
-    const { data, message } = await this.$axios.$post(
+    const { message } = await this.$axios.$post(
       `prescriptions`,
       payload,
       config
     )
-    commit(ADD_PRESCRIPTION, data)
+    commit(ADD_PRESCRIPTION, payload)
     return message
   },
   async [ADD_TEST]({ commit }, payload) {
@@ -49,7 +49,7 @@ export default {
       headers: { Authorization: `Bearer ${user.token.token}` },
     }
     const { data, message } = await this.$axios.$post(
-      `prescriptions`,
+      `/diagnosis/tests`,
       payload,
       config
     )

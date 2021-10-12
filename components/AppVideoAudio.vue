@@ -172,7 +172,7 @@ export default {
           const config = {
             headers: { Authorization: `Bearer ${this.token}` },
           }
-          await this.$axios.get(
+          await this.$axios.$get(
             `/complete/call/${this.currentCaseFile.id}`,
             config
           )

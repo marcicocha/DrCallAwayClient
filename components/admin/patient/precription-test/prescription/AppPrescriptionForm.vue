@@ -83,7 +83,10 @@
       <div>
         <h6 class="t-c">Pharmacies Near You</h6>
         <a-divider />
-        <AppPharmacyTable :drug-list="dataSource" />
+        <AppPharmacyTable
+          :drug-list="dataSource"
+          :prescriptionObj="prescriptionObj"
+        />
       </div>
     </a-modal>
   </div>

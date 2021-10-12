@@ -40,7 +40,11 @@
             Selected Pharmacy: {{ selectedPharmacyObj.registered_name }}
           </h6>
           <a-divider />
-          <AppSelectedPharmacy :drug-list="drugList" />
+          <AppSelectedPharmacy
+            :drug-list="drugList"
+            :selectedPharmacyObj="selectedPharmacyObj"
+            :prescriptionObj="prescriptionObj"
+          />
         </div>
       </a-modal>
     </div>
@@ -59,6 +63,10 @@ export default {
     drugList: {
       type: Array,
       default: () => [],
+    },
+    prescriptionObj: {
+      type: Object,
+      default: () => {},
     },
   },
   data() {

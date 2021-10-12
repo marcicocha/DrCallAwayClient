@@ -106,7 +106,7 @@ export default {
     // added by dafom
     // fetchMessages() {
     //   console.log(':::: before chat ::::')
-    //   this.$axios.get('MessageSent').then((response) => {
+    //   this.$axios.$get('MessageSent').then((response) => {
     //     this.messages = response.data
     //     console.log(this.messages, ':::: messages ::::')
     //   })

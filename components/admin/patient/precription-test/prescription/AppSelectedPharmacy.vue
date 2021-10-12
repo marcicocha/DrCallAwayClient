@@ -32,6 +32,14 @@ export default {
       type: Array,
       default: () => [],
     },
+    selectedPharmacyObj: {
+      type: Object,
+      default: () => ({}),
+    },
+    prescriptionObj: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
@@ -66,8 +74,38 @@ export default {
     },
   },
   methods: {
-    submitHandler() {
-      console.log('CLICKED')
+    async submitHandler() {
+      const user = JSON.parse(localStorage.getItem('user'))
+      const config = {
+        headers: { Authorization: `Bearer ${user.token.token}` },
+      }
+      try {
+        const obj = {
+          partners_id: this.selectedPharmacyObj.id,
+          status: 'Active',
+        }
+        const { message } = await this.$axios.patch(
+          `prescriptions/${this.prescriptionObj.id}/pharmacies`,
+          obj,
+          config
+        )
+        this.$emit('switchToCompleteTab')
+        this.$notification.success({
+          message: 'Success',
+          description: message,
+          duration: 4000,
+        })
+      } catch (err) {
+        this.isLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
   },
 }

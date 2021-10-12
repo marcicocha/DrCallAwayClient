@@ -72,6 +72,7 @@
             :current-case-file="currentCaseFile"
             status="doctor"
             @showTestTab="showTestTab"
+            @switchToCompleteTab="switchToCompleteTab"
           />
         </div>
       </div>
@@ -179,6 +180,11 @@ export default {
   methods: {
     onClose() {
       this.chatDrawerIsVisible = false
+    },
+    switchToCompleteTab() {
+      this.activeKey = '2'
+      this.changeTabHandler('2')
+      this.testIsVisible = false
     },
     async showChatDrawer(record) {
       this.chatDrawerIsVisible = true

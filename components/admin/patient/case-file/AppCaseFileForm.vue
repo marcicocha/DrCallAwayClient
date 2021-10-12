@@ -388,12 +388,34 @@ export default {
       this.videoModalIsVisible = false
     },
     async closeCaseHandler() {
-      const { message } = await this.$axios.post('')
-      this.$notification.success({
-        message: 'Success',
-        description: message,
-        duration: 4000,
-      })
+      const user = JSON.parse(localStorage.getItem('user'))
+      const config = {
+        headers: { Authorization: `Bearer ${user.token.token}` },
+      }
+      try {
+        const response = await this.$axios.patch(
+          `cases/${this.caseFileObj.id}/close`,
+          this.caseFileObj.id,
+          config
+        )
+        console.log(response.message, 'MESSAGE')
+        this.$notification.success({
+          message: 'Success',
+          description: response.message,
+          duration: 4000,
+        })
+        this.$emit('switchToCompleteTab')
+      } catch (err) {
+        this.isLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
   },
 }

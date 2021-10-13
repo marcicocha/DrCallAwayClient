@@ -431,9 +431,9 @@ export default {
   position: absolute;
   bottom: 0;
   right: 0;
-  min-width: 200px;
-  min-height: 150px;
-  background: $dark-purple;
+  // min-width: 200px;
+  // min-height: 150px;
+  // background: $dark-purple;
   video {
     width: 200px !important;
   }

@@ -21,16 +21,8 @@
     </div>
     <div class="embed-responsive embed-responsive-16by9">
       <div class="row remote_video_container"></div>
-      <div id="remoteTrack">
-        <!-- <div v-if="!camera" class="name__tag">
-          <span>{{ remoteUser }}</span>
-        </div> -->
-      </div>
-      <div id="localTrack">
-        <!-- <div v-if="!camera" class="name__tag">
-          <span>{{ localUser }}</span>
-        </div> -->
-      </div>
+      <div id="remoteTrack"></div>
+      <div id="localTrack"></div>
     </div>
   </div>
 </template>

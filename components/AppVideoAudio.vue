@@ -412,12 +412,12 @@ export default {
   video {
     width: 100% !important;
   }
-  .name__tag {
-    span {
-      font-size: 4rem;
-      background: $dark-purple;
-    }
-  }
+  // .name__tag {
+  //   span {
+  //     font-size: 4rem;
+  //     background: $dark-purple;
+  //   }
+  // }
 }
 #localTrack {
   position: absolute;
@@ -429,11 +429,11 @@ export default {
   video {
     width: 200px !important;
   }
-  .name__tag {
-    span {
-      background: $purple;
-    }
-  }
+  // .name__tag {
+  //   span {
+  //     background: $purple;
+  //   }
+  // }
 }
 .name__tag {
   z-index: 20;

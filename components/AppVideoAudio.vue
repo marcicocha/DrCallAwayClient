@@ -362,7 +362,7 @@ export default {
           })
           // if local preview is not active, create it
           if (!VueThis.localTrack) {
-            if (!VueThis.camera) {
+            if (VueThis.camera) {
               createLocalVideoTrack().then((track) => {
                 console.log(track, 'TRACK')
                 const localMediaContainer =

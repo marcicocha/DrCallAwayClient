@@ -362,12 +362,15 @@ export default {
           })
           // if local preview is not active, create it
           if (!VueThis.localTrack) {
-            createLocalVideoTrack().then((track) => {
-              console.log(track, 'TRACK')
-              const localMediaContainer = document.getElementById('localTrack')
-              localMediaContainer.appendChild(track.attach())
-              VueThis.localTrack = true
-            })
+            if (!VueThis.camera) {
+              createLocalVideoTrack().then((track) => {
+                console.log(track, 'TRACK')
+                const localMediaContainer =
+                  document.getElementById('localTrack')
+                localMediaContainer.appendChild(track.attach())
+                VueThis.localTrack = true
+              })
+            }
           }
         })
       })

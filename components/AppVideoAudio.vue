@@ -421,7 +421,10 @@ export default {
     width: 100% !important;
   }
   .name__tag {
-    background: $dark-purple;
+    span {
+      font-size: 4rem;
+      background: $dark-purple;
+    }
   }
 }
 #localTrack {

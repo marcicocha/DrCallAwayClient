@@ -21,8 +21,16 @@
     </div>
     <div class="embed-responsive embed-responsive-16by9">
       <div class="row remote_video_container"></div>
-      <div id="remoteTrack"></div>
-      <div id="localTrack"></div>
+      <div id="remoteTrack">
+        <div v-if="!camera" class="name__tag">
+          <span>{{ remoteUser }}</span>
+        </div>
+      </div>
+      <div id="localTrack">
+        <div v-if="!camera" class="name__tag">
+          <span>{{ localUser }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -74,10 +82,25 @@ export default {
       roomName: null,
       microphone: true,
       token,
+      user,
     }
   },
   created() {
     this.createChat(this.roomName)
+  },
+  computed: {
+    localUser() {
+      const name = this.user.first_name
+      return name.charAt(0)
+    },
+    remoteUser() {
+      if (this.status === 'doctor') {
+        const name = this.currentCaseFile.patient.first_name
+        return name.charAt(0)
+      }
+      const name = this.currentCaseFile.partners.first_name
+      return name.charAt(0)
+    },
   },
   methods: {
     // Access token generation using username and room name
@@ -397,13 +420,43 @@ export default {
   video {
     width: 100% !important;
   }
+  .name__tag {
+    background: $dark-purple;
+  }
 }
 #localTrack {
   position: absolute;
   bottom: 0;
   right: 0;
+  min-width: 200px;
+  min-height: 150px;
+  background: $dark-purple;
   video {
     width: 200px !important;
+  }
+  .name__tag {
+    span {
+      background: $purple;
+    }
+  }
+}
+.name__tag {
+  z-index: 20;
+  display: block;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  // width: 5rem;
+  // height: 5rem;
+  span {
+    text-transform: uppercase;
+    font-size: 3rem;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 50%;
   }
 }
 </style>

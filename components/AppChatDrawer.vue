@@ -9,7 +9,7 @@
     @close="onClose"
   >
     <AppConversation
-      :currentCaseFile="currentCaseFile"
+      :current-case-file="currentCaseFile"
       :status="status"
       :doctor="doctor"
     />

@@ -303,7 +303,7 @@
                   required
                   rules="required"
                 />
-                <AppInput
+                <AppPassword
                   v-model="userObject.password"
                   placeholder="Password"
                   input-type="password"
@@ -451,7 +451,7 @@
                   required
                   rules="required"
                 />
-                <AppInput
+                <AppPassword
                   v-model="signUpObject.password"
                   placeholder="Password"
                   input-type="password"
@@ -535,6 +535,7 @@ import AppInput from '@/components/AppInput'
 import AppCheckbox from '@/components/AppCheckbox'
 import AppSelect from '@/components/AppSelect'
 import AppButton from '@/components/AppButton'
+import AppPassword from '@/components/AppPassword'
 
 export default {
   components: {
@@ -542,6 +543,7 @@ export default {
     AppCheckbox,
     AppButton,
     AppSelect,
+    AppPassword,
     ValidationObserver,
   },
   data() {

@@ -89,7 +89,7 @@
         <a-divider />
         <AppPharmacyTable
           :drug-list="dataSource"
-          :prescriptionObj="prescriptionObj"
+          :prescription-obj="prescriptionObj"
           @onClose="onClose"
         />
       </div>

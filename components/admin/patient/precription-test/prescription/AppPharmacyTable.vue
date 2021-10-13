@@ -42,8 +42,8 @@
           <a-divider />
           <AppSelectedPharmacy
             :drug-list="drugList"
-            :selectedPharmacyObj="selectedPharmacyObj"
-            :prescriptionObj="prescriptionObj"
+            :selected-pharmacy-obj="selectedPharmacyObj"
+            :prescription-obj="prescriptionObj"
             @closeModal="onClose"
           />
         </div>

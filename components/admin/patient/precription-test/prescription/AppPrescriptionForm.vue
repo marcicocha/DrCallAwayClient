@@ -8,6 +8,7 @@
               v-model="prescriptionObj.prescriptionId"
               label="Prescription ID"
               name="prescription id"
+              disabled
             />
           </a-col>
           <a-col :span="12">
@@ -15,6 +16,7 @@
               v-model="prescriptionObj.prescriptionBy"
               label="Prescription By"
               name="prescription by"
+              disabled
             />
           </a-col>
           <a-col :span="12">
@@ -22,6 +24,7 @@
               v-model="prescriptionObj.prescriptionDate"
               label="Prescription Date"
               name="prescription date"
+              disabled
             />
           </a-col>
           <a-col :span="12">
@@ -29,6 +32,7 @@
               v-model="prescriptionObj.status"
               label="Status"
               name="status"
+              disabled
             />
           </a-col>
         </a-row>
@@ -86,7 +90,7 @@
         <AppPharmacyTable
           :drug-list="dataSource"
           :prescriptionObj="prescriptionObj"
-          @onClose="closeModal"
+          @onClose="onClose"
         />
       </div>
     </a-modal>
@@ -203,6 +207,10 @@ export default {
     },
     submitHandler() {
       this.pharmacyModalIsVisible = true
+    },
+    onClose() {
+      this.closeModal()
+      this.$emit('closeModal')
     },
   },
 }

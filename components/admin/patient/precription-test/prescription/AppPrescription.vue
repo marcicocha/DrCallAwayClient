@@ -61,6 +61,7 @@
         <a-divider />
         <AppPrescriptionForm
           :current-prescription-obj="currentPrescriptionObj"
+          @closeModal="closeModal"
         />
       </div>
     </a-modal>

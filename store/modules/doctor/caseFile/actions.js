@@ -4,6 +4,7 @@ import {
   ADD_PRESCRIPTION,
   ADD_TEST,
   GET_ALL_TEST,
+  RESET_CASE_FILE,
 } from '@/utils/mutation-types/doctor/case-file'
 export default {
   async [GET_DOCTOR_CASE_FILE]({ commit }, payload) {
@@ -67,5 +68,8 @@ export default {
     const data = await this.$axios.$get('test_all_list', config)
     commit(GET_ALL_TEST, data)
     return data
+  },
+  [RESET_CASE_FILE]({ commit }) {
+    commit(RESET_CASE_FILE)
   },
 }

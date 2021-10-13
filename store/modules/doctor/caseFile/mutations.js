@@ -4,6 +4,7 @@ import {
   ADD_PRESCRIPTION,
   ADD_TEST,
   GET_ALL_TEST,
+  RESET_CASE_FILE,
 } from '@/utils/mutation-types/doctor/case-file'
 
 export default {
@@ -19,5 +20,8 @@ export default {
   },
   [GET_ALL_TEST](state, payload) {
     state.testList = payload
+  },
+  [RESET_CASE_FILE](state) {
+    state.caseFiles = []
   },
 }

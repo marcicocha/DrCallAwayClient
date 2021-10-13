@@ -177,6 +177,9 @@ export default {
   mounted() {
     this.changeTabHandler('1')
   },
+  destroyed() {
+    this.resetHandler()
+  },
   methods: {
     onClose() {
       this.chatDrawerIsVisible = false
@@ -243,6 +246,7 @@ export default {
     },
     ...mapActions({
       getAllCaseFile: 'caseFileDoctorModule/GET_DOCTOR_CASE_FILE',
+      resetHandler: 'caseFileDoctorModule/RESET_CASE_FILE',
       getMessageHandler: 'messageModule/GET_MESSAGE',
     }),
   },

@@ -112,6 +112,9 @@ export default {
   mounted() {
     this.changeTabHandler('1')
   },
+  destroyed() {
+    this.resetHandler()
+  },
   methods: {
     checkInHandler(record) {
       const $this = this
@@ -198,6 +201,7 @@ export default {
     ...mapActions({
       getGeneralWaitingRoom: 'waitingRoomModule/GET_GENERAL_WAITING_ROOM',
       getSpecialistWaitingRoom: 'waitingRoomModule/GET_SPECIALIST_WAITING_ROOM',
+      resetHandler: 'waitingRoomModule/RESET_WAITING_ROOM',
     }),
   },
 }

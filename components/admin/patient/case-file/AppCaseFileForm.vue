@@ -48,14 +48,21 @@
             />
           </a-col>
           <a-col :span="24">
-            <AppInput
+            <AppSearch
               v-model="caseFileObj.doctor_observation"
               label="Doctor's Comment"
               name="Doctor Comment"
               :disabled="
                 status === 'patient' || caseFileObj.status === 'COMPLETED'
               "
-            />
+              @search="saveHandler"
+            >
+              <!-- <template>
+                <a-button slot="enterButton"
+                  ><img src="@/assets/images/admin/save.png" alt="img"
+                /></a-button>
+              </template> -->
+            </AppSearch>
           </a-col>
         </a-row>
       </ValidationObserver>
@@ -206,6 +213,7 @@ import { ValidationObserver } from 'vee-validate'
 import AppInput from '@/components/AppInput'
 import AppDatePicker from '@/components/AppDatePicker'
 import AppButton from '@/components/AppButton'
+import AppSearch from '@/components/AppSearch'
 import AppPrescriptionForm from '@/components/admin/patient/case-file/AppPrescriptionForm'
 import AppChatDrawer from '@/components/AppChatDrawer'
 import AppVideoAudio from '@/components/AppVideoAudio.vue'
@@ -219,6 +227,7 @@ export default {
     AppDatePicker,
     AppChatDrawer,
     AppVideoAudio,
+    AppSearch,
   },
   props: {
     currentCaseFile: {
@@ -231,6 +240,10 @@ export default {
     },
   },
   data() {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const config = {
+      headers: { Authorization: `Bearer ${user.token.token}` },
+    }
     return {
       caseFileObj: {},
       prescriptionIsVisible: false,
@@ -238,6 +251,8 @@ export default {
       chatDrawerIsVisible: false,
       videoModalIsVisible: false,
       camera: false,
+      user,
+      config,
     }
   },
   computed: {
@@ -396,16 +411,39 @@ export default {
       this.chatDrawerIsVisible = false
       this.videoModalIsVisible = false
     },
-    async closeCaseHandler() {
-      const user = JSON.parse(localStorage.getItem('user'))
-      const config = {
-        headers: { Authorization: `Bearer ${user.token.token}` },
+    async saveHandler(value) {
+      const obj = { comment: value }
+      try {
+        const response = await this.$axios.patch(
+          `cases/${this.caseFileObj.id}/comment`,
+          obj,
+          this.config
+        )
+        console.log(response.message, 'MESSAGE')
+        this.$notification.success({
+          message: 'Success',
+          description: response.message,
+          duration: 4000,
+        })
+        this.$emit('switchToCompleteTab')
+      } catch (err) {
+        this.isLoading = false
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
       }
+    },
+    async closeCaseHandler() {
       try {
         const response = await this.$axios.patch(
           `cases/${this.caseFileObj.id}/close`,
           this.caseFileObj.id,
-          config
+          this.config
         )
         console.log(response.message, 'MESSAGE')
         this.$notification.success({

@@ -11,7 +11,7 @@
     >
       <!-- slot-scope="{ errors, flags }" :validate-status="resolveState({ errors, flags })"
     :help="showErrors ? errors[0] : ''" -->
-      <a-input-password
+      <a-input-search
         v-model="innerValue"
         :type="inputType"
         :placeholder="placeholder"
@@ -19,9 +19,11 @@
         :size="size"
         :class="classNames"
         :allow-clear="allowClear"
-        :max-length="parseInt(maxLength, 10)"
         @blur="blurHandler"
-      />
+        @search="onSearch"
+      >
+        <slot></slot>
+      </a-input-search>
     </a-form-item>
   </ValidationProvider>
 </template>
@@ -30,7 +32,7 @@
 import { ValidationProvider } from 'vee-validate'
 
 export default {
-  name: 'AppPassword',
+  name: 'AppSearch',
   components: {
     ValidationProvider,
   },
@@ -65,7 +67,7 @@ export default {
     },
     allowClear: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     wrapperCol: {
       type: Object,
@@ -220,6 +222,9 @@ export default {
   methods: {
     blurHandler(e) {
       this.$emit('blur', this.innerValue)
+    },
+    onSearch(e) {
+      this.$emit('search', this.innerValue)
     },
     resolveState({ errors, flags }) {
       if (errors[0]) {

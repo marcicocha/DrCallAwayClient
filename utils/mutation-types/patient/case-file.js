@@ -1,2 +1,3 @@
 export const GET_CASE_FILE = 'GET_CASE_FILE'
 export const GET_DOCTOR_CASE_FILE = 'GET_DOCTOR_CASE_FILE'
+export const RESET_CASE_FILE = 'RESET_CASE_FILE'

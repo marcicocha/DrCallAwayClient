@@ -2,6 +2,7 @@ import {
   GET_GENERAL_WAITING_ROOM,
   GET_SPECIALIST_WAITING_ROOM,
   GET_HEALTH_INFORMATION,
+  RESET_WAITING_ROOM,
 } from '@/utils/mutation-types/doctor/waiting-room'
 export default {
   async [GET_GENERAL_WAITING_ROOM]({ commit }, payload) {
@@ -36,5 +37,8 @@ export default {
     }
     const { data } = await this.$axios.$get('medical-histories', config)
     commit(GET_HEALTH_INFORMATION, data)
+  },
+  [RESET_WAITING_ROOM]({ commit }) {
+    commit(RESET_WAITING_ROOM)
   },
 }

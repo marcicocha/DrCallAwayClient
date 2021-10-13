@@ -21,8 +21,16 @@
     </div>
     <div class="embed-responsive embed-responsive-16by9">
       <div class="row remote_video_container"></div>
-      <div id="remoteTrack"></div>
-      <div id="localTrack"></div>
+      <div id="remoteTrack">
+        <div v-if="!camera" class="name__tag">
+          <span>{{ remoteUser }}</span>
+        </div>
+      </div>
+      <div id="localTrack">
+        <div v-if="!camera" class="name__tag">
+          <span>{{ localUser }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -77,6 +85,9 @@ export default {
       user,
     }
   },
+  created() {
+    this.createChat(this.roomName)
+  },
   computed: {
     localUser() {
       const name = this.user.first_name
@@ -90,9 +101,6 @@ export default {
       const name = this.currentCaseFile.partners.first_name
       return name.charAt(0)
     },
-  },
-  created() {
-    this.createChat(this.roomName)
   },
   methods: {
     // Access token generation using username and room name
@@ -412,28 +420,28 @@ export default {
   video {
     width: 100% !important;
   }
-  // .name__tag {
-  //   span {
-  //     font-size: 4rem;
-  //     background: $dark-purple;
-  //   }
-  // }
+  .name__tag {
+    span {
+      font-size: 4rem;
+      background: $dark-purple;
+    }
+  }
 }
 #localTrack {
   position: absolute;
   bottom: 0;
   right: 0;
-  // min-width: 200px;
-  // min-height: 150px;
-  // background: $dark-purple;
+  min-width: 200px;
+  min-height: 150px;
+  background: $dark-purple;
   video {
     width: 200px !important;
   }
-  // .name__tag {
-  //   span {
-  //     background: $purple;
-  //   }
-  // }
+  .name__tag {
+    span {
+      background: $purple;
+    }
+  }
 }
 .name__tag {
   z-index: 20;

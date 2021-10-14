@@ -115,6 +115,7 @@ export default {
       counter: 0,
       status: 'PENDING',
       chatDrawerIsVisible: false,
+      TIMER_ID: null,
     }
   },
   computed: {
@@ -172,11 +173,14 @@ export default {
   methods: {
     onClose() {
       this.chatDrawerIsVisible = false
+      clearInterval(this.TIMER_ID)
     },
     async showChatDrawer(record) {
       this.currentCaseFile = record
       try {
-        await this.getMessageHandler(record.id)
+        this.TIMER_ID = setInterval(() => {
+          this.getMessageHandler(this.currentCaseFile.id)
+        }, 5000)
         this.chatDrawerIsVisible = true
       } catch (err) {
         const { default: errorHandler } = await import('@/utils/errorHandler')

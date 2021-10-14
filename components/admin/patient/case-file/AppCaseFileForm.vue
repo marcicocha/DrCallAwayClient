@@ -253,6 +253,7 @@ export default {
       camera: false,
       user,
       config,
+      TIMER_ID: null,
     }
   },
   computed: {
@@ -398,7 +399,9 @@ export default {
     },
     async showChatHandler() {
       try {
-        await this.getMessageHandler(this.currentCaseFile.id)
+        this.TIMER_ID = setInterval(() => {
+          this.getMessageHandler(this.currentCaseFile.id)
+        }, 5000)
         this.chatDrawerIsVisible = true
       } catch (err) {
         const { default: errorHandler } = await import('@/utils/errorHandler')
@@ -422,6 +425,7 @@ export default {
     onClose() {
       this.chatDrawerIsVisible = false
       this.videoModalIsVisible = false
+      clearInterval(this.TIMER_ID)
     },
     async saveHandler(value) {
       if (!value) {

@@ -4,7 +4,7 @@ import {
   RESET_MESSAGE,
 } from '@/utils/mutation-types/message'
 export default {
-  [GET_MESSAGE]({ commit }, payload) {
+  async [GET_MESSAGE]({ commit }, payload) {
     const user = JSON.parse(localStorage.getItem('user'))
     const config = {
       headers: { Authorization: `Bearer ${user.token.token}` },
@@ -12,10 +12,11 @@ export default {
       //   ...payload,
       // },
     }
-    setInterval(() => {
-      const { data } = this.$axios.$get(`/cases/${payload}/messages`, config)
-      commit(GET_MESSAGE, data)
-    }, 5000)
+    const { data } = await this.$axios.$get(
+      `/cases/${payload}/messages`,
+      config
+    )
+    commit(GET_MESSAGE, data)
   },
   async [POST_MESSAGE]({ commit }, payload) {
     const user = JSON.parse(localStorage.getItem('user'))

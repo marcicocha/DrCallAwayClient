@@ -1,4 +1,8 @@
-import { GET_MESSAGE, POST_MESSAGE } from '@/utils/mutation-types/message'
+import {
+  GET_MESSAGE,
+  POST_MESSAGE,
+  RESET_MESSAGE,
+} from '@/utils/mutation-types/message'
 export default {
   async [GET_MESSAGE]({ commit }, payload) {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -25,5 +29,8 @@ export default {
       config
     )
     commit(POST_MESSAGE, data)
+  },
+  [RESET_MESSAGE]({ commit }) {
+    commit(RESET_MESSAGE)
   },
 }

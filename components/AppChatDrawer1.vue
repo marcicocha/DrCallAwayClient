@@ -95,39 +95,10 @@ export default {
       immediate: true,
     },
   },
-  // mounted() {
-  //   // this.$echo
-  //   //   .private(`message.${this.currentCaseFile.patient_id}`)
-  //   //   .listen('MessageSent', (e) => {
-  //   //     console.log(e)
-  //   //   })
-  //   this.$echo
-  //     .private(message`${this.currentCaseFile.id}`)
-  //     .listen('MessageSent', (e) => {
-  //       console.log(e, '::: mounted ::')
-  //     })
-  // },
-  async created() {
-    try {
-      await this.getMessageHandler(this.currentCaseFile.id)
-    } catch (err) {
-      const { default: errorHandler } = await import('@/utils/errorHandler')
-      errorHandler(err).forEach((msg) => {
-        this.$notification.error({
-          message: 'Error',
-          description: msg,
-          duration: 4000,
-        })
-      })
-    }
-  },
-  // beforeDestroy() {
-  //   this.$echo.leave(`message.${this.currentCaseFile.id}`)
-  // },
-
   methods: {
     onClose() {
       this.$emit('onClose')
+      this.resetMessageHandler()
     },
     async sendMessageHandler() {
       if (!this.message) {
@@ -153,7 +124,7 @@ export default {
     },
     ...mapActions({
       submitMessageHandler: 'messageModule/POST_MESSAGE',
-      getMessageHandler: 'messageModule/GET_MESSAGE',
+      resetMessageHandler: 'messageModule/RESET_MESSAGE',
     }),
   },
 }

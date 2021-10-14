@@ -208,7 +208,7 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { ValidationObserver } from 'vee-validate'
 import AppInput from '@/components/AppInput'
 import AppDatePicker from '@/components/AppDatePicker'
@@ -396,8 +396,20 @@ export default {
     closeModal() {
       this.prescriptionIsVisible = false
     },
-    showChatHandler() {
-      this.chatDrawerIsVisible = true
+    async showChatHandler() {
+      try {
+        await this.getMessageHandler(this.currentCaseFile.id)
+        this.chatDrawerIsVisible = true
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
     showVideoHandler(key) {
       this.videoModalIsVisible = true
@@ -472,6 +484,9 @@ export default {
         })
       }
     },
+    ...mapActions({
+      getMessageHandler: 'messageModule/GET_MESSAGE',
+    }),
   },
 }
 </script>

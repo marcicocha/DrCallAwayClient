@@ -190,10 +190,10 @@ export default {
       this.testIsVisible = false
     },
     async showChatDrawer(record) {
-      this.chatDrawerIsVisible = true
       this.currentCaseFile = record
       try {
         await this.getMessageHandler(this.currentCaseFile.id)
+        this.chatDrawerIsVisible = true
       } catch (err) {
         const { default: errorHandler } = await import('@/utils/errorHandler')
         errorHandler(err).forEach((msg) => {

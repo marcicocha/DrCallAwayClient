@@ -173,10 +173,21 @@ export default {
     onClose() {
       this.chatDrawerIsVisible = false
     },
-    showChatDrawer(record) {
+    async showChatDrawer(record) {
       this.currentCaseFile = record
-      this.chatDrawerIsVisible = true
-
+      try {
+        await this.getMessageHandler(record.id)
+        this.chatDrawerIsVisible = true
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
       // try {
       //   await this.getMessageHandler(this.currentCaseFile.id)
       // } catch (err) {
@@ -227,6 +238,7 @@ export default {
     ...mapActions({
       getAllCaseFile: 'caseFileModule/GET_CASE_FILE',
       resetHandler: 'caseFileModule/RESET_CASE_FILE',
+      getMessageHandler: 'messageModule/GET_MESSAGE',
     }),
   },
 }

@@ -283,7 +283,7 @@ export default {
         }
         // before a user enters a new room,
         // disconnect the user from they joined already
-        this.leaveRoomIfJoined()
+        VueThis.leaveRoomIfJoined()
         // remove any remote track when joining a new room
         document.getElementById('remoteTrack').innerHTML = ''
         Twilio.connect(token, connectOptions).then(function (room) {
@@ -364,7 +364,6 @@ export default {
           if (!VueThis.localTrack) {
             if (VueThis.camera) {
               createLocalVideoTrack().then((track) => {
-                console.log(track, 'TRACK')
                 const localMediaContainer =
                   document.getElementById('localTrack')
                 localMediaContainer.appendChild(track.attach())

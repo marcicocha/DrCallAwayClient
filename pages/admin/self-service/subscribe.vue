@@ -7,7 +7,7 @@
           <a-row type="flex" :gutter="16">
             <a-col :span="12">
               <AppInput
-                v-model="suscriptionObj.subscriptionType"
+                v-model="suscriptionObj.type"
                 label="Subscription Type"
                 name="Subscription Type"
                 disabled
@@ -15,7 +15,7 @@
             </a-col>
             <a-col :span="12">
               <AppInput
-                v-model="suscriptionObj.subscriptionPlan"
+                v-model="suscriptionObj.plan"
                 label="Subscription Plan"
                 name="Subscription Plan"
                 disabled
@@ -82,40 +82,51 @@
             <ValidationObserver ref="observer" tag="div">
               <div v-if="renewIsVisible">
                 <AppInput
-                  v-model="currentSubscriptionObj.currentSubscriptionType"
+                  v-model="currentSubscriptionObj.type"
                   label="Current Subscription Type"
                   name="Current Subscription Type"
                   required
                   rules="required"
+                  disabled
                 />
                 <AppInput
-                  v-model="currentSubscriptionObj.currentSubscriptionPlan"
+                  v-model="currentSubscriptionObj.plan"
                   label="Current Subscription Plan"
                   name="current subscription plan"
                   required
                   rules="required"
+                  disabled
                 />
               </div>
               <div v-else>
                 <AppSelect
-                  v-model="newSubscriptionObj.newSubscriptionType"
+                  v-model="newSubscriptionObj.type"
                   label="New Subscription Type"
                   name="New Subscription Type"
                   placeholder="New Subscription Type"
-                  :data="['STANDARD']"
+                  :data="['Standard', 'Premium']"
                   :remote="false"
                   required
                   rules="required"
                 />
                 <AppSelect
-                  v-model="newSubscriptionObj.newSubscriptionPlan"
+                  v-model="newSubscriptionObj.plan"
                   label="New Subscription Plan"
                   name="New Subscription Plan"
                   placeholder="New Subscription Plan"
-                  :data="['STANDARD']"
+                  :url="`subscriptions/plans/${newSubscriptionObj.type}`"
+                  :call-back-func="
+                    (resp) => ({
+                      text: resp.plan,
+                      value: resp.plan,
+                      amount: resp.amount,
+                    })
+                  "
                   :remote="false"
                   required
                   rules="required"
+                  :disabled="!newSubscriptionObj.type"
+                  @selectedObject="selectedObjectHandler"
                 />
               </div>
             </ValidationObserver>
@@ -156,6 +167,7 @@ export default {
   },
   layout: 'dashboard',
   data() {
+    const userObject = JSON.parse(localStorage.getItem('user'))
     return {
       suscriptionObj: {},
       isLoading: false,
@@ -167,6 +179,8 @@ export default {
       paymentIsVisible: false,
       confirmLoading: false,
       user: {},
+      planArray: [],
+      userObject,
     }
   },
   computed: {
@@ -175,12 +189,10 @@ export default {
     }),
   },
   async mounted() {
-    const userObject = JSON.parse(localStorage.getItem('user'))
     this.user = {
-      email: userObject.email,
-      firstName: userObject.first_name,
-      lastName: userObject.last_name,
-      amount: 100,
+      email: this.userObject.email,
+      firstName: this.userObject.first_name,
+      lastName: this.userObject.last_name,
     }
     try {
       await this.getSubscriptionHandler()
@@ -213,6 +225,10 @@ export default {
     },
     close() {
       // this.paymentIsVisible = false
+    },
+    selectedObjectHandler(rcd) {
+      this.newSubscriptionObj.amount = rcd.amount
+      this.user.amount = rcd.amount
     },
     async callback(res) {
       if (res.message === 'Approved') {

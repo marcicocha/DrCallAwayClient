@@ -12,7 +12,7 @@ export default {
         ...payload,
       },
     }
-    const { data } = await this.$axios.$get('subscription', config)
+    const { data } = await this.$axios.$get('subscriptions', config)
     commit(GET_SUBSCRIPTION, data)
   },
   async [RENEW_SUBSCRIPTION]({ commit }, payload) {
@@ -21,7 +21,7 @@ export default {
       headers: { Authorization: `Bearer ${user.token.token}` },
     }
     const { data, message } = await this.$axios.$post(
-      'renew-subscription',
+      'subscribe',
       payload,
       config
     )
@@ -34,7 +34,7 @@ export default {
       headers: { Authorization: `Bearer ${user.token.token}` },
     }
     const { data, message } = await this.$axios.$post(
-      'change-subscription',
+      'subscribe',
       payload,
       config
     )

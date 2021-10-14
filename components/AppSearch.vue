@@ -22,7 +22,9 @@
         @blur="blurHandler"
         @search="onSearch"
       >
-        <slot></slot>
+        <a-button v-show="innerValue" slot="enterButton"
+          ><img src="@/assets/images/admin/save.png" alt="img"
+        /></a-button>
       </a-input-search>
     </a-form-item>
   </ValidationProvider>
@@ -67,7 +69,7 @@ export default {
     },
     allowClear: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     wrapperCol: {
       type: Object,

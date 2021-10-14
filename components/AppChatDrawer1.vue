@@ -14,8 +14,8 @@
         :key="i"
         :class="{
           'message-section': true,
-          'message-out': true,
-          'message-in': false,
+          'message-out': msg.isSender,
+          'message-in': !msg.isSender,
         }"
       >
         <span>{{ msg.body }}</span>
@@ -57,14 +57,23 @@ export default {
     },
   },
   data() {
+    const user = JSON.parse(localStorage.getItem('user'))
     return {
       message: '',
+      user,
     }
   },
   computed: {
     messageList() {
       if (this.allMessage) {
-        return [...this.allMessage]
+        const newArray = this.allMessage.map((rcd) => {
+          if (rcd.sender_id === this.user.id) {
+            return { ...rcd, isSender: true }
+          } else {
+            return { ...rcd, isSender: false }
+          }
+        })
+        return [...newArray]
       }
       return []
     },
@@ -76,11 +85,11 @@ export default {
     chatDrawerIsVisible: {
       handler(newVal, oldVal) {
         if (newVal) {
-          this.$echo
-            .private(`message.${this.currentCaseFile.id}`)
-            .listen('MessageSent', (e) => {
-              console.log(e, '::: mounted ::')
-            })
+          // this.$echo
+          //   .private(`message.${this.currentCaseFile.id}`)
+          //   .listen('MessageSent', (e) => {
+          //     console.log(e, '::: mounted ::')
+          //   })
         }
       },
       immediate: true,
@@ -98,23 +107,27 @@ export default {
   //       console.log(e, '::: mounted ::')
   //     })
   // },
-  beforeDestroy() {
-    this.$echo.leave(`message.${this.currentCaseFile.id}`)
+  async created() {
+    try {
+      await this.getMessageHandler(this.currentCaseFile.id)
+    } catch (err) {
+      const { default: errorHandler } = await import('@/utils/errorHandler')
+      errorHandler(err).forEach((msg) => {
+        this.$notification.error({
+          message: 'Error',
+          description: msg,
+          duration: 4000,
+        })
+      })
+    }
   },
+  // beforeDestroy() {
+  //   this.$echo.leave(`message.${this.currentCaseFile.id}`)
+  // },
 
   methods: {
-    // added by dafom
-    // fetchMessages() {
-    //   console.log(':::: before chat ::::')
-    //   this.$axios.$get('MessageSent').then((response) => {
-    //     this.messages = response.data
-    //     console.log(this.messages, ':::: messages ::::')
-    //   })
-    // },
-    // dafom end
     onClose() {
       this.$emit('onClose')
-      this.$echo.leave(`message.${this.currentCaseFile.patient_id}`)
     },
     async sendMessageHandler() {
       if (!this.message) {
@@ -140,6 +153,7 @@ export default {
     },
     ...mapActions({
       submitMessageHandler: 'messageModule/POST_MESSAGE',
+      getMessageHandler: 'messageModule/GET_MESSAGE',
     }),
   },
 }

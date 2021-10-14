@@ -65,6 +65,7 @@ export default {
     AppAppointmentDataTable,
   },
   layout: 'dashboard',
+
   data() {
     return {
       dashboardList: [
@@ -155,10 +156,14 @@ export default {
       })
     }
   },
+  destroyed() {
+    this.resetHandler()
+  },
   methods: {
     ...mapActions({
       getAllAppointment: 'appointmentModule/GET_APPOINTMENT',
       getAllCaseFile: 'caseFileModule/GET_CASE_FILE',
+      resetHandler: 'caseFileModule/RESET_CASE_FILE',
     }),
   },
 }

@@ -94,7 +94,7 @@ import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable.vue'
 import AppCaseFileForm from '@/components/admin/patient/case-file/AppCaseFileForm'
-import AppChatDrawer from '@/components/AppChatDrawer'
+import AppChatDrawer from '@/components/AppChatDrawer1'
 export default {
   components: {
     AppTabs,
@@ -227,7 +227,6 @@ export default {
     ...mapActions({
       getAllCaseFile: 'caseFileModule/GET_CASE_FILE',
       resetHandler: 'caseFileModule/RESET_CASE_FILE',
-      // getMessageHandler: 'messageModule/GET_MESSAGE',
     }),
   },
 }

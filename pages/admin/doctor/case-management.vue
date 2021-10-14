@@ -103,7 +103,7 @@ import AppSelect from '@/components/AppSelect'
 import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable.vue'
 import AppCaseFileForm from '@/components/admin/patient/case-file/AppCaseFileForm'
 import AppScreeningTab from '@/components/admin/doctor/case-file/AppScreeningTab'
-import AppChatDrawer from '@/components/AppChatDrawer'
+import AppChatDrawer from '@/components/AppChatDrawer1'
 
 export default {
   components: {

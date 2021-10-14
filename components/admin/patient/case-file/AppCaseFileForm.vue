@@ -215,7 +215,7 @@ import AppDatePicker from '@/components/AppDatePicker'
 import AppButton from '@/components/AppButton'
 import AppSearch from '@/components/AppSearch'
 import AppPrescriptionForm from '@/components/admin/patient/case-file/AppPrescriptionForm'
-import AppChatDrawer from '@/components/AppChatDrawer'
+import AppChatDrawer from '@/components/AppChatDrawer1'
 import AppVideoAudio from '@/components/AppVideoAudio.vue'
 export default {
   name: 'AppCaseFileForm',
@@ -412,6 +412,14 @@ export default {
       this.videoModalIsVisible = false
     },
     async saveHandler(value) {
+      if (!value) {
+        this.$notification.error({
+          message: 'Erroe',
+          description: 'Comment is Empty',
+          duration: 4000,
+        })
+        return
+      }
       const obj = { comment: value }
       try {
         const response = await this.$axios.patch(

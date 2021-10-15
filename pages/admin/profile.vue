@@ -143,6 +143,10 @@
                       name="Phone Number"
                       rules="required"
                       required
+                      :max-length="15"
+                      :space-allowed="false"
+                      :char-allowed="false"
+                      :text-allowed="false"
                       is-number
                     />
                   </a-col>
@@ -352,6 +356,10 @@
                       name="Phone Number"
                       rules="required"
                       required
+                      :max-length="15"
+                      :space-allowed="false"
+                      :char-allowed="false"
+                      :text-allowed="false"
                       is-number
                     />
                   </a-col>

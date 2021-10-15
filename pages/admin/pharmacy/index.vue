@@ -33,6 +33,7 @@
       <AppPrescriptionDataTable
         :data-source="prescriptionDataSource"
         :pagination="false"
+        dashboard
       />
     </div>
   </div>
@@ -68,7 +69,8 @@ export default {
   },
   computed: {
     ...mapState({
-      allPrescription: (state) => state.prescriptionPharmacyModule.prescription,
+      allPrescription: (state) =>
+        state.prescriptionPharmacyModule.prescriptions,
     }),
     prescriptionDataSource() {
       const newArray = this.allPrescription

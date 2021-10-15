@@ -63,37 +63,68 @@ export default {
       type: Object,
       default: () => {},
     },
+    dashboard: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     columns() {
-      const columns = [
-        {
-          title: 'Prescription ID',
-          dataIndex: 'prescriptionId',
-        },
-        {
-          title: 'Prescription Title',
-          dataIndex: 'prescriptionTitle',
-        },
-        {
-          title: 'Prescribed By',
-          dataIndex: 'prescriptionBy',
-        },
-        {
-          title: 'Prescription Date',
-          dataIndex: 'prescriptionDate',
-        },
-        {
-          title: 'Status',
-          dataIndex: 'status',
-          scopedSlots: { customRender: 'status' },
-        },
-        {
-          title: '',
-          dataIndex: 'operation',
-          scopedSlots: { customRender: 'operation' },
-        },
-      ]
+      let columns
+      if (this.dashboard) {
+        columns = [
+          {
+            title: 'Prescription ID',
+            dataIndex: 'id',
+          },
+          {
+            title: 'Prescription Title',
+            dataIndex: 'prescriptionTitle',
+          },
+          {
+            title: 'Prescribed By',
+            dataIndex: 'prescriptionBy',
+          },
+          {
+            title: 'Prescription Date',
+            dataIndex: 'prescriptionDate',
+          },
+          {
+            title: 'Status',
+            dataIndex: 'status',
+            scopedSlots: { customRender: 'status' },
+          },
+        ]
+      } else {
+        columns = [
+          {
+            title: 'Prescription ID',
+            dataIndex: 'id',
+          },
+          {
+            title: 'Prescription Title',
+            dataIndex: 'prescriptionTitle',
+          },
+          {
+            title: 'Prescribed By',
+            dataIndex: 'prescriptionBy',
+          },
+          {
+            title: 'Prescription Date',
+            dataIndex: 'prescriptionDate',
+          },
+          {
+            title: 'Status',
+            dataIndex: 'status',
+            scopedSlots: { customRender: 'status' },
+          },
+          {
+            title: '',
+            dataIndex: 'operation',
+            scopedSlots: { customRender: 'operation' },
+          },
+        ]
+      }
       return columns
     },
   },

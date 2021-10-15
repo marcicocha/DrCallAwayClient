@@ -44,7 +44,7 @@
           <AppInput
             v-model="prescriptionObj.dosage"
             label="DOSAGE"
-            placeholder="Enter Days"
+            placeholder="Enter Dosage"
             name="dosage"
             rules="required"
             required

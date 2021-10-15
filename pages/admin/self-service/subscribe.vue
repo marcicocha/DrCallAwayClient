@@ -7,7 +7,7 @@
           <a-row type="flex" :gutter="16">
             <a-col :span="12">
               <AppInput
-                v-model="suscriptionObj.type"
+                v-model="subscriptionObj.type"
                 label="Subscription Type"
                 name="Subscription Type"
                 disabled
@@ -15,7 +15,7 @@
             </a-col>
             <a-col :span="12">
               <AppInput
-                v-model="suscriptionObj.plan"
+                v-model="subscriptionObj.plan"
                 label="Subscription Plan"
                 name="Subscription Plan"
                 disabled
@@ -23,7 +23,7 @@
             </a-col>
             <a-col :span="12">
               <AppInput
-                v-model="suscriptionObj.expiryDate"
+                v-model="subscriptionObj.end"
                 label="Expiry Date"
                 name="Expiry Date"
                 disabled
@@ -31,7 +31,7 @@
             </a-col>
             <a-col :span="12">
               <AppInput
-                v-model="suscriptionObj.status"
+                v-model="subscriptionObj.status"
                 label="Status"
                 name="Status"
                 disabled
@@ -82,7 +82,7 @@
             <ValidationObserver ref="observer" tag="div">
               <div v-if="renewIsVisible">
                 <AppInput
-                  v-model="currentSubscriptionObj.type"
+                  v-model="subscriptionObj.type"
                   label="Current Subscription Type"
                   name="Current Subscription Type"
                   required
@@ -90,7 +90,7 @@
                   disabled
                 />
                 <AppInput
-                  v-model="currentSubscriptionObj.plan"
+                  v-model="subscriptionObj.plan"
                   label="Current Subscription Plan"
                   name="current subscription plan"
                   required
@@ -122,7 +122,6 @@
                       amount: resp.amount,
                     })
                   "
-                  :remote="false"
                   required
                   rules="required"
                   :disabled="!newSubscriptionObj.type"
@@ -169,7 +168,7 @@ export default {
   data() {
     const userObject = JSON.parse(localStorage.getItem('user'))
     return {
-      suscriptionObj: {},
+      // suscriptionObj: {},
       isLoading: false,
       modalIsVisible: false,
       renewIsVisible: false,
@@ -184,6 +183,13 @@ export default {
     }
   },
   computed: {
+    subscriptionObj() {
+      const obj = {
+        ...this.allSubscription,
+        status: this.allSubscription.active === 1 ? 'ACTIVE' : 'INACTIVE',
+      }
+      return { ...obj }
+    },
     ...mapState({
       allSubscription: (state) => state.subscriptionModule.subscriptionObj,
     }),
@@ -213,6 +219,7 @@ export default {
       if (key === 'renew') {
         this.renewIsVisible = true
         this.changeIsVisible = false
+        this.user.amount = this.subscriptionObj.amount
       } else {
         this.changeIsVisible = true
         this.renewIsVisible = false
@@ -239,9 +246,7 @@ export default {
         })
         try {
           if (this.renewIsVisible) {
-            const message = await this.submitRenewHandler(
-              this.currentSubscriptionObj
-            )
+            const message = await this.submitRenewHandler(this.subscriptionObj)
             this.$notification.success({
               message: 'Success',
               description: message,

@@ -117,7 +117,9 @@
               <AppInput
                 v-model="healthDetails.if_others"
                 name="value"
-                :disabled="healthDetails.recurring !== 'Other' || isDoctor"
+                :disabled="
+                  !healthDetails.recurring.includes('Other') || isDoctor
+                "
               />
             </a-col>
             <a-col :span="24" style="margin-top: 0.8rem">

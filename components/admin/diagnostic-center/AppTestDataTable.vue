@@ -40,6 +40,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    dashboard: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     columns() {

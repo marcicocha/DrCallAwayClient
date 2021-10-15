@@ -1,6 +1,7 @@
 <template>
   <div class="header-menu">
     <AppButton
+      v-if="role === 'patient'"
       type="primary"
       :block="false"
       class="admin-button"
@@ -12,7 +13,7 @@
       alt="notification"
       class="notification"
     />
-    <p>
+    <p style="text-transform: capitalize">
       {{
         userObject.registered_name
           ? `${userObject.registered_name}`
@@ -39,16 +40,16 @@ export default {
     },
   },
   data() {
+    const userObject = JSON.parse(localStorage.getItem('user'))
     return {
-      userObject: {},
+      userObject,
+      role: userObject.roles[0].name,
     }
   },
-  mounted() {
-    this.userObject = JSON.parse(localStorage.getItem('user'))
-  },
+
   methods: {
     subscribeHandler() {
-      this.$router.replace('/admin/patient/self-service/subscribe')
+      this.$router.replace('/admin/self-service/subscribe')
     },
   },
 }

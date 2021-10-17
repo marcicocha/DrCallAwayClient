@@ -3,19 +3,7 @@
     <h6>PRECRIPTIONS</h6>
     <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
-        <a-tab-pane key="1" tab="Pending Prescription" force-render>
-          <AppPrescriptionDataTable
-            :data-source="allPrescription"
-            @showPrescriptionModal="showPrescriptionModal"
-          />
-        </a-tab-pane>
-        <a-tab-pane key="2" tab="Completed Prescription">
-          <AppPrescriptionDataTable
-            :data-source="allPrescription"
-            @showPrescriptionModal="showPrescriptionModal"
-          />
-        </a-tab-pane>
-        <a-tab-pane key="3" tab="Declined Prescription">
+        <a-tab-pane key="1" tab="All Prescriptions" force-render>
           <AppPrescriptionDataTable
             :data-source="allPrescription"
             @showPrescriptionModal="showPrescriptionModal"
@@ -111,19 +99,19 @@ export default {
       this.prescriptionModalIsVisible = false
     },
     async changeTabHandler(key) {
-      if (key === '1') {
-        this.status = 'PENDING'
-      }
-      if (key === '2') {
-        this.status = 'COMPLETED'
-      }
-      if (key === '3') {
-        this.status = 'DECLINED'
-      }
+      // if (key === '1') {
+      //   this.status = 'PENDING'
+      // }
+      // if (key === '2') {
+      //   this.status = 'COMPLETED'
+      // }
+      // if (key === '3') {
+      //   this.status = 'DECLINED'
+      // }
       try {
         const obj = {
           ...this.filterObj,
-          status: this.status,
+          // status: this.status,
         }
         await this.getAllPrescription(obj)
       } catch (err) {

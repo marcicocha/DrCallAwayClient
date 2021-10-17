@@ -462,31 +462,44 @@ export default {
         })
       }
     },
-    async closeCaseHandler() {
-      try {
-        const response = await this.$axios.patch(
-          `cases/${this.caseFileObj.id}/close`,
-          this.caseFileObj.id,
-          this.config
-        )
-        console.log(response.message, 'MESSAGE')
-        this.$notification.success({
-          message: 'Success',
-          description: response.message,
-          duration: 4000,
-        })
-        this.$emit('switchToCompleteTab')
-      } catch (err) {
-        this.isLoading = false
-        const { default: errorHandler } = await import('@/utils/errorHandler')
-        errorHandler(err).forEach((msg) => {
-          this.$notification.error({
-            message: 'Error',
-            description: msg,
-            duration: 4000,
-          })
-        })
-      }
+    closeCaseHandler() {
+      const $this = this
+      this.$confirm({
+        title: `Are you sure you want to close this Case?`,
+        content: `With ID: ${$this.caseFileObj.id}`,
+        okText: 'Yes',
+        okType: 'danger',
+        cancelText: 'No',
+        async onOk() {
+          // vm.showModal(false)
+          try {
+            const response = await $this.$axios.patch(
+              `cases/${$this.caseFileObj.id}/close`,
+              $this.caseFileObj.id,
+              $this.config
+            )
+            $this.$notification.success({
+              message: 'Success',
+              description: response.message,
+              duration: 4000,
+            })
+            $this.$emit('switchToCompleteTab')
+          } catch (err) {
+            $this.loading = false
+            const { default: errorHandler } = await import(
+              '@/utils/errorHandler'
+            )
+            errorHandler(err).forEach((msg) => {
+              $this.$notification.error({
+                message: 'Error',
+                description: msg,
+                duration: 4000,
+              })
+            })
+          }
+        },
+        onCancel() {},
+      })
     },
     ...mapActions({
       getMessageHandler: 'messageModule/GET_MESSAGE',

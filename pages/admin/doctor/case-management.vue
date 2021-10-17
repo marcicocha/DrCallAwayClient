@@ -189,7 +189,7 @@ export default {
     switchToCompleteTab() {
       this.activeKey = '2'
       this.changeTabHandler('2')
-      this.testIsVisible = false
+      this.viewIsVisible = false
     },
     async showChatDrawer(record) {
       this.currentCaseFile = record

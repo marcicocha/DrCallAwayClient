@@ -16,7 +16,7 @@ export default {
     state.prescriptionList = [...state.prescriptionList, ...payload.drugs]
   },
   [ADD_TEST](state, payload) {
-    state.testList = [...state.testList, ...payload.tests]
+    state.testList = [...payload.tests]
   },
   [GET_ALL_TEST](state, payload) {
     state.testList = payload

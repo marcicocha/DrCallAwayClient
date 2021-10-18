@@ -68,7 +68,7 @@ export default {
   },
   props: {
     caseId: {
-      type: String,
+      type: [String, Number],
       default: '',
     },
   },
@@ -143,6 +143,7 @@ export default {
           description: message,
           duration: 4000,
         })
+        this.$emit('closeTestHandler')
         this.isLoading = false
       } catch (err) {
         this.isLoading = false

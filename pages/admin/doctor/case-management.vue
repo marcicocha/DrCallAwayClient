@@ -83,7 +83,10 @@
           /></a>
         </div>
         <br />
-        <AppScreeningTab :case-id="currentCaseFile.id" />
+        <AppScreeningTab
+          :case-id="currentCaseFile.id"
+          @closeTestHandler="closeTestHandler"
+        />
       </div>
     </div>
     <AppChatDrawer
@@ -185,6 +188,9 @@ export default {
     onClose() {
       this.chatDrawerIsVisible = false
       clearInterval(this.TIMER_ID)
+    },
+    closeTestHandler() {
+      this.testIsVisible = false
     },
     switchToCompleteTab() {
       this.activeKey = '2'

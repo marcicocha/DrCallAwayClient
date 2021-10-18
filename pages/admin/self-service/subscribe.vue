@@ -184,6 +184,9 @@ export default {
   },
   computed: {
     subscriptionObj() {
+      if (this.allSubscription === null) {
+        return {}
+      }
       const obj = {
         ...this.allSubscription,
         status: this.allSubscription.active === 1 ? 'ACTIVE' : 'INACTIVE',

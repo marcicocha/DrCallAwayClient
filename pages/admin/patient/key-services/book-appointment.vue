@@ -281,7 +281,7 @@ export default {
       if (!isValid) {
         return
       }
-      this.isLoading = true
+      // this.isLoading = true
       const userObject = JSON.parse(localStorage.getItem('user'))
       this.user = {
         email: userObject.email,

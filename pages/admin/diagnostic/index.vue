@@ -25,9 +25,7 @@
     <div>
       <AppTitleDivider title="Tests"
         ><span class="right-details"
-          ><NuxtLink to="/admin/diagnostic-center/tests"
-            >View All ></NuxtLink
-          ></span
+          ><NuxtLink to="/admin/diagnostic/tests">View All ></NuxtLink></span
         ></AppTitleDivider
       >
       <AppTestDataTable :data-source="testDataSource" :pagination="false" />
@@ -58,7 +56,7 @@ export default {
           secondText: 'Tests',
           imgSrc: 'admin/ambulance/appointments.svg',
           color: '#641C62',
-          path: '/admin/diagnostic-center/tests',
+          path: '/admin/diagnostic/tests',
         },
       ],
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="colored-table">
     <a-table :columns="columns" :data-source="dataSource" :pagination="false" />
-    <p class="t-r"><span>TOTAL</span> <span>N2,300</span></p>
+    <p class="t-r"><span>TOTAL</span> <span>N</span></p>
     <br />
     <div v-if="dataSource.length !== 0" class="t-c">
       <AppButton

@@ -99,8 +99,14 @@
       centered
       @cancel="closeModal"
     >
-      <br />
-      <AppSelectAmbulanceDataTable @callback="callback" />
+      <div>
+        <h6 class="t-c">Ambulance Providers Near You</h6>
+        <a-divider />
+        <AppSelectAmbulanceDataTable
+          :request-obj="requestObj"
+          @onClose="onClose"
+        />
+      </div>
     </a-modal>
   </div>
 </template>
@@ -133,6 +139,7 @@ export default {
       status: 'PENDING',
       modalIsVisible: false,
       confirmLoading: false,
+      selectAmbulance: true,
     }
   },
   computed: {
@@ -146,6 +153,15 @@ export default {
   methods: {
     closeModal() {
       this.modalIsVisible = false
+    },
+    onClose() {
+      this.closeModal()
+      requestAnimationFrame(() => {
+        this.$refs.observer.reset()
+        this.requestObj = {}
+        this.isLoading = false
+        this.modalIsVisible = false
+      })
     },
     async acceptHandler(record) {
       try {
@@ -172,46 +188,6 @@ export default {
             description: msg,
           })
         })
-      }
-    },
-    async callback(res, record) {
-      if (res.message === 'Approved') {
-        this.$notification.success({
-          message: res.message,
-          description: 'Payment successful',
-          duration: 4000,
-        })
-        this.isLoading = true
-        console.log('record', record)
-        try {
-          const request = {
-            ...this.requestObj,
-            ambulance_id: record.id,
-          }
-          const message = await this.submitAmbulanceHandler(request)
-          this.$notification.success({
-            message: 'Success',
-            description: message,
-            duration: 4000,
-          })
-
-          requestAnimationFrame(() => {
-            this.$refs.observer.reset()
-            this.requestObj = {}
-            this.isLoading = false
-            this.modalIsVisible = false
-          })
-        } catch (err) {
-          this.isLoading = false
-          const { default: errorHandler } = await import('@/utils/errorHandler')
-          errorHandler(err).forEach((msg) => {
-            this.$notification.error({
-              message: 'Error',
-              description: msg,
-              duration: 4000,
-            })
-          })
-        }
       }
     },
     async submitHandler() {
@@ -249,7 +225,6 @@ export default {
       }
     },
     ...mapActions({
-      submitAmbulanceHandler: 'ambulanceModule/ADD_AMBULANCE',
       getAllCallUpFile: 'ambulanceModule/GET_AMBULANCE',
     }),
   },

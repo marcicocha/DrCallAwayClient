@@ -11,30 +11,54 @@
       <template slot="operation" slot-scope="text, record">
         <div style="text-align: right">
           <a-button-group class="link-group">
-            <AppPayment
-              :user-obj="getUserObject(record.price)"
-              @callback="callback($event, record)"
+            <a-button
+              type="primary"
+              class="table__btn"
+              @click="selectHandler(record)"
+              >SELECT</a-button
             >
-              SELECT
-            </AppPayment>
           </a-button-group>
         </div>
       </template>
     </a-table>
+    <a-modal
+      :visible="selectedAmbulanceModalIsVisible"
+      width="600px"
+      :footer="null"
+      :destroy-on-close="true"
+      :mask-style="{ background: 'rgba(61, 12, 60, 0.9)' }"
+      centered
+      @cancel="closeModal"
+    >
+      <div>
+        <h6 class="t-c">Ambulance Request</h6>
+        <a-divider />
+        <AppAmbulanceSelectedTable
+          :user="user"
+          :request-obj="requestObj"
+          :selected-ambulance-obj="selectedAmbulanceObj"
+          @closeModal="closeModal"
+          @onClose="onClose"
+        />
+      </div>
+    </a-modal>
   </div>
 </template>
 <script>
-import AppPayment from '@/components/AppPayment.vue'
-
+import AppAmbulanceSelectedTable from '@/components/admin/patient/ambulance/AppAmbulanceSelectedTable'
 export default {
   name: 'AppSelectAmbulanceDataTable',
   components: {
-    AppPayment,
+    AppAmbulanceSelectedTable,
   },
   props: {
     pagination: {
       type: Boolean,
       default: true,
+    },
+    requestObj: {
+      type: Object,
+      default: () => ({}),
     },
   },
   data() {
@@ -47,6 +71,8 @@ export default {
         lastName: userObject.last_name,
         amount: this.totalPrice,
       },
+      selectedAmbulanceModalIsVisible: false,
+      selectedAmbulanceObj: {},
     }
   },
   computed: {
@@ -80,8 +106,16 @@ export default {
     this.fetchAmbulanceListHandler()
   },
   methods: {
-    callback(res, record) {
-      this.$emit('callback', res, record)
+    onClose() {
+      this.closeModal()
+      this.$emit('onClose')
+    },
+    closeModal() {
+      this.selectedAmbulanceModalIsVisible = false
+    },
+    selectHandler(record) {
+      this.selectedAmbulanceObj = record
+      this.selectedAmbulanceModalIsVisible = true
     },
     getUserObject(price) {
       return {

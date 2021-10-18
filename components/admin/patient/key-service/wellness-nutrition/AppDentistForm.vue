@@ -115,7 +115,6 @@
               <a-col :span="12">
                 <AppButton
                   type="default"
-                  :loading="isLoading"
                   class="admin-button"
                   @click="closeModal"
                   >GO BACK</AppButton

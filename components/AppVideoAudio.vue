@@ -85,9 +85,6 @@ export default {
       user,
     }
   },
-  created() {
-    this.createChat(this.roomName)
-  },
   computed: {
     localUser() {
       const name = this.user.first_name
@@ -101,6 +98,9 @@ export default {
       const name = this.currentCaseFile.partners.first_name
       return name.charAt(0)
     },
+  },
+  created() {
+    this.createChat(this.roomName)
   },
   methods: {
     // Access token generation using username and room name

@@ -66,7 +66,7 @@
         />
         <AppTextArea
           v-model="opticalObj.additional_info"
-          label="Briefly tell Nutritionist what you are consulting for"
+          label="Briefly tell Optician what you are consulting for"
         />
       </ValidationObserver>
       <br />

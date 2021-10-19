@@ -95,7 +95,7 @@ export default {
         const name = this.currentCaseFile.patient.first_name
         return name.charAt(0)
       }
-      const name = this.currentCaseFile.partners.first_name
+      const name = this.currentCaseFile.doctor.first_name
       return name.charAt(0)
     },
   },

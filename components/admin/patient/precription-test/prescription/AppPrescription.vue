@@ -97,6 +97,7 @@ export default {
     },
     closeModal() {
       this.prescriptionModalIsVisible = false
+      this.changeTabHandler('1')
     },
     async changeTabHandler(key) {
       // if (key === '1') {

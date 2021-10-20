@@ -81,7 +81,7 @@ export default {
       }
       try {
         const obj = {
-          partners_id: this.selectedPharmacyObj.id,
+          pharmacy_id: this.selectedPharmacyObj.id,
           status: 'PENDING',
         }
         const { message } = await this.$axios.patch(

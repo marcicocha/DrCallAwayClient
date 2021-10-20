@@ -66,7 +66,7 @@
     <br />
     <div v-if="prescriptionObj.status === 'PENDING'" class="t-c">
       <AppButton
-        v-if="prescriptionObj.partners.specialty_id"
+        v-if="!prescriptionObj.pharmacy_id"
         type="primary"
         :block="false"
         :loading="isLoading"

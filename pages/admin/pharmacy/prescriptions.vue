@@ -193,7 +193,10 @@ export default {
   },
   methods: {
     showPresciptionModal(record) {
-      this.currentPrescription = { ...record }
+      this.currentPrescription = {
+        ...record,
+        patientName: `${record.patient.first_name} ${record.patient.last_name}`,
+      }
       this.modalIsVisible = true
     },
     closeModal() {
@@ -242,7 +245,7 @@ export default {
               headers: { Authorization: `Bearer ${user.token.token}` },
             }
             await $this.$axios.$patch(
-              `ambulance/accept/callup/${record.id}`,
+              `prescriptions/${record.id}/accept`,
               record.id,
               config
             )
@@ -250,8 +253,8 @@ export default {
               message: 'Success',
               description: 'Request Accepted Successfully',
             })
-            $this.changeTabHandler('2')
-            $this.activeKey = '2'
+            $this.changeTabHandler('1')
+            $this.activeKey = '1'
           } catch (e) {
             const { default: errorHandler } = await import(
               '@/utils/errorHandler'

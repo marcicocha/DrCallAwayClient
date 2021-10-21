@@ -117,9 +117,7 @@
               <AppInput
                 v-model="healthDetails.if_others"
                 name="value"
-                :disabled="
-                  !healthDetails.recurring.includes('Other') || isDoctor
-                "
+                :disabled="isOther"
               />
             </a-col>
             <a-col :span="24" style="margin-top: 0.8rem">
@@ -192,6 +190,12 @@ export default {
   computed: {
     isDoctor() {
       return this.mode === 'doctor'
+    },
+    isOther() {
+      if (!this.healthDetails.recurring) {
+        return
+      }
+      return !this.healthDetails.recurring.includes('Other') || this.isDoctor
     },
   },
   watch: {

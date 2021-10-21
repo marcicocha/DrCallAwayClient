@@ -76,7 +76,8 @@ export default {
         amount: this.totalPrice,
       },
       selectedAmbulanceModalIsVisible: false,
-      selectedAmbulanceObj: [],
+      selectedAmbulanceObj: {},
+      selectedAmbulance: [],
       config,
     }
   },

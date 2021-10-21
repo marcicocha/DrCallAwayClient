@@ -3,15 +3,14 @@
     <p class="page_heading">PRESCRIPTIONS</p>
     <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
-        <a-tab-pane key="1" tab="Pending Prescription" force-render>
+        <a-tab-pane key="1" tab="All Prescription" force-render>
           <AppPrescriptionDataTable
-            status="PENDING"
             :data-source="allPrescription"
             @showPresciptionModal="showPresciptionModal"
             @acceptPrescriptionHandler="acceptPrescriptionHandler"
           />
         </a-tab-pane>
-        <a-tab-pane key="2" tab="Completed Prescription">
+        <!-- <a-tab-pane key="2" tab="Completed Prescription">
           <AppPrescriptionDataTable
             status="COMPLETED"
             :data-source="allPrescription"
@@ -24,7 +23,7 @@
             :data-source="allPrescription"
             @showPresciptionModal="showPresciptionModal"
           />
-        </a-tab-pane>
+        </a-tab-pane>  -->
       </template>
       <template slot="rightInfo">
         <a-row type="flex" :gutter="16" class="right-info" justify="end">
@@ -210,8 +209,8 @@ export default {
           message: 'Success',
           description: 'Request Accepted Successfully',
         })
-        this.changeTabHandler('2')
-        this.activeKey = '2'
+        this.changeTabHandler('1')
+        // this.activeKey = '1'
       } catch (e) {
         const { default: errorHandler } = await import('@/utils/errorHandler')
         errorHandler(e).forEach((msg) => {
@@ -263,20 +262,19 @@ export default {
         onCancel() {},
       })
     },
-    async changeTabHandler(key) {
-      if (key === '1') {
-        this.status = 'PENDING'
-      }
-      if (key === '2') {
-        this.status = 'COMPLETED'
-      }
-      if (key === '3') {
-        this.status = 'DECLINED'
-      }
+    async changeTabHandler() {
+      // if (key === '1') {
+      //   this.status = 'PENDING'
+      // }
+      // if (key === '2') {
+      //   this.status = 'COMPLETED'
+      // }
+      // if (key === '3') {
+      //   this.status = 'DECLINED'
+      // }
       try {
         const obj = {
           ...this.filterObj,
-          status: this.status,
         }
         await this.getAllPrescription(obj)
       } catch (err) {

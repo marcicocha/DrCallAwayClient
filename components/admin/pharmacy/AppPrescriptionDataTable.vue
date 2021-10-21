@@ -9,6 +9,9 @@
       <template slot="sn" slot-scope="text, record, index">
         {{ index + 1 }}
       </template>
+      <template slot="prescriptionTitle" slot-scope="text, record">
+        {{ `Prescription for ${record.ailment}` }}
+      </template>
       <template slot="status" slot-scope="text, record">
         <div
           :class="{
@@ -21,7 +24,7 @@
         </div>
       </template>
       <template slot="date" slot-scope="text, record">
-        {{ formatDate(record.date) }}
+        {{ formatDate(record.updated_at) }}
       </template>
       <template slot="operation" slot-scope="text, record">
         <div style="text-align: right">
@@ -80,6 +83,7 @@ export default {
           {
             title: 'Prescription Title',
             dataIndex: 'prescriptionTitle',
+            scopedSlots: { customRender: 'prescriptionTitle' },
           },
           {
             title: 'Prescribed By',
@@ -87,7 +91,8 @@ export default {
           },
           {
             title: 'Prescription Date',
-            dataIndex: 'prescriptionDate',
+            dataIndex: 'updated_at',
+            scopedSlots: { customRender: 'date' },
           },
           {
             title: 'Status',
@@ -104,6 +109,7 @@ export default {
           {
             title: 'Prescription Title',
             dataIndex: 'prescriptionTitle',
+            scopedSlots: { customRender: 'prescriptionTitle' },
           },
           {
             title: 'Prescribed By',
@@ -111,7 +117,8 @@ export default {
           },
           {
             title: 'Prescription Date',
-            dataIndex: 'prescriptionDate',
+            dataIndex: 'updated_at',
+            scopedSlots: { customRender: 'date' },
           },
           {
             title: 'Status',

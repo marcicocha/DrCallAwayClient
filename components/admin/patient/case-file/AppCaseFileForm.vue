@@ -84,7 +84,7 @@
           <p>
             {{
               caseFileObj.prescription
-                ? caseFileObj.prescription.partners
+                ? caseFileObj.prescription.partners.registered_name !== null
                   ? `Selected Pharmacy: ${caseFileObj.prescription.partners.registered_name}`
                   : ''
                 : ''
@@ -254,6 +254,7 @@ export default {
       user,
       config,
       TIMER_ID: null,
+      testArray: [],
     }
   },
   computed: {
@@ -335,22 +336,25 @@ export default {
     },
     prescriptionList() {
       let array = []
-      if (this.caseFileObj.prescription !== null) {
-        array = [...array, ...this.caseFileObj.prescription.drugs]
-      }
       if (this.allPrescription.length !== 0) {
         array = [...array, ...this.allPrescription]
+        return array
+      }
+      if (this.caseFileObj.prescription !== null) {
+        array = [...array, ...this.caseFileObj.prescription.drugs]
       }
       return array
     },
     testList() {
       let array = []
+      if (this.allTest.length !== 0) {
+        array = [...array, ...this.allTest]
+        return array
+      }
       if (this.caseFileObj.diagnosis !== null) {
         array = [...array, ...this.caseFileObj.diagnosis.tests]
       }
-      if (this.allTest.length !== 0) {
-        array = [...array, ...this.allTest]
-      }
+
       return array
     },
     imgLink() {

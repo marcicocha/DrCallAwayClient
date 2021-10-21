@@ -239,7 +239,6 @@ export default {
       }
     },
     audioHandler() {
-      console.log(this.activeRoom, 'ACTIVE ROOM')
       if (this.microphone) {
         // mute audio of video chat
         this.activeRoom.localParticipant.audioTracks.forEach(function (

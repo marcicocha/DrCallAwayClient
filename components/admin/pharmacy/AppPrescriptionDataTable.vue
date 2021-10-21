@@ -12,6 +12,9 @@
       <template slot="prescriptionTitle" slot-scope="text, record">
         {{ `Prescription for ${record.ailment}` }}
       </template>
+      <template slot="prescriptionBy" slot-scope="text, record">
+        {{ `${record.partners.first_name} ${record.partners.last_name}` }}
+      </template>
       <template slot="status" slot-scope="text, record">
         <div
           :class="{
@@ -88,6 +91,7 @@ export default {
           {
             title: 'Prescribed By',
             dataIndex: 'prescriptionBy',
+            scopedSlots: { customRender: 'prescriptionBy' },
           },
           {
             title: 'Prescription Date',

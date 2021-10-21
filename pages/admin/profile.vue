@@ -155,6 +155,10 @@
                       v-model="profileObj.alternate_mobile_phone_number"
                       label="Alternate Phone Number"
                       name="Alternate Phone Number"
+                      :max-length="15"
+                      :space-allowed="false"
+                      :char-allowed="false"
+                      :text-allowed="false"
                       is-number
                     />
                   </a-col>

@@ -1,7 +1,17 @@
 <template>
   <div class="colored-table">
-    <a-table :columns="columns" :data-source="dataSource" :pagination="false" />
-    <p class="t-r"><span>TOTAL</span> <span>N</span></p>
+    <a-table :columns="columns" :data-source="dataSource" :pagination="false">
+      <template slot="sn" slot-scope="text, record, index">
+        {{ index + 1 }}
+      </template>
+      <template slot="registered_name">
+        {{ selectedAmbulanceObj.registered_name }}
+      </template>
+    </a-table>
+    <br />
+    <p class="price-total">
+      <span>TOTAL</span> <span>{{ `N${totalPrice}` }}</span>
+    </p>
     <br />
     <div>
       <a-row type="flex" :gutter="24">
@@ -14,7 +24,7 @@
           >
         </a-col>
         <a-col :span="12">
-          <AppPayment :user-obj="user" @callback="callback">
+          <AppPayment :user-obj="finalUserObj" @callback="callback">
             MAKE PAYMENT
           </AppPayment>
         </a-col>
@@ -55,6 +65,17 @@ export default {
     }
   },
   computed: {
+    finalUserObj() {
+      return {
+        ...this.user,
+        amount: this.totalPrice,
+      }
+    },
+    totalPrice() {
+      let total = 0
+      this.dataSource.forEach((record) => (total += record.amount))
+      return total
+    },
     columns() {
       const columns = [
         {
@@ -69,12 +90,12 @@ export default {
         },
         {
           title: 'NAME OF SERVICE',
-          dataIndex: 'nameOfService',
-          scopedSlots: { customRender: 'nameOfService' },
+          dataIndex: 'name',
+          scopedSlots: { customRender: 'name' },
         },
         {
           title: 'PRICE',
-          dataIndex: 'price',
+          dataIndex: 'amount',
         },
       ]
       return columns

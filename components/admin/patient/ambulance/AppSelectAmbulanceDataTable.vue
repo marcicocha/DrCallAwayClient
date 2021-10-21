@@ -37,6 +37,7 @@
           :user="user"
           :request-obj="requestObj"
           :selected-ambulance-obj="selectedAmbulanceObj"
+          :data-source="selectedAmbulance"
           @closeModal="closeModal"
           @onClose="onClose"
         />
@@ -63,6 +64,9 @@ export default {
   },
   data() {
     const userObject = JSON.parse(localStorage.getItem('user'))
+    const config = {
+      headers: { Authorization: `Bearer ${userObject.token.token}` },
+    }
     return {
       dataSource: [],
       user: {
@@ -72,7 +76,8 @@ export default {
         amount: this.totalPrice,
       },
       selectedAmbulanceModalIsVisible: false,
-      selectedAmbulanceObj: {},
+      selectedAmbulanceObj: [],
+      config,
     }
   },
   computed: {
@@ -113,10 +118,27 @@ export default {
     closeModal() {
       this.selectedAmbulanceModalIsVisible = false
     },
-    selectHandler(record) {
-      this.selectedAmbulanceObj = record
-      this.selectedAmbulanceModalIsVisible = true
+    async selectHandler(record) {
+      try {
+        const { data } = await this.$axios.$get(
+          '/get_service_and_price_list?type=ambulance',
+          this.config
+        )
+        this.selectedAmbulance = data
+        this.selectedAmbulanceObj = record
+        this.selectedAmbulanceModalIsVisible = true
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
+
     getUserObject(price) {
       return {
         ...this.user,
@@ -125,11 +147,7 @@ export default {
     },
     async fetchAmbulanceListHandler() {
       try {
-        const user = JSON.parse(localStorage.getItem('user'))
-        const config = {
-          headers: { Authorization: `Bearer ${user.token.token}` },
-        }
-        const { data } = await this.$axios.$get('ambulance', config)
+        const { data } = await this.$axios.$get('ambulance', this.config)
         this.dataSource = data
       } catch (err) {
         const { default: errorHandler } = await import('@/utils/errorHandler')

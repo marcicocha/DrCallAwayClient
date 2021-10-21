@@ -62,30 +62,35 @@
         <a-row type="flex" :gutter="16">
           <a-col :span="12">
             <AppInput
-              v-model="currentPrescription.prescriptionId"
+              v-model="currentPrescription.id"
               label="Prescription ID"
+              disabled
             />
           </a-col>
           <a-col :span="12">
             <AppInput
               v-model="currentPrescription.prescriptionBy"
               label="Prescription By"
+              disabled
             />
           </a-col>
           <a-col :span="12">
             <AppDatePicker
-              v-model="currentPrescription.prescriptionDate"
+              v-model="currentPrescription.updated_at"
               label="Prescription Date"
+              disabled
             />
           </a-col>
           <a-col :span="12">
-            <AppDatePicker
+            <AppInput
               v-model="currentPrescription.patientName"
               label="Patient Name"
+              disabled
             />
           </a-col>
         </a-row>
-        <div>
+        <div class="colored-table">
+          <br />
           <p>Prescribed Drugs</p>
           <a-table
             :columns="columns"
@@ -188,7 +193,7 @@ export default {
   },
   methods: {
     showPresciptionModal(record) {
-      this.currentPrescription = record
+      this.currentPrescription = { ...record }
       this.modalIsVisible = true
     },
     closeModal() {

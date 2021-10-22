@@ -125,13 +125,7 @@ export default {
       pharmacyModalIsVisible: false,
       isLoading: false,
       dataSource: [],
-      pharmacyDataSource: [
-        {
-          name: 'Mr. Kolawole Ojo',
-          address: 'Ijapo Estate',
-          phoneNumber: '08100969815',
-        },
-      ],
+      pharmacyDataSource: [],
     }
   },
   computed: {

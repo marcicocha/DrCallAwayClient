@@ -97,11 +97,13 @@
 import { ValidationObserver } from 'vee-validate'
 import AppButton from '@/components/AppButton'
 import AppSelectedDiagnostic from '@/components/admin/patient/precription-test/test/AppSelectedDiagnostic'
+import AppSelect from '@/components/AppSelect'
 export default {
   name: 'AppDiagnosticTable',
   components: {
     AppButton,
     AppSelectedDiagnostic,
+    AppSelect,
     ValidationObserver,
   },
   props: {
@@ -165,14 +167,14 @@ export default {
       this.counter++
       this.addressObj.city = undefined
     },
-    async selectCityHandler() {
+    async selectCityHandler(e) {
       try {
         const user = JSON.parse(localStorage.getItem('user'))
         const config = {
           headers: { Authorization: `Bearer ${user.token.token}` },
         }
         const { data } = await this.$axios.$get(
-          `/list/diagnostic?state=${this.addressObj.state}&lga=${this.addressObj.city}`,
+          `/list/diagnostic?state=${this.addressObj.state}&lga=${e}`,
           config
         )
         this.dataSource = data

@@ -64,7 +64,7 @@
       </div>
     </div>
     <br />
-    <div v-if="testObj.status === 'ACTIVE'" class="t-c">
+    <div v-if="testObj.status === 'PENDING'" class="t-c">
       <AppButton
         type="primary"
         :block="false"
@@ -121,6 +121,7 @@ export default {
       confirmLoading: false,
       selectedDiagnosticObj: {},
       dataSource: [],
+      diagnosticDataSource: [],
     }
   },
   computed: {
@@ -187,26 +188,6 @@ export default {
     },
     submitHandler() {
       this.diagnosticModalIsVisible = true
-      // try {
-      //   const user = JSON.parse(localStorage.getItem('user'))
-      //   const config = {
-      //     headers: { Authorization: `Bearer ${user.token.token}` },
-      //   }
-      //   const { data } = this.$axios.$patch(
-      //     `/tests/assignTestToDiagnosticCenter/${this.testObj.testId}?partners_id=${record.partner_id}`,
-      //     config
-      //   )
-      //   console.log(data)
-      // } catch (err) {
-      //   const { default: errorHandler } = await import('@/utils/errorHandler')
-      //   errorHandler(err).forEach((msg) => {
-      //     this.$notification.error({
-      //       message: 'Error',
-      //       description: msg,
-      //       duration: 4000,
-      //     })
-      //   })
-      // }
     },
     closeModal() {
       this.diagnosticModalIsVisible = false

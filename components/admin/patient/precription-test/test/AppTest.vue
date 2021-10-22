@@ -51,7 +51,7 @@
       <div>
         <h6 class="t-c">Test for Case {{ currentTestObj.case_file_id }}</h6>
         <a-divider />
-        <AppTestForm :current-test-obj="currentTestObj" />
+        <AppTestForm :current-test-obj="currentTestObj" @closeModal="onClose" />
       </div>
     </a-modal>
   </div>
@@ -119,6 +119,10 @@ export default {
           })
         })
       }
+    },
+    onClose() {
+      this.closeModal()
+      this.changeTabHandler('1')
     },
     closeModal() {
       this.testModalIsVisible = false

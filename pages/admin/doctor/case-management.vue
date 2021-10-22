@@ -221,6 +221,7 @@ export default {
     },
     closeViewHandler(key) {
       if (key === 'case') {
+        this.changeTabHandler(this.activeKey)
         this.viewIsVisible = false
       }
       if (key === 'test') {

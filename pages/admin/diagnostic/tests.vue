@@ -4,14 +4,14 @@
     <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Tests" force-render>
-          <AppPrescriptionDataTable
+          <AppTestDataTable
             status="PENDING"
             :data-source="allTest"
             @showTestModal="showTestModal"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Completed Tests">
-          <AppPrescriptionDataTable
+          <AppTestDataTable
             status="COMPLETED"
             :data-source="allTest"
             @showTestModal="showTestModal"
@@ -52,45 +52,39 @@
     >
       <div>
         <h6 class="t-c">Test for Case {{ currentTest.case_id }}</h6>
+        <a-divider />
         <a-row type="flex" :gutter="16">
           <a-col :span="12">
-            <AppInput v-model="currentTest.testId" label="Test ID" />
+            <AppInput v-model="currentTest.id" label="Test ID" disabled />
           </a-col>
           <a-col :span="12">
-            <AppInput v-model="currentTest.complaint" label="Complaint" />
-          </a-col>
-          <a-col :span="12">
-            <AppDatePicker
-              v-model="currentTest.prescriptionBy"
-              label="Prescription By"
+            <AppInput
+              v-model="currentTest.complaint"
+              label="Complaint"
+              disabled
             />
           </a-col>
           <a-col :span="12">
-            <AppDatePicker
+            <AppInput
+              v-model="currentTest.prescriptionBy"
+              label="Prescription By"
+              disabled
+            />
+          </a-col>
+          <a-col :span="12">
+            <AppInput
               v-model="currentTest.patientName"
               label="Patient Name"
+              disabled
             />
           </a-col>
         </a-row>
-        <div>
+        <br />
+        <div class="colored-table">
           <p>Prescribed Tests</p>
           <a-table
             :columns="columns"
-            :data-source="currentTest.test"
-            :pagination="false"
-            :row-key="(record) => record.id"
-          >
-            <template slot="sn" slot-scope="text, record, index">
-              {{ index + 1 }}
-            </template>
-          </a-table>
-        </div>
-
-        <div v-if="currentTest.diagnostic_center">
-          <p>Diagnostic Center Information</p>
-          <a-table
-            :columns="diagnosticColumns"
-            :data-source="currentTest.diagnostic_center"
+            :data-source="currentTest.tests"
             :pagination="false"
             :row-key="(record) => record.id"
           >
@@ -100,12 +94,22 @@
           </a-table>
         </div>
         <br />
-        <div v-if="currentTest.status === 'PENDING'" class="t-c">
+        <div>
+          <a-form>
+            <AppTextArea
+              v-model="testInstruction"
+              label="Test Instruction/Additional Information"
+              colon="false"
+              :disabled="currentTest.status === 'COMPLETED'"
+            />
+          </a-form>
+        </div>
+        <br />
+        <div v-if="currentTest.status === 'ACTIVE'" class="t-c">
           <a-row type="flex" :gutter="16">
             <a-col :span="12">
               <AppButton
                 type="primary"
-                :block="false"
                 :loading="isLoading"
                 class="admin-button"
                 @click="acceptTestHandler"
@@ -115,9 +119,8 @@
             <a-col :span="12">
               <AppButton
                 type="primary"
-                :block="false"
                 :loading="isLoading"
-                class="admin-button"
+                class="admin-button reject__btn"
                 @click="rejectTestHandler"
                 >REJECT</AppButton
               >
@@ -156,16 +159,17 @@
 import { mapActions, mapState } from 'vuex'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
+import AppTextArea from '@/components/AppTextArea'
 import AppSelect from '@/components/AppSelect'
-import AppDatePicker from '@/components/AppDatePicker'
-import AppPrescriptionDataTable from '@/components/admin/pharmacy/AppPrescriptionDataTable'
+import AppTestDataTable from '@/components/admin/diagnostic-center/AppTestDataTable'
+
 export default {
   components: {
     AppTabs,
     AppInput,
     AppSelect,
-    AppPrescriptionDataTable,
-    AppDatePicker,
+    AppTestDataTable,
+    AppTextArea,
   },
   layout: 'dashboard',
   data() {
@@ -177,6 +181,7 @@ export default {
       confirmLoading: false,
       isLoading: false,
       status: 'PENDING',
+      testInstruction: '',
     }
   },
   computed: {
@@ -221,7 +226,12 @@ export default {
   },
   methods: {
     showTestModal(record) {
-      this.currentTest = record
+      this.currentTest = {
+        ...record,
+        complaint: record.caseFile.initial_complain,
+        prescriptionBy: `${record.doctor.first_name} ${record.doctor.last_name}`,
+        patientName: `${record.caseFile.patient.first_name} ${record.caseFile.patient.last_name}`,
+      }
       this.modalIsVisible = true
     },
     closeModal() {
@@ -333,5 +343,14 @@ export default {
 <style lang="scss" scoped>
 h6 {
   color: $dark-purple;
+}
+p {
+  font-weight: bold;
+  color: $dark-purple;
+  font-size: 14px;
+}
+.reject__btn {
+  background: #524d4d !important;
+  border-color: #524d4d;
 }
 </style>

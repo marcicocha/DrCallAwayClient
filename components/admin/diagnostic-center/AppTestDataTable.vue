@@ -10,6 +10,14 @@
       <template slot="sn" slot-scope="text, record, index">
         {{ index + 1 }}
       </template>
+      <template slot="caseId" slot-scope="text, record">
+        {{ record.caseFile.case_id }}
+      </template>
+      <template slot="prescribedBy" slot-scope="text, record">
+        <div>
+          {{ `${record.doctor.first_name} ${record.doctor.last_name}` }}
+        </div>
+      </template>
       <template slot="status" slot-scope="text, record">
         <div
           :class="{
@@ -50,15 +58,17 @@ export default {
       const columns = [
         {
           title: 'Test ID',
-          dataIndex: 'testId',
+          dataIndex: 'id',
         },
         {
           title: 'Case Associated',
-          dataIndex: 'case_id',
+          dataIndex: 'caseId',
+          scopedSlots: { customRender: 'caseId' },
         },
         {
           title: 'Prescribed By',
           dataIndex: 'prescriptionBy',
+          scopedSlots: { customRender: 'prescribedBy' },
         },
         {
           title: 'Status',

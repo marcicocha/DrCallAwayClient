@@ -28,7 +28,11 @@
           ><NuxtLink to="/admin/diagnostic/tests">View All ></NuxtLink></span
         ></AppTitleDivider
       >
-      <AppTestDataTable :data-source="testDataSource" :pagination="false" />
+      <AppTestDataTable
+        :data-source="testDataSource"
+        :pagination="false"
+        dashboard
+      />
     </div>
   </div>
 </template>

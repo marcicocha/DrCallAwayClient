@@ -54,7 +54,7 @@
       </div>
 
       <br />
-      <div v-if="testObj.status !== 'PENDING'">
+      <div v-if="testObj.status !== 'PENDING' && this.currentTestObj.partners">
         <p>Diagnostic Center Information</p>
         <a-table
           :columns="diagnosticColumns"
@@ -121,10 +121,22 @@ export default {
       confirmLoading: false,
       selectedDiagnosticObj: {},
       dataSource: [],
-      diagnosticDataSource: [],
     }
   },
   computed: {
+    diagnosticDataSource() {
+      if (this.currentTestObj.partners) {
+        const newArray = [
+          {
+            name: this.currentTestObj.partners.registered_name,
+            address: this.currentTestObj.partners.address,
+            phoneNumber: this.currentTestObj.partners.mobile_phone_number,
+          },
+        ]
+        return newArray
+      }
+      return []
+    },
     columns() {
       const columns = [
         {

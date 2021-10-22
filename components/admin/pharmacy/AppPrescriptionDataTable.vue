@@ -33,18 +33,18 @@
         <div style="text-align: right">
           <a-button-group class="link-group">
             <a-button
-              class="table__btn"
-              type="link"
-              @click="$emit('showPresciptionModal', record)"
-              ><img src="@/assets/images/admin/table-view.png" alt="view"
-            /></a-button>
-            <a-button
               v-if="record.status === 'PENDING'"
               type="primary"
               class="table__btn"
               @click="$emit('acceptPrescriptionHandler', record)"
               >ACCEPT</a-button
             >
+            <a-button
+              class="table__btn"
+              type="link"
+              @click="$emit('showPresciptionModal', record)"
+              ><img src="@/assets/images/admin/table-view.png" alt="view"
+            /></a-button>
           </a-button-group>
         </div>
       </template>
@@ -118,6 +118,7 @@ export default {
           {
             title: 'Prescribed By',
             dataIndex: 'prescriptionBy',
+            scopedSlots: { customRender: 'prescriptionBy' },
           },
           {
             title: 'Prescription Date',

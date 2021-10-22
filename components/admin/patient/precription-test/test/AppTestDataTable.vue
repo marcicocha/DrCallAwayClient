@@ -17,9 +17,12 @@
           {{ record.status }}
         </div>
       </template>
+      <template slot="caseId" slot-scope="text, record">
+        {{ record.caseFile.case_id }}
+      </template>
       <template slot="prescribedBy" slot-scope="text, record">
         <div>
-          {{ `${record.partners.first_name} ${record.partners.last_name}` }}
+          {{ `${record.doctor.first_name} ${record.doctor.last_name}` }}
         </div>
       </template>
     </a-table>
@@ -43,13 +46,13 @@ export default {
       const columns = [
         {
           title: 'Test ID',
-          dataIndex: 'test_id',
-          scopedSlots: { customRender: 'test_id' },
+          dataIndex: 'id',
+          scopedSlots: { customRender: 'id' },
         },
         {
           title: 'Case Associated',
-          dataIndex: 'case_file_id',
-          scopedSlots: { customRender: 'case_file_id' },
+          dataIndex: 'caseId',
+          scopedSlots: { customRender: 'caseId' },
         },
         {
           title: 'Prescribed By',

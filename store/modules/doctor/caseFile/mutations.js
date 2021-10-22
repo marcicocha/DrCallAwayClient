@@ -13,7 +13,7 @@ export default {
   },
   [ACCEPT_CASE_FILE](state, payload) {},
   [ADD_PRESCRIPTION](state, payload) {
-    state.prescriptionList = [...state.prescriptionList, ...payload.drugs]
+    state.prescriptionList = payload[0].drugs
   },
   [ADD_TEST](state, payload) {
     state.testList = payload[0].tests

@@ -1,6 +1,51 @@
 <template>
   <div>
-    <div class="colored-table">
+    <div>
+      <a-form>
+        <ValidationObserver ref="observer" tag="div">
+          <a-row type="flex" :gutter="24">
+            <a-col :span="12">
+              <AppSelect
+                v-model="addressObj.state"
+                placeholder="Select State"
+                name="state"
+                url="/states"
+                :call-back-func="
+                  (resp) => ({
+                    text: resp,
+                    value: resp,
+                  })
+                "
+                rules="required"
+                required
+                @change="selectStateHandler"
+              />
+            </a-col>
+            <a-col :span="12">
+              <AppSelect
+                :key="counter"
+                v-model="addressObj.city"
+                placeholder="Select LGA"
+                name="LGA"
+                :url="`/lgas/${addressObj.state}`"
+                :call-back-func="
+                  (resp) => ({
+                    text: resp,
+                    value: resp,
+                  })
+                "
+                rules="required"
+                required
+                :disabled="!addressObj.state"
+                @change="selectCityHandler"
+              />
+            </a-col>
+          </a-row>
+        </ValidationObserver>
+      </a-form>
+    </div>
+    <br />
+    <div v-if="cityIsSelected" class="colored-table">
       <a-table
         :columns="columns"
         :data-source="dataSource"
@@ -37,13 +82,19 @@
             }}
           </h6>
           <a-divider />
-          <AppSelectedDiagnostic :test-list="testList" />
+          <AppSelectedDiagnostic
+            :test-list="testList"
+            :selectedDiagnosticObj="selectedDiagnosticObj"
+            :currentTestObj="currentTestObj"
+            @closeModal="onClose"
+          />
         </div>
       </a-modal>
     </div>
   </div>
 </template>
 <script>
+import { ValidationObserver } from 'vee-validate'
 import AppButton from '@/components/AppButton'
 import AppSelectedDiagnostic from '@/components/admin/patient/precription-test/test/AppSelectedDiagnostic'
 export default {
@@ -51,11 +102,16 @@ export default {
   components: {
     AppButton,
     AppSelectedDiagnostic,
+    ValidationObserver,
   },
   props: {
     testList: {
       type: Array,
       default: () => [],
+    },
+    currentTestObj: {
+      type: Object,
+      default: () => {},
     },
   },
   data() {
@@ -64,6 +120,9 @@ export default {
       selectedDiagnosticObj: {},
       confirmLoading: false,
       dataSource: [],
+      addressObj: {},
+      counter: 0,
+      cityIsSelected: false,
     }
   },
   computed: {
@@ -94,9 +153,6 @@ export default {
       return columns
     },
   },
-  mounted() {
-    this.fetchDiagnosticListHandler()
-  },
   methods: {
     selectHandler(record) {
       this.selectedDiagnosticObj = record
@@ -105,14 +161,22 @@ export default {
     closeModal() {
       this.selectedDiagnosticModalIsVisible = false
     },
-    async fetchDiagnosticListHandler() {
+    selectStateHandler() {
+      this.counter++
+      this.addressObj.city = undefined
+    },
+    async selectCityHandler() {
       try {
         const user = JSON.parse(localStorage.getItem('user'))
         const config = {
           headers: { Authorization: `Bearer ${user.token.token}` },
         }
-        const { data } = await this.$axios.$get('/tests/patient/list', config)
+        const { data } = await this.$axios.$get(
+          `/list/diagnostic?state=${this.addressObj.state}&lga=${this.addressObj.city}`,
+          config
+        )
         this.dataSource = data
+        this.cityIsSelected = true
       } catch (err) {
         const { default: errorHandler } = await import('@/utils/errorHandler')
         errorHandler(err).forEach((msg) => {
@@ -123,6 +187,10 @@ export default {
           })
         })
       }
+    },
+    onClose() {
+      this.$emit('onClose')
+      this.closeModal()
     },
   },
 }

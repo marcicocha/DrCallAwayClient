@@ -5,7 +5,7 @@ import {
 
 export default {
   [GET_TESTS](state, payload) {
-    state.tests = payload.data
+    state.tests = payload
   },
   [GET_ALL_MEDICAL_SCREENING](state, payload) {
     state.medicalScreenings = payload

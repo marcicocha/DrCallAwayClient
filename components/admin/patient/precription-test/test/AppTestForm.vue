@@ -5,9 +5,10 @@
         <a-row type="flex" :gutter="24">
           <a-col :span="12">
             <AppInput
-              v-model="testObj.test_id"
+              v-model="testObj.id"
               label="Test ID"
               name="test id"
+              disabled
             />
           </a-col>
           <a-col :span="12">
@@ -15,6 +16,7 @@
               v-model="testObj.complaint"
               label="Complaint"
               name="Complaint"
+              disabled
             />
           </a-col>
           <a-col :span="12">
@@ -22,10 +24,16 @@
               v-model="testObj.prescriptionBy"
               label="Prescription By"
               name="prescription by"
+              disabled
             />
           </a-col>
           <a-col :span="12">
-            <AppInput v-model="testObj.status" label="Status" name="status" />
+            <AppInput
+              v-model="testObj.status"
+              label="Status"
+              name="status"
+              disabled
+            />
           </a-col>
         </a-row>
       </ValidationObserver>
@@ -56,7 +64,7 @@
       </div>
     </div>
     <br />
-    <div v-if="testObj.status === 'PENDING'" class="t-c">
+    <div v-if="testObj.status === 'ACTIVE'" class="t-c">
       <AppButton
         type="primary"
         :block="false"
@@ -68,7 +76,7 @@
     </div>
     <a-modal
       :visible="diagnosticModalIsVisible"
-      width="600px"
+      width="800px"
       :confirm-loading="confirmLoading"
       :footer="null"
       :destroy-on-close="true"
@@ -79,7 +87,11 @@
       <div>
         <h6 class="t-c">Diagnostic Centers Near You</h6>
         <a-divider />
-        <AppDiagnosticTable :test-list="dataSource" />
+        <AppDiagnosticTable
+          :test-list="dataSource"
+          :currentTestObj="testObj"
+          @onClose="onClose"
+        />
       </div>
     </a-modal>
   </div>
@@ -109,13 +121,6 @@ export default {
       confirmLoading: false,
       selectedDiagnosticObj: {},
       dataSource: [],
-      diagnosticDataSource: [
-        {
-          name: 'Smith Diagnostic Center',
-          address: 'Ijapo Estate',
-          phoneNumber: '08100969815',
-        },
-      ],
     }
   },
   computed: {
@@ -163,7 +168,8 @@ export default {
         } else {
           this.testObj = {
             ...newCurrentTestObj,
-            prescriptionBy: `${newCurrentTestObj.partners.first_name} ${newCurrentTestObj.partners.last_name}`,
+            prescriptionBy: `${newCurrentTestObj.doctor.first_name} ${newCurrentTestObj.doctor.last_name}`,
+            complaint: newCurrentTestObj.caseFile.initial_complain,
           }
           this.dataSource = newCurrentTestObj.tests
             ? [...newCurrentTestObj.tests]
@@ -175,29 +181,32 @@ export default {
     },
   },
   methods: {
-    async submitHandler(record) {
-      this.selectedDiagnosticObj = record
+    onClose() {
+      this.closeModal()
+      this.$emit('closeModal')
+    },
+    submitHandler() {
       this.diagnosticModalIsVisible = true
-      try {
-        const user = JSON.parse(localStorage.getItem('user'))
-        const config = {
-          headers: { Authorization: `Bearer ${user.token.token}` },
-        }
-        const { data } = this.$axios.$patch(
-          `/tests/assignTestToDiagnosticCenter/${this.testObj.testId}?partners_id=${record.partner_id}`,
-          config
-        )
-        console.log(data)
-      } catch (err) {
-        const { default: errorHandler } = await import('@/utils/errorHandler')
-        errorHandler(err).forEach((msg) => {
-          this.$notification.error({
-            message: 'Error',
-            description: msg,
-            duration: 4000,
-          })
-        })
-      }
+      // try {
+      //   const user = JSON.parse(localStorage.getItem('user'))
+      //   const config = {
+      //     headers: { Authorization: `Bearer ${user.token.token}` },
+      //   }
+      //   const { data } = this.$axios.$patch(
+      //     `/tests/assignTestToDiagnosticCenter/${this.testObj.testId}?partners_id=${record.partner_id}`,
+      //     config
+      //   )
+      //   console.log(data)
+      // } catch (err) {
+      //   const { default: errorHandler } = await import('@/utils/errorHandler')
+      //   errorHandler(err).forEach((msg) => {
+      //     this.$notification.error({
+      //       message: 'Error',
+      //       description: msg,
+      //       duration: 4000,
+      //     })
+      //   })
+      // }
     },
     closeModal() {
       this.diagnosticModalIsVisible = false

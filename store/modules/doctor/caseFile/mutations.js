@@ -23,5 +23,7 @@ export default {
   },
   [RESET_CASE_FILE](state) {
     state.caseFiles = []
+    state.testList = []
+    state.prescriptionList = []
   },
 }

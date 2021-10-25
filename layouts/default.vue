@@ -93,7 +93,7 @@
           <button
             to="contact"
             class="button header__button"
-            @click="showSignInModal"
+            @click="signInHandler"
           >
             Talk To A Medical Practitioner
           </button>
@@ -171,7 +171,7 @@
               padding: 0.5rem 0.2rem;
               width: 100%;
             "
-            @click="showSignInModal"
+            @click="signInHandler"
           >
             Talk To A Medical Practitioner
           </button>
@@ -324,6 +324,15 @@ export default {
     },
     closeModalSignInHandler() {
       this.signInIsVisible = false
+    },
+    signInHandler() {
+      const user = JSON.parse(localStorage.getItem('user'))
+      if (user) {
+        console.log(user, 'USER')
+        this.$router.push(`/admin/${user.roles[0].name}`)
+        return
+      }
+      this.showSignInModal()
     },
     showSignInModal() {
       this.modalIsVisible = true

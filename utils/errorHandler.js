@@ -26,7 +26,11 @@ export const ErrorHandler = (err) => {
         }
       } else if (typeof err.response.data.message === 'string') {
         errors.push(err.response.data.message)
-        if (err.response.data.message === 'Unauthenticated.') {
+        if (
+          err.response.data.message === 'Unauthenticated.' ||
+          err.response.data.message ===
+            'Call to a member function token() on null'
+        ) {
           console.log('Unauthenticated.')
           window.location.href = '/'
           localStorage.clear()

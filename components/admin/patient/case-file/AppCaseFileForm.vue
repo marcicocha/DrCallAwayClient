@@ -434,7 +434,7 @@ export default {
     async saveHandler(value) {
       if (!value) {
         this.$notification.error({
-          message: 'Erroe',
+          message: 'Error',
           description: 'Comment is Empty',
           duration: 4000,
         })
@@ -447,13 +447,11 @@ export default {
           obj,
           this.config
         )
-        console.log(response.message, 'MESSAGE')
         this.$notification.success({
           message: 'Success',
           description: response.message,
           duration: 4000,
         })
-        this.$emit('switchToCompleteTab')
       } catch (err) {
         this.isLoading = false
         const { default: errorHandler } = await import('@/utils/errorHandler')

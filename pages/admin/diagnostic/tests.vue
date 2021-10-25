@@ -285,7 +285,7 @@ export default {
               headers: { Authorization: `Bearer ${user.token.token}` },
             }
             await $this.$axios.$patch(
-              `ambulance/accept/callup/${this.currentTest.id}`,
+              `/accept/diagnostic/${this.currentTest.id}`,
               this.currentTest.id,
               config
             )

@@ -92,6 +92,7 @@
       </ul>
     </div>
     <div ref="top" class="list__details">
+      <br />
       <h2>Terms and Conditions</h2>
       <p>Effective Date: Monday, May 17, 2021</p>
       <component

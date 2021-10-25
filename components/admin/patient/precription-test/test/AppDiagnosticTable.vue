@@ -84,8 +84,8 @@
           <a-divider />
           <AppSelectedDiagnostic
             :test-list="testList"
-            :selectedDiagnosticObj="selectedDiagnosticObj"
-            :currentTestObj="currentTestObj"
+            :selected-diagnostic-obj="selectedDiagnosticObj"
+            :current-test-obj="currentTestObj"
             @closeModal="onClose"
           />
         </div>

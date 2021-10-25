@@ -54,7 +54,7 @@
       </div>
 
       <br />
-      <div v-if="testObj.status !== 'PENDING' && this.currentTestObj.partners">
+      <div v-if="testObj.status !== 'PENDING' && currentTestObj.partners">
         <p>Diagnostic Center Information</p>
         <a-table
           :columns="diagnosticColumns"
@@ -89,7 +89,7 @@
         <a-divider />
         <AppDiagnosticTable
           :test-list="dataSource"
-          :currentTestObj="testObj"
+          :current-test-obj="testObj"
           @onClose="onClose"
         />
       </div>

@@ -364,7 +364,7 @@ export default {
             if (VueThis.camera) {
               createLocalVideoTrack().then((track) => {
                 const localMediaContainer =
-                  document.getElementById('localTrack')
+                  document.getElementById('localT rack')
                 localMediaContainer.appendChild(track.attach())
                 VueThis.localTrack = true
               })

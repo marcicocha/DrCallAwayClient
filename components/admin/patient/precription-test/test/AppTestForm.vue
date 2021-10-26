@@ -64,7 +64,7 @@
       </div>
     </div>
     <br />
-    <div v-if="testObj.status === 'PENDING'" class="t-c">
+    <div v-if="testObj.status === 'PENDING' && !testObj.partners" class="t-c">
       <AppButton
         type="primary"
         :block="false"
@@ -125,12 +125,12 @@ export default {
   },
   computed: {
     diagnosticDataSource() {
-      if (this.currentTestObj.partners) {
+      if (this.testObj.partners) {
         const newArray = [
           {
-            name: this.currentTestObj.partners.registered_name,
-            address: this.currentTestObj.partners.address,
-            phoneNumber: this.currentTestObj.partners.mobile_phone_number,
+            name: this.testObj.partners.registered_name,
+            address: this.testObj.partners.address,
+            phoneNumber: this.testObj.partners.mobile_phone_number,
           },
         ]
         return newArray

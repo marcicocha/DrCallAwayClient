@@ -54,7 +54,7 @@
       </div>
 
       <br />
-      <div v-if="prescriptionObj.status !== 'PENDING'">
+      <div v-if="prescriptionObj.pharmacy_id">
         <p>Pharmacy Information</p>
         <a-table
           :columns="pharmacyColumns"
@@ -64,9 +64,8 @@
       </div>
     </div>
     <br />
-    <div v-if="prescriptionObj.status === 'PENDING'" class="t-c">
+    <div v-if="!prescriptionObj.pharmacy_id" class="t-c">
       <AppButton
-        v-if="!prescriptionObj.pharmacy_id"
         type="primary"
         :block="false"
         :loading="isLoading"
@@ -125,10 +124,22 @@ export default {
       pharmacyModalIsVisible: false,
       isLoading: false,
       dataSource: [],
-      pharmacyDataSource: [],
     }
   },
   computed: {
+    pharmacyDataSource() {
+      if (this.prescriptionObj.partners) {
+        const newArray = [
+          {
+            name: this.prescriptionObj.partners.registered_name,
+            address: this.prescriptionObj.partners.address,
+            phoneNumber: this.prescriptionObj.partners.mobile_phone_number,
+          },
+        ]
+        return newArray
+      }
+      return []
+    },
     columns() {
       const columns = [
         {

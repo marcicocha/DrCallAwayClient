@@ -10,7 +10,14 @@
             @showTestModal="showTestModal"
           />
         </a-tab-pane>
-        <a-tab-pane key="2" tab="Completed Tests">
+        <a-tab-pane key="2" tab="Active Tests" force-render>
+          <AppTestDataTable
+            status="ACTIVE"
+            :data-source="allTest"
+            @showTestModal="showTestModal"
+          />
+        </a-tab-pane>
+        <a-tab-pane key="3" tab="Completed Tests">
           <AppTestDataTable
             status="COMPLETED"
             :data-source="allTest"
@@ -100,7 +107,7 @@
               v-model="testInstruction"
               label="Test Instruction/Additional Information"
               colon="false"
-              :disabled="currentTest.status === 'COMPLETED'"
+              :disabled="currentTest.status !== 'PENDING'"
             />
           </a-form>
         </div>

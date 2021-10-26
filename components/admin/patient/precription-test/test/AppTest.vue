@@ -9,7 +9,13 @@
             @showTestModal="showTestModal"
           />
         </a-tab-pane>
-        <a-tab-pane key="2" tab="Completed Test">
+        <a-tab-pane key="2" tab="Active Test">
+          <AppTestDataTable
+            :data-source="allTests"
+            @showTestModal="showTestModal"
+          />
+        </a-tab-pane>
+        <a-tab-pane key="3" tab="Completed Test">
           <AppTestDataTable
             :data-source="allTests"
             @showTestModal="showTestModal"
@@ -80,7 +86,7 @@ export default {
       testModalIsVisible: false,
       confirmLoading: false,
       currentTestObj: {},
-      status: 'PENDING',
+      status: 'ACTIVE',
     }
   },
   computed: {
@@ -101,6 +107,9 @@ export default {
         this.status = 'PENDING'
       }
       if (key === '2') {
+        this.status = 'ACTIVE'
+      }
+      if (key === '3') {
         this.status = 'COMPLETED'
       }
       try {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="page_heading">TESTS</p>
+    <!-- <p class="page_heading">TESTS</p> -->
     <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Tests" force-render>
@@ -104,15 +104,16 @@
         <div>
           <a-form>
             <AppTextArea
-              v-model="testInstruction"
+              v-model="currentTest.addition_information"
               label="Test Instruction/Additional Information"
               colon="false"
+              required
               :disabled="currentTest.status !== 'PENDING'"
             />
           </a-form>
         </div>
         <br />
-        <div v-if="currentTest.status === 'ACTIVE'" class="t-c">
+        <div v-if="currentTest.status === 'PENDING'" class="t-c">
           <a-row type="flex" :gutter="16">
             <a-col :span="12">
               <AppButton
@@ -134,7 +135,17 @@
             </a-col>
           </a-row>
         </div>
-        <div v-if="currentTest.status === 'COMPLETED'" class="t-c">
+        <div v-if="currentTest.status === 'ACTIVE'" class="t-c">
+          <AppButton
+            type="primary"
+            :loading="isLoading"
+            :block="false"
+            class="admin-button"
+            @click="completeTestHandler"
+            >COMPLETE</AppButton
+          >
+        </div>
+        <!-- <div v-if="currentTest.status === 'COMPLETED'" class="t-c">
           <a-row type="flex" :gutter="16">
             <a-col :span="12">
               <AppButton
@@ -157,7 +168,7 @@
               >
             </a-col>
           </a-row>
-        </div>
+        </div> -->
       </div>
     </a-modal>
   </div>
@@ -180,6 +191,10 @@ export default {
   },
   layout: 'dashboard',
   data() {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const config = {
+      headers: { Authorization: `Bearer ${user.token.token}` },
+    }
     return {
       activeKey: '1',
       filterObj: {},
@@ -188,7 +203,8 @@ export default {
       confirmLoading: false,
       isLoading: false,
       status: 'PENDING',
-      testInstruction: '',
+      addition_information: '',
+      config,
     }
   },
   computed: {
@@ -244,57 +260,119 @@ export default {
     closeModal() {
       this.modalIsVisible = false
     },
-    async submitHandler() {
-      try {
-        const user = JSON.parse(localStorage.getItem('user'))
-        const config = {
-          headers: { Authorization: `Bearer ${user.token.token}` },
-        }
-        await this.$axios.$patch(
-          `pharmacy/accept/prescription/${this.currentTest.id}`,
-          this.currentTest.id,
-          config
-        )
-        this.$notification.success({
-          message: 'Success',
-          description: 'Request Accepted Successfully',
-        })
-        this.changeTabHandler('2')
-        this.activeKey = '2'
-      } catch (e) {
-        const { default: errorHandler } = await import('@/utils/errorHandler')
-        errorHandler(e).forEach((msg) => {
-          this.$notification.error({
-            message: 'Error',
-            description: msg,
-          })
-        })
-      }
-    },
     rejectTestHandler() {
-      this.modalIsVisible = false
-    },
-    viewResultHandler() {},
-    downloadResultHandler() {},
-    acceptTestHandler() {
+      if (!this.currentTest.addition_information) {
+        this.$notification.error({
+          message: 'Error',
+          description: 'Test Instruction is Required',
+        })
+        return
+      }
       const $this = this
       this.$confirm({
-        title: 'Are you sure you want to accept this Test?',
-        content: `With ID: ${this.currentTest.id}`,
+        title: 'Are you sure you want to reject this Test?',
+        content: `With ID: ${$this.currentTest.id}`,
         okText: 'Yes',
         okType: 'danger',
         cancelText: 'No',
         async onOk() {
           // vm.showModal(false)
           try {
-            const user = JSON.parse(localStorage.getItem('user'))
-            const config = {
-              headers: { Authorization: `Bearer ${user.token.token}` },
+            const obj = {
+              addition_information: $this.currentTest.addition_information,
             }
             await $this.$axios.$patch(
-              `/accept/diagnostic/${this.currentTest.id}`,
-              this.currentTest.id,
-              config
+              `/reject/diagnostic/${$this.currentTest.id}`,
+              obj,
+              $this.config
+            )
+            $this.$notification.success({
+              message: 'Success',
+              description: 'Request Rejected Successfully',
+            })
+            $this.changeTabHandler('1')
+            $this.activeKey = '1'
+            $this.modalIsVisible = false
+          } catch (e) {
+            const { default: errorHandler } = await import(
+              '@/utils/errorHandler'
+            )
+            errorHandler(e).forEach((msg) => {
+              $this.$notification.error({
+                message: 'Error',
+                description: msg,
+              })
+            })
+          }
+        },
+        onCancel() {},
+      })
+    },
+    viewResultHandler() {},
+    downloadResultHandler() {},
+    completeTestHandler() {
+      const $this = this
+      this.$confirm({
+        title: 'Are you sure you want to complete this Test?',
+        content: `With ID: ${$this.currentTest.id}`,
+        okText: 'Yes',
+        okType: 'danger',
+        cancelText: 'No',
+        async onOk() {
+          // vm.showModal(false)
+          try {
+            await $this.$axios.$patch(
+              `/complete/diagnostic/${$this.currentTest.id}`,
+              $this.currentTest.id,
+              $this.config
+            )
+            $this.$notification.success({
+              message: 'Success',
+              description: 'Request Completed Successfully',
+            })
+            $this.changeTabHandler('3')
+            $this.activeKey = '3'
+            $this.modalIsVisible = false
+          } catch (e) {
+            const { default: errorHandler } = await import(
+              '@/utils/errorHandler'
+            )
+            errorHandler(e).forEach((msg) => {
+              $this.$notification.error({
+                message: 'Error',
+                description: msg,
+              })
+            })
+          }
+        },
+        onCancel() {},
+      })
+    },
+    acceptTestHandler() {
+      if (!this.currentTest.addition_information) {
+        this.$notification.error({
+          message: 'Error',
+          description: 'Test Instruction is Required',
+        })
+        return
+      }
+      const $this = this
+      this.$confirm({
+        title: 'Are you sure you want to accept this Test?',
+        content: `With ID: ${$this.currentTest.id}`,
+        okText: 'Yes',
+        okType: 'danger',
+        cancelText: 'No',
+        async onOk() {
+          // vm.showModal(false)
+          try {
+            const obj = {
+              addition_information: $this.currentTest.addition_information,
+            }
+            await $this.$axios.$patch(
+              `/accept/diagnostic/${$this.currentTest.id}`,
+              obj,
+              $this.config
             )
             $this.$notification.success({
               message: 'Success',
@@ -302,6 +380,7 @@ export default {
             })
             $this.changeTabHandler('2')
             $this.activeKey = '2'
+            $this.modalIsVisible = false
           } catch (e) {
             const { default: errorHandler } = await import(
               '@/utils/errorHandler'
@@ -322,6 +401,9 @@ export default {
         this.status = 'PENDING'
       }
       if (key === '2') {
+        this.status = 'ACTIVE'
+      }
+      if (key === '3') {
         this.status = 'COMPLETED'
       }
       try {

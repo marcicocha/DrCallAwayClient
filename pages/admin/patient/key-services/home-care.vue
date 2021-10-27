@@ -92,6 +92,8 @@
                 v-model="homeCareObj.address"
                 label="Address"
                 name="address"
+                required
+                rules="required"
               />
               <AppDatePicker
                 v-model="homeCareObj.date"
@@ -112,8 +114,6 @@
                 v-model="homeCareObj.additional_info"
                 label="Additional Comment"
                 name="additional comment"
-                rules="required"
-                required
               />
             </ValidationObserver>
             <br />

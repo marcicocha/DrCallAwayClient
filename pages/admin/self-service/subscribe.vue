@@ -85,16 +85,18 @@
                   v-model="subscriptionObj.type"
                   label="Current Subscription Type"
                   name="Current Subscription Type"
-                  required
-                  rules="required"
                   disabled
                 />
                 <AppInput
                   v-model="subscriptionObj.plan"
                   label="Current Subscription Plan"
                   name="current subscription plan"
-                  required
-                  rules="required"
+                  disabled
+                />
+                <AppInput
+                  v-model="subscriptionObj.amount"
+                  label="Current Subscription Plan"
+                  name="current subscription plan"
                   disabled
                 />
               </div>
@@ -126,6 +128,12 @@
                   rules="required"
                   :disabled="!newSubscriptionObj.type"
                   @selectedObject="selectedObjectHandler"
+                />
+                <AppInput
+                  v-model="newSubscriptionObj.amount"
+                  label="New Subscription Price"
+                  name="New Subscription Price"
+                  disabled
                 />
               </div>
             </ValidationObserver>

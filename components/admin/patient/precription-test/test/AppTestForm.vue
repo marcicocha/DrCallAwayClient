@@ -35,6 +35,14 @@
               disabled
             />
           </a-col>
+          <a-col v-if="testObj.status !== 'PENDING'" :span="24">
+            <AppTextArea
+              v-model="testObj.addition_information"
+              label="Test Instruction/Additional Information"
+              colon="false"
+              disabled
+            />
+          </a-col>
         </a-row>
       </ValidationObserver>
     </a-form>
@@ -100,12 +108,15 @@
 import { ValidationObserver } from 'vee-validate'
 import AppInput from '@/components/AppInput'
 import AppDiagnosticTable from '@/components/admin/patient/precription-test/test/AppDiagnosticTable'
+import AppTextArea from '@/components/AppTextArea'
+
 export default {
   name: 'AppTestForm',
   components: {
     ValidationObserver,
     AppInput,
     AppDiagnosticTable,
+    AppTextArea,
   },
   props: {
     currentTestObj: {

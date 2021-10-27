@@ -93,12 +93,10 @@
                   name="current subscription plan"
                   disabled
                 />
-                <AppInput
-                  v-model="subscriptionObj.amount"
-                  label="Current Subscription Plan"
-                  name="current subscription plan"
-                  disabled
-                />
+                <br />
+                <h6 class="red t-c">
+                  {{ `Amount: N${subscriptionObj.amount}` }}
+                </h6>
               </div>
               <div v-else>
                 <AppSelect
@@ -129,12 +127,12 @@
                   :disabled="!newSubscriptionObj.type"
                   @selectedObject="selectedObjectHandler"
                 />
-                <AppInput
-                  v-model="newSubscriptionObj.amount"
-                  label="New Subscription Price"
-                  name="New Subscription Price"
-                  disabled
-                />
+                <div v-if="newSubscriptionObj.amount">
+                  <br />
+                  <h6 class="red t-c">
+                    {{ `Amount: N${newSubscriptionObj.amount}` }}
+                  </h6>
+                </div>
               </div>
             </ValidationObserver>
             <br />
@@ -312,5 +310,8 @@ export default {
 <style lang="scss" scoped>
 h6 {
   color: $dark-purple;
+}
+.red {
+  color: #e74353 !important;
 }
 </style>

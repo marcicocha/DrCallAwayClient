@@ -56,7 +56,7 @@ export default {
             'In addition to his training in the United States, Dr Olatinwo also trained internationally with several fellowships including as a British Council Scholar at the University of Sheffield’s Department of Obstetrics and Gynaecology in Sheffield, England, and the West African College of Surgeons at Lagos University Teaching Hospital in Lagos, Nigeria.',
             'Dr Olatinwo has earned numerous honours and academic awards prior to establishing a private practice.',
           ],
-          imgSrc: 'icon.png',
+          imgSrc: 'tunde.png',
         },
         {
           title: 'MRS LIZZIE AMKPA',

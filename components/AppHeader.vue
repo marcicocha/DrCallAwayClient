@@ -8,11 +8,13 @@
       @click="subscribeHandler"
       >Subscribe</AppButton
     >
-    <img
-      src="@/assets/images/notification.svg"
-      alt="notification"
-      class="notification"
-    />
+    <nuxt-link to="/admin/notification">
+      <img
+        src="@/assets/images/notification.svg"
+        alt="notification"
+        class="notification"
+      />
+    </nuxt-link>
     <p style="text-transform: capitalize">
       {{
         userObject.registered_name

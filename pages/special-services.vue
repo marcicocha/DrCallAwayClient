@@ -13,7 +13,7 @@
       <div class="text-container">
         <h4 v-html="service.title"></h4>
         <p v-if="service.description" v-html="service.description"></p>
-        <button class="button">Explore More</button>
+        <button class="button" @click="signInHandler">Explore More</button>
       </div>
     </AppCard>
   </div>
@@ -24,6 +24,10 @@ export default {
   components: { AppCard },
   data() {
     return {
+      modalIsVisible: false,
+      signUpIsVisible: false,
+      signInIsVisible: false,
+      mode: 'patient',
       keyServicesList: [
         {
           title: 'Find A Pharmacy',
@@ -49,6 +53,34 @@ export default {
   methods: {
     getImgHandler(pic) {
       return require('~/assets/images/special-service/' + pic)
+    },
+    closeModal() {
+      this.modalIsVisible = false
+      this.signUpIsVisible = false
+      this.signInIsVisible = false
+    },
+    closeModalSignInHandler() {
+      this.signInIsVisible = false
+    },
+    signInHandler() {
+      const user = JSON.parse(localStorage.getItem('user'))
+      if (user) {
+        console.log(user, 'USER')
+        this.$router.push(`/admin/${user.roles[0].name}`)
+        return
+      }
+      this.showSignInModal()
+    },
+    showSignInModal() {
+      this.modalIsVisible = true
+      this.signInIsVisible = true
+      this.signUpIsVisible = false
+    },
+    showSignUpModal(mode) {
+      this.modalIsVisible = true
+      this.signUpIsVisible = true
+      this.signInIsVisible = false
+      this.mode = mode
     },
   },
 }

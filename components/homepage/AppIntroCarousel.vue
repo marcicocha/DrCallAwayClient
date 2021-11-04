@@ -21,7 +21,9 @@
           comfort of your home, office or anywhere you are.
         </p>
         <br />
-        <button class="button">Start Consultation</button>
+        <button class="button" @click="$emit('signInHandler')">
+          Start Consultation
+        </button>
       </div>
       <div class="intro__image">
         <img
@@ -43,7 +45,9 @@
           healthcare costs.
         </p>
         <br />
-        <button class="button">Start Consultation</button>
+        <button class="button" @click="$emit('signInHandler')">
+          Start Consultation
+        </button>
       </div>
       <div class="intro__image">
         <img
@@ -65,7 +69,9 @@
           virtual treatment can help to limit exposure and spread of the virus.
         </p>
         <br />
-        <button class="button">Start Consultation</button>
+        <button class="button" @click="$emit('signInHandler')">
+          Start Consultation
+        </button>
       </div>
       <div class="intro__image">
         <img

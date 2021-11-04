@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="container intro_container">
-      <AppIntroCarousel />
+      <AppIntroCarousel @signInHandler="signInHandler" />
     </section>
     <section class="service">
       <div
@@ -22,7 +22,7 @@
         <p>Sign up and connect with a doctor at your convenience</p>
         <br />
         <br />
-        <button class="button">Get Started</button>
+        <button class="button" @click="signInHandler">Get Started</button>
       </div>
     </section>
     <section class="flex flex-jc-sb flex-ai-c howitworks">
@@ -119,21 +119,74 @@
         </ul>
         <br />
         <div class="t-c">
-          <button class="button">Start Your Virtual Visit</button>
+          <button class="button" @click="signInHandler">
+            Start Your Virtual Visit
+          </button>
         </div>
       </div>
     </section>
+    <AppManageSignInUp
+      :mode="mode"
+      :modal-is-visible="modalIsVisible"
+      :sign-up-is-visible="signUpIsVisible"
+      :sign-in-is-visible="signInIsVisible"
+      @closeModal="closeModal"
+      @showSignInModal="showSignInModal"
+      @showSignUpModal="showSignUpModal"
+      @closeModalSignInHandler="closeModalSignInHandler"
+    />
   </div>
 </template>
 <script>
 import AppIntroCarousel from '@/components/homepage/AppIntroCarousel'
 import AppServiceCarousel from '@/components/homepage/AppServiceCarousel'
 import AppHowItWorksCarousel from '@/components/homepage/AppHowItWorksCarousel'
+import AppManageSignInUp from '@/components/AppManageSignInUp'
+
 export default {
   components: {
     AppIntroCarousel,
     AppServiceCarousel,
     AppHowItWorksCarousel,
+    AppManageSignInUp,
+  },
+  data() {
+    return {
+      modalIsVisible: false,
+      signUpIsVisible: false,
+      signInIsVisible: false,
+      mode: 'patient',
+    }
+  },
+  methods: {
+    closeModal() {
+      this.modalIsVisible = false
+      this.signUpIsVisible = false
+      this.signInIsVisible = false
+    },
+    closeModalSignInHandler() {
+      this.signInIsVisible = false
+    },
+    signInHandler() {
+      const user = JSON.parse(localStorage.getItem('user'))
+      if (user) {
+        console.log(user, 'USER')
+        this.$router.push(`/admin/${user.roles[0].name}`)
+        return
+      }
+      this.showSignInModal()
+    },
+    showSignInModal() {
+      this.modalIsVisible = true
+      this.signInIsVisible = true
+      this.signUpIsVisible = false
+    },
+    showSignUpModal(mode) {
+      this.modalIsVisible = true
+      this.signUpIsVisible = true
+      this.signInIsVisible = false
+      this.mode = mode
+    },
   },
 }
 </script>

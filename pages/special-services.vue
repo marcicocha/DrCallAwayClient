@@ -30,19 +30,19 @@ export default {
       mode: 'patient',
       keyServicesList: [
         {
-          title: 'Find A Pharmacy',
+          title: 'Apply for Medical loans',
           description:
-            'The need to get your medical supplies especially medications from an authentic and trusted source cannot be over-emphasized. We remain committed to pointing you to the right direction. Click here to find the closest to you.',
+            'Don’t miss out on essential medical services due to temporary lack of resources. Access loans for medical expenses through our finance partners.',
           imgSrc: 'pharmacy.png',
         },
         {
-          title: 'Find A Diagnostic Center',
+          title: 'Book for your Routine Medical Screening',
           description:
             'Knowing your numbers is as important as talking to your doctor. This entails getting tested in a reliable and trusted center. Count on us to point you in the right direction. Tests results will be forwarded online to your GP and uploaded to your medical records on our system.',
           imgSrc: 'laboratory.png',
         },
         {
-          title: 'DrCallAway<sup>TM</sup> Special Ailments',
+          title: 'DrCallAway<sup>TM</sup> Book An Ambulance',
           description:
             'Has a loved one suddenly fallen sick or does someone need to get to the hospital urgently? No need to worry, DrCallAway<sup>TM</sup> is your trusted link, 24/7 at your service.',
           imgSrc: 'ambulance.png',

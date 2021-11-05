@@ -24,10 +24,10 @@ import moment from 'moment'
 import AppTitleDivider from '@/components/AppTitleDivider'
 
 export default {
-  layout: 'dashboard',
   components: {
     AppTitleDivider,
   },
+  layout: 'dashboard',
   data() {
     const userObject = JSON.parse(localStorage.getItem('user'))
     const config = {

@@ -30,12 +30,6 @@ export default {
       mode: 'patient',
       keyServicesList: [
         {
-          title: 'Apply for Medical loans',
-          description:
-            'Don’t miss out on essential medical services due to temporary lack of resources. Access loans for medical expenses through our finance partners.',
-          imgSrc: 'pharmacy.png',
-        },
-        {
           title: 'Book for your Routine Medical Screening',
           description:
             'Knowing your numbers is as important as talking to your doctor. This entails getting tested in a reliable and trusted center. Count on us to point you in the right direction. Tests results will be forwarded online to your GP and uploaded to your medical records on our system.',
@@ -46,6 +40,12 @@ export default {
           description:
             'Has a loved one suddenly fallen sick or does someone need to get to the hospital urgently? No need to worry, DrCallAway<sup>TM</sup> is your trusted link, 24/7 at your service.',
           imgSrc: 'ambulance.png',
+        },
+        {
+          title: 'Apply for Medical loans',
+          description:
+            'Don’t miss out on essential medical services due to temporary lack of resources. Access loans for medical expenses through our finance partners.',
+          imgSrc: 'loan.png',
         },
       ],
     }
@@ -107,6 +107,7 @@ h4 {
   @include breakpoint-up(large) {
     margin-top: 0;
     margin-bottom: 0.5rem;
+    font-size: 1.25rem;
   }
 }
 .img-container {

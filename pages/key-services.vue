@@ -143,6 +143,7 @@ h4 {
   @include breakpoint-up(large) {
     margin-top: 0;
     margin-bottom: 0.5rem;
+    font-size: 1.25rem;
   }
 }
 .img-container {

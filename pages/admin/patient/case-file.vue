@@ -208,6 +208,10 @@ export default {
     showCaseFile(record) {
       this.viewIsVisible = true
       this.currentCaseFile = record
+      this.$router.replace({
+        name: '/admin/patient/case-file',
+        params: { id: record.id },
+      })
     },
     closeViewHandler() {
       this.viewIsVisible = false

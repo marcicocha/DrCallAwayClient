@@ -115,6 +115,8 @@
                 </div>
               </a-col>
               <a-col :span="8" class="t-c">
+                <p class="price">{{ `${screeningPlan}: ${price}` }}</p>
+                <br />
                 <p>Selected Diagnostic Center</p>
                 <p style="text-transform: uppercase">
                   {{
@@ -469,6 +471,11 @@ h6 {
   color: #f04519;
   font-weight: 400;
   margin-top: 0.8rem;
+  font-size: 12px;
+}
+.price {
+  color: #e74353;
+  font-weight: bold;
 }
 p {
   color: $dark-purple;

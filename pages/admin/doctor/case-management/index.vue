@@ -1,10 +1,6 @@
 <template>
   <div>
-    <AppTabs
-      v-if="!viewIsVisible"
-      v-model="activeKey"
-      @tabClick="changeTabHandler"
-    >
+    <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
         <a-tab-pane key="1" tab="Active Cases" force-render>
           <AppCaseFileDataTable
@@ -46,49 +42,7 @@
         </a-row>
       </template>
     </AppTabs>
-    <div v-if="viewIsVisible">
-      <div v-if="!testIsVisible">
-        <div>
-          <a @click="closeViewHandler('case')"
-            ><img src="@/assets/images/long-arrow-left.svg"
-          /></a>
-        </div>
-        <br />
-        <AppTitleDivider :title="`Case File / ${currentCaseFile.case_id}`"
-          ><span class="right-details"
-            ><span style="color: $dark-purple">Status:</span>
-            <span
-              :class="{
-                blue: currentCaseFile.status === 'ACTIVE',
-                green: currentCaseFile.status === 'COMPLETED',
-                red: currentCaseFile.status === 'PENDING',
-              }"
-              >{{ currentCaseFile.status }}</span
-            ></span
-          ></AppTitleDivider
-        >
-        <div>
-          <AppCaseFileForm
-            :current-case-file="currentCaseFile"
-            status="doctor"
-            @showTestTab="showTestTab"
-            @switchToCompleteTab="switchToCompleteTab"
-          />
-        </div>
-      </div>
-      <div v-else>
-        <div>
-          <a @click="closeViewHandler('test')"
-            ><img src="@/assets/images/long-arrow-left.svg"
-          /></a>
-        </div>
-        <br />
-        <AppScreeningTab
-          :case-id="currentCaseFile.id"
-          @closeTestHandler="closeTestHandler"
-        />
-      </div>
-    </div>
+    <div v-if="viewIsVisible"></div>
     <AppChatDrawer
       :doctor="doctor"
       status="doctor"
@@ -104,8 +58,6 @@ import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable.vue'
-import AppCaseFileForm from '@/components/admin/patient/case-file/AppCaseFileForm'
-import AppScreeningTab from '@/components/admin/doctor/case-file/AppScreeningTab'
 import AppChatDrawer from '@/components/AppChatDrawer1'
 
 export default {
@@ -114,8 +66,6 @@ export default {
     AppInput,
     AppSelect,
     AppCaseFileDataTable,
-    AppCaseFileForm,
-    AppScreeningTab,
     AppChatDrawer,
   },
   layout: 'dashboard',
@@ -189,14 +139,7 @@ export default {
       this.chatDrawerIsVisible = false
       clearInterval(this.TIMER_ID)
     },
-    closeTestHandler() {
-      this.testIsVisible = false
-    },
-    switchToCompleteTab() {
-      this.activeKey = '2'
-      this.changeTabHandler('2')
-      this.viewIsVisible = false
-    },
+
     async showChatDrawer(record) {
       this.currentCaseFile = record
       try {
@@ -216,8 +159,10 @@ export default {
       }
     },
     showCaseFile(record) {
-      this.viewIsVisible = true
-      this.currentCaseFile = record
+      this.$router.push({
+        name: 'admin-doctor-case-management-id',
+        params: { id: record.id },
+      })
     },
     closeViewHandler(key) {
       if (key === 'case') {
@@ -252,9 +197,7 @@ export default {
         })
       }
     },
-    showTestTab() {
-      this.testIsVisible = true
-    },
+
     ...mapActions({
       getAllCaseFile: 'caseFileDoctorModule/GET_DOCTOR_CASE_FILE',
       resetHandler: 'caseFileDoctorModule/RESET_CASE_FILE',

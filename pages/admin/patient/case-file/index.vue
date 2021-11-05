@@ -1,10 +1,6 @@
 <template>
   <div>
-    <AppTabs
-      v-if="!viewIsVisible"
-      v-model="activeKey"
-      @tabClick="changeTabHandler"
-    >
+    <AppTabs v-model="activeKey" @tabClick="changeTabHandler">
       <template slot="default">
         <a-tab-pane key="1" tab="Pending Cases">
           <AppCaseFileDataTable
@@ -51,33 +47,6 @@
         </a-row>
       </template>
     </AppTabs>
-    <div v-if="viewIsVisible">
-      <div>
-        <a @click="closeViewHandler"
-          ><img src="@/assets/images/long-arrow-left.svg"
-        /></a>
-      </div>
-      <br />
-      <AppTitleDivider :title="`Case File / ${currentCaseFile.case_id}`"
-        ><span class="right-details"
-          ><span style="color: $dark-purple">Status:</span>
-          <span
-            :class="{
-              blue: currentCaseFile.status === 'ACTIVE',
-              green: currentCaseFile.status === 'COMPLETED',
-              red: currentCaseFile.status === 'PENDING',
-            }"
-            >{{ currentCaseFile.status }}</span
-          ></span
-        ></AppTitleDivider
-      >
-      <div>
-        <AppCaseFileForm
-          :current-case-file="currentCaseFile"
-          status="patient"
-        />
-      </div>
-    </div>
     <AppChatDrawer
       :doctor="doctor"
       status="patient"
@@ -93,7 +62,6 @@ import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable.vue'
-import AppCaseFileForm from '@/components/admin/patient/case-file/AppCaseFileForm'
 import AppChatDrawer from '@/components/AppChatDrawer1'
 export default {
   components: {
@@ -101,7 +69,6 @@ export default {
     AppInput,
     AppSelect,
     AppCaseFileDataTable,
-    AppCaseFileForm,
     AppChatDrawer,
   },
   layout: 'dashboard',
@@ -206,10 +173,9 @@ export default {
       // }
     },
     showCaseFile(record) {
-      this.viewIsVisible = true
-      this.currentCaseFile = record
-      this.$router.replace({
-        name: '/admin/patient/case-file',
+      // this.viewIsVisible = true
+      this.$router.push({
+        name: 'admin-patient-case-file-id',
         params: { id: record.id },
       })
     },

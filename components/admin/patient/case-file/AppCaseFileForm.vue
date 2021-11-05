@@ -340,7 +340,7 @@ export default {
         array = [...array, ...this.allPrescription]
         return array
       }
-      if (this.caseFileObj.prescription !== null) {
+      if (this.caseFileObj.prescription) {
         array = [...array, ...this.caseFileObj.prescription.drugs]
       }
       return array
@@ -351,7 +351,7 @@ export default {
         array = [...array, ...this.allTest]
         return array
       }
-      if (this.caseFileObj.diagnosis !== null) {
+      if (this.caseFileObj.diagnosis) {
         array = [...array, ...this.caseFileObj.diagnosis.tests]
       }
 

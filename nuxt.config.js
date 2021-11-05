@@ -44,15 +44,6 @@ export default {
     { src: 'ant-design-vue/dist/antd.less', lang: 'less' },
     '~/assets/scss/main.scss',
   ],
-  router: {
-    routes: [
-      {
-        name: '/admin/patient/case-file',
-        path: '/admin/patient/case-file/:id?',
-        component: 'pages/admin/patient/case-file/AppCaseFileForm.vue',
-      },
-    ],
-  },
   server: {
     host: '0.0.0.0',
     port: 8080,

@@ -328,7 +328,6 @@ export default {
     signInHandler() {
       const user = JSON.parse(localStorage.getItem('user'))
       if (user) {
-        console.log(user, 'USER')
         this.$router.push(`/admin/${user.roles[0].name}`)
         return
       }
@@ -346,7 +345,6 @@ export default {
       this.mode = mode
     },
     userHandler() {
-      console.log('user is signed in')
       this.$router.replace('/admin/patient')
     },
     showOverlay() {

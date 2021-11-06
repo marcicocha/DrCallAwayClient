@@ -36,7 +36,7 @@
               <a-row type="flex" :gutter="16" align="middle"
                 ><a-col :span="12"><AppCheckbox label="Remember me" /></a-col
                 ><a-col :span="12"
-                  ><p class="t-r">
+                  ><p class="t-r fs-13">
                     <a @click="forgotPasswordIsVisibleHandler"
                       >Forgot Password</a
                     >
@@ -314,6 +314,7 @@ export default {
   methods: {
     closeModal() {
       this.$emit('closeModal')
+      this.forgotPasswordIsVisible = false
     },
     showSignUpModal(mode) {
       this.$emit('showSignUpModal', mode)

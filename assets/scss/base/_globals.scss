@@ -332,6 +332,15 @@ h6 {
   .ant-row {
     margin-bottom: 16px;
   }
+  @include breakpoint-down(medium) {
+    .ant-form label,
+    .fs-13 {
+      font-size: 13px;
+    }
+    .ant-btn {
+      font-size: 12px;
+    }
+  }
 }
 .ant-table {
   padding: 10px;

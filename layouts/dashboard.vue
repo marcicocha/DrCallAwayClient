@@ -111,6 +111,7 @@
   </a-layout>
 </template>
 <script>
+import { mapState } from 'vuex'
 import AppHeader from '@/components/AppHeader'
 import {
   clientMenu,
@@ -143,14 +144,11 @@ export default {
       diagnosticMenu,
     }
   },
-  // computed: {
-  //   openKeys: {
-  //     get() {
-  //       return this.key ? [this.key] : []
-  //     },
-  //     set(val) {},
-  //   },
-  // },
+  computed: {
+    ...mapState({
+      allSubscription: (state) => state.subscriptionModule.subscriptionObj,
+    }),
+  },
   mounted() {
     this.userObject = JSON.parse(localStorage.getItem('user'))
     const role = this.userObject.roles[0].name
@@ -203,6 +201,15 @@ export default {
       }
     },
     goToPage(path) {
+      if (!this.allSubscription) {
+        this.$notification.error({
+          message: 'Error',
+          description: 'Please subscribe to continue',
+          duration: 4000,
+        })
+        this.$router.push('/admin/self-service/subscribe')
+        return
+      }
       this.$router.replace(path)
     },
     titleClickHandler(key) {

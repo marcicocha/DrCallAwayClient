@@ -253,6 +253,7 @@
 </template>
 <script>
 import { ValidationObserver } from 'vee-validate'
+import { mapActions, mapState } from 'vuex'
 import AppInput from '@/components/AppInput'
 import AppCheckbox from '@/components/AppCheckbox'
 import AppSelect from '@/components/AppSelect'
@@ -306,6 +307,9 @@ export default {
         this.signUpObject.type === 'PHARMACY'
       )
     },
+    ...mapState({
+      allSubscription: (state) => state.subscriptionModule.subscriptionObj,
+    }),
   },
   methods: {
     closeModal() {
@@ -330,10 +334,15 @@ export default {
       this.isSignInLoading = true
       try {
         const { data } = await this.$axios.$post('login', this.userObject)
-        localStorage.setItem('user', JSON.stringify(data))
+        await localStorage.setItem('user', JSON.stringify(data))
+        await this.getSubscriptionHandler()
         if (data.is_first_time_login === 1) {
           this.$router.push(`/admin/profile`)
         } else {
+          if (data.roles[0].name === 'patient' && !this.allSubscription) {
+            this.$router.push('/admin/self-service/subscribe')
+            return
+          }
           this.$router.push(`/admin/${data.roles[0].name}`)
         }
         this.isSignInLoading = false
@@ -415,6 +424,9 @@ export default {
         })
       }
     },
+    ...mapActions({
+      getSubscriptionHandler: 'subscriptionModule/GET_SUBSCRIPTION',
+    }),
   },
 }
 </script>

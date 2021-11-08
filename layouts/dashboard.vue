@@ -40,9 +40,9 @@
               selected: checkPathHandler(menu.path, `${String(i)}`),
             }"
           >
-            <a-icon :type="menu.icon" />
-            <span
-              ><a class="menu_anchor" @click="goToPage(menu.path)">{{
+            <span>
+              <a-icon :type="menu.icon" />
+              <a class="menu_anchor" @click="goToPage(menu.path)">{{
                 menu.name
               }}</a></span
             >
@@ -128,6 +128,9 @@ export default {
     AppHeader,
   },
   data() {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const role = this.user.roles[0].name
+
     return {
       collapsed: false,
       userObject: {},
@@ -142,6 +145,8 @@ export default {
       pharmacyMenu,
       nutritionistMenu,
       diagnosticMenu,
+      user,
+      role,
     }
   },
   computed: {
@@ -150,30 +155,27 @@ export default {
     }),
   },
   mounted() {
-    this.userObject = JSON.parse(localStorage.getItem('user'))
-    const role = this.userObject.roles[0].name
-
-    if (role === 'doctor') {
+    if (this.role === 'doctor') {
       this.menuList = [...doctorMenu]
       return
     }
-    if (role === 'ambulance') {
+    if (this.role === 'ambulance') {
       this.menuList = [...ambulanceMenu]
       return
     }
-    if (role === 'nurse') {
+    if (this.role === 'nurse') {
       this.menuList = [...nurseMenu]
       return
     }
-    if (role === 'pharmacy') {
+    if (this.role === 'pharmacy') {
       this.menuList = [...pharmacyMenu]
       return
     }
-    if (role === 'nutritionist') {
+    if (this.role === 'nutritionist') {
       this.menuList = [...nutritionistMenu]
       return
     }
-    if (role === 'diagnostic') {
+    if (this.role === 'diagnostic') {
       this.menuList = [...diagnosticMenu]
       return
     }
@@ -182,9 +184,8 @@ export default {
   methods: {
     async logoutHandler() {
       try {
-        const user = JSON.parse(localStorage.getItem('user'))
         const config = {
-          headers: { Authorization: `Bearer ${user.token.token}` },
+          headers: { Authorization: `Bearer ${this.user.token.token}` },
         }
         await this.$axios.$post('logout', {}, config)
         this.$router.replace('/')
@@ -201,7 +202,7 @@ export default {
       }
     },
     goToPage(path) {
-      if (!this.allSubscription) {
+      if (this.role === 'patient' && !this.allSubscription) {
         this.$notification.error({
           message: 'Error',
           description: 'Please subscribe to continue',

@@ -629,6 +629,9 @@ export default {
             description: message,
             duration: 4000,
           })
+          if (this.user.is_first_time_login === 1) {
+            this.$router.push(`/admin/self-service/subscribe`)
+          }
         } else {
           const { message } = await this.$axios.$post(
             '/update/partners',
@@ -641,9 +644,7 @@ export default {
             duration: 4000,
           })
         }
-        if (this.user.is_first_time_login === 1) {
-          this.$router.push(`/admin/self-service/subscribe`)
-        }
+
         requestAnimationFrame(() => {
           this.$refs.observer.reset()
           this.isLoading = false

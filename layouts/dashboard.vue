@@ -129,7 +129,7 @@ export default {
   },
   data() {
     const user = JSON.parse(localStorage.getItem('user'))
-    const role = this.user.roles[0].name
+    const role = user.roles[0].name
 
     return {
       collapsed: false,

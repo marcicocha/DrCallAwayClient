@@ -31,11 +31,11 @@ export default {
     const user = JSON.parse(localStorage.getItem('user'))
     const config = {
       headers: { Authorization: `Bearer ${user.token.token}` },
-      params: {
-        patient_id: payload,
-      },
     }
-    const { data } = await this.$axios.$get('medical-histories', config)
+    const { data } = await this.$axios.$get(
+      `medical-histories/${payload}`,
+      config
+    )
     commit(GET_HEALTH_INFORMATION, data)
   },
   [RESET_WAITING_ROOM]({ commit }) {

@@ -4,6 +4,7 @@ import actions from './actions'
 
 const state = () => ({
   appointments: [],
+  moveToBooked: false,
 })
 
 export default {

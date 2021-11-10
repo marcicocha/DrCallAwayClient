@@ -63,7 +63,7 @@
     </div>
     <a-modal
       :visible="modalIsVisible"
-      width="900px"
+      width="1000px"
       :confirm-loading="confirmLoading"
       :footer="null"
       :destroy-on-close="true"

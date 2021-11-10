@@ -55,6 +55,7 @@ export default {
   data() {
     return {
       currentCaseFile: {},
+      testIsVisible: false,
     }
   },
   async mounted() {
@@ -77,7 +78,7 @@ export default {
       })
     }
   },
-  method: {
+  methods: {
     closeTestHandler() {
       this.testIsVisible = false
     },

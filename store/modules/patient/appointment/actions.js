@@ -3,6 +3,7 @@ import {
   BOOK_APPOINTMENT,
   BOOK_NURSE,
   RESET_APPOINTMENT,
+  MOVE_TO_BOOKED_APPOINTMENT,
 } from '@/utils/mutation-types/patient/appointment'
 export default {
   async [GET_APPOINTMENT]({ commit }, payload) {
@@ -44,5 +45,8 @@ export default {
   },
   [RESET_APPOINTMENT]({ commit }) {
     commit(RESET_APPOINTMENT)
+  },
+  [MOVE_TO_BOOKED_APPOINTMENT]({ commit }) {
+    commit(MOVE_TO_BOOKED_APPOINTMENT)
   },
 }

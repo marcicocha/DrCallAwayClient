@@ -3,6 +3,7 @@ import {
   BOOK_APPOINTMENT,
   BOOK_NURSE,
   RESET_APPOINTMENT,
+  MOVE_TO_BOOKED_APPOINTMENT,
 } from '@/utils/mutation-types/patient/appointment'
 
 export default {
@@ -17,5 +18,9 @@ export default {
   },
   [RESET_APPOINTMENT](state) {
     state.appointments = []
+    state.moveToBooked = false
+  },
+  [MOVE_TO_BOOKED_APPOINTMENT](state) {
+    state.moveToBooked = true
   },
 }

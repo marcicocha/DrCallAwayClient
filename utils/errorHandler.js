@@ -1,5 +1,6 @@
 export const ErrorHandler = (err) => {
   const errors = []
+
   if (err && err.response && err.response.data) {
     if (err.response.data.hasError) {
       const { fieldValidationErrors, processErrors } = err.response.data

@@ -106,9 +106,15 @@ export default {
   computed: {
     ...mapState({
       allAppointments: (state) => state.appointmentModule.appointments,
+      shouldMoveToBooked: (state) => state.appointmentModule.moveToBooked,
     }),
   },
   mounted() {
+    if (this.shouldMoveToBooked) {
+      this.activeKey = '2'
+      this.changeTabHandler('2')
+      return
+    }
     this.changeTabHandler('1')
   },
   destroyed() {

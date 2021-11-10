@@ -398,7 +398,9 @@ export default {
             description: message,
             duration: 4000,
           })
+          await this.moveToCompletedHandler()
           this.$router.replace('/admin/patient/appointment')
+
           requestAnimationFrame(() => {
             this.$refs.observer2.reset()
             this.isLoading = false
@@ -459,6 +461,7 @@ export default {
     },
     ...mapActions({
       submitAppointmentHandler: 'appointmentModule/BOOK_APPOINTMENT',
+      moveToCompletedHandler: 'appointmentModule/MOVE_TO_BOOKED_APPOINTMENT',
     }),
   },
 }

@@ -177,6 +177,7 @@ export default {
 }
 .slide {
   border-radius: 10px;
+  padding-right: 1rem;
   flex-shrink: 0;
   @include breakpoint-up(large) {
     padding-right: 1.5rem;

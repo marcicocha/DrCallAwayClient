@@ -391,6 +391,7 @@ export default {
             frequency: this.screeningFrequency,
             description: 'Medical Screening',
             specialtyId: '0',
+            isScreening: true,
           }
           const message = await this.submitAppointmentHandler(obj)
           this.$notification.success({

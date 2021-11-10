@@ -128,7 +128,7 @@ export default {
   },
   computed: {
     pharmacyDataSource() {
-      if (this.prescriptionObj.partners) {
+      if (this.prescriptionObj.pharmacy_id && this.prescriptionObj.partners) {
         const newArray = [
           {
             name: this.prescriptionObj.partners.registered_name,

@@ -135,9 +135,9 @@ export default {
       if (this.prescriptionObj.pharmacy_id && this.prescriptionObj.partners) {
         const newArray = [
           {
-            name: this.prescriptionObj.partners.registered_name,
-            address: this.prescriptionObj.partners.address,
-            phoneNumber: this.prescriptionObj.partners.mobile_phone_number,
+            name: this.prescriptionObj.pharmacy.registered_name,
+            address: this.prescriptionObj.pharmacy.address,
+            phoneNumber: this.prescriptionObj.pharmacy.mobile_phone_number,
           },
         ]
         return newArray

@@ -47,14 +47,20 @@
               disabled
             />
           </a-col>
-          <a-col :span="24">
+          <a-col :span="24" v-if="status === 'patient'">
+            <AppInput
+              v-model="caseFileObj.doctor_observation"
+              label="Doctor's Comment"
+              name="Doctor Comment"
+              disabled
+            />
+          </a-col>
+          <a-col :span="24" v-if="status === 'doctor'">
             <AppSearch
               v-model="caseFileObj.doctor_observation"
               label="Doctor's Comment"
               name="Doctor Comment"
-              :disabled="
-                status === 'patient' || caseFileObj.status === 'COMPLETED'
-              "
+              :disabled="caseFileObj.status === 'COMPLETED'"
               @search="saveHandler"
             >
               <!-- <template>

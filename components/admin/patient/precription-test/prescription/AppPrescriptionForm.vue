@@ -54,7 +54,11 @@
       </div>
 
       <br />
-      <div v-if="prescriptionObj.pharmacy_id">
+      <div
+        v-if="
+          prescriptionObj.pharmacy_id && prescriptionObj.status !== 'PENDING'
+        "
+      >
         <p>Pharmacy Information</p>
         <a-table
           :columns="pharmacyColumns"

@@ -90,6 +90,11 @@
               >Subscription</span
             ></nuxt-link
           >
+          <nuxt-link to="contact-us"
+            ><span class="m-lr" @click="hideDropdown"
+              >Contact Us</span
+            ></nuxt-link
+          >
           <button
             to="contact"
             class="button header__button"
@@ -161,6 +166,9 @@
           </div>
           <div class="header__links-anchor-container" @click="showOverlay">
             <nuxt-link to="subscription"><span>Subscription</span></nuxt-link>
+          </div>
+          <div class="header__links-anchor-container" @click="showOverlay">
+            <nuxt-link to="contact-us"><span>Contact Us</span></nuxt-link>
           </div>
           <button
             to="contact"

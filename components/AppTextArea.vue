@@ -1,26 +1,33 @@
 <template>
-  <a-form-item
-    :label="label"
-    :required="required"
-    :label-col="labelCol"
-    :wrapper-col="wrapperCol"
-  >
-    <a-textarea
-      v-model="innerValue"
-      type="text"
-      :placeholder="placeholder"
-      :size="size"
-      :rows="rows"
-      :disabled="disabled"
-      @blur="blurHandler"
-    />
-  </a-form-item>
+  <ValidationProvider :vid="$attrs.name" :name="name" :rules="rules" tag="div">
+    <a-form-item
+      slot-scope="{ errors, flags }"
+      :label="label"
+      :required="required"
+      :label-col="labelCol"
+      :wrapper-col="wrapperCol"
+      :validate-status="resolveState({ errors, flags })"
+      :help="showErrors ? errors[0] : ''"
+    >
+      <a-textarea
+        v-model="innerValue"
+        type="text"
+        :placeholder="placeholder"
+        :size="size"
+        :rows="rows"
+        :disabled="disabled"
+        @blur="blurHandler"
+      />
+    </a-form-item>
+  </ValidationProvider>
 </template>
 
 <script>
+import { ValidationProvider } from 'vee-validate'
+
 export default {
   name: 'AppInput',
-  components: {},
+  components: { ValidationProvider },
   props: {
     value: {
       type: String,
@@ -94,6 +101,21 @@ export default {
   methods: {
     blurHandler(e) {
       this.$emit('blur', e.target.value)
+    },
+    resolveState({ errors, flags }) {
+      if (errors[0]) {
+        return 'error'
+      }
+
+      // if (flags.pending) {
+      //   return 'validating'
+      // }
+
+      // if (flags.valid) {
+      //   return 'success'
+      // }
+
+      return ''
     },
   },
 }

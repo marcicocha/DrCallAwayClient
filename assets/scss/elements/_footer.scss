@@ -30,6 +30,12 @@ footer {
           h5 {
             color: $white;
             margin: 0;
+            @include breakpoint-up(large) {
+              font-size: 1.25rem !important;
+            }
+            @include breakpoint-up(xlarge) {
+              font-size: 1.5rem !important;
+            }
           }
         }
         &__form {

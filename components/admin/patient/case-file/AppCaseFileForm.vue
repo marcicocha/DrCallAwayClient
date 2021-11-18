@@ -47,7 +47,7 @@
               disabled
             />
           </a-col>
-          <a-col :span="24" v-if="status === 'patient'">
+          <a-col v-if="status === 'patient'" :span="24">
             <AppInput
               v-model="caseFileObj.doctor_observation"
               label="Doctor's Comment"
@@ -55,7 +55,7 @@
               disabled
             />
           </a-col>
-          <a-col :span="24" v-if="status === 'doctor'">
+          <a-col v-if="status === 'doctor'" :span="24">
             <AppSearch
               v-model="caseFileObj.doctor_observation"
               label="Doctor's Comment"

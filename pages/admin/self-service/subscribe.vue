@@ -42,6 +42,7 @@
           <br />
           <div class="t-c">
             <AppButton
+              v-if="!isFirstTime"
               type="default"
               :block="false"
               :loading="isLoading"
@@ -56,7 +57,7 @@
               :loading="isLoading"
               class="admin-button"
               @click="submitHandler('change')"
-              >CHANGE PLAN</AppButton
+              >{{ isFirstTime ? 'NEW PLAN' : 'CHANGE PLAN' }}</AppButton
             >
           </div>
         </a-form>
@@ -74,7 +75,7 @@
     >
       <div>
         <h6 class="t-c">
-          {{ renewIsVisible ? 'Renew Plan' : 'Renew Different Plan' }}
+          {{ modalTitle }}
         </h6>
         <a-divider />
         <div>
@@ -186,6 +187,7 @@ export default {
       user: {},
       planArray: [],
       userObject,
+      isFirstTime: userObject.is_first_time_login === 1,
     }
   },
   computed: {
@@ -198,6 +200,13 @@ export default {
         status: this.allSubscription.active === 1 ? 'ACTIVE' : 'INACTIVE',
       }
       return { ...obj }
+    },
+    modalTitle() {
+      if (this.isFirstTime) {
+        return 'NEW PLAN'
+      } else {
+        return this.renewIsVisible ? 'Renew Plan' : 'Renew Different Plan'
+      }
     },
     ...mapState({
       allSubscription: (state) => state.subscriptionModule.subscriptionObj,

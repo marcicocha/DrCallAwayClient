@@ -284,7 +284,9 @@ export default {
         // disconnect the user from they joined already
         VueThis.leaveRoomIfJoined()
         // remove any remote track when joining a new room
-        document.getElementById('remoteTrack').innerHTML = ''
+        if (VueThis.camera) {
+          document.getElementById('remoteTrack').innerHTML = ''
+        }
         Twilio.connect(token, connectOptions).then(function (room) {
           console.log(room, 'ROOM')
           // set active room
@@ -362,7 +364,7 @@ export default {
           // if local preview is not active, create it
           if (VueThis.camera) {
             createLocalVideoTrack().then((track) => {
-              const localMediaContainer = document.getElementById('localT rack')
+              const localMediaContainer = document.getElementById('localTrack')
               localMediaContainer.appendChild(track.attach())
               VueThis.localTrack = true
             })

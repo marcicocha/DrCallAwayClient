@@ -362,12 +362,15 @@ export default {
             })
           })
           // if local preview is not active, create it
-          if (VueThis.camera) {
-            createLocalVideoTrack().then((track) => {
-              const localMediaContainer = document.getElementById('localTrack')
-              localMediaContainer.appendChild(track.attach())
-              VueThis.localTrack = true
-            })
+          if (!VueThis.localTrack) {
+            if (VueThis.camera) {
+              createLocalVideoTrack().then((track) => {
+                const localMediaContainer =
+                  document.getElementById('localTrack')
+                localMediaContainer.appendChild(track.attach())
+                VueThis.localTrack = true
+              })
+            }
           }
         })
       })
@@ -400,6 +403,7 @@ export default {
 .Video {
   // padding: 4px;
   color: rgb(3, 11, 19);
+  max-height: 400px;
 }
 .col-md-10 {
   background-color: lightgray;

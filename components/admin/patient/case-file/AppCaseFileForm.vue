@@ -561,4 +561,7 @@ h6 {
     font-weight: bold;
   }
 }
+.video_modal {
+  max-height: 400px;
+}
 </style>

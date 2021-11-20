@@ -403,7 +403,6 @@ export default {
 .Video {
   // padding: 4px;
   color: rgb(3, 11, 19);
-  max-height: 400px;
 }
 .col-md-10 {
   background-color: lightgray;

@@ -280,6 +280,9 @@ export default {
               duration: 4000,
             })
           }
+          const newObj = { ...this.userObject, is_first_time_login: 0 }
+          await localStorage.setItem('user', JSON.stringify(newObj))
+
           requestAnimationFrame(() => {
             this.$refs.observer.reset()
             this.isLoading = false

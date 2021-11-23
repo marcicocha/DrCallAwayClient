@@ -58,7 +58,7 @@
       @cancel="closeModal"
     >
       <div>
-        <h6 class="t-c">Test for Case {{ currentTest.case_id }}</h6>
+        <h6 class="t-c">Routine Screening for {{ currentTest.patientName }}</h6>
         <a-divider />
         <a-row type="flex" :gutter="16">
           <a-col :span="12">
@@ -87,7 +87,7 @@
           </a-col>
         </a-row>
         <br />
-        <div class="colored-table">
+        <!-- <div class="colored-table">
           <p>Prescribed Tests</p>
           <a-table
             :columns="columns"
@@ -100,7 +100,7 @@
             </template>
           </a-table>
         </div>
-        <br />
+        <br /> -->
         <div>
           <a-form>
             <AppTextArea

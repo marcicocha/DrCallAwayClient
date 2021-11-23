@@ -285,6 +285,7 @@ export default {
 
           requestAnimationFrame(() => {
             this.$refs.observer.reset()
+            this.isFirstTime = false
             this.isLoading = false
             this.currentSubscriptionObj = {}
             this.newSubscriptionObj = {}

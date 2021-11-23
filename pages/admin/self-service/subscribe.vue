@@ -57,7 +57,7 @@
               :loading="isLoading"
               class="admin-button"
               @click="submitHandler('change')"
-              >{{ isFirstTime ? 'NEW PLAN' : 'CHANGE PLAN' }}</AppButton
+              >{{ isFirstTime ? 'SUBSCRIBE' : 'CHANGE PLAN' }}</AppButton
             >
           </div>
         </a-form>

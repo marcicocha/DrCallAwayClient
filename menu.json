@@ -245,6 +245,13 @@
       "children": []
     },
     {
+      "key": "routine_screening",
+      "name": "Routine Screening",
+      "path": "/admin/diagnostic/routine-screening",
+      "icon": "medicine-box",
+      "children": []
+    },
+    {
       "key": "self_service",
       "name": "Self Service",
       "path": "/admin/self-service",

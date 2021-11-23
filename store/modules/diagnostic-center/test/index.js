@@ -4,6 +4,7 @@ import actions from './actions'
 
 const state = () => ({
   tests: [],
+  routineScreeningList: [],
 })
 
 export default {

@@ -49,7 +49,7 @@
     </AppTabs>
     <a-modal
       :visible="modalIsVisible"
-      width="600px"
+      width="800px"
       :confirm-loading="confirmLoading"
       :footer="null"
       :destroy-on-close="true"
@@ -61,34 +61,34 @@
         <h6 class="t-c">Routine Screening for {{ currentTest.patientName }}</h6>
         <a-divider />
         <a-row type="flex" :gutter="16">
-          <a-col :span="12">
+          <a-col :span="8">
             <AppInput v-model="currentTest.id" label="Test ID" disabled />
           </a-col>
-          <a-col :span="12">
+          <a-col :span="8">
             <AppInput
               v-model="currentTest.patientName"
               label="Patient Name"
               disabled
             />
           </a-col>
-          <a-col :span="12">
+          <a-col :span="8">
             <AppInput
               v-model="currentTest.frequency"
               label="Frequency"
               disabled
             />
           </a-col>
-          <a-col :span="12">
+          <a-col :span="8">
             <AppInput
               v-model="currentTest.screeningPlan"
               label="Screening Plan"
               disabled
             />
           </a-col>
-          <a-col :span="12">
+          <a-col :span="8">
             <AppDatePicker v-model="currentTest.date" label="Date" disabled />
           </a-col>
-          <a-col :span="12">
+          <a-col :span="8">
             <AppTimePicker v-model="currentTest.time" label="Time" disabled />
           </a-col>
         </a-row>

@@ -33,6 +33,14 @@ export default {
       type: String,
       default: '',
     },
+    name: {
+      type: String,
+      default: '',
+    },
+    rules: {
+      type: [Object, String],
+      default: '',
+    },
     size: {
       type: String,
       default: 'default',
@@ -52,6 +60,10 @@ export default {
     placeholder: {
       type: String,
       default: '',
+    },
+    showErrors: {
+      type: Boolean,
+      default: true,
     },
     disabled: {
       type: Boolean,

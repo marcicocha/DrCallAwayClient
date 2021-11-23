@@ -93,8 +93,8 @@
           </a-col>
         </a-row>
         <br />
-        <!-- <div class="colored-table">
-          <p>Prescribed Tests</p>
+        <div class="colored-table">
+          <p>{{ `${currentTest.screeningPlan} Tests` }}</p>
           <a-table
             :columns="columns"
             :data-source="currentTest.tests"
@@ -106,7 +106,7 @@
             </template>
           </a-table>
         </div>
-        <br /> -->
+        <br />
         <div>
           <a-form>
             <AppTextArea

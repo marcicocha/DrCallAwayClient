@@ -7,7 +7,6 @@
             status="PENDING"
             :data-source="allAppointments"
             @showAppointmentModal="showAppointmentModal"
-            @acceptAppointmentHandler="acceptAppointmentHandler"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Booked Appointment">
@@ -70,6 +69,8 @@
         <AppAppointmentCreationForm
           :current-appointment="currentAppointment"
           status="doctor"
+          @rejectAppointmentHandler="rejectAppointmentHandler"
+          @acceptAppointmentHandler="acceptAppointmentHandler"
         />
       </div>
     </a-modal>
@@ -124,7 +125,7 @@ export default {
     closeModal() {
       this.modalIsVisible = false
     },
-    rejectAppointmentandler() {
+    rejectAppointmentHandler() {
       const $this = this
       this.$confirm({
         title: 'Are you sure you want to reject this Test?',
@@ -171,7 +172,7 @@ export default {
         onCancel() {},
       })
     },
-    acceptAppointmentHandler(record) {
+    acceptAppointmentHandler() {
       // const currentDate = moment()
       // const recordDate = moment(record.date + ' ' + record.time)
       // if (currentDate > recordDate) {
@@ -184,16 +185,20 @@ export default {
       const $this = this
       this.$confirm({
         title: 'Are you sure you want to accept this Appointment?',
-        content: `With ID: ${record.id}`,
+        content: `With ID: ${$this.currentAppointment.id}`,
         okText: 'Yes',
         okType: 'danger',
         cancelText: 'No',
         async onOk() {
           // vm.showModal(false)
           try {
+            const obj = {
+              addition_information:
+                $this.currentAppointment.addition_information,
+            }
             await $this.$axios.$patch(
-              `accept/appointments/${record.id}`,
-              record.id,
+              `accept/appointments/${$this.currentAppointment.id}`,
+              obj,
               $this.config
             )
             $this.$notification.success({

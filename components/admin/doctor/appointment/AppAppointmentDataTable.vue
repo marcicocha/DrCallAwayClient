@@ -32,13 +32,13 @@
               @click="$emit('showAppointmentModal', record)"
               ><img src="@/assets/images/admin/table-view.png" alt="view"
             /></a-button>
-            <a-button
+            <!-- <a-button
               v-if="record.status === 'PENDING'"
               type="primary"
               class="table__btn"
               @click="$emit('acceptAppointmentHandler', record)"
               >ACCEPT</a-button
-            >
+            > -->
           </a-button-group>
         </div>
       </template>

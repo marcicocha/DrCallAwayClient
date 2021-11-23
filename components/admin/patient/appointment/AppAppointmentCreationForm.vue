@@ -49,7 +49,7 @@
         />
       </ValidationObserver>
       <br />
-      <div v-if="isReadOnly" class="t-c">
+      <div v-if="isPatientButtonOnly" class="t-c">
         <AppButton
           type="primary"
           :block="false"
@@ -58,6 +58,28 @@
           @click="submitHandler"
           >COMPLETED</AppButton
         >
+      </div>
+      <div v-if="isDoctorButtonOnly" class="t-c">
+        <a-row type="flex" :gutter="16">
+          <a-col :span="12">
+            <AppButton
+              type="primary"
+              :loading="isLoading"
+              class="admin-button"
+              @click="emit('acceptAppointmentHandler')"
+              >ACCEPT</AppButton
+            >
+          </a-col>
+          <a-col :span="12">
+            <AppButton
+              type="primary"
+              :loading="isLoading"
+              class="admin-button reject__btn"
+              @click="emit('rejectAppointmentHandler')"
+              >REJECT</AppButton
+            >
+          </a-col>
+        </a-row>
       </div>
     </a-form>
   </div>
@@ -97,9 +119,14 @@ export default {
     }
   },
   computed: {
-    isReadOnly() {
+    isPatientButtonOnly() {
       return (
         this.appointmentObj.status === 'BOOKED' && this.status === 'patient'
+      )
+    },
+    isDoctorButtonOnly() {
+      return (
+        this.appointmentObj.status === 'PENDING' && this.status === 'doctor'
       )
     },
   },

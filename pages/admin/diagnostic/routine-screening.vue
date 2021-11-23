@@ -85,6 +85,12 @@
               disabled
             />
           </a-col>
+          <a-col :span="12">
+            <AppDatePicker v-model="currentTest.date" label="Date" disabled />
+          </a-col>
+          <a-col :span="12">
+            <AppTimePicker v-model="currentTest.time" label="Time" disabled />
+          </a-col>
         </a-row>
         <br />
         <!-- <div class="colored-table">
@@ -177,6 +183,8 @@
 import { mapActions, mapState } from 'vuex'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
+import AppDatePicker from '@/components/AppDatePicker'
+import AppTimePicker from '@/components/AppTimePicker'
 import AppTextArea from '@/components/AppTextArea'
 import AppSelect from '@/components/AppSelect'
 import AppRoutineScreeningDataTable from '@/components/admin/diagnostic-center/AppRoutineScreeningDataTable'
@@ -188,6 +196,8 @@ export default {
     AppSelect,
     AppRoutineScreeningDataTable,
     AppTextArea,
+    AppDatePicker,
+    AppTimePicker,
   },
   layout: 'dashboard',
   data() {

@@ -65,12 +65,18 @@ export default {
         {
           title: 'Screening Plan',
           dataIndex: 'screeningPlan',
-          scopedSlots: { customRender: 'screeningPlan' },
         },
         {
           title: 'Frequency',
           dataIndex: 'frequency',
-          scopedSlots: { customRender: 'frequency' },
+        },
+        {
+          title: 'Date',
+          dataIndex: 'date',
+        },
+        {
+          title: 'Time',
+          dataIndex: 'time',
         },
         {
           title: 'Status',

@@ -126,7 +126,7 @@ export default {
     },
     isDoctorButtonOnly() {
       return (
-        this.appointmentObj.status === 'PENDING' && this.status === 'doctor'
+        this.appointmentObj.status === 'PENDING' && this.status !== 'patient'
       )
     },
   },

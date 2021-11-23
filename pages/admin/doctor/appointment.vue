@@ -94,12 +94,18 @@ export default {
   },
   layout: 'dashboard',
   data() {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const config = {
+      headers: { Authorization: `Bearer ${user.token.token}` },
+    }
     return {
       activeKey: '1',
       filterObj: {},
       modalIsVisible: false,
       currentAppointment: {},
       confirmLoading: false,
+      user,
+      config,
     }
   },
   computed: {
@@ -117,6 +123,53 @@ export default {
     },
     closeModal() {
       this.modalIsVisible = false
+    },
+    rejectAppointmentandler() {
+      const $this = this
+      this.$confirm({
+        title: 'Are you sure you want to reject this Test?',
+        content: `With ID: ${$this.currentAppointment.id}`,
+        okText: 'Yes',
+        okType: 'danger',
+        cancelText: 'No',
+        async onOk() {
+          // vm.showModal(false)
+          try {
+            const obj = {
+              addition_information:
+                $this.currentAppointment.addition_information,
+            }
+            // await $this.$axios.$patch(
+            //   `/reject/diagnostic/${$this.currentTest.id}`,
+            //   obj,
+            //   $this.config
+            // )
+            await $this.$axios.$patch(
+              `reject/appointments/${$this.currentAppointment.id}`,
+              obj,
+              $this.config
+            )
+            $this.$notification.success({
+              message: 'Success',
+              description: 'Request Rejected Successfully',
+            })
+            $this.changeTabHandler('1')
+            $this.activeKey = '1'
+            $this.modalIsVisible = false
+          } catch (e) {
+            const { default: errorHandler } = await import(
+              '@/utils/errorHandler'
+            )
+            errorHandler(e).forEach((msg) => {
+              $this.$notification.error({
+                message: 'Error',
+                description: msg,
+              })
+            })
+          }
+        },
+        onCancel() {},
+      })
     },
     acceptAppointmentHandler(record) {
       // const currentDate = moment()
@@ -138,14 +191,10 @@ export default {
         async onOk() {
           // vm.showModal(false)
           try {
-            const user = JSON.parse(localStorage.getItem('user'))
-            const config = {
-              headers: { Authorization: `Bearer ${user.token.token}` },
-            }
             await $this.$axios.$patch(
               `accept/appointments/${record.id}`,
               record.id,
-              config
+              $this.config
             )
             $this.$notification.success({
               message: 'Success',

@@ -289,8 +289,13 @@ export default {
             const obj = {
               addition_information: $this.currentTest.addition_information,
             }
+            // await $this.$axios.$patch(
+            //   `/reject/diagnostic/${$this.currentTest.id}`,
+            //   obj,
+            //   $this.config
+            // )
             await $this.$axios.$patch(
-              `/reject/diagnostic/${$this.currentTest.id}`,
+              `reject/appointments/${$this.currentTest.id}`,
               obj,
               $this.config
             )
@@ -377,8 +382,13 @@ export default {
             const obj = {
               addition_information: $this.currentTest.addition_information,
             }
+            // await $this.$axios.$patch(
+            //   `/accept/diagnostic/${$this.currentTest.id}`,
+            //   obj,
+            //   $this.config
+            // )
             await $this.$axios.$patch(
-              `/accept/diagnostic/${$this.currentTest.id}`,
+              `accept/appointments/${$this.currentTest.id}`,
               obj,
               $this.config
             )

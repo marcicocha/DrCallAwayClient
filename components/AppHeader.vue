@@ -28,6 +28,7 @@
   </div>
 </template>
 <script>
+import Pusher from 'pusher-js'
 import AppButton from '@/components/AppButton'
 
 export default {
@@ -46,9 +47,35 @@ export default {
     return {
       userObject,
       role: userObject.roles[0].name,
+      notificationList: [],
     }
   },
-
+  mounted() {
+    Pusher.log = function (message) {
+      console.log(message, 'MESSAGE')
+    }
+    const pusher = new Pusher(process.env.PUSHER_APP_KEY, {
+      key: process.env.PUSHER_APP_KEY,
+      cluster: process.env.PUSHER_APP_CLUSTER,
+      secret: process.env.PUSHER_APP_SECRET,
+      app_id: process.env.PUSHER_APP_ID,
+    })
+    const channel = pusher.subscribe(`CaseCreated.${this.userObject.id}`)
+    // const handler = () => {
+    //   console.log(`My name is marcia`)
+    // }
+    channel.bind('pusher:ping', (data) => {
+      console.log('IT GOT HERE')
+      console.log('data', data)
+    })
+    // channel.bind('CaseCreated', (data) => {
+    //   console.log('IT GOT HERE')
+    //   console.log('data', data.message)
+    //   this.notificationList.push(data.message)
+    //   console.log(this.notificationList, 'NOTIFICATION LIST')
+    // })
+    console.log(channel, 'PUSHER')
+  },
   methods: {
     subscribeHandler() {
       this.$router.replace('/admin/self-service/subscribe')

@@ -43,7 +43,7 @@ export default {
       const { data } = await this.$axios.get('/notifications', this.config)
       const newArray = data.data
       this.notificationList = newArray.data
-      console.log(this.notificationList, 'NOTIFICATION LIST')
+      // console.log(this.notificationList, 'NOTIFICATION LIST')
     } catch (err) {
       const { default: errorHandler } = await import('@/utils/errorHandler')
       errorHandler(err).forEach((msg) => {

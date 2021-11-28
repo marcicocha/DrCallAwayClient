@@ -159,6 +159,7 @@
 <script>
 import { ValidationObserver } from 'vee-validate'
 import { mapActions, mapState } from 'vuex'
+import moment from 'moment'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppTitleDivider from '@/components/AppTitleDivider'
@@ -198,6 +199,7 @@ export default {
       const obj = {
         ...this.allSubscription,
         status: this.allSubscription.active === 1 ? 'ACTIVE' : 'INACTIVE',
+        end: moment(this.allSubscription.end).format('DD/MM/YYYY'),
       }
       return { ...obj }
     },

@@ -110,11 +110,11 @@ export default {
     }),
   },
   mounted() {
-    if (this.shouldMoveToBooked) {
-      this.activeKey = '2'
-      this.changeTabHandler('2')
-      return
-    }
+    // if (this.shouldMoveToBooked) {
+    //   this.activeKey = '2'
+    //   this.changeTabHandler('2')
+    //   return
+    // }
     this.changeTabHandler('1')
   },
   destroyed() {

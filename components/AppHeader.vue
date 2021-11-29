@@ -8,13 +8,14 @@
       @click="subscribeHandler"
       >Subscribe</AppButton
     >
-    <nuxt-link to="/admin/notification">
+    <a @click="notificationHandler" style="position: relative">
       <img
         src="@/assets/images/notification.svg"
         alt="notification"
-        class="notification"
+        :class="{ notification: true, 'new-notification': isNewNotification }"
       />
-    </nuxt-link>
+      <span v-if="isNewNotification" class="notification_span">*</span>
+    </a>
     <p style="text-transform: capitalize">
       {{
         userObject.registered_name
@@ -47,38 +48,35 @@ export default {
     return {
       userObject,
       role: userObject.roles[0].name,
-      notificationList: [],
+      isNewNotification: false,
     }
   },
   mounted() {
-    Pusher.log = function (message) {
-      console.log(message, 'MESSAGE')
-    }
+    // Pusher.log = function (message) {
+    //   console.log(message, 'MESSAGE')
+    // }
     const pusher = new Pusher(process.env.PUSHER_APP_KEY, {
       key: process.env.PUSHER_APP_KEY,
       cluster: process.env.PUSHER_APP_CLUSTER,
       secret: process.env.PUSHER_APP_SECRET,
       app_id: process.env.PUSHER_APP_ID,
     })
-    const channel = pusher.subscribe(`CaseCreated.${this.userObject.id}`)
-    // const handler = () => {
-    //   console.log(`My name is marcia`)
-    // }
-    channel.bind('pusher:ping', (data) => {
-      console.log('IT GOT HERE')
-      console.log('data', data)
+    const channel = pusher.subscribe(`NotificationEvent.${this.userObject.id}`)
+    channel.bind('App\\Events\\NotificationEvent', (data) => {
+      if (data) {
+        this.isNewNotification = true
+      }
+      // this.notificationList.push(data)
+      // console.log(this.notificationList, 'NOTIFICATION LIST')
     })
-    // channel.bind('CaseCreated', (data) => {
-    //   console.log('IT GOT HERE')
-    //   console.log('data', data.message)
-    //   this.notificationList.push(data.message)
-    //   console.log(this.notificationList, 'NOTIFICATION LIST')
-    // })
-    console.log(channel, 'PUSHER')
   },
   methods: {
     subscribeHandler() {
       this.$router.replace('/admin/self-service/subscribe')
+    },
+    notificationHandler() {
+      this.$router.replace('/admin/notification')
+      this.isNewNotification = false
     },
   },
 }
@@ -96,6 +94,23 @@ export default {
     height: 44px;
     object-fit: none;
     margin: 0 30px;
+    &_span {
+      position: absolute;
+      left: 57%;
+      color: red;
+    }
+  }
+  .new-notification {
+    position: relative;
+    content: '*';
+    animation: shake 1000ms ease-in-out infinite forwards;
+    &::before {
+      content: '*';
+      position: absolute;
+      color: red;
+      width: 10px;
+      height: 10px;
+    }
   }
   .user {
     width: 40px;

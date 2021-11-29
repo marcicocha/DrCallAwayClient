@@ -31,3 +31,15 @@
 .fade-out {
   animation: fade-out 200ms ease-in-out forwards;
 }
+
+@keyframes shake {
+  from {
+    transform: rotate(45deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+  to {
+    transform: rotate(45deg);
+  }
+}

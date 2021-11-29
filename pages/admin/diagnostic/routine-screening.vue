@@ -121,7 +121,7 @@
         <br />
         <div v-if="currentTest.status === 'PENDING'" class="t-c">
           <a-row type="flex" :gutter="16">
-            <a-col :span="12">
+            <a-col :span="24">
               <AppButton
                 type="primary"
                 :loading="isLoading"
@@ -130,7 +130,7 @@
                 >ACCEPT</AppButton
               >
             </a-col>
-            <a-col :span="12">
+            <!-- <a-col :span="12">
               <AppButton
                 type="primary"
                 :loading="isLoading"
@@ -138,7 +138,7 @@
                 @click="rejectTestHandler"
                 >REJECT</AppButton
               >
-            </a-col>
+            </a-col> -->
           </a-row>
         </div>
         <div v-if="currentTest.status === 'ACTIVE'" class="t-c">

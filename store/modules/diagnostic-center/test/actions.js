@@ -1,6 +1,7 @@
 import {
   GET_TEST,
   GET_ROUTINE_TEST,
+  RESET_ROUTINE_TEST,
 } from '@/utils/mutation-types/diagnostic-center/test'
 export default {
   async [GET_TEST]({ commit }, payload) {
@@ -24,5 +25,8 @@ export default {
     }
     const data = await this.$axios.$get('/tests/diagnostic/list', config)
     commit(GET_ROUTINE_TEST, data)
+  },
+  [RESET_ROUTINE_TEST]({ commit }) {
+    commit(RESET_ROUTINE_TEST)
   },
 }

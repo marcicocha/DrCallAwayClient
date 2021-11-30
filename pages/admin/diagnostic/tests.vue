@@ -247,6 +247,9 @@ export default {
   mounted() {
     this.changeTabHandler('1')
   },
+  destroyed() {
+    this.resetHandler()
+  },
   methods: {
     showTestModal(record) {
       this.currentTest = {
@@ -397,6 +400,7 @@ export default {
       })
     },
     async changeTabHandler(key) {
+      await this.resetHandler()
       if (key === '1') {
         this.status = 'PENDING'
       }
@@ -425,6 +429,7 @@ export default {
     },
     ...mapActions({
       getAllTest: 'testDiagnosticModule/GET_TEST',
+      resetHandler: 'testDiagnosticModule/RESET_ROUTINE_TEST',
     }),
   },
 }

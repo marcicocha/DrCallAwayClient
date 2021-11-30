@@ -12,7 +12,7 @@
         </a-tab-pane>
         <a-tab-pane key="2" tab="Active Routine Screening" force-render>
           <AppRoutineScreeningDataTable
-            status="ACTIVE"
+            status="BOOKED"
             :data-source="allTest"
             @showTestModal="showTestModal"
           />
@@ -420,7 +420,7 @@ export default {
         this.status = 'PENDING'
       }
       if (key === '2') {
-        this.status = 'ACTIVE'
+        this.status = 'BOOKED'
       }
       if (key === '3') {
         this.status = 'COMPLETED'

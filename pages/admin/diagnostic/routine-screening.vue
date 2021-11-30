@@ -141,7 +141,7 @@
             </a-col> -->
           </a-row>
         </div>
-        <div v-if="currentTest.status === 'ACTIVE'" class="t-c">
+        <div v-if="currentTest.status === 'BOOKED'" class="t-c">
           <AppButton
             type="primary"
             :loading="isLoading"
@@ -256,6 +256,9 @@ export default {
   },
   mounted() {
     this.changeTabHandler('1')
+  },
+  destroyed() {
+    this.resetHandler()
   },
   methods: {
     showTestModal(record) {
@@ -416,6 +419,7 @@ export default {
       })
     },
     async changeTabHandler(key) {
+      await this.resetHandler()
       if (key === '1') {
         this.status = 'PENDING'
       }
@@ -444,6 +448,7 @@ export default {
     },
     ...mapActions({
       getAllTest: 'testDiagnosticModule/GET_ROUTINE_TEST',
+      resetHandler: 'testDiagnosticModule/RESET_ROUTINE_TEST',
     }),
   },
 }

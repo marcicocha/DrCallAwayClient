@@ -16,12 +16,24 @@
         <button class="button" @click="signInHandler">Explore More</button>
       </div>
     </AppCard>
+    <AppManageSignInUp
+      :mode="mode"
+      :modal-is-visible="modalIsVisible"
+      :sign-up-is-visible="signUpIsVisible"
+      :sign-in-is-visible="signInIsVisible"
+      @closeModal="closeModal"
+      @showSignInModal="showSignInModal"
+      @showSignUpModal="showSignUpModal"
+      @closeModalSignInHandler="closeModalSignInHandler"
+    />
   </div>
 </template>
 <script>
 import AppCard from '@/components/AppCard'
+import AppManageSignInUp from '@/components/AppManageSignInUp.vue'
+
 export default {
-  components: { AppCard },
+  components: { AppCard, AppManageSignInUp },
   data() {
     return {
       modalIsVisible: false,

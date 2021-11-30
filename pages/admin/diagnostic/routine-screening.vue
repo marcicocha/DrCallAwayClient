@@ -141,7 +141,7 @@
             </a-col> -->
           </a-row>
         </div>
-        <div v-if="currentTest.status === 'ACTIVE'" class="t-c">
+        <div v-if="currentTest.status === 'BOOKED'" class="t-c">
           <AppButton
             type="primary"
             :loading="isLoading"

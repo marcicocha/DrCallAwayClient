@@ -181,7 +181,6 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
-import moment from 'moment'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppDatePicker from '@/components/AppDatePicker'
@@ -260,7 +259,6 @@ export default {
   },
   methods: {
     showTestModal(record) {
-      console.log(moment(record.time), 'TIME')
       this.currentTest = {
         ...record,
         patientName: `${record.patient_info.first_name} ${record.patient_info.last_name}`,

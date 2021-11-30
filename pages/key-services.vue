@@ -35,8 +35,9 @@
 </template>
 <script>
 import AppCard from '@/components/AppCard'
+import AppManageSignInUp from '@/components/AppManageSignInUp.vue'
 export default {
-  components: { AppCard },
+  components: { AppCard, AppManageSignInUp },
   data() {
     return {
       modalIsVisible: false,

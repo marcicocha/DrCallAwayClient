@@ -93,7 +93,7 @@
           </a-col>
         </a-row>
         <br />
-        <div class="colored-table">
+        <!-- <div class="colored-table">
           <p>{{ `${currentTest.screeningPlan} Tests` }}</p>
           <a-table
             :columns="columns"
@@ -105,7 +105,7 @@
               {{ index + 1 }}
             </template>
           </a-table>
-        </div>
+        </div> -->
         <br />
         <div>
           <a-form>
@@ -181,6 +181,7 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
+import moment from 'moment'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppDatePicker from '@/components/AppDatePicker'
@@ -259,9 +260,11 @@ export default {
   },
   methods: {
     showTestModal(record) {
+      console.log(moment(record.time), 'TIME')
       this.currentTest = {
         ...record,
         patientName: `${record.patient_info.first_name} ${record.patient_info.last_name}`,
+        time: `${record.date} ${record.time}`,
       }
       this.modalIsVisible = true
     },

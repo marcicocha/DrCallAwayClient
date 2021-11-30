@@ -32,6 +32,7 @@
     "ant-design-vue": "^1.7.5",
     "core-js": "^3.9.1",
     "firebase": "^9.0.2",
+    "lamejs": "^1.2.0",
     "laravel-echo": "^1.11.2",
     "less": "^3.10.1",
     "less-loader": "^5.0.0",
@@ -44,6 +45,7 @@
     "twilio-chat": "^5.0.2",
     "twilio-video": "2.8.0",
     "vee-validate": "^3.4.9",
+    "vue-advanced-chat": "^1.4.2",
     "vue-carousel": "^0.18.0",
     "vue-paystack": "^2.0.4",
     "vue-simple-accordion": "^0.1.0"

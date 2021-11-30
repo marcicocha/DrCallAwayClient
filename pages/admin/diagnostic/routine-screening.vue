@@ -12,7 +12,7 @@
         </a-tab-pane>
         <a-tab-pane key="2" tab="Active Routine Screening" force-render>
           <AppRoutineScreeningDataTable
-            status="ACTIVE"
+            status="BOOKED"
             :data-source="allTest"
             @showTestModal="showTestModal"
           />
@@ -181,7 +181,6 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
-import moment from 'moment'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppDatePicker from '@/components/AppDatePicker'
@@ -260,7 +259,6 @@ export default {
   },
   methods: {
     showTestModal(record) {
-      console.log(moment(record.time), 'TIME')
       this.currentTest = {
         ...record,
         patientName: `${record.patient_info.first_name} ${record.patient_info.last_name}`,
@@ -422,7 +420,7 @@ export default {
         this.status = 'PENDING'
       }
       if (key === '2') {
-        this.status = 'ACTIVE'
+        this.status = 'BOOKED'
       }
       if (key === '3') {
         this.status = 'COMPLETED'

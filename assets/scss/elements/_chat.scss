@@ -1,0 +1,38 @@
+.chat-drawer {
+  .ant-drawer-title {
+    color: $dark-purple !important;
+    font-weight: bold !important;
+    font-size: 1.2rem;
+  }
+  .ant-drawer-body {
+    height: 100vh;
+    padding: 0;
+  }
+  .vac-container-scroll {
+    background-color: rgba(230, 212, 229, 0.2) !important;
+  }
+  .vac-col-messages .vac-icon-textarea-left .vac-icon-microphone,
+  #vac-icon-emoji,
+  #vac-icon-paperclip,
+  #vac-icon-send {
+    fill: $dark-purple !important;
+  }
+  .vac-message-wrapper .vac-message-current {
+    background: rgba(162, 71, 159, 0.2) !important;
+  }
+  .vac-message-card {
+    background: rgba(255, 255, 255, 0.8);
+  }
+  .vac-text-timestamp {
+    color: #4a4a4a;
+  }
+  #infinite-loader-messages {
+    visibility: hidden;
+  }
+  .vac-room-info {
+    display: none;
+  }
+  //   #vac-icon-emoji {
+  //     fill: $dark-purple !important;
+  //   }
+}

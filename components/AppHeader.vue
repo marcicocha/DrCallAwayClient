@@ -8,7 +8,7 @@
       @click="subscribeHandler"
       >Subscribe</AppButton
     >
-    <a @click="notificationHandler" style="position: relative">
+    <a style="position: relative" @click="notificationHandler">
       <img
         src="@/assets/images/notification.svg"
         alt="notification"

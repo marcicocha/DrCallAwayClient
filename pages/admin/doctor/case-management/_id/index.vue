@@ -7,26 +7,29 @@
         /></nuxt-link>
       </div>
       <br />
-      <AppTitleDivider :title="`Case File / ${currentCaseFile.case_id}`"
-        ><span class="right-details"
-          ><span style="color: $dark-purple">Status:</span>
-          <span
-            :class="{
-              blue: currentCaseFile.status === 'ACTIVE',
-              green: currentCaseFile.status === 'COMPLETED',
-              red: currentCaseFile.status === 'PENDING',
-            }"
-            >{{ currentCaseFile.status }}</span
-          ></span
-        ></AppTitleDivider
-      >
-      <div>
-        <AppCaseFileForm
-          :current-case-file="currentCaseFile"
-          status="doctor"
-          @showTestTab="showTestTab"
-          @switchToCompleteTab="switchToCompleteTab"
-        />
+      <div v-if="isLoading"></div>
+      <div v-else>
+        <AppTitleDivider :title="`Case File / ${currentCaseFile.case_id}`"
+          ><span class="right-details"
+            ><span style="color: $dark-purple">Status:</span>
+            <span
+              :class="{
+                blue: currentCaseFile.status === 'ACTIVE',
+                green: currentCaseFile.status === 'COMPLETED',
+                red: currentCaseFile.status === 'PENDING',
+              }"
+              >{{ currentCaseFile.status }}</span
+            ></span
+          ></AppTitleDivider
+        >
+        <div>
+          <AppCaseFileForm
+            :current-case-file="currentCaseFile"
+            status="doctor"
+            @showTestTab="showTestTab"
+            @switchToCompleteTab="switchToCompleteTab"
+          />
+        </div>
       </div>
     </div>
     <div v-else>
@@ -56,6 +59,7 @@ export default {
     return {
       currentCaseFile: {},
       testIsVisible: false,
+      isLoading: true,
     }
   },
   async mounted() {
@@ -67,6 +71,7 @@ export default {
       }
       const { data } = await this.$axios.$get(`cases/${caseId}`, config)
       this.currentCaseFile = data
+      this.isLoading = false
     } catch (err) {
       const { default: errorHandler } = await import('@/utils/errorHandler')
       errorHandler(err).forEach((msg) => {

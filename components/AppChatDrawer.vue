@@ -21,6 +21,7 @@
       @edit-message="editMessage"
       @delete-message="deleteMessage"
       @fetch-messages="fetchMessages"
+      @open-file="openFile"
     />
   </a-drawer>
 </template>

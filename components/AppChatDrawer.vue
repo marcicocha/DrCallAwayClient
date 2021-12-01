@@ -8,20 +8,21 @@
     class="chat-drawer"
     @close="onClose"
   >
-    <AppConversation
-      :current-case-file="currentCaseFile"
-      :status="status"
-      :doctor="doctor"
+    <chat-window
+      :current-user-id="currentUserId"
+      :rooms="rooms"
+      :messages="messages"
     />
   </a-drawer>
 </template>
+
 <script>
-import AppConversation from '~/components/AppConversation.vue'
+import ChatWindow from 'vue-advanced-chat'
+import 'vue-advanced-chat/dist/vue-advanced-chat.css'
 
 export default {
-  name: 'AppChatDrawer',
   components: {
-    AppConversation,
+    ChatWindow,
   },
   props: {
     chatDrawerIsVisible: {
@@ -32,20 +33,20 @@ export default {
       type: String,
       default: '',
     },
-    status: {
-      type: String,
-      default: 'patient',
-    },
     currentCaseFile: {
       type: Object,
       default: () => {},
     },
   },
-  methods: {
-    onClose() {
-      this.$emit('onClose')
-      // this.$echo.leave(`message.${this.currentCaseFile.patient_id}`)
-    },
+  data() {
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    return {
+      rooms: [],
+      messages: [],
+      currentUserId: 1234,
+      user,
+    }
   },
 }
 </script>

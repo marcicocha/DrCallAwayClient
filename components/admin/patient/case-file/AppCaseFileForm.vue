@@ -221,7 +221,7 @@ import AppDatePicker from '@/components/AppDatePicker'
 import AppButton from '@/components/AppButton'
 import AppSearch from '@/components/AppSearch'
 import AppPrescriptionForm from '@/components/admin/patient/case-file/AppPrescriptionForm'
-import AppChatDrawer from '@/components/AppChatDrawer1'
+import AppChatDrawer from '@/components/AppChatDrawer'
 import AppVideoAudio from '@/components/AppVideoAudio.vue'
 export default {
   name: 'AppCaseFileForm',

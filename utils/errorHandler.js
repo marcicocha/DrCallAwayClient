@@ -1,6 +1,6 @@
 export const ErrorHandler = (err) => {
   const errors = []
-
+  console.log(err.response.data.error)
   if (err && err.response && err.response.data) {
     if (err.response.data.hasError) {
       const { fieldValidationErrors, processErrors } = err.response.data
@@ -19,6 +19,8 @@ export const ErrorHandler = (err) => {
       }
     } else if (err.response.data.errorMessage) {
       errors.push(err.response.data.response)
+    } else if (err.response.data.error) {
+      errors.push(err.response.data.error)
     } else if (err.response.data.message) {
       if (typeof err.response.data.message === 'object') {
         const obj = err.response.data.message
@@ -46,6 +48,8 @@ export const ErrorHandler = (err) => {
     }
   } else if (err && err.message) {
     errors.push(err.message)
+  } else if (err && err.error) {
+    errors.push(err.error)
   }
   return errors
 }

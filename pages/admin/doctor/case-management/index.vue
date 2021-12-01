@@ -58,7 +58,7 @@ import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppSelect from '@/components/AppSelect'
 import AppCaseFileDataTable from '@/components/admin/patient/case-file/AppCaseFileDataTable.vue'
-import AppChatDrawer from '@/components/AppChatDrawer1'
+import AppChatDrawer from '@/components/AppChatDrawer'
 
 export default {
   components: {
@@ -140,23 +140,25 @@ export default {
       clearInterval(this.TIMER_ID)
     },
 
-    async showChatDrawer(record) {
+    showChatDrawer(record) {
       this.currentCaseFile = record
-      try {
-        this.TIMER_ID = setInterval(() => {
-          this.getMessageHandler(this.currentCaseFile.id)
-        }, 5000)
-        this.chatDrawerIsVisible = true
-      } catch (err) {
-        const { default: errorHandler } = await import('@/utils/errorHandler')
-        errorHandler(err).forEach((msg) => {
-          this.$notification.error({
-            message: 'Error',
-            description: msg,
-            duration: 4000,
-          })
-        })
-      }
+      this.chatDrawerIsVisible = true
+
+      // try {
+      //   this.TIMER_ID = setInterval(() => {
+      //     this.getMessageHandler(this.currentCaseFile.id)
+      //   }, 5000)
+      //   this.chatDrawerIsVisible = true
+      // } catch (err) {
+      //   const { default: errorHandler } = await import('@/utils/errorHandler')
+      //   errorHandler(err).forEach((msg) => {
+      //     this.$notification.error({
+      //       message: 'Error',
+      //       description: msg,
+      //       duration: 4000,
+      //     })
+      //   })
+      // }
     },
     showCaseFile(record) {
       this.$router.push({

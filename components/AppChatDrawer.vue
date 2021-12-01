@@ -75,7 +75,7 @@ export default {
   },
   computed: {
     rooms() {
-      if (this.status === 'patient') {
+      if (this.status === 'patient' && this.currentCaseFile.case_id) {
         return [
           {
             roomId: this.currentCaseFile.case_id,
@@ -117,46 +117,49 @@ export default {
           },
         ]
       }
-      return [
-        {
-          roomId: this.currentCaseFile.case_id,
-          roomName: this.currentCaseFile.patient.first_name,
-          avatar: this.currentCaseFile.patient.profile_pic,
-          unreadCount: 4,
-          index: 3,
-          lastMessage: {
-            content: 'Last message received',
-            senderId: 1234,
-            username: 'John Doe',
-            timestamp: '10:20',
-            saved: true,
-            distributed: false,
-            seen: false,
-            new: true,
+      if (this.status === 'doctor' && this.currentCaseFile.case_id) {
+        return [
+          {
+            roomId: this.currentCaseFile.case_id,
+            roomName: this.currentCaseFile.patient.first_name,
+            avatar: this.currentCaseFile.patient.profile_pic,
+            unreadCount: 4,
+            index: 3,
+            lastMessage: {
+              content: 'Last message received',
+              senderId: 1234,
+              username: 'John Doe',
+              timestamp: '10:20',
+              saved: true,
+              distributed: false,
+              seen: false,
+              new: true,
+            },
+            users: [
+              {
+                _id: this.user.id,
+                username: this.user.firstName,
+                avatar: this.user.profile_pic,
+                status: {
+                  state: 'online',
+                  lastChanged: 'today, 14:30',
+                },
+              },
+              {
+                _id: this.currentCaseFile.patient.id,
+                username: this.currentCaseFile.patient.firstName,
+                avatar: this.currentCaseFile.patient.profile_pic,
+                status: {
+                  state: 'offline',
+                  lastChanged: '14 July, 20:00',
+                },
+              },
+            ],
+            typingUsers: [this.currentCaseFile.patient.id],
           },
-          users: [
-            {
-              _id: this.user.id,
-              username: this.user.firstName,
-              avatar: this.user.profile_pic,
-              status: {
-                state: 'online',
-                lastChanged: 'today, 14:30',
-              },
-            },
-            {
-              _id: this.currentCaseFile.patient.id,
-              username: this.currentCaseFile.patient.firstName,
-              avatar: this.currentCaseFile.patient.profile_pic,
-              status: {
-                state: 'offline',
-                lastChanged: '14 July, 20:00',
-              },
-            },
-          ],
-          typingUsers: [this.currentCaseFile.patient.id],
-        },
-      ]
+        ]
+      }
+      return []
     },
     messageList() {
       if (this.allMessage) {

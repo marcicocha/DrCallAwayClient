@@ -1,6 +1,7 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/firestore'
 import 'firebase/compat/storage'
+import 'firebase/compat/database'
 
 const config = {
   apiKey: 'AIzaSyD1pRphGib7I8QhwT-nPyNnbGImCVvLlXM',
@@ -14,6 +15,7 @@ const config = {
 firebase.initializeApp(config)
 firebase.firestore().settings({ timestampsInSnapshots: true })
 
-const fireDb = firebase.firestore()
+const firestore = firebase.firestore()
+const database = firebase.database()
 const storage = firebase.storage()
-export { fireDb, storage }
+export { firestore, storage, database }

@@ -6,20 +6,23 @@
       /></nuxt-link>
     </div>
     <br />
-    <AppTitleDivider :title="`Case File / ${currentCaseFile.case_id}`"
-      ><span class="right-details"
-        ><span style="color: $dark-purple">Status:</span>
-        <span
-          :class="{
-            blue: currentCaseFile.status === 'ACTIVE',
-            green: currentCaseFile.status === 'COMPLETED',
-            red: currentCaseFile.status === 'PENDING',
-          }"
-          >{{ currentCaseFile.status }}</span
-        ></span
-      ></AppTitleDivider
-    >
-    <AppCaseFileForm :current-case-file="currentCaseFile" status="patient" />
+    <div v-if="isLoading"></div>
+    <div v-else>
+      <AppTitleDivider :title="`Case File / ${currentCaseFile.case_id}`"
+        ><span class="right-details"
+          ><span style="color: $dark-purple">Status:</span>
+          <span
+            :class="{
+              blue: currentCaseFile.status === 'ACTIVE',
+              green: currentCaseFile.status === 'COMPLETED',
+              red: currentCaseFile.status === 'PENDING',
+            }"
+            >{{ currentCaseFile.status }}</span
+          ></span
+        ></AppTitleDivider
+      >
+      <AppCaseFileForm :current-case-file="currentCaseFile" status="patient" />
+    </div>
   </div>
 </template>
 <script>
@@ -33,6 +36,7 @@ export default {
   data() {
     return {
       currentCaseFile: {},
+      isLoading: true,
     }
   },
   async mounted() {
@@ -43,8 +47,10 @@ export default {
         headers: { Authorization: `Bearer ${user.token.token}` },
       }
       const { data } = await this.$axios.$get(`cases/${caseId}`, config)
+      this.isLoading = false
       this.currentCaseFile = data
     } catch (err) {
+      this.isLoading = false
       const { default: errorHandler } = await import('@/utils/errorHandler')
       errorHandler(err).forEach((msg) => {
         this.$notification.error({

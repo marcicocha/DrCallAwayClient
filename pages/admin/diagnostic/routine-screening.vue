@@ -116,6 +116,14 @@
               required
               :disabled="currentTest.status !== 'PENDING'"
             />
+            <AppUpload
+              v-if="currentTest.status === 'BOOKED'"
+              label="Upload Test Result"
+              placeholder="click here to upload test result"
+              :extenstion="['pdf', 'jpg', 'png']"
+              :uploaded-file-name="test_result_link"
+              @change="documentHandler"
+            />
           </a-form>
         </div>
         <br />
@@ -181,6 +189,8 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
+import { getDownloadURL } from 'firebase/storage'
+import { storage } from '~/plugins/firebase.js'
 import AppTabs from '@/components/AppTabs'
 import AppInput from '@/components/AppInput'
 import AppDatePicker from '@/components/AppDatePicker'
@@ -188,6 +198,7 @@ import AppTimePicker from '@/components/AppTimePicker'
 import AppTextArea from '@/components/AppTextArea'
 import AppSelect from '@/components/AppSelect'
 import AppRoutineScreeningDataTable from '@/components/admin/diagnostic-center/AppRoutineScreeningDataTable'
+import AppUpload from '@/components/AppUpload'
 
 export default {
   components: {
@@ -198,6 +209,7 @@ export default {
     AppTextArea,
     AppDatePicker,
     AppTimePicker,
+    AppUpload,
   },
   layout: 'dashboard',
   data() {
@@ -215,6 +227,7 @@ export default {
       status: 'PENDING',
       addition_information: '',
       config,
+      test_result_link: '',
     }
   },
   computed: {
@@ -272,6 +285,15 @@ export default {
     closeModal() {
       this.modalIsVisible = false
     },
+    documentHandler(file) {
+      const storageRef = storage.ref('diagnostic-result/' + file.name)
+      const uploadTask = storageRef.put(file.originFileObj)
+      uploadTask.on('state_changed', () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          this.test_result_link = downloadURL
+        })
+      })
+    },
     rejectTestHandler() {
       if (!this.currentTest.addition_information) {
         this.$notification.error({
@@ -328,6 +350,13 @@ export default {
     viewResultHandler() {},
     downloadResultHandler() {},
     completeTestHandler() {
+      if (!this.test_result_link) {
+        this.$notification.error({
+          message: 'Error',
+          description: 'Test Result Upload is Required',
+        })
+        return
+      }
       const $this = this
       this.$confirm({
         title: 'Are you sure you want to complete this Test?',
@@ -338,9 +367,12 @@ export default {
         async onOk() {
           // vm.showModal(false)
           try {
+            const obj = {
+              test_result_link: $this.test_result_link,
+            }
             await $this.$axios.$patch(
               `/complete/diagnostic/${$this.currentTest.id}`,
-              $this.currentTest.id,
+              obj,
               $this.config
             )
             $this.$notification.success({

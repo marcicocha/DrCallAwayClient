@@ -66,7 +66,7 @@
               type="primary"
               :loading="isLoading"
               class="admin-button"
-              @click="emit('acceptAppointmentHandler')"
+              @click="$emit('acceptAppointmentHandler')"
               >ACCEPT</AppButton
             >
           </a-col>

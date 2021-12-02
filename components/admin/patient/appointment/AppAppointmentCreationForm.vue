@@ -75,7 +75,7 @@
               type="primary"
               :loading="isLoading"
               class="admin-button reject__btn"
-              @click="emit('rejectAppointmentHandler')"
+              @click="$emit('rejectAppointmentHandler')"
               >REJECT</AppButton
             >
           </a-col>

@@ -207,6 +207,7 @@ export default {
             })
             $this.caseIsVisible = true
             $this.changeTabHandler('2')
+            $this.modalIsVisible = false
             $this.activeKey = '2'
           } catch (e) {
             const { default: errorHandler } = await import(

@@ -31,7 +31,6 @@
 <script>
 import Pusher from 'pusher-js'
 import AppButton from '@/components/AppButton'
-require('dotenv').config()
 export default {
   name: 'AppHeader',
   components: {

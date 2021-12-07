@@ -120,6 +120,7 @@
               v-if="currentTest.status === 'BOOKED'"
               label="Upload Test Result"
               placeholder="click here to upload test result"
+              required
               :extenstion="['pdf', 'jpg', 'png']"
               :uploaded-file-name="test_result_link"
               @change="documentHandler"
@@ -286,7 +287,7 @@ export default {
       this.modalIsVisible = false
     },
     documentHandler(file) {
-      const storageRef = storage.ref('diagnostic-result/' + file.name)
+      const storageRef = storage.ref('profile/' + file.name)
       const uploadTask = storageRef.put(file.originFileObj)
       uploadTask.on('state_changed', () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {

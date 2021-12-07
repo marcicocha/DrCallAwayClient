@@ -466,8 +466,6 @@ h6 {
   }
 }
 
-
-
 .video_modal {
   .ant-modal-content {
     background: #000 !important;
@@ -494,3 +492,11 @@ h6 {
   }
 }
 
+.test-result__container {
+  display: flex;
+  align-items: center;
+  img {
+    width: 1.5rem;
+    margin-left: 1rem;
+  }
+}

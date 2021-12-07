@@ -128,23 +128,20 @@
               {{ record.status }}
             </div>
           </template>
-          <template slot="operation" slot-scope="text, record">
-            <div v-if="record.test_result_link" style="text-align: right">
-              <a-button-group class="link-group">
-                <a-button
-                  class="table__btn"
-                  type="link"
-                  @click="viewTestResult(record.test_result_link)"
-                  ><img src="@/assets/images/admin/table-view.png" alt="view"
-                /></a-button>
-                <a-button
-                  v-if="record.status === 'ACTIVE'"
-                  type="link"
-                  class="table__btn"
-                  @click="downloadTestResult(record.test_result_link)"
-                  ><img src="@/assets/images/admin/download.png" alt="comment"
-                /></a-button>
-              </a-button-group>
+          <template v-if="caseFileObj.diagnosis.test_result_link" slot="footer">
+            <div class="flex flex-jc-sb">
+              <strong class="hide-for-mobile">Test Result</strong>
+              <div class="test-result__container">
+                <a
+                  class="red"
+                  :href="caseFileObj.diagnosis.test_result_link"
+                  target="_blank"
+                  >View</a
+                >
+                <a :href="caseFileObj.diagnosis.test_result_link" download
+                  ><img src="@/assets/images/admin/download.png" alt="download"
+                /></a>
+              </div>
             </div>
           </template>
         </a-table>
@@ -338,11 +335,6 @@ export default {
                 dataIndex: 'price_in_minor_unit',
                 scopedSlots: { customRender: 'price_in_minor_unit' },
               },
-              {
-                title: 'Action',
-                dataIndex: 'operation',
-                scopedSlots: { customRender: 'operation' },
-              },
             ]
           : [
               {
@@ -350,11 +342,6 @@ export default {
                 dataIndex: 'name',
                 scopedSlots: { customRender: 'name' },
                 width: '85%',
-              },
-              {
-                title: 'Action',
-                dataIndex: 'operation',
-                scopedSlots: { customRender: 'operation' },
               },
             ]
       return columns

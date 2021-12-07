@@ -128,6 +128,25 @@
               {{ record.status }}
             </div>
           </template>
+          <template slot="operation" slot-scope="text, record">
+            <div v-if="record.test_result_link" style="text-align: right">
+              <a-button-group class="link-group">
+                <a-button
+                  class="table__btn"
+                  type="link"
+                  @click="viewTestResult(record.test_result_link)"
+                  ><img src="@/assets/images/admin/table-view.png" alt="view"
+                /></a-button>
+                <a-button
+                  v-if="record.status === 'ACTIVE'"
+                  type="link"
+                  class="table__btn"
+                  @click="downloadTestResult(record.test_result_link)"
+                  ><img src="@/assets/images/admin/download.png" alt="comment"
+                /></a-button>
+              </a-button-group>
+            </div>
+          </template>
         </a-table>
         <br />
         <div class="flex flex-jc-sb">
@@ -403,6 +422,12 @@ export default {
       } else {
         this.$emit('showTestTab')
       }
+    },
+    viewTestResult(link) {
+      console.log(link, 'LINK')
+    },
+    downloadTestResult(link) {
+      console.log(link, 'LINK')
     },
     closeModal() {
       this.prescriptionIsVisible = false

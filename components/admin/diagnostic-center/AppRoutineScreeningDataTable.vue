@@ -18,7 +18,7 @@
       <template slot="status" slot-scope="text, record">
         <div
           :class="{
-            blue: record.status === 'ACCEPTED',
+            blue: record.status === 'BOOKED',
             green: record.status === 'COMPLETED',
             red: record.status === 'PENDING',
           }"

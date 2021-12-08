@@ -29,18 +29,45 @@
           name="Description"
           disabled
         />
-        <AppDatePicker
-          v-model="appointmentObj.date"
-          label="Date of Visit"
-          name="Date of Visit"
-          disabled
-        />
-        <AppTimePicker
-          v-model="appointmentObj.time"
-          label="Time of Visit"
-          name="Time of Visit"
-          disabled
-        />
+        <a-row type="flex" :gutter="24">
+          <a-col :span="appointmentObj.screeningPlan ? 12 : 24">
+            <AppDatePicker
+              v-model="appointmentObj.date"
+              label="Date of Visit"
+              name="Date of Visit"
+              disabled
+            />
+          </a-col>
+          <a-col :span="appointmentObj.screeningPlan ? 12 : 24">
+            <AppTimePicker
+              v-model="appointmentObj.time"
+              label="Time of Visit"
+              name="Time of Visit"
+              disabled
+            />
+          </a-col>
+        </a-row>
+        <a-row v-if="appointmentObj.screeningPlan" type="flex" :gutter="24">
+          <a-col :span="12">
+            <AppInput
+              v-if="appointmentObj.screeningPlan"
+              v-model="appointmentObj.screeningPlan"
+              label="Screening Plan"
+              name="Screening Plan"
+              disabled
+            />
+          </a-col>
+          <a-col :span="12">
+            <AppInput
+              v-if="appointmentObj.frequency"
+              v-model="appointmentObj.frequency"
+              label="Frequency"
+              name="Frequency"
+              disabled
+            />
+          </a-col>
+        </a-row>
+
         <AppInput
           v-model="appointmentObj.status"
           label="Status"
@@ -48,6 +75,19 @@
           disabled
         />
       </ValidationObserver>
+      <div v-if="isResultLink" class="flex flex-jc-sb" style="margin-top: 1rem">
+        <strong class="hide-for-mobile" style="color: #3d0c3c"
+          >Test Result:</strong
+        >
+        <div class="test-result__container">
+          <a class="red" :href="appointmentObj.test_result_link" target="_blank"
+            >View</a
+          >
+          <a :href="appointmentObj.test_result_link" download
+            ><img src="@/assets/images/admin/download.png" alt="download"
+          /></a>
+        </div>
+      </div>
       <br />
       <div v-if="isPatientButtonOnly" class="t-c">
         <AppButton
@@ -121,12 +161,21 @@ export default {
   computed: {
     isPatientButtonOnly() {
       return (
-        this.appointmentObj.status === 'BOOKED' && this.status === 'patient'
+        this.appointmentObj.status === 'BOOKED' &&
+        this.status === 'patient' &&
+        !this.appointmentObj.screeningPlan
       )
     },
     isDoctorButtonOnly() {
       return (
         this.appointmentObj.status === 'PENDING' && this.status !== 'patient'
+      )
+    },
+    isResultLink() {
+      return (
+        this.appointmentObj.status === 'COMPLETED' &&
+        this.status === 'patient' &&
+        this.appointmentObj.test_result_link
       )
     },
   },

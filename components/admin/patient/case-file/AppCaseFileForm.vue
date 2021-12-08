@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div v-if="caseFileObj.doctor" class="doctor__container">
+    <div
+      v-if="caseFileObj.doctor && caseFileObj.status === 'ACTIVE'"
+      class="doctor__container"
+    >
       <div class="doctor__container-img">
         <img :src="imgLink" alt="doctor" />
       </div>
@@ -128,7 +131,12 @@
               {{ record.status }}
             </div>
           </template>
-          <template v-if="caseFileObj.diagnosis.test_result_link" slot="footer">
+          <template
+            v-if="
+              caseFileObj.diagnosis && caseFileObj.diagnosis.test_result_link
+            "
+            slot="footer"
+          >
             <div class="flex flex-jc-sb">
               <strong class="hide-for-mobile">Test Result</strong>
               <div class="test-result__container">
@@ -221,6 +229,7 @@
       />
     </a-modal>
     <AppChatDrawer
+      v-if="caseFileObj.status !== 'PENDING'"
       :doctor="doctor"
       :status="status"
       :current-case-file="caseFileObj"

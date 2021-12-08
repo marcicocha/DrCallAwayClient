@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div
-      v-if="caseFileObj.doctor && caseFileObj.status === 'ACTIVE'"
-      class="doctor__container"
-    >
+    <div v-if="caseFileObj.status === 'ACTIVE'" class="doctor__container">
       <div class="doctor__container-img">
         <img :src="imgLink" alt="doctor" />
       </div>

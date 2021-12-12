@@ -424,7 +424,7 @@ export default {
               test_result_link: $this.test_result_link,
             }
             await $this.$axios.$patch(
-              `/complete/diagnostic/${$this.currentTest.id}`,
+              `/appointments/complete/${$this.currentTest.id}`,
               obj,
               $this.config
             )

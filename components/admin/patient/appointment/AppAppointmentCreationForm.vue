@@ -67,11 +67,16 @@
             />
           </a-col>
         </a-row>
-
         <AppInput
           v-model="appointmentObj.status"
           label="Status"
           name="Status"
+          disabled
+        />
+        <AppTextArea
+          v-if="appointmentObj.addition_info"
+          v-model="appointmentObj.addition_info"
+          label="Test Instruction/Additional Information"
           disabled
         />
       </ValidationObserver>
@@ -132,6 +137,7 @@ import AppInput from '@/components/AppInput'
 import AppButton from '@/components/AppButton'
 import AppDatePicker from '@/components/AppDatePicker'
 import AppTimePicker from '@/components/AppTimePicker'
+import AppTextArea from '@/components/AppTextArea'
 
 export default {
   name: 'AppAppointmentCreationForm',
@@ -141,6 +147,7 @@ export default {
     AppButton,
     AppDatePicker,
     AppTimePicker,
+    AppTextArea,
   },
   props: {
     currentAppointment: {

@@ -7,6 +7,11 @@ import {
 export default {
   [GET_CASE_FILE](state, payload) {
     state.caseFiles = payload.data
+    state.paginationObj = {
+      totalElements: payload.total,
+      currentPage: payload.current_page,
+      pageSize: payload.per_page,
+    }
   },
   [RESET_CASE_FILE](state) {
     state.caseFiles = []

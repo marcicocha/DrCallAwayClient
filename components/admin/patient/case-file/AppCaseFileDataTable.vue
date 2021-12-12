@@ -3,7 +3,7 @@
     <a-table
       :columns="columns"
       :data-source="dataSource"
-      :pagination="pagination"
+      :pagination="status === 'doctor'"
       :row-key="(record) => record.caseId"
     >
       <template slot="status" slot-scope="text, record">
@@ -54,21 +54,37 @@
         </div>
       </template>
     </a-table>
+    <div class="paginationCover">
+      <AppPagination
+        v-if="status === 'patient'"
+        show-size-changer
+        :page-size-options="pageSizeOptions"
+        :default-current="0"
+        :total="pagination.totalElements"
+        @change="paginationChangeHandler"
+        @showSizeChange="onShowSizeChange"
+      />
+    </div>
   </div>
 </template>
 <script>
 import moment from 'moment'
+import AppPagination from '@/components/AppPagination.vue'
+
 export default {
   name: 'AppCaseFileDataTable',
+  components: {
+    AppPagination,
+  },
   props: {
     dataSource: {
       type: Array,
       default: () => [],
     },
-    pagination: {
-      type: Boolean,
-      default: true,
-    },
+    // pagination: {
+    //   type: Boolean,
+    //   default: true,
+    // },
     filterObj: {
       type: Object,
       default: () => {},
@@ -77,6 +93,14 @@ export default {
       type: Array,
       default: () => [],
     },
+    pageSizeOptions: {
+      type: Array,
+      default: () => ['10', '20', '30', '40', '50'],
+    },
+    pagination: {
+      type: Object,
+      default: () => {},
+    },
   },
   methods: {
     viewCaseFile(record) {
@@ -84,6 +108,12 @@ export default {
     },
     formatDate(date) {
       return moment(date).format('YYYY-MM-DD HH:mm:ss')
+    },
+    paginationChangeHandler(pageNumber, pageSize) {
+      this.$emit('paginationChangeHandler', pageNumber, pageSize)
+    },
+    onShowSizeChange(current, pageSize) {
+      this.$emit('onShowSizeChange', current, pageSize)
     },
   },
 }

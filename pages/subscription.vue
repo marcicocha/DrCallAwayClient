@@ -22,20 +22,35 @@
               </li>
             </ul>
             <br />
-            <button class="button">Subscribe Now</button>
+            <button class="button" @click="signInHandler">Subscribe Now</button>
           </div>
         </AppCard>
       </div>
     </div>
+    <AppManageSignInUp
+      :mode="mode"
+      :modal-is-visible="modalIsVisible"
+      :sign-up-is-visible="signUpIsVisible"
+      :sign-in-is-visible="signInIsVisible"
+      @closeModal="closeModal"
+      @showSignInModal="showSignInModal"
+      @showSignUpModal="showSignUpModal"
+      @closeModalSignInHandler="closeModalSignInHandler"
+    />
   </div>
 </template>
 <script>
 import AppCard from '@/components/AppCard'
+import AppManageSignInUp from '@/components/AppManageSignInUp.vue'
 
 export default {
-  components: { AppCard },
+  components: { AppCard, AppManageSignInUp },
   data() {
     return {
+      modalIsVisible: false,
+      signUpIsVisible: false,
+      signInIsVisible: false,
+      mode: 'patient',
       suscriptionList: [
         {
           title: 'Standard',
@@ -67,6 +82,34 @@ export default {
   methods: {
     getImgHandler(pic) {
       return require('~/assets/images/subscription/icons/' + pic)
+    },
+    closeModal() {
+      this.modalIsVisible = false
+      this.signUpIsVisible = false
+      this.signInIsVisible = false
+    },
+    closeModalSignInHandler() {
+      this.signInIsVisible = false
+    },
+    signInHandler() {
+      const user = JSON.parse(localStorage.getItem('user'))
+      if (user) {
+        console.log(user, 'USER')
+        this.$router.push(`/admin/${user.roles[0].name}`)
+        return
+      }
+      this.showSignInModal()
+    },
+    showSignInModal() {
+      this.modalIsVisible = true
+      this.signInIsVisible = true
+      this.signUpIsVisible = false
+    },
+    showSignUpModal(mode) {
+      this.modalIsVisible = true
+      this.signUpIsVisible = true
+      this.signInIsVisible = false
+      this.mode = mode
     },
   },
 }

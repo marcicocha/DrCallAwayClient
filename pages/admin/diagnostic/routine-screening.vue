@@ -295,6 +295,58 @@ export default {
         })
       })
     },
+    // acceptAppointmentHandler() {
+    //   // const currentDate = moment()
+    //   // const recordDate = moment(record.date + ' ' + record.time)
+    //   // if (currentDate > recordDate) {
+    //   //   this.$notification.error({
+    //   //     message: 'Error',
+    //   //     description: 'Booked Date has passed',
+    //   //   })
+    //   //   return
+    //   // }
+    //   const $this = this
+    //   this.$confirm({
+    //     title: 'Are you sure you want to accept this Appointment?',
+    //     content: `With ID: ${$this.currentAppointment.id}`,
+    //     okText: 'Yes',
+    //     okType: 'danger',
+    //     cancelText: 'No',
+    //     async onOk() {
+    //       // vm.showModal(false)
+    //       try {
+    //         const obj = {
+    //           addition_information:
+    //             $this.currentAppointment.addition_information,
+    //         }
+    //         await $this.$axios.$patch(
+    //           `accept/appointments/${$this.currentAppointment.id}`,
+    //           obj,
+    //           $this.config
+    //         )
+    //         $this.$notification.success({
+    //           message: 'Success',
+    //           description: 'Appointment Accepted Successfully',
+    //         })
+    //         $this.caseIsVisible = true
+    //         $this.changeTabHandler('2')
+    //         $this.modalIsVisible = false
+    //         $this.activeKey = '2'
+    //       } catch (e) {
+    //         const { default: errorHandler } = await import(
+    //           '@/utils/errorHandler'
+    //         )
+    //         errorHandler(e).forEach((msg) => {
+    //           $this.$notification.error({
+    //             message: 'Error',
+    //             description: msg,
+    //           })
+    //         })
+    //       }
+    //     },
+    //     onCancel() {},
+    //   })
+    // },
     rejectTestHandler() {
       if (!this.currentTest.addition_information) {
         this.$notification.error({

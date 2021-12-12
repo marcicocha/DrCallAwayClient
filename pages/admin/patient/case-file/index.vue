@@ -6,22 +6,31 @@
           <AppCaseFileDataTable
             :data-source="allCaseFiles"
             :columns="columns"
+            :pagination="paginationObj"
             @showCaseFile="showCaseFile"
+            @paginationChangeHandler="paginationChangeHandler"
+            @onShowSizeChange="onShowSizeChange"
           />
         </a-tab-pane>
         <a-tab-pane key="2" tab="Active Cases">
           <AppCaseFileDataTable
             :data-source="allCaseFiles"
             :columns="columns"
+            :pagination="paginationObj"
             @showCaseFile="showCaseFile"
             @showChatDrawer="showChatDrawer"
+            @paginationChangeHandler="paginationChangeHandler"
+            @onShowSizeChange="onShowSizeChange"
           />
         </a-tab-pane>
         <a-tab-pane key="3" tab="Completed Cases">
           <AppCaseFileDataTable
             :data-source="allCaseFiles"
             :columns="columns"
+            :pagination="paginationObj"
             @showCaseFile="showCaseFile"
+            @paginationChangeHandler="paginationChangeHandler"
+            @onShowSizeChange="onShowSizeChange"
           />
         </a-tab-pane>
       </template>
@@ -129,6 +138,7 @@ export default {
     },
     ...mapState({
       allCaseFiles: (state) => state.caseFileModule.caseFiles,
+      paginationObj: (state) => state.caseFileModule.paginationObj,
     }),
   },
   mounted() {
@@ -171,6 +181,39 @@ export default {
     },
     closeViewHandler() {
       this.viewIsVisible = false
+    },
+    paginationChangeHandler(pageNumber, pageSize) {
+      //
+      const pageObject = {
+        ...this.pageObject,
+        page: pageNumber,
+        per_page: pageSize,
+        status: this.status,
+      }
+      this.getCaseHandler(pageObject)
+    },
+    onShowSizeChange(current, pageSize) {
+      const pageObject = {
+        ...this.pageObject,
+        page: current,
+        per_page: pageSize,
+        status: this.status,
+      }
+      this.getCaseHandler(pageObject)
+    },
+    async getCaseHandler(obj) {
+      try {
+        await this.getAllCaseFile(obj)
+      } catch (err) {
+        const { default: errorHandler } = await import('@/utils/errorHandler')
+        errorHandler(err).forEach((msg) => {
+          this.$notification.error({
+            message: 'Error',
+            description: msg,
+            duration: 4000,
+          })
+        })
+      }
     },
     async changeTabHandler(key) {
       if (key === '1') {

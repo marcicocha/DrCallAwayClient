@@ -5,6 +5,7 @@ import actions from './actions'
 const state = () => ({
   caseFiles: [],
   caseFileObj: {},
+  paginationObj: {},
 })
 
 export default {

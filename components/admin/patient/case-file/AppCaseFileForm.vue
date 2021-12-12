@@ -137,12 +137,7 @@
             <div class="flex flex-jc-sb">
               <strong class="hide-for-mobile">Test Result</strong>
               <div class="test-result__container">
-                <a
-                  class="red"
-                  :href="caseFileObj.diagnosis.test_result_link"
-                  target="_blank"
-                  >View</a
-                >
+                <a class="red" @click="showViewResultHandler">View</a>
                 <a :href="caseFileObj.diagnosis.test_result_link" download
                   ><img src="@/assets/images/admin/download.png" alt="download"
                 /></a>
@@ -233,6 +228,17 @@
       :chat-drawer-is-visible="chatDrawerIsVisible"
       @onClose="onClose"
     />
+    <a-modal
+      :visible="viewResultIsVisible"
+      :footer="null"
+      :destroy-on-close="true"
+      @onClose="closeViewResultHandler"
+    >
+      <iframe
+        :src="caseFileObj.diagnosis.test_result_link"
+        frameborder="0"
+      ></iframe>
+    </a-modal>
   </div>
 </template>
 <script>
@@ -283,6 +289,7 @@ export default {
       config,
       TIMER_ID: null,
       testArray: [],
+      viewResultIsVisible: false,
     }
   },
   computed: {
@@ -415,6 +422,12 @@ export default {
       } else {
         this.$emit('showTestTab')
       }
+    },
+    closeViewResultHandler() {
+      this.viewResultIsVisible = false
+    },
+    showViewResultHandler() {
+      this.viewResultIsVisible = true
     },
     viewTestResult(link) {
       console.log(link, 'LINK')

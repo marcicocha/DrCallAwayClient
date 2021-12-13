@@ -110,7 +110,7 @@
         <div>
           <a-form>
             <AppTextArea
-              v-model="currentTest.addition_information"
+              v-model="currentTest.additional_info"
               label="Test Instruction/Additional Information"
               colon="false"
               required
@@ -366,7 +366,7 @@ export default {
           // vm.showModal(false)
           try {
             const obj = {
-              addition_information: $this.currentTest.addition_information,
+              addition_information: $this.currentTest.additional_info,
             }
             // await $this.$axios.$patch(
             //   `/reject/diagnostic/${$this.currentTest.id}`,
@@ -469,7 +469,7 @@ export default {
           // vm.showModal(false)
           try {
             const obj = {
-              addition_information: $this.currentTest.addition_information,
+              addition_information: $this.currentTest.additional_info,
             }
             // await $this.$axios.$patch(
             //   `/accept/diagnostic/${$this.currentTest.id}`,

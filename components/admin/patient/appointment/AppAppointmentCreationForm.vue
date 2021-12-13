@@ -74,8 +74,8 @@
           disabled
         />
         <AppTextArea
-          v-if="appointmentObj.addition_info"
-          v-model="appointmentObj.addition_info"
+          v-if="appointmentObj.additional_info"
+          v-model="appointmentObj.additional_info"
           label="Test Instruction/Additional Information"
           disabled
         />

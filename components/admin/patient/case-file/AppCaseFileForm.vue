@@ -230,14 +230,29 @@
     />
     <a-modal
       :visible="viewResultIsVisible"
+      width="900px"
       :footer="null"
       :destroy-on-close="true"
-      @onClose="closeViewResultHandler"
+      @cancel="closeViewResultHandler"
     >
-      <iframe
+      <object
+        v-if="caseFileObj.diagnosis && caseFileObj.diagnosis.test_result_link"
+        :data="caseFileObj.diagnosis.test_result_link"
+        type="application/pdf"
+        width="100%"
+      >
+        <embed
+          :src="caseFileObj.diagnosis.test_result_link"
+          type="application/pdf"
+        />
+      </object>
+      <!-- <iframe
+        
         :src="caseFileObj.diagnosis.test_result_link"
+        type="application/pdf"
         frameborder="0"
-      ></iframe>
+        width="100%"
+      ></iframe> -->
     </a-modal>
   </div>
 </template>
@@ -383,11 +398,15 @@ export default {
       return array
     },
     imgLink() {
-      if (status === 'patient') {
+      if (this.status === 'patient' && this.caseFileObj.partner) {
         return this.caseFileObj.partner.profile_pic
-      } else {
+      } else if (
+        this.status === 'doctor' &&
+        this.caseFileObj.patient.profile_pic
+      ) {
         return this.caseFileObj.patient.profile_pic
       }
+      return ''
     },
     ...mapState({
       allPrescription: (state) => state.caseFileDoctorModule.prescriptionList,

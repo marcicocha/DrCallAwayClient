@@ -348,7 +348,7 @@ export default {
     //   })
     // },
     rejectTestHandler() {
-      if (!this.currentTest.addition_information) {
+      if (!this.currentTest.additional_info) {
         this.$notification.error({
           message: 'Error',
           description: 'Test Instruction is Required',
@@ -451,7 +451,7 @@ export default {
       })
     },
     acceptTestHandler() {
-      if (!this.currentTest.addition_information) {
+      if (!this.currentTest.additional_info) {
         this.$notification.error({
           message: 'Error',
           description: 'Test Instruction is Required',

@@ -138,7 +138,9 @@
               <strong class="hide-for-mobile">Test Result</strong>
               <div class="test-result__container">
                 <a class="red" @click="showViewResultHandler">View</a>
-                <a :href="caseFileObj.diagnosis.test_result_link" download
+                <a
+                  href="https://www.clickdimensions.com/links/TestPDFfile.pdf"
+                  download
                   ><img src="@/assets/images/admin/download.png" alt="download"
                 /></a>
               </div>
@@ -236,18 +238,17 @@
       @cancel="closeViewResultHandler"
     >
       <object
-        v-if="caseFileObj.diagnosis && caseFileObj.diagnosis.test_result_link"
-        :data="caseFileObj.diagnosis.test_result_link"
+        data="https://www.clickdimensions.com/links/TestPDFfile.pdf"
         type="application/pdf"
         width="100%"
       >
         <embed
-          :src="caseFileObj.diagnosis.test_result_link"
+          src="https://www.clickdimensions.com/links/TestPDFfile.pdf"
           type="application/pdf"
         />
       </object>
       <!-- <iframe
-        
+
         :src="caseFileObj.diagnosis.test_result_link"
         type="application/pdf"
         frameborder="0"

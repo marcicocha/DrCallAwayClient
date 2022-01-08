@@ -42,9 +42,11 @@
           >
             <span>
               <a-icon :type="menu.icon" />
-              <a class="menu_anchor" @click="goToPage(menu.path)">{{
-                menu.name
-              }}</a></span
+              <span style="margin-left: 5px"
+                ><a class="menu_anchor" @click="goToPage(menu.path)">{{
+                  menu.name
+                }}</a></span
+              ></span
             >
           </a-menu-item>
           <a-sub-menu
@@ -56,7 +58,7 @@
             @titleClick="titleClickHandler(`Sub${String(i)}`)"
           >
             <span slot="title"
-              ><a-icon :type="menu.icon" /><span style="margin-left: 5px">{{
+              ><a-icon :type="menu.icon" /><span style="margin-left: 10px">{{
                 menu.name
               }}</span></span
             >
@@ -75,7 +77,9 @@
         </template>
         <a-menu-item class="bottom-menu">
           <a-icon type="logout" />
-          <span><a class="menu_anchor" @click="logoutHandler">Logout</a></span>
+          <span style="margin-left: 5px"
+            ><a class="menu_anchor" @click="logoutHandler">Logout</a></span
+          >
         </a-menu-item>
       </a-menu>
     </a-layout-sider>

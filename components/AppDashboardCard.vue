@@ -38,6 +38,9 @@ export default {
   padding: 1.5rem;
   color: white;
   border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   p {
     font-size: 16px;
     margin-bottom: 0;

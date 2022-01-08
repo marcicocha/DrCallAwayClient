@@ -107,6 +107,7 @@
           padding: '0',
           minHeight: '280px',
           'overflow-y': 'auto',
+          'padding-right': '1rem',
         }"
       >
         <Nuxt />

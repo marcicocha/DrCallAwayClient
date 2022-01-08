@@ -4,7 +4,7 @@
       :pagination-enabled="false"
       :per-page-custom="[
         [320, 1],
-        [640, 2],
+        [640, 1],
         [1024, 3],
         [1400, 3],
       ]"
